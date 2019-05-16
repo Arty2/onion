@@ -468,6 +468,7 @@ Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 	src: url('../fonts/Alegreya-Regular.woff2') format('woff2');
 	font-weight: normal;
 	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
@@ -475,6 +476,7 @@ Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 	src: url('../fonts/Alegreya-Italic.woff2') format('woff2');
 	font-weight: normal;
 	font-style: italic;
+	font-display: swap;
 }
 
 @font-face {
@@ -482,6 +484,7 @@ Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 	src: url('../fonts/Alegreya-Bold.woff2') format('woff2');
 	font-weight: bold;
 	font-style: normal;
+	font-display: swap;
 }
 
 
@@ -490,6 +493,7 @@ Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 	src: url('../fonts/lekton.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
@@ -497,6 +501,7 @@ Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 	src: url('../fonts/lekton-italic.woff') format('woff');
 	font-weight: normal;
 	font-style: italic;
+	font-display: swap;
 }
 
 @font-face {
@@ -504,6 +509,7 @@ Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 	src: url('../fonts/lekton-bold.woff') format('woff');
 	font-weight: bold;
 	font-style: normal;
+	font-display: swap;
 }
 
 /*@font-face {
@@ -518,6 +524,7 @@ Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 	src: url('../fonts/icons.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
+	font-display: swap;
 }
 
 /*--------------------------------------------------------------
