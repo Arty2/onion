@@ -1,0 +1,24 @@
+<article class="{{ if eq .Type "preformatted" }} preformatted{{end}}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ if .Params.tags }}{{ delimit .Params.tags " " }}{{ end }}">
+{{- if eq .Type "preformatted" -}}
+	<pre>{{ .RawContent | safeHTML }}</pre>
+{{- else -}}
+	<a href="{{ .RelPermalink }}">
+		{{- $img := (.Resources.ByType "image").GetMatch "*_featured*" -}}
+		<figure class="thumbnail" href="{{ .RelPermalink }}">
+			{{- with $img -}}
+			{{- $resized := .Resize "600x" -}}
+			<img src="{{ $resized.RelPermalink  }}" alt="">
+			{{- end -}}
+		</figure>
+		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
+			{{- if .Params.dateCreated -}}
+				{{- .Params.dateCreated -}}
+			{{- else -}}
+				{{- .Date.Format "2006-01-02" -}}
+			{{- end -}}
+		</time>
+		<h3 class="title{{ with .Draft }} draft{{ end }}">{{ .Title }}</h3>
+		<p class="description">{{ with .Params.description }}{{ . | plainify | markdownify }}{{ end }}</p>
+	</a>
+{{- end -}}
+</article>

@@ -1,0 +1,93 @@
+{{- $class := (.Get "class") -}}
+<div id="tag-filter" class="{{ with $class }}{{ $class }}{{ end }}">
+	<div>
+	{{- range $tag, $tags := .Site.Taxonomies.tags -}}
+	<button class="tag tag-{{ $tag | urlize }}" data-filter-tag="{{ $tag | urlize }}" data-filter="articles-filterable">{{ (i18n $tag) }}</button>
+	{{- end -}}
+	<button id="tag-filter-reset" data-filter="articles-filterable" data-reset="true">{{ (i18n "reset") }}</button>
+	</div>
+</div>
+<script type="text/javascript">
+	// code based on https://codepen.io/brendanfalkowski/pen/QwdKMK
+	// todo: include basic display/hide CSS [data-toggle='on'] here, so that timings can be controlled in a single place?
+	// todo: convert to vanilla JS
+
+	filters = [];
+
+	document.querySelectorAll('#tag-filter button').forEach(button => {
+		button.addEventListener('click', function (e) {
+			var button = e.target;
+
+			if (button.getAttribute('data-reset') === 'true') {
+				var filter = button.getAttribute('data-filter');
+				resetFilter(filter);
+			}
+			else if (button.getAttribute('data-active') === 'true') {
+				var filter = button.getAttribute('data-filter');
+				var tag    = button.getAttribute('data-filter-tag');
+				filters = filters.filter(val => val !== tag);
+				button.setAttribute('data-active', 'false');
+				toggleTag(filter, tag);
+				if (filters.length < 1) {
+					document.getElementById('tag-filter-reset').style.visibility = 'hidden';
+					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-toggle', 'on'); });
+				}
+			}
+			else {
+				var filter = button.getAttribute('data-filter');
+				var tag    = button.getAttribute('data-filter-tag');
+				filters.push(tag);
+				button.setAttribute('data-active', 'true');
+				toggleTag(filter, tag);
+				if (filters.length > 0) {
+					document.getElementById('tag-filter-reset').style.visibility = 'visible';
+					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-toggle', 'off'); });
+				}
+			}
+
+			// scroll back to the first visible post
+			setTimeout(function(){
+				$('html, body').animate({
+					scrollTop: $( $("[data-toggle='on']")[0] ).offset().top - $('#tag-filter').height() - parseInt( $('#tag-filter').css('padding-top') + $('#tag-filter').css('padding-bottom') )
+					// scrollTop: document.querySelector('[data-toggle="on"]')[0].offsetTop - $('#tag-filter').height() - parseInt( $('#tag-filter').css('padding-top') + $('#tag-filter').css('padding-bottom') ) // vanilla JS
+				}, 200);
+			}, 500); // this is really affected by performance, it should be a little bigger than the transition speed
+		});
+
+
+		function toggleTag(filter, tag) {
+			var items = document.querySelectorAll('.' + filter + ' > article');
+
+			for (var i = 0; i < items.length; i++) {
+				var itemTags = items[i].getAttribute('data-tags');
+				if (itemTags != null) {
+					if (!filters.some(v=> itemTags.indexOf(v) >= 0)) {
+						items[i].setAttribute('data-toggle', 'off');
+					}
+					else {
+						items[i].setAttribute('data-toggle', 'on');				
+					}
+				}
+				if (filters.length === 0) {
+					items[i].setAttribute('data-toggle', 'on');		
+				}
+			}
+		}
+
+
+		function resetFilter(filter) {
+			filters = [];
+			document.getElementById('tag-filter-reset').style.visibility = 'hidden'; 
+			var items = document.querySelectorAll('.' + filter + ' > article');
+
+			for (var i = 0; i < items.length; i++) {
+				items[i].setAttribute('data-toggle', 'on');
+			}
+
+			var tags = document.querySelectorAll('button.tag');
+			for (var i = 0; i < tags.length; i++) {
+				tags[i].setAttribute('data-active', 'false');
+			}
+		}
+	});
+</script>

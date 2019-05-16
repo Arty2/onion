@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="{{ with .Site.Params.locale }}{{ . }}{{ end }}">
+<head>
+	<title>{{ .Title }} • {{ .Site.Title }}</title>
+	{{ partial "head.html" . }}
+
+	<link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}">
+</head>
+<body class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
+	{{- with .Resources.GetMatch "style.css" }}
+		<!-- with .Resources.GetMatch "style.css" | toCSS | minify, issue with type of file -->
+		<style>{{ .Content | safeCSS }}</style>
+	{{ end -}}
+
+	{{ partial "languages.html" . }}
+	<header>
+		{{- partial "header/inner.html" . -}}
+	</header>
+	<main class="single">
+		<article class="h-entry">
+			{{- $img := (.Resources.ByType "image").GetMatch "*_featured*" -}}
+			{{- with $img -}}
+			<div class="hero">
+					{{- /* $resized := .Resize "600x" */ -}}
+					<img src="{{ .RelPermalink  }}" alt="">
+			</div>
+			{{- end -}}
+			<h1><a class="{{ if .Draft }}draft{{ end }}" href="#">{{ .Title }}</a></h1>
+			<header>
+				<div class="details">
+					{{ if .Params.description }}
+						<div class="summary">
+							{{ .Params.description | markdownify }}
+						</div>
+						{{ if eq .Site.Params.Sharing true }}{{ partial "sharing.html" . }}{{ end }}
+					{{ end }}
+				</div>
+			{{ if ne .Params.Meta_display false -}}
+				<aside class="meta">
+					<h2>{{ (i18n "metadata") }}</h2>
+					<dl>
+					<!-- {{ with .Params.description }}
+						<dt>{{ i18n "description" }}</dt>
+						<dd>{{ . | markdownify }}</dd>
+					</dd>
+					{{ end }} -->
+					{{ if .Params.dateCreated }}
+						<dt>{{ i18n "produced" }}</dt><dd>{{ .Params.dateCreated }}</dd>
+					{{ else }}
+						<dt>{{ i18n "published" }}</dt><dd>{{ .Date.Format "2006-01-02" }}</dd>
+					{{ end }}
+
+					{{ if (lt (add .Date.Unix 63072000) now.Unix) }}
+						{{ $yearsElapsed := ( sub (int (now.Format "2006")) (int (.Date.Format "2006")) ) }}
+						<dd span class="time">{{ $yearsElapsed }} {{ i18n "notice-outdated" | safeHTML }}</dd>
+					{{ end }}
+
+					{{ with .Params.license }}
+						<dt>{{ i18n "license" }}</dt>
+						<dd>{{ . | markdownify }}</dd>
+					</dd>
+					{{ end }}
+
+					{{ if .Params.Tags }}
+						<dt>{{ i18n "tags" }}</dt>
+						<dd>{{ range .Params.Tags -}}
+							<a href="/tags/{{ . | urlize }}" class="tag" rel="tag">{{ (i18n . ) }}</a>
+						{{- end }}</dd>
+					{{ end }}
+					</dl>
+					{{ with .Params.Meta }}
+						{{ . | markdownify }}
+					{{ end }}
+
+					{{ if ge (len .TableOfContents) 150 }}
+						<h2>{{ (i18n "contents") }}</h2>
+						{{.TableOfContents}}
+					{{ end }}
+				</aside>
+			{{- end }}
+			</header>
+			<div class="entry-content" itemprop="articleBody">
+				{{ .Content }}
+			</div>
+		</article>
+		{{ template "_internal/disqus.html" . }}
+	</main>
+	<footer>
+		{{ partial "footer/inner.html" . }}
+	</footer>
+	{{ partial "scripts.html" . }}
+<!-- </div> -->
+</body>
+</html>

@@ -1,0 +1,23 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="{{ .Description }}">
+
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . }}
+{{ template "_internal/schema.html" . }}
+
+<link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
+
+<link rel="stylesheet" href="{{ "/styles/screen.css" | relURL }}">
+
+{{ range .AlternativeOutputFormats -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{- end }}
+{{ if .IsTranslated -}}
+    {{ range .AllTranslations -}}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .RelPermalink }}" title="{{ .Language.LanguageName }}">
+    {{- end }}
+{{- end }}
+
+{{ .Hugo.Generator }}

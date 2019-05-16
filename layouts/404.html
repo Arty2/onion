@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<style>
+		body {
+			margin: 4em;
+			background: #ccc;
+		}
+		a {
+			border-bottom: 1px solid #ccc;
+			border-color: rgba(0,0,0,0.2);
+			color: #333;
+			text-decoration: none;
+
+			-webkit-transition  : border .3s;
+			-moz-transition     : border .3s;
+			transition          : border .3s;
+		}
+		a:hover {
+			border-bottom: 4px solid #000
+		}
+	</style>
+</head>
+<body onload="init()">
+	<h1><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>
+	<p id="output">404</p>
+	<script type="text/javascript">
+		var count = 1, output = document.getElementById('output');
+
+		setTimeout(function(){
+					output.innerHTML += ' = ';
+				}, 20);
+
+		function write() {
+			if (count < 404) {
+				output.innerHTML += '1';
+				setTimeout(function(){
+					output.innerHTML += ' + ';
+				}, 2);
+				count++;
+			}
+			else {
+				output.innerHTML += '1 <a onclick="history.go(-1);">Page Not Found.</a>';
+				window.clearInterval(timer);
+			}
+		}
+
+		function init() {
+			timer = setInterval(write, 10);
+		}
+	</script>
+</body>
+</html>

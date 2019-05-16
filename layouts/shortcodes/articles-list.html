@@ -1,0 +1,16 @@
+{{ $types := (.Get "types") }}
+{{ $tag := (.Get "tag") }}
+{{ $filter := (.Get "filter") }}
+{{ $class := (.Get "class") }}
+{{ $title := (.Get "title") }}
+{{ $lang := .Site.Language.Lang }}
+<section class="articles-list {{ with $class }}{{ $class }}{{ end }}">
+<h2>{{ $title }}</h2>
+{{- range .Site.AllPages -}}
+	{{- if and (and (or (in $types .Type) (in .Params.tags $tag)) (eq .IsPage true)) (not (in .Params.tags $filter)) -}}
+		{{- if (or (eq .Lang $lang) .Params.Crosspost) -}}
+			{{ partial "article.html" . }}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}
+</section>

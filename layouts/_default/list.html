@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Params.locale }}">
+<head>
+	<title>{{ .Title }} • {{ .Site.Title }}</title>
+	{{ partial "head.html" . }}
+</head>
+<body class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
+	{{ partial "languages.html" . }}
+	<header>
+		{{ partial "header/inner.html" . }}
+	</header>
+
+	<main>
+	<section class="articles-list">
+		{{ .Content }}
+		{{ if gt (len .Data.Pages) 0}}
+			{{ range .Data.Pages }}
+				{{ partial "article.html" . }}
+			{{ end }}
+		{{ end }}
+	</section>
+	</main>
+	<footer>
+		{{ partial "footer/inner.html" . }}
+	</footer>
+	{{ partial "scripts.html" . }}
+</body>
+</html>

@@ -1,0 +1,37 @@
+# UI
+
+description:
+  other: summary
+
+license:
+  other: license
+
+tags:
+  other: tags
+
+share-twitter:
+  other: tweet
+
+share-facebook:
+  other: share
+
+share-email:
+  other: email
+
+reset:
+  other: reset tags
+
+notice-outdated:
+  other: "years ago"
+
+metadata:
+  other: meta
+
+contents:
+  other: contents
+
+produced:
+  other: produced
+
+published:
+  other: published

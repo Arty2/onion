@@ -1,0 +1,2 @@
+{{- $class := (.Get "class") -}}
+<aside class="sidenote {{ with $class }}{{ $class }}{{ end }}">{{ .Inner | markdownify }}</aside>
