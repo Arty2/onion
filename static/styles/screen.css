@@ -18,8 +18,8 @@ global CSS variables
 :root {
 	/* color theme */
 	--page-color: 221, 238, 255;
-	--text-color: 34, 34, 34;
-	--hyperlink-color: 34, 34, 34;
+	--text-color: 34, 34, 50;
+	--hyperlink-color: 34, 34, 50;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 255, 255, 255;
 
@@ -45,8 +45,8 @@ themes
 
 body.light {
 	--page-color: 221, 238, 255;
-	--text-color: 34, 34, 34;
-	--hyperlink-color: 34, 34, 34;
+	--text-color: 34, 34, 50;
+	--hyperlink-color: 34, 34, 50;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 255, 255, 255;
 	--shadow-color: rgba(var(--text-color),0.2);

@@ -1,4 +1,4 @@
 <div class="inner">
-	<a href="{{ "/" | relLangURL }}"><h1>{{ .Site.Title }}{{ with .Site.Params.description }}<span class="description">{{ . }}</span>{{ end }}</h1></a>
+	{{ partial "header/nav.html" . }}
 	{{ if eq .Site.Params.Menu_main true }}{{ partial "header/nav.html" . }}{{ end }}
 </div>
