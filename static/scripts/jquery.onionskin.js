@@ -89,7 +89,7 @@ $('div.gallery').each( function() {
 Thread lines - Work in progress
 via https://anseki.github.io/leader-line/
 --------------------------------------------------------------*/
-
+/*
 var linestyles = {
 		// middleLabel: LeaderLine.pathLabel({text: 'LABEL', outlineColor: 'rgb(var(--page-color))' }),
 		gradient: {
@@ -126,78 +126,7 @@ points.each(function(i, start){
 	});
 });
 // end thread lines
-
-/*--------------------------------------------------------------
-Drag scrollable
-based on https://github.com/lx-s/jquery.dragscrollable/ (this fork has touch events)
---------------------------------------------------------------*/
-/*$.ajax({
-	cache: true,
-	url: '/scripts/jquery.dragscrollable.js',
-	dataType: 'script',
-	success: function() {
-		// console.log('jquery.dragscrollable.js has loaded');
-		// if ($( 'main' ).hasClass( 'home' )) {
-			$( '.cards' ).wrapInner( '<div class="wrapper"></div>' );
-		// }
-		// $( '.cards .wrapper' ).css('transform', 'translateZ(0)'); // change CSS stacking order
-		$( '.cards .wrapper' ).dragscrollable( {dragSelector: 'article', allowY: false} );
-	},
-	error: function() { console.log('jquery.dragscrollable.js not loaded') }
-});*/
-// end Drag scrollable
-
-
-/*--------------------------------------------------------------
-scrollify
-via https://github.com/lukehaas/Scrollify
---------------------------------------------------------------*/
-/*$.ajax({
-	cache: false,
-	url: '/scripts/jquery.scrollify.js',
-	dataType: 'script',
-	success: function() {
-		$.scrollify({
-			section : '.slide',
-			updateHash : false,
-			after: function() {
-				// disable on last slide
-				if ($.scrollify.current().hasClass('fullwidth')){
-					$('html, body').animate({
-						scrollTop: $( $('.slide:last ~ *')[0] ).offset().top
-					}, 1100);
-					
-					$.scrollify.disable();
-				}
-			},
-		});
-
-		// disable if outside of active slide area
-
-		$(document).on('scroll resize touchstart', function() {
-			var safeheight = (( $('.slide').length - 1 ) * $(window).height());
-
-			if ($(document).scrollTop() > safeheight && !$.scrollify.isDisabled()) {
-				$.scrollify.disable();
-				// console.log('disabled');
-			}
-			// else if ($(document).scrollTop() < (( $('.slide').length - 2 ) * $(window).height()) && $.scrollify.isDisabled()) {
-			// 	$.scrollify.enable();
-			// 	$.scrollify.update();
-			// 	$.scrollify.next();
-			// 	console.log('enabled');
-			// }
-		});
-	},
-	error: function() { console.log('jquery.scrollify.js not loaded') }
-});*/
-// end scrollify
-
-
-// $('head').append('<link>');
-// var css = $('head').children(':last');
-// css.attr({ rel: 'stylesheet', type: 'text/css', href: './styles.css' });
-
+*/
 
 /*--------------------------------------------------------------
 thumbnail follow
