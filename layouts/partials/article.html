@@ -1,6 +1,8 @@
 <article class="{{ if eq .Type "preformatted" }} preformatted{{end}}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ if .Params.tags }}{{ delimit .Params.tags " " }}{{ end }}">
 {{- if eq .Type "preformatted" -}}
 	<pre>{{ .RawContent | safeHTML }}</pre>
+{{- else if eq .Type "ephemera" -}}
+	{{ .RawContent | safeHTML }}
 {{- else -}}
 	<a href="{{ .RelPermalink }}">
 		{{- $img := (.Resources.ByType "image").GetMatch "*_featured*" -}}

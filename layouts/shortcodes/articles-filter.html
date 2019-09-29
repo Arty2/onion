@@ -1,0 +1,114 @@
+{{- $class := (.Get "class") -}}
+<div id="articles-filter" class="{{ with $class }}{{ $class }}{{ end }}">
+	<div>
+	{{- range $tag, $tags := .Site.Taxonomies.tags -}}
+	<button class="tag tag-{{ $tag | urlize }}" data-filter-tag="{{ $tag | urlize }}" data-filter="articles-filterable">{{ (i18n $tag) }}</button>
+	{{- end -}}
+	<button id="articles-filter__reset" class="button" data-filter="articles-filterable" data-reset="true">{{ (i18n "reset") }}</button>
+	</div>
+</div>
+<script type="text/javascript">
+	// code based on https://codepen.io/brendanfalkowski/pen/QwdKMK
+	// todo: convert to vanilla JS
+
+	/*
+	[data-visibility='on'] {
+		opacity: 1;
+
+		-webkit-transition: all 0.3s linear;
+		transition        : all 0.3s linear;
+	}
+
+	[data-visibility='off'] {
+		opacity: 0.1 !important;
+
+		pointer-events: none !important;
+		-webkit-user-select: none !important;
+		user-select        : none !important;
+
+		-webkit-transition: all 0.3s linear;
+		transition        : all 0.3s linear;
+	}
+	*/
+
+	filters = [];
+
+	document.querySelectorAll('#articles-filter button').forEach(button => {
+		button.addEventListener('click', function (e) {
+			var button = e.target;
+
+			if (button.getAttribute('data-reset') === 'true') {
+				var filter = button.getAttribute('data-filter');
+				resetFilter(filter);
+			}
+			else if (button.getAttribute('data-active') === 'true') {
+				var filter = button.getAttribute('data-filter');
+				var tag    = button.getAttribute('data-filter-tag');
+				filters = filters.filter(val => val !== tag);
+				button.setAttribute('data-active', 'false');
+				toggleTag(filter, tag);
+				if (filters.length < 1) {
+					document.getElementById('articles-filter__reset').style.visibility = 'hidden';
+					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-visibility', 'on'); });
+				}
+			}
+			else {
+				var filter = button.getAttribute('data-filter');
+				var tag    = button.getAttribute('data-filter-tag');
+				filters.push(tag);
+				button.setAttribute('data-active', 'true');
+				toggleTag(filter, tag);
+				if (filters.length > 0) {
+					document.getElementById('articles-filter__reset').style.visibility = 'visible';
+					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-visibility', 'off'); });
+				}
+			}
+
+			// scroll back to the first visible post
+			
+			setTimeout(function(){
+				$('html, body').animate({
+					scrollTop: $( $("[data-visibility='on']")[0] ).offset().top - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') )
+					// scrollTop: document.querySelector('[data-visibility="on"]')[0].offsetTop - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') ) // vanilla JS
+				}, 200);
+			}, 500); // this is really affected by performance, it should be a little bigger than the transition speed
+			
+		});
+
+
+		function toggleTag(filter, tag) {
+			var items = document.querySelectorAll('.' + filter + ' article');
+
+			for (var i = 0; i < items.length; i++) {
+				var itemTags = items[i].getAttribute('data-tags');
+				if (itemTags != null) {
+					if (!filters.some(v=> itemTags.indexOf(v) >= 0)) {
+						items[i].setAttribute('data-visibility', 'off');
+					}
+					else {
+						items[i].setAttribute('data-visibility', 'on');				
+					}
+				}
+				if (filters.length === 0) {
+					items[i].setAttribute('data-visibility', 'on');		
+				}
+			}
+		}
+
+
+		function resetFilter(filter) {
+			filters = [];
+			document.getElementById('articles-filter__reset').style.visibility = 'hidden'; 
+			var items = document.querySelectorAll('.' + filter + ' article');
+
+			for (var i = 0; i < items.length; i++) {
+				items[i].setAttribute('data-visibility', 'on');
+			}
+
+			var tags = document.querySelectorAll('#articles-filter button.tag');
+			for (var i = 0; i < tags.length; i++) {
+				tags[i].setAttribute('data-active', 'false');
+			}
+		}
+	});
+</script>
