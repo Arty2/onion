@@ -4,8 +4,8 @@
 {{ $class := (.Get "class") }}
 {{ $title := (.Get "title") }}
 {{ $lang := .Site.Language.Lang }}
-<section class="articles-list {{ with $class }}{{ $class }}{{ end }}">
-<h2>{{ $title }}</h2>
+<details class="articles-list {{ with $class }}{{ $class }}{{ end }}" open>
+<summary><h2>{{ $title }}</h2></summary>
 <div class="wrapper">
 {{- range .Site.AllPages -}}
 	{{- if and (and (or (in $types .Type) (in .Params.tags $tag)) (eq .IsPage true)) (not (in .Params.tags $filter)) -}}
@@ -15,4 +15,4 @@
 	{{- end -}}
 {{- end -}}
 </div>
-</section>
+</details>

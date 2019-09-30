@@ -155,7 +155,7 @@ body.blue {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-@media (prefers-color-scheme: darak) {
+@media (prefers-color-scheme: dark) {
 	:root {
 		--page-color: 34, 34, 34;
 		--text-color: 204, 204, 204;
@@ -223,6 +223,7 @@ pre, input, textarea {
 
 button, code, kbd,
 .tag, .languages, .sharing,
+body > header h1,
 .articles-list h2, .social {
 	/*font-family: var(--font-mono);*/
 	font-family: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
@@ -257,6 +258,12 @@ body > header h1 {
 
 body > footer {
 	font-size: 80%
+}
+
+aside.meta,
+.entry-content.sidenote,
+.footnotes {
+	font-size: 80%;
 }
 
 /*--------------------------------------------------------------
@@ -493,6 +500,7 @@ html {
 
 body {
 	position: relative;
+	padding: 12px; /* fallback */
 	padding: var(--gutter-width);
 	/*width: 90vw;*/
 	overflow-x: hidden;
@@ -504,18 +512,22 @@ body > footer,
 body > main {
 	margin-left: auto;
 	margin-right: auto;
+	max-width: 40em; /* fallback */
 	max-width: var(--content-width);
 	/* outline: 1px dashed red; /* DEBUG */
 }
 
 body > header {
 	margin-bottom: var(--gutter-width);
+	z-index: 103;
+	opacity: 0.99;
 }
 
 body > footer {
 	/*position: sticky;*/
 	bottom: 0;
 	clear: both;
+	margin-top: 30vh;
 	margin-bottom: var(--gutter-width);
 	min-width: 100%;
 	z-index: -1;
@@ -559,7 +571,6 @@ body > footer nav li,
 .hero {
 	display: block;
 	width: 98vw;
-	min-width: 98vw;
 
 	margin-left: calc(50% - 49vw) !important;
 	margin-right: calc(50% - 49vw) !important;
@@ -568,15 +579,24 @@ body > footer nav li,
 	text-align: center;
 }
 
-header + main > article > .hero {
-	/*border: 2px solid red;*/
+.hero {
+	/*margin-top: -4rem;*/
+	margin-bottom: var(--gutter-width);
+}
+
+@media (orientation: portrait) {
+	.hero img {
+		height: 100vh;
+		width: 100%;
+		object-fit: cover;
+	}
 }
 
 .sticky {
 	position: sticky !important;
 }
 
-main {
+body > main {
 	/*scroll-snap-type: y mandatory;*/
 }
 
@@ -595,13 +615,17 @@ main {
 	/*scroll-snap-align: start;*/
 	/*scroll-snap-stop: always;*/
 
-	outline: 1px dashed red;
+	/*outline: 1px dashed red;*/
 }
 
 .slide > * {
+	box-sizing: content-box;
+
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	padding-left: var(--gutter-width);
+	padding-right: var(--gutter-width);
 	max-width: var(--content-width);
 }
 
@@ -610,7 +634,9 @@ theme styles
 --------------------------------------------------------------*/
 
 body {
+	background: #fff; /* fallback */
 	background: rgb(var(--page-color));
+	color: #000; /* fallback */
 	color: rgb(var(--text-color));
 }
 
@@ -629,6 +655,7 @@ a, a:visited {
 	vertical-align: baseline;
 
 	background: transparent;
+	color: #00f; /* fallback */
 	color: rgb(var(--hyperlink-color));
 	/*text-decoration: underline;*/
 	/*text-decoration-skip-ink: auto;*/
@@ -636,7 +663,7 @@ a, a:visited {
 	-webkit-transition: all .3s;
 	transition        : all .3s;
 
-	outline: 0;
+	outline: none;
 }
 
 a:before, a:after {
@@ -645,6 +672,7 @@ a:before, a:after {
 }
 
 a:hover, a:active {
+	color: #f00; /* fallback */
 	color: rgb(var(--accent-color));
 }
 
@@ -904,16 +932,32 @@ form styles
 	outline: none;
 }
 
-.button::-moz-focus-inner { border:0; }
+.button::-moz-focus-inner { border: 0; }
 
 
 /*--------------------------------------------------------------
 articles-list styles
 --------------------------------------------------------------*/
 
+
 .articles-list {
 	margin-top: var(--gutter-width);
 	/*outline: 1px dashed cyan;*/
+}
+
+.articles-list summary {
+	margin-left: -1rem;
+}
+.articles-list summary::marker {
+	/*color: red !important;*/
+}
+
+.articles-list summary:focus {
+	outline: none;
+}
+
+.articles-list summary:focus h2 {
+	text-decoration: underline;
 }
 
 .articles-list h2 {
@@ -921,8 +965,8 @@ articles-list styles
 	margin-bottom: var(--gutter-width);
 	padding: 0 0.25rem;
 
-	background: rgb(var(--text-color));
-	color: rgb(var(--text-color-inverted));
+/*	background: rgb(var(--text-color));
+	color: rgb(var(--text-color-inverted));*/
 }
 
 .articles-list article {
@@ -933,6 +977,10 @@ articles-list styles
 
 .articles-list article > a {
 	text-decoration: none;
+}
+
+.articles-list article > a:focus h3 {
+	text-decoration: underline;
 }
 
 
@@ -1043,16 +1091,14 @@ article meta styles
 }
 
 
-/*-- ------------------------------------------------------------
+/*--------------------------------------------------------------
 article styles
 --------------------------------------------------------------*/
 
 aside.meta,
 .entry-content.sidenote {
-	border: 1.5px dashed;
+	border: 1px dashed;
 	margin: var(--gutter-width) auto;
-
-	font-size: 70%;
 }
 
 .entry-content ul li:before {
@@ -1071,6 +1117,11 @@ aside.meta,
 .entry-content p, .entry-content img, .entry-content article, .entry-content ul, .entry-content ol, .entry-content figure, .entry-content aside {
 	/*margin-top: var(--gutter-width);*/
 	margin-bottom: calc(1*var(--gutter-width));
+}
+
+
+.footnotes ol {
+	padding: calc(var(--gutter-width)/2) calc(var(--gutter-width));
 }
 
 
