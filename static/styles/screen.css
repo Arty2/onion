@@ -1107,6 +1107,7 @@ articles-list styles
 .articles-list summary {
 	margin-left: -1rem;
 }
+
 .articles-list summary::marker {
 	/*color: red !important;*/
 }
@@ -1336,6 +1337,7 @@ articles-list - no-thumbnail
 	z-index: 103;
 
 	pointer-events: none;
+	transition: transform 1s;
 }
 
 .articles-list.no-thumbnail article .thumbnail img {
@@ -1348,11 +1350,9 @@ articles-list - no-thumbnail
 	opacity: 0;
 
 	/* force GPU rendering */
-	-webkit-transform: translateZ(0);
-	transform        : translateZ(0);
+	transform: translateZ(0);
 
-	-webkit-transition: all 1s;
-	transition        : all 1s;
+	transition: all 1s;
 }
 	.articles-list.no-thumbnail article:hover .thumbnail img {
 		opacity: 0.2;
