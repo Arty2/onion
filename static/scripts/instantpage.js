@@ -1,4 +1,4 @@
-/*! instant.page v1.2.2 - (C) 2019 Alexandre Dieulot - https://instant.page/license */
+/*! instant.page v2.0.0 - (C) 2019 Alexandre Dieulot - https://instant.page/license */
 
 let urlToPreload
 let mouseoverTimer
@@ -9,6 +9,25 @@ const isSupported = prefetcher.relList && prefetcher.relList.supports && prefetc
 const isDataSaverEnabled = navigator.connection && navigator.connection.saveData
 const allowQueryString = 'instantAllowQueryString' in document.body.dataset
 const allowExternalLinks = 'instantAllowExternalLinks' in document.body.dataset
+const useWhitelist = 'instantWhitelist' in document.body.dataset
+
+let delayOnHover = 65
+let useMousedown = false
+let useMousedownOnly = false
+if ('instantIntensity' in document.body.dataset) {
+  if (document.body.dataset.instantIntensity.substr(0, 'mousedown'.length) == 'mousedown') {
+    useMousedown = true
+    if (document.body.dataset.instantIntensity == 'mousedown-only') {
+      useMousedownOnly = true
+    }
+  }
+  else {
+    const milliseconds = parseInt(document.body.dataset.instantIntensity)
+    if (milliseconds != NaN) {
+      delayOnHover = milliseconds
+    }
+  }
+}
 
 if (isSupported && !isDataSaverEnabled) {
   prefetcher.rel = 'prefetch'
@@ -18,8 +37,17 @@ if (isSupported && !isDataSaverEnabled) {
     capture: true,
     passive: true,
   }
-  document.addEventListener('touchstart', touchstartListener, eventListenersOptions)
-  document.addEventListener('mouseover', mouseoverListener, eventListenersOptions)
+
+  if (!useMousedownOnly) {
+    document.addEventListener('touchstart', touchstartListener, eventListenersOptions)
+  }
+
+  if (!useMousedown) {
+    document.addEventListener('mouseover', mouseoverListener, eventListenersOptions)
+  }
+  else {
+    document.addEventListener('mousedown', mousedownListener, eventListenersOptions)
+  }
 }
 
 function touchstartListener(event) {
@@ -63,7 +91,21 @@ function mouseoverListener(event) {
   mouseoverTimer = setTimeout(() => {
     preload(linkElement.href)
     mouseoverTimer = undefined
-  }, 65)
+  }, delayOnHover)
+}
+
+function mousedownListener(event) {
+  const linkElement = event.target.closest('a')
+
+  if (!isPreloadable(linkElement)) {
+    return
+  }
+
+  linkElement.addEventListener('mouseout', mouseoutListener, {passive: true})
+
+  urlToPreload = linkElement.href
+
+  preload(linkElement.href)
 }
 
 function mouseoutListener(event) {
@@ -75,10 +117,10 @@ function mouseoutListener(event) {
     clearTimeout(mouseoverTimer)
     mouseoverTimer = undefined
   }
-  else {
-    urlToPreload = undefined
-    stopPreloading()
-  }
+
+  urlToPreload = undefined
+
+  stopPreloading()
 }
 
 function isPreloadable(linkElement) {
@@ -90,25 +132,27 @@ function isPreloadable(linkElement) {
     return
   }
 
-  const preloadLocation = new URL(linkElement.href)
-
-  if (!allowExternalLinks && preloadLocation.origin != location.origin && !('instant' in linkElement.dataset)) {
+  if (useWhitelist && !('instant' in linkElement.dataset)) {
     return
   }
 
-  if (!['http:', 'https:'].includes(preloadLocation.protocol)) {
+  if (!allowExternalLinks && linkElement.origin != location.origin && !('instant' in linkElement.dataset)) {
     return
   }
 
-  if (preloadLocation.protocol == 'http:' && location.protocol == 'https:') {
+  if (!['http:', 'https:'].includes(linkElement.protocol)) {
     return
   }
 
-  if (!allowQueryString && preloadLocation.search && !('instant' in linkElement.dataset)) {
+  if (linkElement.protocol == 'http:' && location.protocol == 'https:') {
     return
   }
 
-  if (preloadLocation.hash && preloadLocation.pathname + preloadLocation.search == location.pathname + location.search) {
+  if (!allowQueryString && linkElement.search && !('instant' in linkElement.dataset)) {
+    return
+  }
+
+  if (linkElement.hash && linkElement.pathname + linkElement.search == location.pathname + location.search) {
     return
   }
 
