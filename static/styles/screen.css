@@ -168,6 +168,34 @@ body.blue {
 
 
 
+/*--------------------------------------------------------------
+theme styles
+--------------------------------------------------------------*/
+
+::selection {
+	background: rgb(var(--text-color));
+	color: rgb(var(--text-color-inverted));
+	text-shadow: none;
+}
+
+body {
+	background: #fff; /* fallback */
+	background: rgb(var(--page-color));
+	color: #000; /* fallback */
+	color: rgb(var(--text-color));
+
+	/* transition messes with custom styles */
+	/*-webkit-transition: background 0.3s;*/
+	/*transition        : background 0.3s;*/
+}
+
+body > header a,
+h1 a, h2 a {
+	color: rgb(var(--text-color));
+	text-decoration: none;
+}
+
+
 
 /*--------------------------------------------------------------
 fonts & type
@@ -175,6 +203,7 @@ fonts & type
 Alegrya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
 Lekton (Greek): via https://www.roleplay.gr/blog/greekifying-lekton-font
 FantasqueSan: via https://github.com/belluzj/fantasque-sans;
+icon font via https://icomoon.io (Brands iconset)
 --------------------------------------------------------------*/
 
 @font-face {
@@ -237,11 +266,12 @@ body > header h1,
 .articles-list h2, .social {
 	/*font-family: var(--font-mono);*/
 	font-family: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
-	font-size: 90%; /* adjust for x-height */
+	font-size: 0.9rem; /* adjust for x-height */
 }
 
 :root {
-	font-size: 125%;
+	font-size: 125%; /* fallback */
+	font-size: calc(1rem + 0.5vw);
 }
 
 body {
@@ -265,17 +295,17 @@ body > header h1 {
 .tag, .button,
 figcaption,
 .entry-content blockquote {
-	font-size: 80%;
+	font-size: 0.8rem;
 }
 
 body > footer {
-	font-size: 80%
+	font-size: 0.8rem;
 }
 
 aside.meta,
-.entry-content.sidenote,
+.entry-content .sidenote,
 .footnotes {
-	font-size: 80%;
+	font-size: 0.8rem;
 }
 
 /*--------------------------------------------------------------
@@ -382,6 +412,15 @@ hr {
 		text-align: center;
 	}
 
+p, li {
+	font-variant-ligatures: normal;
+
+	-webkit-hyphens	: auto;
+	hyphens			: auto;
+
+	/*text-align: justify;*/
+}
+
 pre {
 	margin: var(--gutter-height) 0;
 	padding: 0;
@@ -470,7 +509,7 @@ sup {
 }
 
 /*--------------------------------------------------------------
-helper classes
+helper / common classes
 --------------------------------------------------------------*/
 
 .center {
@@ -481,6 +520,14 @@ helper classes
 
 .half {
 	width: calc(50% - var(--gutter-width)/2);
+}
+
+svg.stroke {
+	stroke: rgb(var(--text-color));
+}
+
+svg.fill {
+	fill: rgb(var(--text-color));
 }
 
 /*--------------------------------------------------------------
@@ -669,34 +716,6 @@ body > main {
 }
 
 /*--------------------------------------------------------------
-theme styles
---------------------------------------------------------------*/
-
-::selection {
-	background: rgb(var(--text-color));
-	color: rgb(var(--text-color-inverted));
-	text-shadow: none;
-}
-
-body {
-	background: #fff; /* fallback */
-	background: rgb(var(--page-color));
-	color: #000; /* fallback */
-	color: rgb(var(--text-color));
-
-	/* transition messes with custom styles */
-	/*-webkit-transition: background 0.3s;*/
-	/*transition        : background 0.3s;*/
-}
-
-body > header a,
-h1 a, h2 a {
-	color: rgb(var(--text-color));
-	text-decoration: none;
-}
-
-
-/*--------------------------------------------------------------
 hyperlink styles
 --------------------------------------------------------------*/
 
@@ -799,13 +818,16 @@ social menu
 	display: none;
 }
 
-.icon-email:before { content: "\65"; }
-.icon-gitlab:before { content: "\6c"; }
-.icon-github:before { content: "\68"; }
-.icon-instagram:before { content: "\69"; }
-.icon-twitter:before { content: "\74"; }
-.icon-facebook:before { content: "\66"; }
-.icon-mastodon:before { content: "\6d"; }
+.icon-email:before { content: '📧'; }
+.icon-gitlab:before { content: '🦊'; }
+.icon-github:before { content: '🐙'; }
+.icon-instagram:before { content: '📷'; }
+.icon-twitter:before { content: '🐦'; }
+.icon-facebook:before { content: '👍'; }
+.icon-mastodon:before { content: '🐘'; }
+.icon-webring:before { content: '🕸'; }
+.icon-soundcloud:before { content: '☁'; }
+.icon-youtube:before { content: '▶'; }
 
 /*.icon-email:hover:before { color: #168de2; }*/ /* same color as links */
 .icon-gitlab:hover:before { color: #e24329; }
@@ -814,6 +836,8 @@ social menu
 .icon-twitter:hover:before { color: #1da1f2; }
 .icon-facebook:hover:before { color: #3b5998; }
 .icon-mastodon:hover:before { color: #3088d4; }
+.icon-soundcloud:hover:before { color: #ff3300; }
+.icon-youtube:hover:before { color: #ff0000; }
 
 /*--------------------------------------------------------------
 languages selector
@@ -1122,30 +1146,49 @@ articles-list styles
 	text-decoration: none;
 }
 
+.articles-list article > a:hover h3,
 .articles-list article > a:focus h3 {
 	text-decoration: underline;
 }
 
-.articles-list article figure {
+.articles-list article > a:hover .thumbnail {
+	transform: scale(1.02);
+}
+
+.articles-list article .thumbnail {
 	font-size: 0;
-}
-
-.articles-list article figure img {
-	width: 100%;
-}
-
-.articles-list article h3 {
-	/*margin-top: -0.5rem;*/
-	text-decoration: none;
-	font-size: 1rem
-}
-
-.articles-list article .description {
-	/*outline: 1px dashed red;*/
+	transition: transform .3s;
 }
 
 .articles-list article .thumbnail:empty {
-	display: none;
+	display: none !important;
+}
+
+.articles-list article .thumbnail img {
+	width: 100%;
+}
+
+.articles-list article .time {
+	display: block;
+
+	color: rgb(var(--text-color));
+	font-size: 1rem;
+	/*outline: 1px dashed red;*/
+}
+
+.articles-list article .title {
+	display: inline-block;
+	margin-right: 1ch;
+
+	font-size: 1rem
+	/*outline: 1px dashed red;*/
+}
+
+.articles-list article .description {
+	display: inline;
+
+	color: rgba(var(--text-color),0.8);
+	/*outline: 1px dashed red;*/
 }
 
 
@@ -1157,7 +1200,7 @@ articles-list - stack
 --------------------------------------------------------------*/
 
 .articles-list.stack > .wrapper {
-
+	/* */
 }
 
 .articles-list.stack article + article {
@@ -1180,8 +1223,6 @@ articles-list - stack
 .articles-list.stack .time {
 	order: 3;
 	width: 9ch;
-
-	color: rgb(var(--text-color));
 }
 
 .articles-list.stack .time {
@@ -1193,9 +1234,7 @@ articles-list - stack
 
 
 .articles-list.stack .title {
-	display: inline-block;
 	order: 1;
-	margin-right: 1ch;
 }
 
 .articles-list.stack .description {
@@ -1204,10 +1243,8 @@ articles-list - stack
 	flex-grow: 1;
 	overflow: hidden;
 
-	color: rgba(var(--text-color),0.5);
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	/*outline: 1px dashed red;*/
 }
 
 /*--------------------------------------------------------------
@@ -1217,16 +1254,21 @@ articles-list - cluster
 .articles-list.cluster > .wrapper {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: flex-start;
+	justify-content: flex-start;
 	margin: calc(-1*var(--gutter-width)/2);
 }
 
 .articles-list.cluster article {
 	display: inline-block;
-	flex-basis: calc(var(--content-width)/2 - var(--gutter-width));
+	flex-basis: calc((var(--content-width)/2 - 0.5*var(--gutter-width)));
 	flex-grow: 1;
 	margin: calc(var(--gutter-width)/2);
-	width: calc(( 100% - 2*var(--gutter-width) ) / 2);
+	/*width: calc(( 100% - 2*var(--gutter-width) ) / 2);*/
+}
+
+.articles-list.cluster article:nth-last-child(1):nth-child(odd) {
+	/*flex-grow: 0;*/
+	/*outline: 2px solid red;*/
 }
 
 .articles-list.cluster article.preformatted {
@@ -1243,6 +1285,13 @@ articles-list - cluster
 	text-align: left;
 }
 
+
+/*--------------------------------------------------------------
+articles-list - no-summary
+--------------------------------------------------------------*/
+.articles-list.no-summary > summary {
+	display: none;
+}
 
 /*--------------------------------------------------------------
 articles-list - no-gap
@@ -1275,10 +1324,10 @@ articles-list - no-time
 
 
 /*--------------------------------------------------------------
-articles-list - no-images
+articles-list - no-thumbnail
 --------------------------------------------------------------*/
 
-.articles-list.no-images article .thumbnail {
+.articles-list.no-thumbnail article .thumbnail {
 	display: block;
 	position: fixed;
 	top: -0.5vh;
@@ -1289,7 +1338,7 @@ articles-list - no-images
 	pointer-events: none;
 }
 
-.articles-list.no-images article .thumbnail img {
+.articles-list.no-thumbnail article .thumbnail img {
 	width: 101vw;
 	height: 101vh;
 
@@ -1305,7 +1354,7 @@ articles-list - no-images
 	-webkit-transition: all 1s;
 	transition        : all 1s;
 }
-	.articles-list.no-images article:hover .thumbnail img {
+	.articles-list.no-thumbnail article:hover .thumbnail img {
 		opacity: 0.2;
 	}
 
@@ -1313,13 +1362,13 @@ articles-list - no-images
 /*--------------------------------------------------------------
 articles-list - thumb ratio
 --------------------------------------------------------------*/
-.articles-list[class*="thumb-"] article .thumbnail {
+.articles-list[class*="thumbnail-"] article .thumbnail {
 	position: relative;
 	overflow: hidden;
 	/*outline: 1px solid red;*/
 }
 
-.articles-list[class*="thumb-"] article .thumbnail img {
+.articles-list[class*="thumbnail-"] article .thumbnail img {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1329,23 +1378,23 @@ articles-list - thumb ratio
 	object-fit: cover;
 }
 
-.articles-list.thumb-4\:3 article .thumbnail {
+.articles-list.thumbnail-4\:3 article .thumbnail {
 	padding-top: 75%;
 }
 
-.articles-list.thumb-3\:4 article .thumbnail {
+.articles-list.thumbnail-3\:4 article .thumbnail {
 	padding-top: 133%;
 }
 
-.articles-list.thumb-16\:9 article .thumbnail {
+.articles-list.thumbnail-16\:9 article .thumbnail {
 	padding-top: 56%;
 }
 
-.articles-list.thumb-9\:16 article .thumbnail {
+.articles-list.thumbnail-9\:16 article .thumbnail {
 	padding-top: 178%;
 }
 
-.articles-list.thumb-1\:1 article .thumbnail {
+.articles-list.thumbnail-1\:1 article .thumbnail {
 	padding-top: 100%;
 }
 
@@ -1431,7 +1480,7 @@ article styles
 --------------------------------------------------------------*/
 
 aside.meta,
-.entry-content.sidenote {
+.entry-content .sidenote {
 	border: 3px double;
 	margin: var(--gutter-width) auto;
 }
@@ -1447,8 +1496,6 @@ aside.meta,
 	padding-left: var(--gutter-width);
 }
 
-
-
 .entry-content p,
 .entry-content img,
 .entry-content article,
@@ -1457,6 +1504,7 @@ aside.meta,
 .entry-content figure,
 .entry-content aside {
 	/*margin-top: var(--gutter-width);*/
+	margin-bottom: 2rem; /* fallback */
 	margin-bottom: calc(1*var(--gutter-width));
 }
 
@@ -1519,15 +1567,29 @@ gallery
 --------------------------------------------------------------*/
 
 .gallery {
-	height: 50vh;
 	position: relative;
-	margin: 4rem 2rem;
+	height: 50vh;
+	margin: 6rem 3rem;
+
+	counter-reset: items;
+}
+
+.gallery:after {
+	content: attr(data-current) " / " counter(items);
+
+	position:absolute;
+	bottom: 0;
+	right: 0;
+
+	font-size: 60%;
 }
 
 .gallery figure {
 	position: absolute;
 	top: 0;
 	left: 0;
+
+	counter-increment: items;
 
 	transition: transform .3s;
 	/*transition: transform .3s, z-index 1s step-end;*/
@@ -1540,10 +1602,26 @@ gallery
 	/*animation: tofront 0.3s linear forwards;*/
 	/*transition: transform .3s, z-index 1s step-start;*/
 }
+	@keyframes tofront {
+		from { opacity: 0.8; }
+		to   { opacity: 1; }
+	}
 
-@keyframes tofront {
-	from { opacity: 0.8; }
-	to   { opacity: 1; }
+.gallery figure:first-child {
+	z-index: 1; /* make the first image display first */
+}
+
+.gallery figcaption {
+	visibility: hidden;
+	margin-top: 1.5rem;
+}
+
+.gallery.no-caption figcaption {
+	display: none;
+}
+
+.gallery .top figcaption {
+	visibility: visible;
 }
 
 .gallery img {
@@ -1570,10 +1648,6 @@ gallery
 .gallery img:hover {
 	transform: scale(1.2);
 	transition-delay: 0s;
-}
-
-.gallery figure:first-child {
-	z-index: 1; /* make the first image display first */
 }
 
 .gallery .top img {
