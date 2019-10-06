@@ -611,18 +611,62 @@ body > main > article .entry-content > **/ {
 	/*outline: 1px dashed red; /* DEBUG */
 }
 
-body > main,
-body > main > article,
-body > main > article .entry-content {
-	/*display: contents;*/
+body > main {
+	position: relative;
+	scroll-snap-type: y mandatory;
 }
 
-/*aside.meta,*/
+/*body > main,
+body > main > article,
+body > main > article .entry-content {
+	display: contents;
+}*/
+
+/*aside.meta,
 .entry-content .sidenote {
-	/*grid-column-start: full-start;
+	grid-column-start: full-start;
 	grid-column-end: main-start;
 
-	outline: 2px solid red;*/
+	outline: 2px solid red;
+}*/
+
+
+
+.sticky {
+	position: sticky !important;
+}
+
+.slide {
+	display: flex;
+	flex-direction: column;
+	/*top: 0;*/
+	margin-top: var(--gutter-width);
+	margin-bottom: var(--gutter-width);
+	margin-left: calc(50% - 49vw) !important;
+	margin-right: calc(50% - 49vw) !important;
+	width: 98vw;
+	min-width: 98vw;
+	/*min-height: 100vh;*/
+
+
+	align-items: center;
+	background: rgba(var(--page-color), 0.95);
+	justify-content: center;
+
+	scroll-snap-align: start;
+
+	/*outline: 1px dashed red;*/
+}
+
+.slide > * {
+	box-sizing: content-box;
+
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: var(--gutter-width);
+	padding-right: var(--gutter-width);
+	max-width: var(--content-width);
 }
 
 .fullwidth,
@@ -700,37 +744,6 @@ body > footer nav li,
 	.sharing li:last-child {
 		margin-right: 0;
 	}
-
-.sticky {
-	/*position: sticky !important;*/
-}
-
-.slide {
-	display: flex;
-	width: 98vw;
-	min-width: 98vw;
-
-	margin-top: var(--gutter-width);
-	margin-bottom: var(--gutter-width);
-	margin-left: calc(50% - 49vw) !important;
-	margin-right: calc(50% - 49vw) !important;
-
-	/*scroll-snap-align: start;*/
-	/*scroll-snap-stop: always;*/
-
-	/*outline: 1px dashed red;*/
-}
-
-.slide > * {
-	box-sizing: content-box;
-
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: var(--gutter-width);
-	padding-right: var(--gutter-width);
-	max-width: var(--content-width);
-}
 
 /*--------------------------------------------------------------
 hyperlink styles
