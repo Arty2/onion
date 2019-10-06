@@ -9,7 +9,7 @@ $('.single article').fancybox({
 	selector : 'a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]',
 	loop: true,
 	buttons: [
-		'slideShow',
+		// 'slideShow',
 		'close'
 	],
 });
@@ -44,11 +44,16 @@ $('div.gallery').each( function() {
 		});
 	};
 
+
+	// update gallery with current index
+	$(this).attr('data-current', 1);
+
+	// add class to top figure (once)
 	$(this).find('figure:first-child').addClass('top');
 
 	// on click show next slide, or clicked slide if not on top
 	images.on('click', function () {
-		console.log(index,index_current, images.length);
+		// console.log(index,index_current, images.length);
 
 		index = $(this).data('index');
 
@@ -59,21 +64,25 @@ $('div.gallery').each( function() {
 			else { index_current = index_current + 1; }
 
 			$( images[index_current] ).css('z-index', z);
-
-			$( images ).removeClass('top');
-			$( images[index_current] ).addClass('top');
 		}
 		else {
 			$( images[index] ).css('z-index', z);
 			index_current = index;
-			
-			$( images ).removeClass('top');
-			$( images[index] ).addClass('top');
 		}
+		
+		// add class to current figure, remove from all others
+		$( images ).removeClass('top');
+		$( images[index_current] ).addClass('top');
 
+		// update gallery with current index
+		$(this).parent().attr('data-current', index_current + 1);
+
+		// animate
 		slideAnimation();
 	});
 
+
+	//animate
 	slideAnimation();
 });
 // end image gallery
