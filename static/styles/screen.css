@@ -587,20 +587,69 @@ body {
 	position: relative;
 	padding: 12px; /* fallback */
 	padding: var(--gutter-width);
-	/*width: 90vw;*/
-	overflow-x: hidden;
+
+	/*overflow-x: hidden;*/
+/*	display: grid;
+	grid-template-columns: 
+	  [full-start] minmax(var(--gutter-width), 1fr) 
+	  [main-start] minmax(0, var(--content-width)) [main-end]
+	  minmax(var(--gutter-width), 1fr) [full-end];*/
 	/* outline: 1px dashed red; /* DEBUG */
 }
 
 body > header,
 body > footer,
-body > main {
+body > main /*,
+body > main > *,
+body > main > article > *,
+body > main > article .entry-content > **/ {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 40em; /* fallback */
 	max-width: var(--content-width);
-	/* outline: 1px dashed red; /* DEBUG */
+	/*grid-column: main;*/
+	/*outline: 1px dashed red; /* DEBUG */
 }
+
+body > main,
+body > main > article,
+body > main > article .entry-content {
+	/*display: contents;*/
+}
+
+/*aside.meta,*/
+.entry-content .sidenote {
+	/*grid-column-start: full-start;
+	grid-column-end: main-start;
+
+	outline: 2px solid red;*/
+}
+
+.fullwidth,
+.hero {
+	display: block;
+	max-width: 98vw;
+	width: 98vw;
+
+	margin-left: calc(50% - 49vw) !important;
+	margin-right: calc(50% - 49vw) !important;
+
+	font-size: 0;
+	text-align: center;
+	/*grid-column: full;*/
+}
+
+.hero {
+	/*margin-top: -4rem;*/
+	margin-bottom: var(--gutter-width);
+}
+	@media (orientation: portrait) {
+		.hero img {
+			height: 100vh;
+			width: 100%;
+			object-fit: cover;
+		}
+	}
 
 body > header {
 	margin-bottom: var(--gutter-width);
@@ -652,44 +701,12 @@ body > footer nav li,
 		margin-right: 0;
 	}
 
-.fullwidth,
-.hero {
-	display: block;
-	max-width: 98vw;
-	width: 98vw;
-
-	margin-left: calc(50% - 49vw) !important;
-	margin-right: calc(50% - 49vw) !important;
-
-	font-size: 0;
-	text-align: center;
-}
-
-.hero {
-	/*margin-top: -4rem;*/
-	margin-bottom: var(--gutter-width);
-}
-
-@media (orientation: portrait) {
-	.hero img {
-		height: 100vh;
-		width: 100%;
-		object-fit: cover;
-	}
-}
-
 .sticky {
-	position: sticky !important;
-}
-
-body > main {
-	/*scroll-snap-type: y mandatory;*/
+	/*position: sticky !important;*/
 }
 
 .slide {
 	display: flex;
-	/*top: 0;*/
-	/*min-height: 50vh;*/
 	width: 98vw;
 	min-width: 98vw;
 
