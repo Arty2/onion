@@ -66,7 +66,7 @@
 
 			// scroll back to the first visible post
 			
-			if ($( $("[data-visibility='on']")[0] ).offset() > 0) {
+			if ($( $("[data-visibility='on']")[0] ).offset().top > 0) {
 				setTimeout(function(){
 					$('html, body').animate({
 						scrollTop: $( $("[data-visibility='on']")[0] ).offset().top - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') )
