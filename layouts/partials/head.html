@@ -10,6 +10,7 @@
 <link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
 
 <link rel="stylesheet" href="{{ "/styles/screen.css" | relURL }}">
+<link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}">
 
 {{ range .AlternativeOutputFormats -}}
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
@@ -20,4 +21,4 @@
     {{- end }}
 {{- end }}
 
-{{ .Hugo.Generator }}
+{{ hugo.Generator }}

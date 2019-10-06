@@ -66,12 +66,15 @@
 
 			// scroll back to the first visible post
 			
-			setTimeout(function(){
-				$('html, body').animate({
-					scrollTop: $( $("[data-visibility='on']")[0] ).offset().top - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') )
-					// scrollTop: document.querySelector('[data-visibility="on"]')[0].offsetTop - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') ) // vanilla JS
-				}, 200);
-			}, 500); // this is really affected by performance, it should be a little bigger than the transition speed
+			if ($( $("[data-visibility='on']")[0] ).offset() > 0) {
+				setTimeout(function(){
+					$('html, body').animate({
+						scrollTop: $( $("[data-visibility='on']")[0] ).offset().top - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') )
+						// scrollTop: document.querySelector('[data-visibility="on"]')[0].offsetTop - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') ) // vanilla JS
+					}, 200);
+				}, 500);
+			}
+			// this is really affected by performance, it should be a little bigger than the transition speed
 			
 		});
 

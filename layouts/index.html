@@ -1,28 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ with .Site.Params.locale }}{{ . }}{{ end }}">
-<head>
-	<title>{{ .Site.Title }} • {{ .Title }}</title>
-	{{ partial "head.html" . }}
-</head>
-<body class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
-	{{ partial "languages.html" . }}
-	<header>
-		{{ partial "header/inner.html" . }}
-	</header>
-	<main class="home">
-		{{ if gt (len .Content) 0 }}
-			{{ .Content }}
-		{{ else if gt (len .Site.RegularPages) 0}}
-			<section class="articles-list">
-			{{ range .Site.RegularPages }}
-				{{ partial "article.html" . }}
-			{{ end }}
-			</section>
+{{ define "main" }}
+	{{ if gt (len .Content) 0 }}
+		{{ .Content }}
+	{{ else if gt (len .Site.RegularPages) 0}}
+		<section class="articles-list">
+		{{ range .Site.RegularPages }}
+			{{ partial "article.html" . }}
 		{{ end }}
-	</main>
-	<footer>
-		{{ partial "footer/inner.html" . }}
-	</footer>
-	{{ partial "scripts.html" . }}
-</body>
-</html>
+		</section>
+	{{ end }}
+{{ end }}

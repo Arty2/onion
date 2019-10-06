@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{ with .Site.Params.locale }}{{ . }}{{ end }}">
+<head>
+	<title>{{ .Site.Title }} • {{ .Title }}</title>
+	<!-- <title>{{ .Title }} • {{ .Site.Title }}</title> -->
+	{{ partial "head" . }}
+
+	<!-- <link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}"> -->
+</head>
+<body class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
+	{{ partial "languages" . }}
+	{{ partial "ui" . }}
+	<header>
+		{{ block "header" . }}{{ partial "header/inner" . }}{{end}}
+	</header>
+	<main>
+		{{ block "main" . }}{{end}}
+	</main>
+	<footer>
+		{{ block "footer" . }}{{ partial "footer/inner" . }}{{end}}
+	</footer>
+	{{ partial "scripts" . }}
+</body>
+</html>

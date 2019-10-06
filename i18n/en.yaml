@@ -16,7 +16,7 @@ share-facebook:
   other: share
 
 share-email:
-  other: email
+  other: send email
 
 reset:
   other: reset tags

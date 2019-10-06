@@ -241,7 +241,6 @@ pre > code {
 
 code {
 	display: inline-block;
-	/*margin-top: -0.1rem;*/
 	padding: 0.2rem 0.25rem 0;
 
 	background: var(--shadow-color);

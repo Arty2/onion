@@ -27,7 +27,7 @@ $('div.gallery').each( function() {
 	var index = 0
 	var z = 1;
 
-	var images = $(this).find('img');
+	var images = $(this).find('figure');
 
 	images.each( function() {
 		$(this).data('index', index);
@@ -44,20 +44,9 @@ $('div.gallery').each( function() {
 		});
 	};
 
-	// on click, show next slide
+	$(this).find('figure:first-child').addClass('top');
 
-
-	// $(this).on('click', function() {		
-	// 	if (index_current + 1 > images.length - 1) {
-	// 		index_current = 0;
-	// 	}
-	// 	else {
-	// 		index_current = index_current + 1;
-	// 	}
-
-	// 	$( images[index_current] ).css('z-index', z);
-	// });
-
+	// on click show next slide, or clicked slide if not on top
 	images.on('click', function () {
 		console.log(index,index_current, images.length);
 
@@ -70,10 +59,16 @@ $('div.gallery').each( function() {
 			else { index_current = index_current + 1; }
 
 			$( images[index_current] ).css('z-index', z);
+
+			$( images ).removeClass('top');
+			$( images[index_current] ).addClass('top');
 		}
 		else {
 			$( images[index] ).css('z-index', z);
 			index_current = index;
+			
+			$( images ).removeClass('top');
+			$( images[index] ).addClass('top');
 		}
 
 		slideAnimation();
