@@ -27,6 +27,7 @@ global CSS variables
 	--header-height: 3rem;
 	--gutter-width: 1.5rem;
 	--gutter-height: 3.9rem; /* 2.8rem */
+	--scrollbar-width: 2vw;
 
 	/*
 		- themes to be compatble with https://github.com/hundredrabbits/Themes
@@ -36,20 +37,21 @@ global CSS variables
 
 		The Theme format holds only 9 different colors.
 
-		    background, Application Background.
-		    f_high, Foreground, high-contrast.
-		    f_med, Foreground, medium-contrast.
-		    f_low, Foreground, low-contrast.
-		    f_inv, Foreground, inverted.
-		    b_high, Background, high-contrast.
-		    b_med, Background, medium-contrast.
-		    b_low, Background, low-contrast.
-		    b_inv, Background, inverted.
+			background, Application Background.
+			f_high, Foreground, high-contrast.
+			f_med, Foreground, medium-contrast.
+			f_low, Foreground, low-contrast.
+			f_inv, Foreground, inverted.
+			b_high, Background, high-contrast.
+			b_med, Background, medium-contrast.
+			b_low, Background, low-contrast.
+			b_inv, Background, inverted.
 
 	*/
 	
 
 	/* color theme */
+	--page-color-transparency: 0.8;
 	--page-color: 221, 238, 255;
 	--text-color: 34, 34, 50;
 	--hyperlink-color: 34, 34, 50;
@@ -416,8 +418,8 @@ p, li {
 	font-variant-ligatures: normal;
 
 	-webkit-hyphens	: auto;
-	hyphens			: auto;
-
+	hyphens			: auto;	
+	white-space: normal;
 	/*text-align: justify;*/
 }
 
@@ -477,6 +479,42 @@ mark {
 	}
 	mark:before, mark:after {
 		content: '\00A0';
+	}
+
+abbr {
+	position: relative;
+
+	font-variant: small-caps;
+	text-decoration: none;
+	text-transform: lowercase;
+}
+	abbr:after {
+		font-size: 70%;
+		line-height: 1.3;
+
+		font-variant: initial;
+		text-transform: initial;
+	}
+	abbr[title*=' '] {
+		cursor: help;
+	}
+	abbr[title*=' ']:after {
+		content: '*';
+		position: absolute;
+		top: -0.2em;
+	}
+	@media (pointer: coarse) {
+		abbr[title*=' ']:hover:after {
+			content: attr(title);
+			display: inline-block;
+			position: absolute;
+			top: 2em;
+			left: 0;
+			padding: 0.3em 0.5em;
+
+			background: rgba(var(--page-color),var(--page-color-transparency));
+			border: 1px solid;
+		}
 	}
 
 kbd {
@@ -594,12 +632,13 @@ body {
 	  [full-start] minmax(var(--gutter-width), 1fr) 
 	  [main-start] minmax(0, var(--content-width)) [main-end]
 	  minmax(var(--gutter-width), 1fr) [full-end];*/
+
 	/* outline: 1px dashed red; /* DEBUG */
 }
 
 body > header,
 body > footer,
-body > main /*,
+body > main > * /*,
 body > main > *,
 body > main > article > *,
 body > main > article .entry-content > **/ {
@@ -613,7 +652,7 @@ body > main > article .entry-content > **/ {
 
 body > main {
 	position: relative;
-	scroll-snap-type: y mandatory;
+	/*outline: 1px dashed yellow;*/
 }
 
 /*body > main,
@@ -636,29 +675,53 @@ body > main > article .entry-content {
 	position: sticky !important;
 }
 
-.slide {
+.opaque {
+	--page-color-transparency: 1;
+}
+
+.panel {
 	display: flex;
+	position: relative;
+	top: 0;
 	flex-direction: column;
-	/*top: 0;*/
-	margin-top: var(--gutter-width);
-	margin-bottom: var(--gutter-width);
-	margin-left: calc(50% - 49vw) !important;
-	margin-right: calc(50% - 49vw) !important;
-	width: 98vw;
-	min-width: 98vw;
-	/*min-height: 100vh;*/
+	min-height: 100vh;
+	max-width: calc(100vw - var(--scrollbar-width));
+	width: calc(100vw - var(--scrollbar-width));
+
+	margin-left: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
+	margin-right: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
+
 
 
 	align-items: center;
-	background: rgba(var(--page-color), 0.95);
+	background: rgba(var(--page-color), var(--page-color-transparency));
 	justify-content: center;
+	white-space: nowrap;
 
-	scroll-snap-align: start;
-
-	/*outline: 1px dashed red;*/
+	/*background: red;*/
 }
 
-.slide > * {
+.panel:before {
+	display: block;
+	content: '';
+	position: absolute;
+	left: 0;
+	height: calc(2*var(--header-height));
+	width: 100%;
+
+	white-space: nowrap;
+	pointer-events: none;
+}
+	.panel:before {
+		top: calc(-2*var(--header-height));
+		
+		background: -webkit-linear-gradient(bottom, rgba(var(--page-color),var(--page-color-transparency)) 0, rgba(255,0,0,0) 100%);
+	}
+	.panel:first-child:before {
+		display: none;
+	}
+
+.panel > * {
 	box-sizing: content-box;
 
 	display: block;
@@ -669,14 +732,28 @@ body > main > article .entry-content {
 	max-width: var(--content-width);
 }
 
+/*.panel:nth-last-of-type(1):after {
+	position: absolute;
+	bottom: -100vh;
+	display: block;
+	content: '';
+	height: 100vh;
+	width: 100%;
+
+	background: red;
+
+	white-space: nowrap;
+	pointer-events: none;
+}*/
+
 .fullwidth,
 .hero {
 	display: block;
-	max-width: 98vw;
-	width: 98vw;
+	max-width: calc(100vw - var(--scrollbar-width));
+	width: calc(100vw - var(--scrollbar-width));
 
-	margin-left: calc(50% - 49vw) !important;
-	margin-right: calc(50% - 49vw) !important;
+	margin-left: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
+	margin-right: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
 
 	font-size: 0;
 	text-align: center;
@@ -698,14 +775,18 @@ body > main > article .entry-content {
 body > header {
 	margin-bottom: var(--gutter-width);
 	z-index: 103;
-	opacity: 0.99;
+	opacity: 0.999;
+}
+
+main {
+	margin-bottom: 60vh;
 }
 
 body > footer {
-	/*position: sticky;*/
-	bottom: 0;
+	/*position: fixed;*/
+	/*bottom: 0;*/
 	clear: both;
-	margin-top: 30vh;
+	/*margin-top: 100vh;*/
 	margin-bottom: var(--gutter-width);
 	min-width: 100%;
 	z-index: -1;
@@ -1664,9 +1745,9 @@ gallery
 	
 	/*box-shadow: 0.3rem 0.3rem 0.5rem -0.1rem rgba(0,0,0,.5);*/
 	box-shadow: 0 4px 8px rgba(0,0,0,0.07),
-                0 8px 16px rgba(0,0,0,0.07),
-                0 16px 32px rgba(0,0,0,0.07),
-                0 32px 64px rgba(0,0,0,0.07);
+				0 8px 16px rgba(0,0,0,0.07),
+				0 16px 32px rgba(0,0,0,0.07),
+				0 32px 64px rgba(0,0,0,0.07);
 	outline: 1px solid rgba(0,0,0,0.1);
 
 	transform-origin: center;

@@ -2,7 +2,6 @@ jQuery(document).ready(function($) {
 
 /*--------------------------------------------------------------
 Initialize fancybox
-based on https://viewfromthisside.superhi.com/
 --------------------------------------------------------------*/
 
 $('.single article').fancybox({
@@ -15,9 +14,10 @@ $('.single article').fancybox({
 });
 // end fancybox
 
+
 /*--------------------------------------------------------------
 Stacked image galleries
-based on https://viewfromthisside.superhi.com/
+inspired from https://viewfromthisside.superhi.com/
 --------------------------------------------------------------*/
 
 $('div.gallery').each( function() {
@@ -69,7 +69,7 @@ $('div.gallery').each( function() {
 			$( images[index] ).css('z-index', z);
 			index_current = index;
 		}
-		
+
 		// add class to current figure, remove from all others
 		$( images ).removeClass('top');
 		$( images[index_current] ).addClass('top');
@@ -88,6 +88,46 @@ $('div.gallery').each( function() {
 // end image gallery
 
 
+/*--------------------------------------------------------------
+Scrollbar width
+gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
+--------------------------------------------------------------*/
+function scrollbarWidth() {
+	let width = window.innerWidth - document.querySelector('body').clientWidth;
+	document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
+	console.log(width);
+}
+
+scrollbarWidth();
+window.addEventListener('resize', scrollbarWidth);
+
+/*--------------------------------------------------------------
+Slide scroll
+--------------------------------------------------------------*/
+var index = 0;
+var slidescroll = new IntersectionObserver(function(entries) {
+	entries.forEach(function(entry) {
+		if (entry.isIntersecting) {
+			// console.log(entry.target.dataset.index);
+			if (entry.target.dataset.index != index) {
+				console.log(index);
+				entry.target.scrollIntoView();
+				index = entry.target.dataset.index;
+			} else if (index > 0) {
+				// entry.target.scrollIntoView();
+				index = entry.target.dataset.index - 1;
+			}
+		}
+	});
+}, { threshold: [0.1] });
+
+
+$('.panel').each(function(i){
+	slidescroll.observe(this);
+	this.dataset.index = i;
+	i++;
+});
+// end slide scroll
 
 /*--------------------------------------------------------------
 Thread lines - Work in progress
