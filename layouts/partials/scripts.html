@@ -3,12 +3,11 @@
 
 <script src="{{ "/scripts/jquery.onionskin.js" | relURL }}" async></script>
 
-<!-- <script async src="{{ "/scripts/leader-line.min.js" | relURL }}" ></script> -->
+<script src="{{ "/scripts/snap-points.js" | relURL }}" async></script>
 
 <script src="{{ "/scripts/instantpage.js" | relURL }}" type="module" defer></script>
 
-<!-- <script src="{{ "/scripts/instantclick.min.js" | relURL }}" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script> -->
+<!-- <script async src="{{ "/scripts/leader-line.min.js" | relURL }}" ></script> -->
 
 {{ with .Resources.Match "script.js" }}
 <script async src="./script.js"></script>
