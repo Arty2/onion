@@ -1,10 +1,10 @@
-{{ $types := (.Get "types") }}
-{{ $tag := (.Get "tag") }}
-{{ $filter := (.Get "filter") }}
-{{ $class := (.Get "class") }}
-{{ $title := (.Get "title") }}
-{{ $closed := (.Get "closed") }}
-{{ $lang := .Site.Language.Lang }}
+{{- $types := (.Get "types") -}}
+{{- $tag := (.Get "tag") -}}
+{{- $filter := (.Get "filter") -}}
+{{- $class := (.Get "class") -}}
+{{- $title := (.Get "title") -}}
+{{- $closed := (.Get "closed") -}}
+{{- $lang := .Site.Language.Lang -}}
 <details class="articles-list {{ with $class }}{{ $class }}{{ end }}" {{ if ne $closed "true" }}open{{ end }}>
 <summary><h2>{{ $title }}</h2></summary>
 <div class="wrapper">

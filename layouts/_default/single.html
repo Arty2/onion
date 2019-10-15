@@ -33,9 +33,20 @@
 					</dd>
 					{{ end }} -->
 					{{ if .Params.dateCreated }}
-						<dt>{{ i18n "produced" }}</dt><dd>{{ .Params.dateCreated }}</dd>
+						<dt>{{ i18n "produced" }}</dt>
+							<dd>{{ .Params.dateCreated }}</dd>
 					{{ else }}
-						<dt>{{ i18n "published" }}</dt><dd>{{ .Date.Format "2006-01-02" }}</dd>
+						<dt>{{ i18n "published" }}</dt>
+							<dd>{{- if .Params.dateCreated -}}
+									{{- .Params.dateCreated -}}
+								{{- else -}}
+									{{- if isset $.Site.Params "date_format" -}}
+										{{- .Date.Format $.Site.Params.date_format -}}
+									{{- else -}}
+										{{- .Date.Format "2006-01-02" -}}
+									{{- end -}}
+								{{- end -}}
+							</dd>
 					{{ end }}
 
 					{{ if (lt (add .Date.Unix 63072000) now.Unix) }}

@@ -16,7 +16,11 @@
 			{{- if .Params.dateCreated -}}
 				{{- .Params.dateCreated -}}
 			{{- else -}}
-				{{- .Date.Format "2006-01-02" -}}
+				{{- if isset $.Site.Params "date_format" -}}
+					{{- .Date.Format $.Site.Params.date_format -}}
+				{{- else -}}
+					{{- .Date.Format "2006-01-02" -}}
+				{{- end -}}
 			{{- end -}}
 		</time>
 		<h3 class="title{{ with .Draft }} draft{{ end }}">{{ .Title }}</h3>
