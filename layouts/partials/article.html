@@ -5,9 +5,14 @@
 	{{ .RawContent | safeHTML }}
 {{- else -}}
 	<a href="{{ .RelPermalink }}">
-		{{- $img := (.Resources.ByType "image").GetMatch "*_featured*" -}}
+		{{ $featured := "" }}
+		{{ if .Params.image }}
+			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image) }}
+		{{ else }}
+			{{ $featured = (.Resources.ByType "image").GetMatch "*_featured*" }}
+		{{ end }}
 		<figure class="thumbnail" href="{{ .RelPermalink }}">
-			{{- with $img -}}
+			{{- with $featured -}}
 			{{- $resized := .Resize "600x" -}}
 			<img src="{{ $resized.RelPermalink  }}" alt="">
 			{{- end -}}

@@ -5,14 +5,20 @@
 	{{ end -}}
 
 	<article class="h-entry">
-		{{- $img := (.Resources.ByType "image").GetMatch "*_featured*" -}}
-		{{- with $img -}}
-		<div class="hero">
+		{{ $featured := "" }}
+		{{ if .Params.image }}
+			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image) }}
+		{{ else }}
+			{{ $featured = (.Resources.ByType "image").GetMatch "*_featured*" }}
+		{{ end }}
+
+		{{- with $featured -}}
+		<div class="hero snap">
 				{{- /* $resized := .Resize "600x" */ -}}
 				<img src="{{ .RelPermalink  }}" alt="">
 		</div>
 		{{- end -}}
-		<h1><a class="{{ if .Draft }}draft{{ end }}" href="#">{{ .Title }}</a></h1>
+		<h1 class="snap"><a class="{{ if .Draft }}draft{{ end }}" href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
 		<header>
 			<div class="details">
 				{{ if .Params.description }}
