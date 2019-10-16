@@ -7,7 +7,7 @@
 
 	<!-- <link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}"> -->
 </head>
-<body class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
+<body id="start" class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
 	{{ partial "languages" . }}
 	{{ partial "ui" . }}
 	<header>

@@ -95,7 +95,7 @@ gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
 function scrollbarWidth() {
 	let width = window.innerWidth - document.querySelector('body').clientWidth;
 	document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
-	console.log(width);
+	// console.log(width); // DEBUG
 }
 
 scrollbarWidth();
@@ -104,29 +104,47 @@ window.addEventListener('resize', scrollbarWidth);
 /*--------------------------------------------------------------
 Slide scroll
 --------------------------------------------------------------*/
-var index = 0;
+
+// scroll to element if it intersects the viewport
+// TODO: should work for first element as well
+var snap_index = 0;
 var slidescroll = new IntersectionObserver(function(entries) {
 	entries.forEach(function(entry) {
 		if (entry.isIntersecting) {
-			// console.log(entry.target.dataset.index);
-			if (entry.target.dataset.index != index) {
-				console.log(index);
-				entry.target.scrollIntoView();
-				index = entry.target.dataset.index;
-			} else if (index > 0) {
-				// entry.target.scrollIntoView();
-				index = entry.target.dataset.index - 1;
+			// console.log(entry.target.dataset.index); // DEBUG
+			if (entry.target.dataset.index > snap_index) {
+				entry.target.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start'
+				});
+				snap_index = entry.target.dataset.index*1;
+				// console.log("scrolled to: " + snap_index); // DEBUG
+			} else if (snap_index > 0) {
+				// snap_index = entry.target.dataset.index - 1;
 			}
+			// console.log("current: " + index); // DEBUG
 		}
 	});
 }, { threshold: [0.1] });
 
-
-$('.panel').each(function(i){
+// apply the intersection observer to all elements with a snap class
+$('.snap').each(function(i){
 	slidescroll.observe(this);
 	this.dataset.index = i;
 	i++;
 });
+
+// scroll to first snap if at top of the page for 2 seconds
+setTimeout(function(){
+	if (window.scrollY == 0) {
+		$('.snap')[0].scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		});
+	}	
+	// console.log("scrolled to first"); // DEBUG
+}, 2000);
+
 // end slide scroll
 
 /*--------------------------------------------------------------

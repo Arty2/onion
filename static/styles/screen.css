@@ -264,7 +264,6 @@ pre, input, textarea {
 
 button, code, kbd,
 .tag, .languages, .sharing,
-body > header h1,
 .articles-list h2, .social {
 	/*font-family: var(--font-mono);*/
 	font-family: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
@@ -300,6 +299,7 @@ figcaption,
 	font-size: 0.8rem;
 }
 
+body > header .description,
 body > footer {
 	font-size: 0.8rem;
 }
@@ -316,7 +316,8 @@ reset styles
 
 html {
 	box-sizing: border-box;
-	scroll-behavior: smooth;}
+	scroll-behavior: smooth;
+}
 
 *,
 *::before,
@@ -560,6 +561,10 @@ helper / common classes
 	width: calc(50% - var(--gutter-width)/2);
 }
 
+.hidden, .secret {
+	display: none;
+}
+
 svg.stroke {
 	stroke: rgb(var(--text-color));
 }
@@ -697,9 +702,11 @@ body > main > article .entry-content {
 	background: rgba(var(--page-color), var(--page-color-transparency));
 	justify-content: center;
 	white-space: nowrap;
-
-	/*background: red;*/
 }
+	.panel:first-child {
+		/*min-height: calc(100vh - var(--header-height));*/
+		/*outline: 1px solid red;*/
+	}
 
 .panel:before {
 	display: block;
@@ -764,18 +771,26 @@ body > main > article .entry-content {
 	/*margin-top: -4rem;*/
 	margin-bottom: var(--gutter-width);
 }
-	@media (orientation: portrait) {
+.hero img {
+		width: 100%;
+		height: 100vh;
+		object-fit: cover;
+	}
+/*	@media (orientation: portrait) {
 		.hero img {
 			height: 100vh;
-			width: 100%;
-			object-fit: cover;
 		}
-	}
+	}*/
 
 body > header {
 	margin-bottom: var(--gutter-width);
+	height: var(--header-height);
 	z-index: 103;
-	opacity: 0.999;
+	opacity: 0.999; /* z-index quickfix */
+}
+
+body > header .description {
+	display: block;
 }
 
 main {
@@ -979,7 +994,6 @@ languages selector
 
 	.languages a {
 		display: inline-block;
-		margin-bottom: 0.5rem;
 		text-decoration: none;
 	}
 
