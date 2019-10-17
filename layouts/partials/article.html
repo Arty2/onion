@@ -6,7 +6,9 @@
 {{- else -}}
 	<a href="{{ .RelPermalink }}">
 		{{ $featured := "" }}
-		{{ if .Params.image }}
+		{{ if .Params.image_preview }}
+			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image_preview) }}
+		{{ else if .Params.image }}
 			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image) }}
 		{{ else }}
 			{{ $featured = (.Resources.ByType "image").GetMatch "*_featured*" }}
