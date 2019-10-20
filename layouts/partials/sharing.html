@@ -1,7 +1,8 @@
 <aside class="sharing">
-	<ul>
-		<li><a target="_blank" href="https://twitter.com/intent/tweet?original_referer=&source=tweetbutton&text={{ with .Params.description }}{{ . | htmlEscape }}{{ " → " | htmlEscape }}{{ end }}&url={{ .Permalink | htmlEscape }}">{{ i18n "share-twitter" }}</a></li>
-		<li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]={{ .Permalink | htmlEscape }}">{{ i18n "share-facebook" }}</a></li>
-		<li><a target="_blank" href="mailto:?subject=FYI:%20{{ .Title | htmlEscape }}&body={{ with .Params.description }}{{ . | htmlEscape }}{{ " → " | htmlEscape }}{{ end }}{{ .Permalink | htmlEscape }}">{{ i18n "share-email" }}</a></li>
-	</ul>
+	<details open>
+	<summary>{{ i18n "share" }}</summary>
+		<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]={{ .Permalink | htmlEscape }}">{{ i18n "share-facebook" }}</a>
+		<a target="_blank" href="https://twitter.com/intent/tweet?original_referer=&source=tweetbutton&text={{ with .Params.description }}{{ . | htmlEscape }}{{ " → " | htmlEscape }}{{ end }}&url={{ .Permalink | htmlEscape }}">{{ i18n "share-twitter" }}</a>
+		<a target="_blank" href="mailto:?subject=FYI:%20{{ .Title | htmlEscape }}&body={{ with .Params.description }}{{ . | htmlEscape }}{{ " → " | htmlEscape }}{{ end }}{{ .Permalink | htmlEscape }}">{{ i18n "share-email" }}</a>
+	</details>
 </aside>

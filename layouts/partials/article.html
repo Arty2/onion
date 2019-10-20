@@ -31,7 +31,7 @@
 			{{- end -}}
 		</time>
 		<h3 class="title">{{ .Title }}</h3>
-		<p class="description">{{ with .Params.description }}{{ . | plainify | markdownify }}{{ end }}</p>
+		<p class="summary">{{ with .Params.description }}{{ . | plainify | markdownify }}{{ end }}</p>
 	</a>
 {{- end -}}
 </article>

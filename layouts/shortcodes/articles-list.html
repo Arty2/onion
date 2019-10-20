@@ -10,6 +10,7 @@
 <div class="wrapper">
 {{- range .Site.AllPages -}}
 	{{- if and (and (or (in $types .Type) (in .Params.tags $tag)) (eq .IsPage true)) (not (in .Params.tags $filter)) -}}
+		{{/* display articles from other languages */}}
 		{{- if (or (eq .Lang $lang) .Params.Crosspost) -}}
 			{{ partial "article.html" . }}
 		{{- end -}}
