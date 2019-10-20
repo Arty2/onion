@@ -4,7 +4,7 @@
 		<style>{{ .Content | safeCSS }}</style>
 	{{ end -}}
 
-	<article class="h-entry">
+	<article class="h-entry{{ with .Draft }} draft{{ end }}">
 		{{ $featured := "" }}
 		{{ if .Params.image }}
 			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image) }}
@@ -18,7 +18,7 @@
 				<img src="{{ .RelPermalink  }}" alt="">
 		</div>
 		{{- end -}}
-		<h1 class="snap"><a class="{{ if .Draft }}draft{{ end }}" href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
+		<h1 class="snap"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
 		<header>
 			<div class="details">
 				{{ if .Params.description }}

@@ -1,4 +1,4 @@
-<article class="{{ if eq .Type "preformatted" }} preformatted{{end}}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ if .Params.tags }}{{ delimit .Params.tags " " }}{{ end }}">
+<article class="{{ if eq .Type "preformatted" }} preformatted{{end}}{{ with .Draft }} draft{{ end }}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ if .Params.tags }}{{ delimit .Params.tags " " }}{{ end }}">
 {{- if eq .Type "preformatted" -}}
 	<pre>{{ .RawContent | safeHTML }}</pre>
 {{- else if eq .Type "ephemera" -}}
@@ -30,7 +30,7 @@
 				{{- end -}}
 			{{- end -}}
 		</time>
-		<h3 class="title{{ with .Draft }} draft{{ end }}">{{ .Title }}</h3>
+		<h3 class="title">{{ .Title }}</h3>
 		<p class="description">{{ with .Params.description }}{{ . | plainify | markdownify }}{{ end }}</p>
 	</a>
 {{- end -}}

@@ -593,21 +593,6 @@ helper / common classes
 
 
 /*--------------------------------------------------------------
-oddities classes
---------------------------------------------------------------*/
-
-.draft:before {
-	content: 'DRAFT';
-	position: absolute;
-	margin-top: -0.35rem;
-
-	color: rgb(var(--text-color-error));
-	font-size: 60%;
-	font-weight: bold;
-}
-
-
-/*--------------------------------------------------------------
 table styles
 --------------------------------------------------------------*/
 
@@ -881,30 +866,6 @@ a:hover, a:focus, a:active {
 	color: #f00; /* fallback */
 	color: rgb(var(--accent-color));
 }
-
-
-/*--------------------------------------------------------------
-cross-language display
---------------------------------------------------------------*/
-
-html:lang(en) article:lang(el),
-html:lang(el) article:lang(en) {
-	background: none;
-	opacity: 0.5;
-	/*blur changing stacking order*/
-	/*-webkit-filter: blur(1px);*/
-	/*filter: blur(1px);*/
-	/*mix-blend-mode: multiply;*/
-	transition: opacity 0.2s;
-}
-	html:lang(en) article:lang(el):hover,
-	html:lang(el) article:lang(en):hover {
-		opacity: 1 !important;
-		/*-webkit-filter: none;*/
-		/*filter: blur(0px);*/
-		mix-blend-mode: normal;
-		transition: opacity 0.3s;
-	}
 
 /*--------------------------------------------------------------
 social menu
@@ -1291,6 +1252,7 @@ form styles
 .button::-moz-focus-inner { border: 0; }
 
 
+
 /*--------------------------------------------------------------
 articles-list styles
 --------------------------------------------------------------*/
@@ -1392,6 +1354,52 @@ articles-list styles
 
 
 
+/*--------------------------------------------------------------
+articles oddities classes
+--------------------------------------------------------------*/
+
+article.draft:after {
+	content: 'DRAFT';
+	position: absolute;
+	line-height: 1;
+
+	border-top: 1.5px solid;
+	border-bottom: 1.5px solid;
+	color: rgb(var(--text-color-error));
+	font-size: 60%;
+	font-weight: bold;
+	text-decoration: none !important;
+}
+
+
+
+/*--------------------------------------------------------------
+articles cross-language display
+--------------------------------------------------------------*/
+
+.articles-list:lang(en) article:lang(el),
+.articles-list:lang(el) article:lang(en) {
+	background: none;
+	opacity: 0.5;
+	filter: blur(1px);
+	transition: opacity 0.2s;
+}
+	.articles-list:lang(en) article:lang(el):hover,
+	.articles-list:lang(el) article:lang(en):hover {
+		opacity: 1 !important;
+		filter: blur(0px);
+		mix-blend-mode: normal;
+		transition: opacity 0.3s;
+	}
+/*	.articles-list:lang(en) article:lang(el):before,
+	.articles-list:lang(el) article:lang(en):before {
+		left: 0;
+		content: attr(lang);
+		filter: blur(0px);
+
+		transform: translate(-100%, 0);
+	}*/
+
 
 
 /*--------------------------------------------------------------
@@ -1446,6 +1454,8 @@ articles-list - stack
 	white-space: nowrap;
 }
 
+
+
 /*--------------------------------------------------------------
 articles-list - cluster
 --------------------------------------------------------------*/
@@ -1484,6 +1494,7 @@ articles-list - cluster
 }
 
 
+
 /*--------------------------------------------------------------
 articles-list - no-summary
 --------------------------------------------------------------*/
@@ -1491,12 +1502,14 @@ articles-list - no-summary
 	display: none;
 }
 
+
 /*--------------------------------------------------------------
 articles-list - no-gap
 --------------------------------------------------------------*/
 .articles-list.no-gap {
 	--gutter-width: 0px;
 }
+
 
 /*--------------------------------------------------------------
 articles-list - no-text
@@ -1513,12 +1526,14 @@ articles-list - no-text
 }
 
 
+
 /*--------------------------------------------------------------
 articles-list - no-time
 --------------------------------------------------------------*/
 .articles-list.no-time article .time {
 	display: none;
 }
+
 
 
 /*--------------------------------------------------------------
@@ -1554,6 +1569,7 @@ articles-list - no-thumbnail
 	.articles-list.no-thumbnail article:hover .thumbnail img {
 		opacity: 0.2;
 	}
+
 
 
 /*--------------------------------------------------------------
@@ -1598,7 +1614,7 @@ articles-list - thumb ratio
 
 
 /*--------------------------------------------------------------
-article meta styles
+single article meta styles
 --------------------------------------------------------------*/
 
 .meta {
