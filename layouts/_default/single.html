@@ -57,7 +57,7 @@
 
 					{{ if (lt (add .Date.Unix 63072000) now.Unix) }}
 						{{ $yearsElapsed := ( sub (int (now.Format "2006")) (int (.Date.Format "2006")) ) }}
-						<dd span class="time">{{ $yearsElapsed }} {{ i18n "notice-outdated" | safeHTML }}</dd>
+						<dd class="time">{{ $yearsElapsed }} {{ i18n "notice-outdated" | safeHTML }}</dd>
 					{{ end }}
 
 					{{ with .Params.license }}
@@ -68,7 +68,7 @@
 
 					{{ if .Params.Tags }}
 						<dt>{{ i18n "tags" }}</dt>
-						<dd>{{ range .Params.Tags -}}
+						<dd class="tags">{{ range .Params.Tags -}}
 							<a href="/tags/{{ . | urlize }}" class="tag" rel="tag">{{ (i18n . ) }}</a>
 						{{- end }}</dd>
 					{{ end }}
