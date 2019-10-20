@@ -484,13 +484,12 @@ mark {
 	}
 
 abbr {
-	position: relative;
-
+	/*position: relative;*/
 	font-variant: small-caps;
 	text-decoration: none;
 	text-transform: lowercase;
 }
-	abbr:after {
+/*	abbr:after {
 		line-height: 1.3;
 
 		font-variant: initial;
@@ -504,7 +503,7 @@ abbr {
 		position: absolute;
 		top: -0.2em;
 	}
-	/*@media (pointer: coarse) {*/
+	@media (pointer: coarse) {
 		abbr[title*=' ']:hover:after {
 			content: attr(title);
 			display: inline-block;
@@ -517,7 +516,7 @@ abbr {
 			backdrop-filter: blur(var(--page-color-blur));
 			border: 1px solid;
 		}
-	/*}*/
+	}*/
 
 kbd {
 	display: inline-block;
@@ -663,7 +662,7 @@ html {
 
 body {
 	position: relative;
-	padding: 12px; /* fallback */
+	padding: 1em; /* fallback */
 	padding: var(--gutter-width);
 }
 
@@ -677,123 +676,6 @@ body > main > * {
 	/*outline: 1px dashed red; /* DEBUG */
 }
 
-body > main {
-	position: relative;
-	/*outline: 1px dashed yellow;*/
-}
-
-.sticky {
-	position: sticky !important;
-}
-
-.opaque {
-	--page-color-transparency: 1;
-}
-
-.panel {
-	display: flex;
-	position: relative;
-	top: 0;
-	flex-direction: column;
-	min-height: 100vh;
-	max-width: calc(100vw - var(--scrollbar-width));
-	width: calc(100vw - var(--scrollbar-width));
-
-	margin-left: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
-	margin-right: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
-
-
-	align-items: center;
-	background-color: rgba(var(--page-color), var(--page-color-transparency));
-	/*backdrop-filter: blur(var(--page-color-blur));*/ /* too heavy on rendering */
-	justify-content: center;
-	white-space: nowrap;
-}
-	.panel:first-child {
-		/*min-height: calc(100vh - var(--header-height));*/
-		/*outline: 1px solid red;*/
-	}
-
-.panel:before,
-.footnotes li[id^="fn:"]:target:before {
-	display: block;
-	content: '';
-	position: absolute;
-	left: 0;
-	height: calc(2*var(--header-height));
-	width: 100%;
-
-	background: inherit;
-	white-space: nowrap;
-	pointer-events: none;
-	outline: 1px solid red;
-}
-	.panel:before,	
-	.footnotes li[id^="fn:"]:target:before {
-		top: calc(-2*var(--header-height));
-		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);;
-	}
-		.panel:first-child:before {
-			display: none;
-		}
-	.panel:after {
-
-	}
-
-.panel > * {
-	box-sizing: content-box;
-
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: var(--gutter-width);
-	padding-right: var(--gutter-width);
-	max-width: var(--content-width);
-}
-
-/*.panel:nth-last-of-type(1):after {
-	position: absolute;
-	bottom: -100vh;
-	display: block;
-	content: '';
-	height: 100vh;
-	width: 100%;
-
-	background: red;
-
-	white-space: nowrap;
-	pointer-events: none;
-}*/
-
-.fullwidth,
-.hero {
-	display: block;
-	max-width: calc(100vw - var(--scrollbar-width));
-	width: calc(100vw - var(--scrollbar-width));
-
-	margin-left: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
-	margin-right: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
-
-	font-size: 0;
-	text-align: center;
-	/*grid-column: full;*/
-}
-
-.hero {
-	/*margin-top: -4rem;*/
-	margin-bottom: var(--gutter-width);
-}
-.hero img {
-		width: 100%;
-		height: 100vh;
-		object-fit: cover;
-	}
-/*	@media (orientation: portrait) {
-		.hero img {
-			height: 100vh;
-		}
-	}*/
-
 body > header {
 	margin-bottom: var(--gutter-width);
 	height: var(--header-height);
@@ -803,10 +685,6 @@ body > header {
 
 body > header .description {
 	display: block;
-}
-
-main {
-	margin-bottom: 60vh;
 }
 
 body > footer {
@@ -852,6 +730,123 @@ body > footer nav li,
 	.sharing li:last-child {
 		margin-right: 0;
 	}
+
+
+
+/*--------------------------------------------------------------
+panel styles
+--------------------------------------------------------------*/
+
+.sticky {
+	position: sticky !important;
+}
+
+.opaque {
+	--page-color-transparency: 1;
+}
+
+.panel {
+	display: flex;
+	position: relative;
+	top: 0;
+	flex-direction: column;
+	padding-left: var(--gutter-width);
+	padding-right: var(--gutter-width);
+	min-height: 100vh;
+	max-width: calc(100vw - var(--scrollbar-width));
+	width: calc(100vw - var(--scrollbar-width));
+
+	margin-left: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
+	margin-right: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
+
+
+	align-items: center;
+	background-color: rgba(var(--page-color), var(--page-color-transparency));
+	/*backdrop-filter: blur(var(--page-color-blur));*/ /* too heavy on rendering */
+	justify-content: center;
+	white-space: nowrap;
+}
+	.panel:first-child {
+		/*min-height: calc(100vh - var(--header-height));*/
+		/*outline: 1px solid red;*/
+	}
+
+.panel:before,
+.footnotes li[id^="fn:"]:target:before {
+	display: block;
+	content: '';
+	position: absolute;
+	left: 0;
+	height: calc(2*var(--header-height));
+	width: 100%;
+
+	background: inherit;
+	white-space: nowrap;
+	pointer-events: none;
+}
+	.panel:before,	
+	.footnotes li[id^="fn:"]:target:before {
+		top: calc(-2*var(--header-height));
+		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);;
+	}
+		.panel:first-child:before {
+			display: none;
+		}
+	.panel:after {
+
+	}
+
+.panel > * {
+	/*box-sizing: content-box;*/
+
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: var(--content-width);
+}
+
+/*.panel:nth-last-of-type(1):after {
+	position: absolute;
+	bottom: -100vh;
+	display: block;
+	content: '';
+	height: 100vh;
+	width: 100%;
+
+	background: red;
+
+	white-space: nowrap;
+	pointer-events: none;
+}*/
+
+.fullwidth,
+.hero {
+	display: block;
+	max-width: calc(100vw - var(--scrollbar-width));
+	width: calc(100vw - var(--scrollbar-width));
+
+	margin-left: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
+	margin-right: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
+
+	font-size: 0;
+	text-align: center;
+	/*grid-column: full;*/
+}
+
+.hero {
+	/*margin-top: -4rem;*/
+	margin-bottom: var(--gutter-width);
+}
+.hero img {
+		width: 100%;
+		height: 100vh;
+		object-fit: cover;
+	}
+/*	@media (orientation: portrait) {
+		.hero img {
+			height: 100vh;
+		}
+	}*/
 
 /*--------------------------------------------------------------
 hyperlink styles
@@ -1049,59 +1044,67 @@ ui controls
 }
 
 
+/*--------------------------------------------------------------
+link tooltip styles
 
-/* style external references, if they have a title */
-/*@media (hover) and ( min-width: 1200px ) {*/
-	a[title*=' ']:after {
-		--tooltip-mark: '↬';
-		content: var(--tooltip-mark); 
-		display: inline-block;
-		position: absolute;
-		padding: 0 0.5em;
-		right: calc(-1*var(--gutter-width));
-		width: var(--gutter-width);
+Provide tooltips in the gutter for links (if they have a title)
+and abbr tags
+--------------------------------------------------------------*/
 
-		background: rgba(var(--page-color),var(--page-color-transparency));
-		backdrop-filter: blur(var(--page-color-blur));
-		color: rgba(var(--text-color),0.33);
-		text-align: center;
-		text-overflow: ellipsis;
+a[title*=' ']:after,
+abbr[title*=' ']:after,
+span[title*=' ']:after {
+	--tooltip-mark: '↬';
+	content: var(--tooltip-mark); 
+	display: inline-block;
+	position: absolute;
+	padding: 0 0.5em;
+	right: calc(-1*var(--gutter-width));
+	right: 0;
+	width: var(--gutter-width);
 
-		-webkit-transition: color 0.3s;
-		transition        : color 0.3s;
+	backdrop-filter: blur(var(--page-color-blur));
+	background-color: rgba(var(--page-color),var(--page-color-transparency));
+	color: rgba(var(--text-color),0.33);
+	font-variant: initial;
+	text-align: center;
+	text-overflow: ellipsis;
+	text-transform: initial;
 
-		/*outline: 1px dashed red;*/
+	-webkit-transition: color 0.3s;
+	transition        : color 0.3s;
+}
+
+a[title*=' ']:hover:after,
+abbr[title*=' ']:hover:after,
+span[title*=' ']:hover:after {
+	content: attr(title);
+	padding-right: var(--gutter-width);
+	width: auto;
+	z-index: 100;
+
+	border: 1px solid;
+	color: rgb(var(--text-color));
+	text-align: left;
+}
+	/* wikipedia links icon */
+	a[title*=' '][href*='wikipedia.org']:after {
+		--tooltip-mark: 'Ꮤ';
+	}
+	/* PDF links icon */
+	a[title*=' '][href*='.pdf']:after {
+		--tooltip-mark: '📄';
+	}
+	/* abbr and other notes icon */
+	abbr[title*=' ']:after,
+	span[title*=' ']:after {
+		--tooltip-mark: '※';
 	}
 
-	/*quikfix for panels*/
-	.panel a[title*=' ']:after {
-		right: 0;
-	}
-
-	a[title*=' ']:active:after {
-		pointer-events: none;
-	}
-
-	a[title*=' ']:hover:after {
-		/*content: attr(title) '\00a0' var(--tooltip-mark);*/
-		content: attr(title);
-		padding-right: var(--gutter-width);
-		width: auto;
-		z-index: 100;
-
-		border: 1px solid;
-		color: rgb(var(--text-color));
-		text-align: left;
-	}
-		/* style wikipedia references, if they have a title */
-		a[title*=' '][href*='wikipedia.org']:after {
-			--tooltip-mark: 'Ꮤ';
-		}
-		/* style PDF links, if they have a title */
-		a[title*=' '][href*='.pdf']:after {
-			--tooltip-mark: '📄';
-		}
-/*}*/
+/* disable click on link tooltips */
+a[title*=' ']:active:after {
+	pointer-events: none;
+}
 
 /*--------------------------------------------------------------
 tags styles
