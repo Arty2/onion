@@ -1380,6 +1380,14 @@ articles-list styles
 	/*outline: 1px dashed red;*/
 }
 
+
+.articles-list article.preformatted {
+	max-width: calc(100vw - 2*var(--gutter-width));
+
+	overflow-x: auto;
+	text-overflow: ellipsis;
+}
+
 .articles-list article.preformatted,
 .articles-list article.preformatted pre {
 	display: inline-block;
