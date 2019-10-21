@@ -106,23 +106,25 @@ Slide scroll
 --------------------------------------------------------------*/
 
 // scroll to element if it intersects the viewport
-// TODO: should work for first element as well
+// TODO: should reset when on top, see https://css-tricks.com/an-explanation-of-how-the-intersection-observer-watches/ for possible solution
 var snap_index = 0;
 var slidescroll = new IntersectionObserver(function(entries) {
 	entries.forEach(function(entry) {
 		if (entry.isIntersecting) {
+			var ratio            = entry.intersectionRatio;
+			var boundingRect     = entry.boundingClientRect;
+			var intersectionRect = entry.intersectionRect;
 			// console.log(entry.target.dataset.index); // DEBUG
 			if (entry.target.dataset.index > snap_index) {
 				entry.target.scrollIntoView({
-					behavior: 'smooth',
+					// behavior: 'smooth',
 					block: 'start'
 				});
 				snap_index = entry.target.dataset.index*1;
 				// console.log("scrolled to: " + snap_index); // DEBUG
-			} else if (snap_index > 0) {
-				// snap_index = entry.target.dataset.index - 1;
 			}
 			// console.log("current: " + index); // DEBUG
+			// console.log(ratio); // DEBUG
 		}
 	});
 }, { threshold: [0.1] });

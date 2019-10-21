@@ -325,6 +325,12 @@ html {
 	scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
 *,
 *::before,
 *::after {
@@ -343,6 +349,8 @@ svg {
 
 
 img {
+	display: block;
+	margin: auto;
 	max-width: 100%;
 	height: auto;
 
@@ -717,16 +725,24 @@ body > header .description {
 	display: block;
 }
 
+body > main {
+	position: relative; /* causes issues with tooltips */
+	margin-bottom: 80vh;
+	padding-bottom: 5vh;
+	background: inherit;
+	z-index: 100;
+}
+
 body > footer {
-	/*position: fixed;*/
-	/*bottom: 0;*/
+	position: fixed;
+	left: var(--gutter-width);
+	right: var(--gutter-width);
+	bottom: 0;
 	clear: both;
-	margin: var(--gutter-width) auto;
-	max-width: var(--content-width);
-	z-index: -1;
+	margin-bottom: var(--gutter-width);
+	z-index: 1;
 
 	text-align: center;
-	/*outline: 1px solid red;*/
 }
 
 
@@ -809,16 +825,16 @@ panel styles
 
 
 	align-items: center;
-	background-color: rgba(var(--page-color), var(--page-color-transparency));
 	/*backdrop-filter: blur(var(--page-color-blur));*/ /* too heavy on rendering */
+	background-color: rgba(var(--page-color), var(--page-color-transparency));
 	justify-content: center;
 	white-space: nowrap;
 }
 	.panel:first-child {
-		/*min-height: calc(100vh - var(--header-height));*/
-		/*outline: 1px solid red;*/
+		--page-color-transparency: 1;
 	}
 
+body > main:after,
 .panel:before,
 .footnotes li[id^="fn:"]:target:before {
 	display: block;
@@ -840,31 +856,33 @@ panel styles
 		.panel:first-child:before {
 			display: none;
 		}
-	.panel:after {
-
+	body > main:after {
+		bottom: calc(-2*var(--header-height));
+		-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
 	}
 
 .panel > * {
-	/*box-sizing: content-box;*/
-
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	max-width: var(--content-width);
 }
 
-/*.panel:nth-last-of-type(1):after {
-	position: absolute;
-	bottom: -100vh;
+/*.panel.sticky:nth-last-of-type(1) + *:after {
 	display: block;
 	content: '';
+	position: absolute;
+	top: 0;
 	height: 100vh;
 	width: 100%;
+	z-index: -1;
 
+	--page-color-transparency: 1;
 	background: red;
 
 	white-space: nowrap;
 	pointer-events: none;
+	mask: none;
 }*/
 
 .fullwidth,
@@ -916,8 +934,7 @@ a, a:visited {
 }
 
 a:active {
-
-	text-decoration-style: dashed;
+	text-decoration-style: wavy;
 }
 
 /*a:before, a:after {
@@ -1075,7 +1092,19 @@ Provide tooltips in the gutter for links (if they have a title)
 and abbr tags
 --------------------------------------------------------------*/
 
+
+a[title*=' ']:hover,
+ins[datetime]:hover,
+del[datetime]:hover,
+abbr[title*=' ']:hover,
+span[title*=' ']:hover {
+	text-decoration: underline;
+	text-decoration-style: wavy;
+}
+
 a[title*=' ']:after,
+ins[datetime]:after,
+del[datetime]:after,
 abbr[title*=' ']:after,
 span[title*=' ']:after {
 	--tooltip-mark: '↬';
@@ -1100,11 +1129,13 @@ span[title*=' ']:after {
 }
 
 a[title*=' ']:hover:after,
+ins[datetime]:hover:after,
+del[datetime]:hover:after,
 abbr[title*=' ']:hover:after,
 span[title*=' ']:hover:after {
 	content: attr(title);
 	padding-right: var(--gutter-width);
-	margin-right: 2px;
+	margin: 0 2px;
 	width: auto;
 	z-index: 100;
 
@@ -1123,7 +1154,17 @@ span[title*=' ']:hover:after {
 	/* abbr and other notes icon */
 	abbr[title*=' ']:after,
 	span[title*=' ']:after {
-		--tooltip-mark: '※';
+		/*--tooltip-mark: '※';*/
+		--tooltip-mark: '🞰';
+	}
+	/* ins and del tags icon and content */
+	ins[datetime]:after,
+	del[datetime]:after {
+		--tooltip-mark: '◊';
+	}
+	ins[datetime]:hover:after,
+	del[datetime]:hover:after {
+		content: attr(datetime);
 	}
 
 /* disable click on link tooltips */
@@ -1382,7 +1423,9 @@ articles-list styles
 
 
 .articles-list article.preformatted {
-	max-width: calc(100vw - 2*var(--gutter-width));
+	padding-left: calc(var(--gutter-width)/2);
+	padding-right: calc(var(--gutter-width)/2);
+	max-width: calc(100vw - 3*var(--gutter-width));
 
 	overflow-x: auto;
 	text-overflow: ellipsis;
@@ -1879,6 +1922,7 @@ sup[id^="fnref:"] a {
 
 sup[id^="fnref:"]:target:after {
 	content: '→';
+	/*content: '☞';*/
 	position: absolute;
 	left: 0;
 	width: var(--gutter-width);
