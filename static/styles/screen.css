@@ -1124,7 +1124,7 @@ languages selector
 	position: fixed;
 	top: var(--gutter-width);
 	right: 0;
-	width: var(--gutter-width);
+	/*width: var(--gutter-width);*/
 	z-index: 104;
 
 	-webkit-user-select: none !important;
