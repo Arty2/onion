@@ -261,24 +261,22 @@ icon font via https://icomoon.io (Brands iconset)
 	font-display: swap;
 }
 
-html,
-pre, input, textarea {
+
+:root {
 	/*font-family: var(--font-copy);*/
 	font-family: 'Alegreya', 'Gentium', 'Georgia', serif;
+	font-size: 125%; /* fallback */
+	font-size: calc(1rem + 0.5vw);
 }
 
 button, code, kbd,
+.monospace,
 .button, .tag,
 .languages, .sharing, .social,
 .articles-list h2 {
 	/*font-family: var(--font-mono);*/
 	font-family: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	font-size: 0.9rem; /* adjust for x-height */
-}
-
-:root {
-	font-size: 125%; /* fallback */
-	font-size: calc(1rem + 0.5vw);
 }
 
 body {
@@ -307,6 +305,11 @@ figcaption,
 
 body > header .description,
 body > footer {
+	font-size: 0.8rem;
+}
+
+
+pre, input, textarea {
 	font-size: 0.8rem;
 }
 
@@ -608,7 +611,7 @@ helper / common classes
 .callout {
 	margin: var(--gutter-height) auto;
 	color: rgb(var(--accent-color));
-	font-size: 3rem;
+	font-size: 2.5rem;
 	line-height: 1.3;
 }
 
