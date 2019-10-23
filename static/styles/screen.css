@@ -913,8 +913,7 @@ panel styles
 	position: relative;
 	top: 0;
 	flex-direction: column;
-	padding-left: var(--gutter-width);
-	padding-right: var(--gutter-width);
+	padding: var(--gutter-width);
 	min-height: 100vh;
 	max-width: calc(100vw - var(--scrollbar-width));
 	width: calc(100vw - var(--scrollbar-width));
@@ -1422,6 +1421,7 @@ articles-list styles
 .articles-list {
 	position: relative;
 	margin-top: var(--gutter-height);
+	width: 100%;
 
 	/*outline: 1px dashed cyan;*/
 }
