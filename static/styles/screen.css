@@ -598,14 +598,15 @@ main figure,
 main aside {
 	/*margin-top: var(--gutter-width);*/
 	margin-bottom: 2rem; /* fallback */
-	margin-bottom: calc(1*var(--gutter-width));
+	margin-bottom: calc(1*var(--gutter-height));
 }
 
 main blockquote {
-	margin-top: var(--gutter-width);
-	margin-bottom: var(--gutter-width);
+	margin-top: var(--gutter-height);
+	margin-bottom: var(--gutter-height);
 	padding-left: var(--gutter-width);
-main	quotes: none;
+
+	quotes: none;
 	text-align: left;
 }
 
@@ -934,6 +935,10 @@ panel styles
 	.panel:last-child {
 		margin-bottom: var(--gutter-height);
 	}
+
+.panel + *:not(.panel) {
+	margin-top: var(--gutter-height);
+}
 
 body > main:after,
 .panel:before,
