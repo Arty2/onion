@@ -706,8 +706,8 @@ input[type="email"] {
 	border-right: none;
 }
 
-.button {	
-	display: inline-block;
+.button {
+	display: block;
 	margin: 0.5rem auto;
 	padding: 0.6rem 0.6rem 0.5rem 0.6rem;
 
@@ -1066,16 +1066,6 @@ social menu
 
 	-webkit-user-select: none !important;
 	user-select : none !important;
-}
-
-.social ul {
-	margin: 0;
-	padding: 0;
-}
-
-.social li {
-	display: inline-block;
-	margin: 0 0.7rem;
 }
 
 .social a {

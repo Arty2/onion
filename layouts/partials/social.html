@@ -1,7 +1,5 @@
 <nav class="social">
-	<ul>
-		{{- range .Site.Params.Social -}}
-		<li><a href="{{ .link }}" rel="me noopener" class="icon-{{ .name }}" title="{{ .name }}" target="_blank"><span>{{ .name }}</span></a></li>
-		{{- end }}
-	</ul>
+	{{- range .Site.Params.Social -}}
+	<a href="{{ .link }}" rel="me noopener" class="icon-{{ .name }}" title="{{ .name }}" target="_blank"><span>{{ .name }}</span></a>
+	{{- end }}
 </nav>
