@@ -262,7 +262,8 @@ icon font via https://icomoon.io (Brands iconset)
 }
 
 
-:root {
+:root,
+pre, input, textarea {
 	/*font-family: var(--font-copy);*/
 	font-family: 'Alegreya', 'Gentium', 'Georgia', serif;
 	font-size: 125%; /* fallback */
@@ -306,6 +307,7 @@ figcaption,
 body > header .description,
 body > footer {
 	font-size: 0.8rem;
+	line-height: 1.3;
 }
 
 
@@ -646,7 +648,7 @@ input[type="email"] {
 }
 
 .button {	
-	display: block;
+	display: inline-block;
 	margin: 0.5rem auto;
 	padding: 0.6rem 0.6rem 0.5rem 0.6rem;
 
@@ -658,6 +660,7 @@ input[type="email"] {
 	/*letter-spacing: 1px;*/
 	line-height: 0.5;	
 	font-weight: bold;
+	text-decoration: none;
 	text-transform: uppercase;
 
 	cursor: pointer;
@@ -670,6 +673,8 @@ input[type="email"] {
 
 .button:hover {
 	box-shadow: inset 0 2rem 0 var(--shadow-color), 0px 3px 0px 0px var(--shadow-color);
+	color: rgb(var(--text-color));
+	text-decoration: none;
 	transform: translate(0, 1px);
 }
 
@@ -867,6 +872,9 @@ panel styles
 }
 	.panel:first-child {
 		--page-color-transparency: 1;
+	}
+	.panel:last-child {
+		margin-bottom: var(--gutter-height);
 	}
 
 body > main:after,
@@ -1850,6 +1858,7 @@ single article meta styles
 
 /*--------------------------------------------------------------
 article styles
+.entry-content
 --------------------------------------------------------------*/
 
 
@@ -1864,6 +1873,7 @@ article styles
 	padding-left: var(--gutter-width);
 }
 
+/*restore margin to block level elements*/
 .entry-content p,
 .entry-content img,
 .entry-content article,
