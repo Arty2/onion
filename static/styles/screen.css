@@ -568,6 +568,64 @@ sup {
 	vertical-align: 50%;
 }
 
+
+
+
+
+/*--------------------------------------------------------------
+article styles / content elements
+.entry-content
+--------------------------------------------------------------*/
+
+
+main ul li:before {
+	content: '-';
+	position: absolute;
+	margin-left: calc(-1*var(--gutter-width));
+}
+
+main ul,
+main ol {
+	padding-left: var(--gutter-width);
+}
+
+/*restore margin to block level elements*/
+main p,
+main img,
+main ul,
+main ol,
+main figure,
+main aside {
+	/*margin-top: var(--gutter-width);*/
+	margin-bottom: 2rem; /* fallback */
+	margin-bottom: calc(1*var(--gutter-width));
+}
+
+main blockquote {
+	margin-top: var(--gutter-width);
+	margin-bottom: var(--gutter-width);
+	padding-left: var(--gutter-width);
+main	quotes: none;
+	text-align: left;
+}
+
+main blockquote::before {
+	content: '“';
+	float: left;
+	margin-left: -1em;
+
+	font-size: 200%;
+	line-height: 1;
+}
+	main blockquote:lang(el)::before {
+		content: '»';
+		margin-top: -0.5em;
+	}
+
+main blockquote + figcaption {
+	text-align: right;
+}
+
 /*--------------------------------------------------------------
 helper / common classes
 --------------------------------------------------------------*/
@@ -1426,11 +1484,14 @@ articles-list styles
 }
 
 .articles-list article .thumbnail {
-	font-size: 0;
-	transition: transform .3s;
+	margin: 0;
 	max-height: 100vh;
 	overflow: hidden;
 	/*outline: 1px dashed red;*/
+
+	font-size: 0;
+
+	transition: transform .3s;
 }
 
 .articles-list article .thumbnail:empty {
@@ -1438,6 +1499,7 @@ articles-list styles
 }
 
 .articles-list article .thumbnail img {
+	margin: 0;
 	width: 100%;
 }
 
@@ -1459,6 +1521,7 @@ articles-list styles
 
 .articles-list article .summary {
 	display: inline;
+	margin: 0;
 
 	color: rgba(var(--text-color),0.8);
 	/*outline: 1px dashed red;*/
@@ -1852,64 +1915,6 @@ single article meta styles
 	content: '';
 	margin: 0;
 	padding: 0;
-}
-
-
-
-/*--------------------------------------------------------------
-article styles
-.entry-content
---------------------------------------------------------------*/
-
-
-.entry-content ul li:before {
-	content: '-';
-	position: absolute;
-	margin-left: calc(-1*var(--gutter-width));
-}
-
-.entry-content ul,
-.entry-content ol {
-	padding-left: var(--gutter-width);
-}
-
-/*restore margin to block level elements*/
-.entry-content p,
-.entry-content img,
-.entry-content article,
-.entry-content ul,
-.entry-content ol,
-.entry-content figure,
-.entry-content aside {
-	/*margin-top: var(--gutter-width);*/
-	margin-bottom: 2rem; /* fallback */
-	margin-bottom: calc(1*var(--gutter-width));
-}
-
-.entry-content blockquote {
-	margin-top: var(--gutter-width);
-	margin-bottom: var(--gutter-width);
-	padding-left: var(--gutter-width);
-
-	quotes: none;
-	text-align: left;
-}
-
-.entry-content blockquote::before {
-	content: '“';
-	float: left;
-	margin-left: -1em;
-
-	font-size: 200%;
-	line-height: 1;
-}
-	.entry-content blockquote:lang(el)::before {
-		content: '»';
-		margin-top: -0.5em;
-	}
-
-.entry-content blockquote + figcaption {
-	text-align: right;
 }
 
 
