@@ -268,8 +268,9 @@ pre, input, textarea {
 }
 
 button, code, kbd,
-.tag, .languages, .sharing,
-.articles-list h2, .social {
+.button, .tag,
+.languages, .sharing, .social,
+.articles-list h2 {
 	/*font-family: var(--font-mono);*/
 	font-family: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	font-size: 0.9rem; /* adjust for x-height */
@@ -617,6 +618,30 @@ helper / common classes
 form styles
 --------------------------------------------------------------*/
 
+form {
+	margin: var(--gutter-height) 0;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+	background: none;
+	border: 1.5px solid rgb(var(--text-color));
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+	border-color: rgb(var(--accent-color));
+}
+
+input[type="text"],
+input[type="email"] {
+	border-top: none;
+	border-left: none;
+	border-right: none;
+}
+
 .button {	
 	display: block;
 	margin: 0.5rem auto;
@@ -901,7 +926,6 @@ body > main:after,
 	margin-left: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
 	margin-right: calc(50% - 50vw + var(--scrollbar-width)/2) !important;
 
-	font-size: 0;
 	text-align: center;
 	/*grid-column: full;*/
 }
@@ -909,6 +933,8 @@ body > main:after,
 .hero {
 	/*margin-top: -4rem;*/
 	margin-bottom: var(--gutter-width);
+
+	font-size: 0;
 }
 .hero img {
 		width: 100%;
@@ -1359,7 +1385,6 @@ articles-list styles
 .articles-list summary h2 {
 	display: inline-block;
 	margin-bottom: var(--gutter-height);
-	padding: 0 0.25rem;
 
 	cursor: pointer;
 }
