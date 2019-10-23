@@ -9,7 +9,7 @@
 </head>
 <body id="start" class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
 	{{ partial "languages" . }}
-	{{ partial "ui" . }}
+	{{ if eq .Site.Params.UI true }}{{ partial "ui" . }}{{ end }}
 	<header>
 		{{ block "header" . }}{{ partial "header/inner" . }}{{end}}
 	</header>
