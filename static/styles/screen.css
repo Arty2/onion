@@ -926,7 +926,7 @@ panel styles
 	/*backdrop-filter: blur(var(--page-color-blur));*/ /* too heavy on rendering */
 	background-color: rgba(var(--page-color), var(--page-color-transparency));
 	justify-content: center;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 }
 	.panel:first-child {
 		--page-color-transparency: 1;
@@ -1420,7 +1420,7 @@ articles-list styles
 
 .articles-list {
 	position: relative;
-	margin-top: var(--gutter-height);
+	margin-bottom: var(--gutter-height);
 	width: 100%;
 
 	/*outline: 1px dashed cyan;*/
