@@ -34,7 +34,7 @@ contents:
   other: Περιεχόμενα
 
 notice-outdated:
-  other: Χρόνια πριν
+  other: χρόνια πριν
 
 created-date:
   other: Παραγωγή
@@ -62,3 +62,6 @@ published:
 
 publisher:
   other: Εκδότης
+
+pages:
+  other: Σελίδες

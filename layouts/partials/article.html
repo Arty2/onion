@@ -22,6 +22,8 @@
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
 			{{- if .Params.dateCreated -}}
 				{{- .Params.dateCreated -}}
+			{{- else if .Params.dateRead -}}
+				{{- .Params.dateRead -}}
 			{{- else -}}
 				{{- if isset $.Site.Params "date_format" -}}
 					{{- .Date.Format $.Site.Params.date_format -}}
@@ -32,14 +34,16 @@
 		</time>
 		<h3 class="title">{{ .Title }}</h3>
 		<p class="summary">
-		{{- with .Params.Publication.Author }}
-			<dt>{{ i18n "author" }}</dt>
-			<dd>{{ . }}</dd>
-		{{ end -}}
+		{{- with .Params.Publication.Author -}}
+			{{ . }}
+		{{- end -}}
 		{{- with .Params.description }}
 			{{ . | plainify | markdownify }}
-		{{ end -}}
+		{{- end -}}
 		</p>
+		{{- with .Params.Rating }}
+			<p class="rating">{{ range seq (int . ) }}★{{ end }}</p>
+		{{- end -}}
 	</a>
 {{- end -}}
 </article>

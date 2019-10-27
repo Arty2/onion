@@ -60,7 +60,7 @@
 						<dd class="time">{{ $yearsElapsed }} {{ i18n "notice-outdated" | safeHTML }}</dd>
 					{{ end }}
 
-					{{ with .Params.ReadDate }}
+					{{ with .Params.DateRead }}
 						<dt>{{ i18n "read-date" }}</dt>
 							<dd>{{ . }}</dd>
 					{{ end }}
@@ -98,7 +98,10 @@
 						{{- if $.Params.Publication.URL }}</a>{{ end -}}
 						</dd>
 					{{ end -}}
-					{{ with .Params.Publication.Subtitle }}
+					{{- with .Params.Publication.Subtitle }}
+						<dd>{{ . }}</dd>
+					{{ end -}}
+					{{- with .Params.Publication.TitleOriginal }}
 						<dd>{{ . }}</dd>
 					{{ end -}}
 					{{ with .Params.Publication.Author }}
@@ -111,6 +114,10 @@
 					{{ end -}}
 					{{ with .Params.Publication.Published }}
 						<dt>{{ i18n "published" }}</dt>
+						<dd>{{ . }}</dd>
+					{{ end -}}
+					{{ with .Params.Publication.Pages }}
+						<dt>{{ i18n "pages" }}</dt>
 						<dd>{{ . }}</dd>
 					{{ end -}}
 					{{ if .Params.Publication.ISBN }}

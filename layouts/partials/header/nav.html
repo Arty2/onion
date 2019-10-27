@@ -1,3 +1,4 @@
+{{ if ne .Site.Params.Menu_main false }}
 <nav>
 	<ul>
 		{{- range .Site.RegularPages -}}
@@ -6,8 +7,9 @@
 			{{- end }}
 		{{- end -}}
 		{{- $currentPage := . -}}
-		{{- range .Site.Menus.footer -}}
-			<li><a href="{{ .URL }}">{{ .Name }}</a></li>
+		{{- range .Site.Menus.main -}}
+			<li><a href="{{ .URL }}">{{ (i18n .Name) }}</a></li>
 		{{- end -}}
 	</ul>
 </nav>
+{{ end }}

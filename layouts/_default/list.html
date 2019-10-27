@@ -1,5 +1,5 @@
 {{ define "main" }}
-	<section class="articles-list">
+	<section class="articles-list stack">
 		{{ .Content }}
 		{{ if gt (len .Data.Pages) 0}}
 			{{ range .Data.Pages }}

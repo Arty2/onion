@@ -4,4 +4,4 @@
 	<div class="copyright">{{ . | safeHTML  }}</div>
 {{- end }}
 <!-- <small>Last Modified: {{ now.Format "2006-01-02 15:04 MST" }}</small> -->
-{{ if eq .Site.Params.Menu_footer true }}{{ partial "footer/nav.html" . }}{{ end }}
+{{ partial "footer/nav.html" . }}

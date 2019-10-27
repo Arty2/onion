@@ -34,7 +34,7 @@ contents:
   other: Contents
 
 notice-outdated:
-  other: Years ago
+  other: years ago
 
 created-date:
   other: Produced
@@ -62,3 +62,6 @@ published:
 
 publisher:
   other: Publisher
+
+pages:
+  other: Pages
