@@ -1,40 +1,64 @@
-# UI
+## UI
+reset:
+  other: Επαναφορά
 
-description:
-  other: συνοπτικά
-
-license:
-  other: άδεια χρήσης
-
-tags:
-  other: ετικέτες
+## social sharing
 
 share:
-  other: μοιράσου
+  other: Μοιράσου
 
 share-twitter:
-  other: τιτίβισε
+  other: Τιτίβισε
 
 share-facebook:
-  other: μοιράσου
+  other: Μοιράσου
 
 share-email:
-  other: στείλε email
+  other: Στείλε email
 
-reset:
-  other: επαναφορά
+## post details
 
-notice-outdated:
-  other: "χρόνια πριν"
+description:
+  other: Σύνοψη
 
-metadata:
-  other: μέτα
+license:
+  other: Άδεια χρήσης
+
+tags:
+  other: Ετικέτες
+
+rating:
+  other: Βαθμολογία
 
 contents:
-  other: περιεχόμενα
+  other: Περιεχόμενα
 
-produced:
-  other: παραγωγή
+notice-outdated:
+  other: Χρόνια πριν
+
+created-date:
+  other: Παραγωγή
+
+read-date:
+  other: Read
+
+publish-date:
+  other: Δημοσίευση
+
+post-details:
+  other: Σχετικά
+
+publication-details:
+  other: Στοιχεία έκδοσης
+
+title:
+  other: Τίτλος
+
+author:
+  other: Συγγραφέας
 
 published:
-  other: δημοσίευση
+  other: Εκδόση
+
+publisher:
+  other: Εκδότης

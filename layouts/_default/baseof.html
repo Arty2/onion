@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ with .Site.Params.locale }}{{ . }}{{ end }}">
 <head>
-	<title>{{ .Site.Title }} • {{ .Title }}</title>
-	<!-- <title>{{ .Title }} • {{ .Site.Title }}</title> -->
+	<title>{{if .IsHome}}{{ .Site.Title }} • {{ .Title }}{{else}}{{ .Title }} • {{ .Site.Title }}{{end}}</title>
 	{{ partial "head" . }}
 
 	<!-- <link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}"> -->
 </head>
 <body id="start" class="{{ .Kind }} {{ if .Params.Theme }}{{ .Params.Theme }}{{ else if .Site.Params.Theme }}{{ .Site.Params.Theme }}{{ end }}">
 	{{ partial "languages" . }}
-	{{ if eq .Site.Params.UI true }}{{ partial "ui" . }}{{ end }}
+	{{ if ne .Site.Params.UI false }}{{ partial "ui" . }}{{ end }}
 	<header>
 		{{ block "header" . }}{{ partial "header/inner" . }}{{end}}
 	</header>

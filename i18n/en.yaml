@@ -1,40 +1,64 @@
-# UI
+## UI
+reset:
+  other: Reset tags
 
-description:
-  other: summary
-
-license:
-  other: license
-
-tags:
-  other: tags
+## social sharing
 
 share:
-  other: share
+  other: Share
 
 share-twitter:
-  other: tweet
+  other: Tweet
 
 share-facebook:
-  other: share
+  other: Share
 
 share-email:
-  other: send email
+  other: Send email
 
-reset:
-  other: reset tags
+## post details
 
-notice-outdated:
-  other: "years ago"
+description:
+  other: Summary
 
-metadata:
-  other: meta
+license:
+  other: License
+
+rating:
+  other: Rating
+
+tags:
+  other: Tags
 
 contents:
-  other: contents
+  other: Contents
 
-produced:
-  other: produced
+notice-outdated:
+  other: Years ago
+
+created-date:
+  other: Produced
+
+read-date:
+  other: Read
+
+publish-date:
+  other: Published
+
+post-details:
+  other: Post details
+
+publication-details:
+  other: Publication details
+
+title:
+  other: Title
+
+author:
+  other: Author
 
 published:
-  other: published
+  other: Published
+
+publisher:
+  other: Publisher

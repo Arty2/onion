@@ -273,8 +273,7 @@ pre, input, textarea {
 button, code, kbd,
 .monospace,
 .button, .tag,
-.languages, .sharing, .social,
-.articles-list h2 {
+.languages, .sharing, .social {
 	/*font-family: var(--font-mono);*/
 	font-family: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	font-size: 0.9rem; /* adjust for x-height */
@@ -294,8 +293,9 @@ body * {
 }
 
 
-body > header h1 {
-	font-size: 1rem;
+body > header h1,
+.meta h2 {
+	font-size: 1em;
 }
 
 .tag, .button,
@@ -826,7 +826,7 @@ body > header .description {
 
 body > main {
 	position: relative; /* causes issues with tooltips */
-	margin-bottom: 80vh;
+	margin-bottom: 90vh;
 	padding-bottom: 5vh;
 	background: inherit;
 	z-index: 100;
@@ -875,7 +875,7 @@ social sharing menu
 --------------------------------------------------------------*/
 
 .sharing {
-	margin-top: var(--gutter-width);
+	/*margin-top: var(--gutter-width);*/
 	margin-bottom: var(--gutter-width);
 }
 
@@ -887,6 +887,8 @@ social sharing menu
 .sharing a {
 	display: inline-block;
 	margin: 0 0.5rem;
+
+	text-transform: lowercase;
 }
 	.sharing a:first-of-type {
 		margin-left: 0;
@@ -1181,6 +1183,7 @@ ui controls
 }
 
 
+
 /*--------------------------------------------------------------
 link tooltip styles
 
@@ -1275,7 +1278,7 @@ tags styles
 .tag {
 	display: inline-block;
 	padding: 0.5rem;
-	margin: 0.4rem 0.2rem 0;
+	margin: 0 0.2rem 0.4rem ;
 
 	background: rgb(var(--page-color));
 	border: 1.5px solid rgb(var(--text-color));
@@ -1337,7 +1340,7 @@ article filter styles
 
 #articles-filter {
 	position: relative;
-	top: 0;
+	top: 0.4rem;
 	z-index: 102;
 
 	text-align: center;
@@ -1841,9 +1844,12 @@ single article meta styles
 .meta {
 	display: flex;
 	flex-wrap: wrap;
+
+	border: 1.5px dashed;
 }
 
 .meta > * {
+	flex-basis: calc((100% - 2*var(--gutter-width))/2);
 	flex-grow: 1;
 	margin: calc(var(--gutter-width)/2);
 	/*outline: 1px dashed red;*/
@@ -1856,12 +1862,12 @@ single article meta styles
 .meta dl {
 	display: grid;
 	/*grid-gap: var(--gutter-width);*/
-	grid-template-columns: 8rem 1fr;
-	margin: auto auto 1.4rem;
+	grid-template-columns: minmax(34%, max-content) max-content;
 }
 
 .meta dt {
 	grid-column: 1;
+	margin-right: 0.5rem;
 
 	font-variant: small-caps;
 	text-transform: uppercase;
@@ -1890,8 +1896,9 @@ single article meta styles
 	counter-reset: item;
 }
 
-#TableOfContents li {
-	padding-bottom: 0.4rem;
+#TableOfContents li:before {
+	position: relative;
+	margin: 0;
 }
 
 #TableOfContents ul ul:not(:first-child) {
@@ -1912,19 +1919,23 @@ single article meta styles
 	padding: 0;
 }
 
+.h-entry .title,
+.h-entry .summary {
+	margin-bottom: var(--gutter-height);
+}
+
 
 /*--------------------------------------------------------------
 sidenote styles
 --------------------------------------------------------------*/
 
-aside.meta,
 .sidenote,
 .entry-content aside {
 	position: relative;
 	margin: var(--gutter-height) 0;
 	padding: calc(var(--gutter-width)/2);
 
-	border: 3px double;
+	border: 1.5px dashed;
 }
 
 /*.sidenote::before,
@@ -2030,6 +2041,7 @@ sup[id^="fnref:"] a {
 	padding-right: 0.3rem;s
 }
 
+/**:target:after,*/
 sup[id^="fnref:"]:target:after {
 	content: '→';
 	/*content: '☞';*/

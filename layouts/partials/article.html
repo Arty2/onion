@@ -31,7 +31,15 @@
 			{{- end -}}
 		</time>
 		<h3 class="title">{{ .Title }}</h3>
-		<p class="summary">{{ with .Params.description }}{{ . | plainify | markdownify }}{{ end }}</p>
+		<p class="summary">
+		{{- with .Params.Publication.Author }}
+			<dt>{{ i18n "author" }}</dt>
+			<dd>{{ . }}</dd>
+		{{ end -}}
+		{{- with .Params.description }}
+			{{ . | plainify | markdownify }}
+		{{ end -}}
+		</p>
 	</a>
 {{- end -}}
 </article>
