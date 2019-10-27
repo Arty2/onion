@@ -1825,8 +1825,7 @@ articles-list - no-thumbnail
 	filter: blur(3px);
 	opacity: 0;
 
-	/* force GPU rendering */
-	transform: translateZ(0);
+	transform: translateZ(0); /* force GPU rendering */
 
 	transition: all 1s;
 }
@@ -1985,17 +1984,14 @@ sidenote styles
 	content: '⊕';
 	display: block;
 	position: absolute;
-	/*top: 0;*/
 	right: 0;
 	width: var(--gutter-width);
 
 	cursor: n-resize;
 	line-height: 1.2rem;
-	/*pointer-events: initial;*/
 	text-align: center;
 
-	-webkit-transition: all .3s 1.5s;
-	transition        : all .3s 1.5s;
+	transition: all .3s;
 
 	/*outline: 1px dashed red;*/
 }
@@ -2011,20 +2007,24 @@ sidenote styles
 	max-height: calc(2*var(--line-height));
 	overflow: hidden;
 
-	-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 1rem, rgba(0,0,0,0) 90%);
-
-	border: 1.5px dashed black;
+	background-clip: border-box;
+	border: 1.5px dashed;
+	text-overflow: ellipsis;
 	transition: max-height 0.3s ease-in;
+
+	/*-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 1rem, rgba(0,0,0,0) 90%);*/
 }
 
 .sidenote:hover,
 .entry-content aside:hover {
 	max-height: 100vh;
+	max-height: initial;
 	z-index: 101;
+
+	transition-delay: 0s;
 
 	-webkit-mask-image: none;
 }
-
 
 
 @media only screen and ( min-width: 1200px ) {
@@ -2039,6 +2039,8 @@ sidenote styles
 		width: var(--sidenote-width);
 		max-height: 100%;
 		transform: translate(-100%, 0);
+
+		border-width: 0;
 
 		-webkit-mask-image: none;
 	}
