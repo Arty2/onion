@@ -808,6 +808,8 @@ body {
 	position: relative;
 	padding: 1em; /* fallback */
 	padding: var(--gutter-width);
+	max-width: 100vw;
+	/*max-width: calc(100vw - var(--scrollbar-width));*/
 }
 
 body > header,
@@ -1917,7 +1919,7 @@ single article meta styles
 .meta dl {
 	display: grid;
 	/*grid-gap: var(--gutter-width);*/
-	grid-template-columns: minmax(34%, max-content) max-content;
+	grid-template-columns: minmax(34%, max-content) 1fr;
 }
 
 .meta dt {
@@ -1986,6 +1988,7 @@ sidenote styles
 	position: absolute;
 	right: 0;
 	width: var(--gutter-width);
+	overflow: visible;
 
 	cursor: n-resize;
 	line-height: 1.2rem;
@@ -2032,8 +2035,7 @@ sidenote styles
 	.entry-content aside {
 		position: absolute;
 		float: left;
-		margin-top: 0.4rem;
-		margin-left: calc(-1*var(--gutter-width));
+		margin: 0.4rem 0 0 calc(-1*var(--gutter-width));
 		padding: 0;
 		max-width: var(--content-width);
 		width: var(--sidenote-width);
