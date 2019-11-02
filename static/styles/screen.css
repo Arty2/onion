@@ -17,8 +17,8 @@ global CSS variables
 --------------------------------------------------------------*/
 :root {
 	/* font stacks */
-	--font-mono: "'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace";
-	--font-copy: "'Alegreya', 'Gentium', 'Georgia', serif";
+	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
+	--font-copy: 'Alegreya', 'Gentium', 'Georgia', serif;
 	--font-interface: '';
 
 	/* layout */
@@ -265,20 +265,26 @@ icon font via https://icomoon.io (Brands iconset)
 
 
 :root,
+.serif,
 pre, input, textarea {
-	/*font-family: var(--font-copy);*/
-	font-family: 'Alegreya', 'Gentium', 'Georgia', serif;
+	font-family: serif; /* fallback */
+	font-family: var(--font-copy);
 	font-size: 125%; /* fallback */
 	font-size: calc(1rem + 0.5vw);
 }
 
+.mono,
 button, code, kbd,
 .monospace,
 .button, .tag,
 .languages, .sharing, .social {
-	/*font-family: var(--font-mono);*/
-	font-family: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
+	font-family: monospace;  /* fallback */
+	font-family: var(--font-mono);
 	font-size: 0.9rem; /* adjust for x-height */
+}
+
+.sans {
+	font-family: sans-serif;
 }
 
 body {
@@ -294,9 +300,8 @@ body * {
 	line-height: inherit;
 }
 
-
-body > header h1,
-.meta h2 {
+.meta h2,
+body > header h1 {
 	font-size: 1em;
 }
 
@@ -1909,7 +1914,7 @@ single article meta styles
 	flex-basis: calc((100% - 2*var(--gutter-width))/2);
 	flex-grow: 1;
 	margin: calc(var(--gutter-width)/2);
-	/*outline: 1px dashed red;*/
+	outline: 1px dashed red;
 }
 
 .meta h2 {
@@ -1929,7 +1934,8 @@ single article meta styles
 	font-variant: small-caps;
 	text-transform: uppercase;
 }
-	.meta dl > dt:first-child {
+	.meta dt:after {
+		content: ':';
 	}
 
 .meta dd {
