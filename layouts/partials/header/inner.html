@@ -1,4 +1,13 @@
 <div class="inner">
-	{{ partial "header/custom-header.html" . }}
+	<a href="{{ "/" | relLangURL }}">
+		<h1>
+			{{- if .Site.Params.Header }}
+				{{ .Site.Params.Header }}
+			{{- else -}}
+				{{ .Site.Title }}
+			{{- end -}}
+			{{- with .Site.Params.Description }}<span class="description">{{ . }}</span>{{ end -}}
+		</h1>
+	</a>
 	{{ partial "header/nav.html" . }}
 </div>
