@@ -1566,8 +1566,8 @@ articles-list styles
 
 .articles-list article .thumbnail {
 	margin: 0;
-	max-height: 100vh;
-	overflow: hidden;
+	/*max-height: 100vh;*/
+	/*overflow: hidden;*/
 	/*outline: 1px dashed red;*/
 
 	font-size: 0;
