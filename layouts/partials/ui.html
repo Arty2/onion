@@ -1,11 +1,15 @@
 <div class="ui">
 	<a href="#top">↑</a>
-	<button id="theme-toggle">☉</button>
+	<button id="theme-toggle">◑</button>
 </div>
 <script type="text/javascript">
 	var themetoggle = document.querySelector('#theme-toggle');
 
-	themetoggle.onclick = function() { 
-		document.querySelector('body').classList.toggle('peach');
+	themetoggle.onclick = function() {
+		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			document.querySelector('body').classList.toggle('light');
+		} else {
+			document.querySelector('body').classList.toggle('dark');
+		}
 	}
 </script>

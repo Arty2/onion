@@ -18,7 +18,8 @@ global CSS variables
 :root {
 	/* font stacks */
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
-	--font-copy: 'Alegreya', 'Gentium', 'Georgia', serif;
+	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
+	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
 	--font-interface: '';
 
 	/* layout */
@@ -240,6 +241,30 @@ icon font via https://icomoon.io (Brands iconset)
 }
 
 @font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
 	font-family: 'Fantasque';
 	src: url('../fonts/FantasqueSansMono-Regular.woff2') format('woff2');
 	font-weight: normal;
@@ -265,26 +290,26 @@ icon font via https://icomoon.io (Brands iconset)
 
 
 :root,
-.serif,
-pre, input, textarea {
+.serif {
 	font-family: serif; /* fallback */
-	font-family: var(--font-copy);
+	font-family: var(--font-serif);
 	font-size: 125%; /* fallback */
 	font-size: calc(1rem + 0.5vw);
 }
 
 .mono,
-button, code, kbd,
+button,
 .monospace,
 .button, .tag,
 .languages, .sharing, .social {
-	font-family: monospace;  /* fallback */
+	font-family: monospace; /* fallback */
 	font-family: var(--font-mono);
-	font-size: 0.9rem; /* adjust for x-height */
+	font-size: 0.92rem; /* adjust for x-height */
 }
 
 .sans {
-	font-family: sans-serif;
+	font-family: sans-serif; /* fallback */
+	font-family: var(--font-sans);
 }
 
 body {
@@ -320,7 +345,13 @@ body > footer {
 
 
 pre, input, textarea {
-	font-size: 0.8rem;
+	font-family: inherit;
+	font-size: 0.8em;
+}
+
+code, kbd {
+	font-family: var(--font-mono);
+	font-size: 0.92em; /* adjust for x-height */
 }
 
 aside.meta,
@@ -1211,9 +1242,12 @@ ui controls
 	background: none;
 	border: none;
 	color: rgb(var(--text-color));
-	-webkit-appearance: button; /* iOS and Safari fix */
 	cursor: pointer;
+	outline: none;
+
+	-webkit-appearance: button; /* iOS and Safari fix */
 }
+	.ui #theme-toggle::-moz-focus-inner { border: 0; }
 
 
 
@@ -1299,7 +1333,7 @@ span[title*=' ']:hover:after {
 	/* ins and del tags icon and content */
 	ins[datetime]:after,
 	del[datetime]:after {
-		--tooltip-mark: '◊';
+		--tooltip-mark: '¤';
 	}
 	ins[datetime]:hover:after,
 	del[datetime]:hover:after {
@@ -1596,16 +1630,16 @@ articles-list styles
 articles oddities classes
 --------------------------------------------------------------*/
 
-article.draft .summary:before {
+article.draft .title:before {
 	content: 'DRAFT';
+	/*float: left;*/
 	margin-right: 0.5em;
 
-	border-top: 1.5px solid;
-	border-bottom: 1.5px solid;
+	border-top: 2px solid;
+	border-bottom: 2px solid;
 	color: rgb(var(--text-color-error));
 	font-size: 60%;
 	font-weight: bold;
-	text-decoration: none !important;
 }
 
 
@@ -1716,7 +1750,7 @@ articles-list - stack
 	display: inline-block;
 	flex-shrink: 0;
 	margin-left: 1ch;
-	order: 3;
+	order: 4;
 	width: 9ch;
 	/*outline: 1px dashed red;*/
 }
@@ -1736,7 +1770,7 @@ articles-list - stack
 }
 
 .articles-list.stack .rating {
-	order: 4;
+	order: 3;
 	color: inherit;
 }
 
@@ -1810,35 +1844,36 @@ articles-list - no-time
 /*--------------------------------------------------------------
 articles-list - no-thumbnail
 --------------------------------------------------------------*/
+@supports (pointer-events: none) {
+	.articles-list.no-thumbnail article .thumbnail {
+		display: block;
+		position: fixed;
+		top: -0.5vh;
+		left: -0.5vw;
+		margin: 0;
+		z-index: 103;
 
-.articles-list.no-thumbnail article .thumbnail {
-	display: block;
-	position: fixed;
-	top: -0.5vh;
-	left: -0.5vw;
-	margin: 0;
-	z-index: 103;
-
-	pointer-events: none;
-	transition: transform 1s;
-}
-
-.articles-list.no-thumbnail article .thumbnail img {
-	width: 101vw;
-	height: 101vh;
-
-	object-fit: cover;
-
-	filter: blur(3px);
-	opacity: 0;
-
-	transform: translateZ(0); /* force GPU rendering */
-
-	transition: all 1s;
-}
-	.articles-list.no-thumbnail article:hover .thumbnail img {
-		opacity: 0.2;
+		pointer-events: none;
+		transition: transform 1s;
 	}
+
+	.articles-list.no-thumbnail article .thumbnail img {
+		width: 101vw;
+		height: 101vh;
+
+		object-fit: cover;
+
+		filter: blur(3px);
+		opacity: 0;
+
+		transform: translateZ(0); /* force GPU rendering */
+
+		transition: all 1s;
+	}
+		.articles-list.no-thumbnail article:hover .thumbnail img {
+			opacity: 0.2;
+		}
+}
 
 
 
@@ -2041,7 +2076,7 @@ sidenote styles
 	.entry-content aside {
 		position: absolute;
 		float: left;
-		margin: 0.4rem 0 0 calc(-1*var(--gutter-width));
+		margin: 0 0 0 calc(-1*var(--gutter-width));
 		padding: 0;
 		max-width: var(--content-width);
 		width: var(--sidenote-width);
@@ -2101,6 +2136,7 @@ footnotes
 	margin-left: calc(-1*var(--page-color-blur)/2);
 	width: calc(100% - 2*var(--gutter-width) + var(--page-color-blur));
 	max-width: calc(var(--content-width) + var(--page-color-blur));
+	z-index: 100;
 
 	background-color: rgba(var(--page-color),var(--page-color-transparency));
 	/*backdrop-filter: blur(var(--page-color-blur));*/
