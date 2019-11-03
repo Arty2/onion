@@ -954,12 +954,11 @@ social sharing menu
 panel styles
 --------------------------------------------------------------*/
 
+
+
 .sticky {
 	position: sticky !important;
-}
-
-.opaque {
-	--page-color-transparency: 1;
+	top: 0;
 }
 
 .panel {
@@ -977,7 +976,7 @@ panel styles
 
 
 	align-items: center;
-	/*backdrop-filter: blur(var(--page-color-blur));*/ /* too heavy on rendering */
+	/*backdrop-filter: blur(var(--page-color-blur));*/ /* too heavy on rendering, doesn't apply well to :before and :after */
 	background-color: rgba(var(--page-color), var(--page-color-transparency));
 	justify-content: center;
 	/*white-space: nowrap;*/
@@ -989,9 +988,9 @@ panel styles
 		margin-bottom: var(--gutter-height);
 	}
 
-.panel + *:not(.panel) {
+/*.panel + *:not(.panel) {
 	margin-top: var(--gutter-height);
-}
+}*/
 
 body > main:after,
 .panel:before,
@@ -1022,27 +1021,30 @@ body > main:after,
 
 .panel > * {
 	display: block;
+	flex-shrink: 0;
 	margin-left: auto;
 	margin-right: auto;
 	max-width: var(--content-width);
 }
 
-/*.panel.sticky:nth-last-of-type(1) + *:after {
+/*.panel.clear:nth-last-of-type(1) {*/
+.panel.sticky.clear {
+	--page-color-transparency: 1;
+
+	min-height: calc(100vh - 3rem);
+}
+
+.panel.sticky.clear:after {
 	display: block;
 	content: '';
 	position: absolute;
-	top: 0;
-	height: 100vh;
+	bottom: -3rem;
+	left: 0;
+	height: 3rem;
 	width: 100%;
-	z-index: -1;
 
-	--page-color-transparency: 1;
-	background: red;
-
-	white-space: nowrap;
-	pointer-events: none;
-	mask: none;
-}*/
+	background: none;
+}
 
 .fullwidth,
 .hero {
@@ -1071,12 +1073,6 @@ body > main:after,
 
 	font-size: 0;
 }
-
-/*	@media (orientation: portrait) {
-		.hero img {
-			height: 100vh;
-		}
-	}*/
 
 /*--------------------------------------------------------------
 hyperlink styles
@@ -1177,7 +1173,7 @@ languages selector
 	position: fixed;
 	top: var(--gutter-width);
 	right: 0;
-	z-index: 104;
+	z-index: 101;
 
 	text-align: right;
 
@@ -1200,7 +1196,7 @@ languages selector
 	.languages a {
 		display: inline-block;
 		min-width: var(--gutter-width);
-		/*padding-right: 0.2rem;*/
+		padding-right: 0.2rem;
 
 		text-align: center;
 		text-decoration: none;
@@ -1279,7 +1275,6 @@ span[title*=' ']:before {
 	width: var(--gutter-width);
 
 	backdrop-filter: blur(var(--page-color-blur));
-	background-color: rgba(var(--page-color),var(--page-color-transparency));
 	color: rgba(var(--text-color),0.33);
 	cursor: help;
 	font-variant: initial;
@@ -1306,6 +1301,7 @@ span[title*=' ']:hover:before {
 	max-width: calc(var(--content-width)/1.61);
 	z-index: 100;
 
+	background-color: rgba(var(--page-color),var(--page-color-transparency));
 	border: 1px solid;
 	color: rgb(var(--text-color));
 	text-align: left;
@@ -1420,8 +1416,8 @@ article filter styles
 
 #articles-filter {
 	position: relative;
-	top: 0.4rem;
-	z-index: 102;
+	padding-top: 0.4rem;
+	z-index: 103;
 
 	text-align: center;
 	pointer-events: none;
@@ -1655,28 +1651,16 @@ article.draft:before {
 articles cross-language display
 --------------------------------------------------------------*/
 
-.articles-list:lang(en) article:lang(el) .thumbnail,
-.articles-list:lang(el) article:lang(en) .thumbnail,
-.articles-list:lang(en) article:lang(el) .title,
-.articles-list:lang(el) article:lang(en) .title,
-.articles-list:lang(en) article:lang(el) .summary,
-.articles-list:lang(el) article:lang(en) .summary,
-.articles-list:lang(en) article:lang(el) .time,
-.articles-list:lang(el) article:lang(en) .time
+.articles-list:lang(en) article:lang(el) a > *,
+.articles-list:lang(el) article:lang(en) a > *
 {
 	opacity: 0.5;
 	filter: blur(1px);
 
 	transition: opacity 0.2s, transform 1s;
 }
-	.articles-list:lang(en) article:lang(el):hover .thumbnail,
-	.articles-list:lang(el) article:lang(en):hover .thumbnail,
-	.articles-list:lang(en) article:lang(el):hover .title,
-	.articles-list:lang(el) article:lang(en):hover .title,
-	.articles-list:lang(en) article:lang(el):hover .summary,
-	.articles-list:lang(el) article:lang(en):hover .summary,
-	.articles-list:lang(en) article:lang(el):hover .time,
-	.articles-list:lang(el) article:lang(en):hover .time
+	.articles-list:lang(en) article:lang(el):hover a > *,
+	.articles-list:lang(el) article:lang(en):hover a > *
 	{
 		opacity: 1 !important;
 		filter: blur(0px);
