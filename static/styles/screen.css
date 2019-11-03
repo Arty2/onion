@@ -20,18 +20,14 @@ global CSS variables
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
 	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
-	--font-interface: '';
 
 	/* layout */
 	--scrollbar-width: 2vw;
 	/*--content-width: 60ch; /* is not same for different fonts */
 	--content-width: 30rem;
 	/*--content-width: 100%;*/ /* DEBUG */
-	/*--sidenote-width: 10rem;*/
-	--sidenote-width: calc((100vw - var(--content-width))/2 - 2*var(--gutter-width));
 
 	--line-height: 1.4rem;
-	--header-height: calc(3*var(--line-height));
 	--gutter-height: calc(1*var(--line-height));
 	--gutter-width: 1.4rem;
 	/*--gutter-width: 0px; /* DEBUG */
@@ -88,6 +84,7 @@ global CSS variables
 	--s4: calc(var(--s3) * var(--ratio));
 	--s5: calc(var(--s4) * var(--ratio));
 }
+
 
 
 /*--------------------------------------------------------------
@@ -355,11 +352,10 @@ code, kbd {
 }
 
 aside.meta,
-.sidenote,
-.entry-content aside,
+.sidenote, .entry-content aside,
 .footnotes,
-abbr:after, a[title*=' ']:after {
-	font-size: 0.8rem;
+abbr:before, abbr:after, a[title*=' ']:before {
+	font-size: 0.8em;
 }
 
 /*--------------------------------------------------------------
@@ -548,10 +544,9 @@ abbr {
 	abbr[title*=' '] {
 		cursor: help;
 	}
-
-	/* the following has been incorporated in the tooltips section
-	/*	
 	abbr:after {
+		display: inline-block;
+		margin-left: -0.1em;
 		line-height: 1.3;
 
 		font-variant: initial;
@@ -559,9 +554,12 @@ abbr {
 	}
 	abbr[title*=' ']:after {
 		content: '*';
-		position: absolute;
+		/*position: absolute;*/
 		top: -0.2em;
 	}
+
+	/* the following has been incorporated in the tooltips section
+	/*	
 	@media (pointer: coarse) {
 		abbr[title*=' ']:hover:after {
 			content: attr(title);
@@ -656,7 +654,7 @@ main blockquote {
 main blockquote::before {
 	content: '“';
 	float: left;
-	margin-left: -1em;
+	margin-left: -0.8em;
 
 	font-size: 200%;
 	line-height: 1;
@@ -860,9 +858,12 @@ body > main > * {
 
 body > header {
 	margin-bottom: var(--gutter-height);
-	/*height: var(--header-height);*/
 	z-index: 103;
 	opacity: 0.999; /* z-index quickfix */
+}
+
+body > header h1 {
+	/*height: var(--header-height);*/
 }
 
 body > header .description {
@@ -999,7 +1000,7 @@ body > main:after,
 	content: '';
 	position: absolute;
 	left: 0;
-	height: calc(2*var(--header-height));
+	height: calc(6*var(--line-height));
 	width: 100%;
 
 	background: inherit;
@@ -1008,14 +1009,14 @@ body > main:after,
 }
 	.panel:before,	
 	.footnotes li[id^="fn:"]:target:before {
-		top: calc(-2*var(--header-height));
+		top: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);;
 	}
 		.panel:first-child:before {
 			display: none;
 		}
 	body > main:after {
-		bottom: calc(-2*var(--header-height));
+		bottom: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
 	}
 
@@ -1242,17 +1243,8 @@ ui controls
 }
 
 .ui #theme-toggle {
-	background: none;
-	border: none;
-	color: rgb(var(--text-color));
 	cursor: pointer;
-	outline: none;
-
-	-webkit-appearance: button; /* iOS and Safari fix */
 }
-	.ui #theme-toggle::-moz-focus-inner { border: 0; }
-
-
 
 /*--------------------------------------------------------------
 link tooltip styles
@@ -1273,11 +1265,11 @@ span[title*=' ']:hover {
 	text-decoration-thickness: 0.5px;
 }
 
-a[title*=' ']:after,
-ins[datetime]:after,
-del[datetime]:after,
-abbr[title*=' ']:after,
-span[title*=' ']:after {
+a[title*=' ']:before,
+ins[datetime]:before,
+del[datetime]:before,
+abbr[title*=' ']:before,
+span[title*=' ']:before {
 	--tooltip-mark: '↬';
 	content: var(--tooltip-mark); 
 	display: inline-block;
@@ -1301,16 +1293,17 @@ span[title*=' ']:after {
 	/*outline: 1px dashed red;*/
 }
 
-a[title*=' ']:hover:after,
-ins[datetime]:hover:after,
-del[datetime]:hover:after,
-abbr[title*=' ']:hover:after,
-span[title*=' ']:hover:after {
+a[title*=' ']:hover:before,
+ins[datetime]:hover:before,
+del[datetime]:hover:before,
+abbr[title*=' ']:hover:before,
+span[title*=' ']:hover:before {
 	content: attr(title);
 	padding-right: var(--gutter-width);
 	padding-left: 0.4rem;
 	margin: 0 2px;
 	width: auto;
+	max-width: calc(var(--content-width)/1.61);
 	z-index: 100;
 
 	border: 1px solid;
@@ -1320,32 +1313,42 @@ span[title*=' ']:hover:after {
 	outline: 1px solid rgb(var(--page-color));
 }
 	/* wikipedia links icon */
-	a[title*=' '][href*='wikipedia.org']:after {
+	a[title*=' '][href*='wikipedia.org']:before {
 		--tooltip-mark: 'Ꮤ';
 	}
 	/* PDF links icon */
-	a[title*=' '][href*='.pdf']:after {
+	a[title*=' '][href*='.pdf']:before {
 		--tooltip-mark: '🗎';
 	}
 	/* abbr and other notes icon */
-	abbr[title*=' ']:after,
-	span[title*=' ']:after {
-		--tooltip-mark: '※';
-		/*--tooltip-mark: '🞰';*/
+	abbr[title*=' ']:before,
+	span[title*=' ']:before {
+		--tooltip-mark: '*';
+		/*--tooltip-mark: '※';*/
 	}
 	/* ins and del tags icon and content */
-	ins[datetime]:after,
-	del[datetime]:after {
+	ins[datetime]:before,
+	del[datetime]:before {
 		--tooltip-mark: '¤';
 	}
-	ins[datetime]:hover:after,
-	del[datetime]:hover:after {
+	ins[datetime]:hover:before,
+	del[datetime]:hover:before {
 		content: attr(datetime);
 	}
 
 /* disable click on link tooltips */
-a[title*=' ']:active:after {
+a[title*=' ']:active:before {
 	pointer-events: none;
+}
+
+@media only screen and ( min-width: 1200px ) {
+	a[title*=' ']:hover:before,
+	ins[datetime]:hover:before,
+	del[datetime]:hover:before,
+	abbr[title*=' ']:hover:before,
+	span[title*=' ']:hover:before {
+		width: calc((100vw - var(--content-width))/2 - var(--gutter-width));
+	}
 }
 
 /*--------------------------------------------------------------
@@ -1633,13 +1636,14 @@ articles-list styles
 articles oddities classes
 --------------------------------------------------------------*/
 
-article.draft .title:before {
+article.draft:before {
 	content: 'DRAFT';
 	/*float: left;*/
 	margin-right: 0.5em;
 
-	border-top: 2px solid;
-	border-bottom: 2px solid;
+	border: 3px solid;
+	border-right: none;
+	border-left: none;
 	color: rgb(var(--text-color-error));
 	font-size: 60%;
 	font-weight: bold;
@@ -1952,7 +1956,7 @@ single article meta styles
 	flex-basis: calc((100% - 2*var(--gutter-width))/2);
 	flex-grow: 1;
 	margin: calc(var(--gutter-width)/2);
-	outline: 1px dashed red;
+	/*outline: 1px dashed red;*/
 }
 
 .meta h2 {
@@ -2034,6 +2038,7 @@ sidenote styles
 	width: var(--gutter-width);
 	overflow: visible;
 
+	color: rgba(var(--text-color),0.33);
 	cursor: n-resize;
 	line-height: 1.2rem;
 	text-align: center;
@@ -2044,20 +2049,22 @@ sidenote styles
 }
 	.sidenote:hover:before,
 	.entry-content aside:hover:before {
-
+		color: rgba(var(--text-color),1);
 	}
 
 .sidenote,
 .entry-content aside {
 	margin: var(--gutter-height) 0;
 	padding: calc(var(--gutter-width)/2);
-	max-height: calc(2*var(--line-height));
+	max-height: calc(2.1*var(--line-height));
 	overflow: hidden;
 
 	background-clip: border-box;
 	border: 1.5px dashed;
+	border-right: none;
+	border-left: none;
 	text-overflow: ellipsis;
-	transition: max-height 0.3s ease-in;
+	transition: max-height 1s 1s;
 
 	/*-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 1rem, rgba(0,0,0,0) 90%);*/
 }
@@ -2065,12 +2072,13 @@ sidenote styles
 .sidenote:hover,
 .entry-content aside:hover {
 	max-height: 100vh;
-	max-height: initial;
 	z-index: 101;
+
+	/*text-overflow: auto;*/
 
 	transition-delay: 0s;
 
-	-webkit-mask-image: none;
+	/*-webkit-mask-image: none;*/
 }
 
 
@@ -2081,12 +2089,12 @@ sidenote styles
 		float: left;
 		margin: 0 0 0 calc(-1*var(--gutter-width));
 		padding: 0;
-		max-width: var(--content-width);
-		width: var(--sidenote-width);
+		max-width: calc(var(--content-width)/1.61);
+		width: calc((100vw - var(--content-width))/2 - 2*var(--gutter-width));
 		max-height: 100%;
 		transform: translate(-100%, 0);
 
-		border-width: 0;
+		border: none;
 
 		-webkit-mask-image: none;
 	}

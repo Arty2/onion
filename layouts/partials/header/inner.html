@@ -1,8 +1,8 @@
 <div class="inner">
 	<a href="{{ "/" | relLangURL }}">
 		<h1>
-			{{- if .Site.Params.Header }}
-				{{ .Site.Params.Header | safeHTML }}
+			{{- if .Site.Params.Logo }}
+				{{ .Site.Params.Logo | safeHTML }}
 			{{- else -}}
 				{{ .Site.Title }}
 			{{- end -}}

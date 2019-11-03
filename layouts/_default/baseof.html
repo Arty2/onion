@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ with .Site.Params.locale }}{{ . }}{{ end }}">
+<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ end }}">
 <head>
 	<title>{{if .IsHome}}{{ .Site.Title }} • {{ .Title }}{{else}}{{ .Title }} • {{ .Site.Title }}{{end}}</title>
 	{{ partial "head" . }}
@@ -8,7 +8,7 @@
 </head>
 <body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	{{ partial "languages" . }}
-	{{ if ne .Site.Params.UI false }}{{ partial "ui" . }}{{ end }}
+	{{ if ne .Site.Params.show_ui false }}{{ partial "ui" . }}{{ end }}
 	<header>
 		{{ block "header" . }}{{ partial "header/inner" . }}{{end}}
 	</header>

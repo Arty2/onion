@@ -1,4 +1,4 @@
-{{ if ne .Site.Params.Menu_social false }}{{ partial "social.html" . }}{{ end }}
+{{ if ne .Site.Params.show_social false }}{{ partial "social.html" . }}{{ end }}
 
 {{ with .Site.Copyright -}}
 	<div class="copyright">{{ . | safeHTML  }}</div>
