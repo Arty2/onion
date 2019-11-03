@@ -6,7 +6,7 @@
 
 	<!-- <link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}"> -->
 </head>
-<body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}">
+<body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	{{ partial "languages" . }}
 	{{ if ne .Site.Params.UI false }}{{ partial "ui" . }}{{ end }}
 	<header>
