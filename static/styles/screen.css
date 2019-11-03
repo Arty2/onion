@@ -1056,18 +1056,21 @@ body > main:after,
 	/*grid-column: full;*/
 }
 
-.hero {
-	/*margin-top: -4rem;*/
-	/*margin-bottom: var(--gutter-width);*/
-
-	font-size: 0;
-}
+.fullwidth img,
 .hero img {
 		margin: 0;
 		width: 100%;
 		height: 100vh;
 		object-fit: cover;
 	}
+
+.hero {
+	/*margin-top: -4rem;*/
+	/*margin-bottom: var(--gutter-width);*/
+
+	font-size: 0;
+}
+
 /*	@media (orientation: portrait) {
 		.hero img {
 			height: 100vh;
