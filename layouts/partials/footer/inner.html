@@ -1,3 +1,15 @@
+{{ if ne .Site.Params.show_social false }}
+	{{ if .Site.Params.Author }}
+	<div class="media author-card" itemscope="" itemtype="http://schema.org/Person">	  
+		{{ with .Site.Params.Author.Image }}<img class="avatar" src="{{ . | relURL }}" itemprop="image" alt="">{{ end }}
+		<div class="media-body">
+			{{ with .Site.Params.Author.Name }}<h3 class="card-title" itemprop="name">{{ . }}</h3>{{ end }}
+			{{ with .Site.Params.Author.Description }}<p class="card-text" itemprop="description">{{ . }}</p>{{ end }}
+		</div>
+	</div>
+	{{ end }}
+{{ end }}
+
 {{ if ne .Site.Params.show_social false }}{{ partial "social.html" . }}{{ end }}
 
 {{ with .Site.Copyright -}}

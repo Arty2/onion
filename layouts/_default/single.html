@@ -48,8 +48,8 @@
 							<dd>{{- if .Params.dateCreated -}}
 									{{- .Params.dateCreated -}}
 								{{- else -}}
-									{{- if isset $.Site.Params "date_format" -}}
-										{{- .Date.Format $.Site.Params.date_format -}}
+									{{- if isset $.Site.Params "dateformat" -}}
+										{{- .Date.Format $.Site.Params.dateformat -}}
 									{{- else -}}
 										{{- .Date.Format "2006-01-02" -}}
 									{{- end -}}

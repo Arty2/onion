@@ -872,7 +872,7 @@ body > header .description {
 
 body > header nav,
 body > footer nav {
-	margin: var(--line-height) 0;
+	margin: var(--line-height) 0 0;
 }
 
 body > header nav {
@@ -905,6 +905,19 @@ body > footer {
 	z-index: 1;
 
 	text-align: center;
+}
+
+body > footer .author-card .avatar {
+	max-height: calc(4*var(--line-height));
+	border-radius: 50%;
+}
+
+body > footer .social {
+
+}
+
+body > footer .copyright {
+	margin-top: var(--gutter-height);
 }
 
 
@@ -2057,13 +2070,16 @@ sidenote styles
 .entry-content aside:hover {
 	max-height: 100vh;
 	z-index: 101;
-
-	/*text-overflow: auto;*/
-
 	transition-delay: 0s;
 
 	/*-webkit-mask-image: none;*/
 }
+
+/*.sidenote:after,
+.entry-content aside:after {
+	content: attr(title);
+	outline: 2px dashed red;
+}*/
 
 
 @media only screen and ( min-width: 1200px ) {
@@ -2217,7 +2233,7 @@ gallery
 }
 
 .gallery:after {
-	content: attr(data-current) " / " counter(items);
+	content: attr(data-current) ' / ' counter(items);
 
 	position:absolute;
 	bottom: 0;
