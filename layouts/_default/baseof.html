@@ -8,7 +8,10 @@
 </head>
 <body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	{{- with .Resources.GetMatch "custom.css" }}
-		<style>{{ .Content | safeCSS }}</style>
+		{{- $customcss := . | resources.Minify }}
+		<style>
+			{{ $customcss.Content | safeCSS }}
+		</style>
 	{{ end -}}
 	{{ partial "languages" . }}
 	{{ if ne .Site.Params.show_ui false }}{{ partial "ui" . }}{{ end }}

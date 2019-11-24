@@ -789,6 +789,7 @@ input[type="email"] {
 .button::-moz-focus-inner { border: 0; }
 
 
+
 /*--------------------------------------------------------------
 table styles
 --------------------------------------------------------------*/
@@ -831,6 +832,8 @@ tr:hover td {
 	background: var(--shadow-color);
 }
 
+
+
 /*--------------------------------------------------------------
 structural styles
 --------------------------------------------------------------*/
@@ -841,14 +844,17 @@ html {
 
 body {
 	position: relative;
-	padding: 1em; /* fallback */
-	padding: var(--gutter-width);
 	max-width: 100vw;
-	/*max-width: calc(100vw - var(--scrollbar-width));*/
 }
 
 body > header,
-body > footer,
+body > footer {
+	padding: var(--gutter-width);
+	width: calc(100vw - var(--scrollbar-width));
+}
+
+body > header > *,
+body > footer > *,
 body > main > * {
 	margin-left: auto;
 	margin-right: auto;
@@ -873,7 +879,7 @@ body > header .description {
 
 body > header nav,
 body > footer nav {
-	margin: var(--line-height) 0 0;
+	/*margin: var(--line-height) auto;*/
 }
 
 body > header nav {
@@ -888,8 +894,9 @@ body > footer nav li {
 
 body > main {
 	position: relative;
-	margin: 0 calc(-1*var(--gutter-width)) 90vh;
-	padding: 0 var(--gutter-width) 5vh;
+	margin-bottom: calc(6*var(--line-height));
+	/*margin-bottom: 100vh;*/
+	padding: 0 var(--gutter-width) 0.5rem;
 	min-height: 100vh;
 
 	background: inherit;
@@ -897,12 +904,10 @@ body > main {
 }
 
 body > footer {
-	position: fixed;
-	left: var(--gutter-width);
-	right: var(--gutter-width);
+	/*position: fixed;*/
 	bottom: 0;
 	clear: both;
-	margin-bottom: var(--gutter-width);
+	/*height: 100vh;*/
 	z-index: 1;
 
 	text-align: center;
@@ -935,40 +940,9 @@ body > footer nav ul {
 
 
 
-
-/*--------------------------------------------------------------
-social sharing menu
---------------------------------------------------------------*/
-
-.sharing {
-	/*margin-top: var(--gutter-width);*/
-	margin-bottom: var(--gutter-width);
-}
-
-.sharing summary {
-	/*display: inline-block;*/
-	display: none;
-}
-
-.sharing a {
-	display: inline-block;
-	margin: 0 0.5rem;
-
-	text-transform: lowercase;
-}
-	.sharing a:first-of-type {
-		margin-left: 0;
-	}
-	.sharing a:last-child {
-		margin-right: 0;
-	}
-
-
 /*--------------------------------------------------------------
 panel styles
 --------------------------------------------------------------*/
-
-
 
 .sticky {
 	position: sticky !important;
@@ -993,7 +967,6 @@ panel styles
 	/*backdrop-filter: blur(var(--page-color-blur));*/ /* too heavy on rendering, doesn't apply well to :before and :after */
 	background-color: rgba(var(--page-color), var(--page-color-transparency));
 	justify-content: center;
-	/*white-space: nowrap;*/
 }
 	.panel:first-child {
 		--page-color-transparency: 1;
@@ -1087,6 +1060,35 @@ body > main:after,
 
 	font-size: 0;
 }
+
+
+
+/*--------------------------------------------------------------
+social sharing menu
+--------------------------------------------------------------*/
+
+.sharing {
+	/*margin-top: var(--gutter-width);*/
+	margin-bottom: var(--gutter-width);
+}
+
+.sharing summary {
+	/*display: inline-block;*/
+	display: none;
+}
+
+.sharing a {
+	display: inline-block;
+	margin: 0 0.5rem;
+
+	text-transform: lowercase;
+}
+	.sharing a:first-of-type {
+		margin-left: 0;
+	}
+	.sharing a:last-child {
+		margin-right: 0;
+	}
 
 /*--------------------------------------------------------------
 hyperlink styles
@@ -1185,7 +1187,7 @@ languages selector
 --------------------------------------------------------------*/
 .languages {
 	position: fixed;
-	top: var(--gutter-width);
+	top: 0;
 	right: 0;
 	z-index: 101;
 
@@ -1231,7 +1233,7 @@ ui controls
 
 .ui {
 	position: fixed;
-	bottom: var(--gutter-width);
+	bottom: 0;
 	right: 0;
 	width: var(--gutter-width);
 	z-index: 104;
@@ -1784,6 +1786,9 @@ articles-list - stack
 articles-list - cluster
 --------------------------------------------------------------*/
 
+.articles-list.cluster {
+	padding: calc(var(--gutter-width)/2);
+}
 .articles-list.cluster > .wrapper {
 	display: flex;
 	flex-wrap: wrap;
@@ -1793,7 +1798,7 @@ articles-list - cluster
 
 .articles-list.cluster article {
 	display: inline-block;
-	flex-basis: calc((var(--content-width)/2 - 0.5*var(--gutter-width)));
+	flex-basis: calc((var(--content-width)/2 - var(--gutter-width)));
 	flex-grow: 1;
 	margin: calc(var(--gutter-width)/2);
 }
