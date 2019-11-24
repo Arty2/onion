@@ -364,6 +364,7 @@ reset styles
 --------------------------------------------------------------*/
 
 html {
+	position: relative;
 	box-sizing: border-box;
 	scroll-behavior: smooth;
 }
@@ -864,7 +865,6 @@ body > main > * {
 }
 
 body > header {
-	margin-bottom: var(--gutter-height);
 	z-index: 103;
 	opacity: 0.999; /* z-index quickfix */
 }
@@ -1161,26 +1161,26 @@ social menu
 	display: none;
 }
 
-.icon-email:before { content: '📧'; }
-.icon-gitlab:before { content: '🦊'; }
-.icon-github:before { content: '🐙'; }
-.icon-instagram:before { content: '📷'; }
-.icon-twitter:before { content: '🐦'; }
-.icon-facebook:before { content: '👍'; }
-.icon-mastodon:before { content: '🐘'; }
-.icon-webring:before { content: '🕸'; }
+.icon-email:before      { content: '📧'; }
+.icon-gitlab:before     { content: '🦊'; }
+.icon-github:before     { content: '🐙'; }
+.icon-instagram:before  { content: '📷'; }
+.icon-twitter:before    { content: '🐦'; }
+.icon-facebook:before   { content: '👍'; }
+.icon-mastodon:before   { content: '🐘'; }
+.icon-webring:before    { content: '🕸'; }
 .icon-soundcloud:before { content: '☁'; }
-.icon-youtube:before { content: '▶'; }
+.icon-youtube:before    { content: '▶'; }
 
 /*.icon-email:hover:before { color: #168de2; }*/ /* same color as links */
-.icon-gitlab:hover:before { color: #e24329; }
-.icon-github:hover:before { color: #2188ff; }
-.icon-instagram:hover:before { color: #e4405f; }
-.icon-twitter:hover:before { color: #1da1f2; }
-.icon-facebook:hover:before { color: #3b5998; }
-.icon-mastodon:hover:before { color: #3088d4; }
-.icon-soundcloud:hover:before { color: #ff3300; }
-.icon-youtube:hover:before { color: #ff0000; }
+.icon-gitlab:hover     { color: #e24329; }
+.icon-github:hover     { color: #2188ff; }
+.icon-instagram:hover  { color: #e4405f; }
+.icon-twitter:hover    { color: #1da1f2; }
+.icon-facebook:hover   { color: #3b5998; }
+.icon-mastodon:hover   { color: #3088d4; }
+.icon-soundcloud:hover { color: #ff3300; }
+.icon-youtube:hover    { color: #ff0000; }
 
 /*--------------------------------------------------------------
 languages selector
@@ -1515,7 +1515,7 @@ articles-list styles
 
 .articles-list {
 	position: relative;
-	margin-bottom: var(--gutter-height);
+	margin-bottom: calc(3*var(--gutter-height));
 	width: 100%;
 
 	/*outline: 1px dashed cyan;*/
@@ -1573,7 +1573,8 @@ articles-list styles
 }
 
 .articles-list article > a:hover .thumbnail {
-	transform: scale(1.02);
+	transform: scale(1.05);
+	/*outline: 1.5px solid rgb(var(--accent-color));*/
 }
 
 .articles-list article .thumbnail {
@@ -1596,15 +1597,8 @@ articles-list styles
 	width: 100%;
 }
 
-.articles-list article .time {
-	display: block;
-
-	color: rgb(var(--text-color));
-	font-size: 1rem;
-	/*outline: 1px dashed red;*/
-}
-
 .articles-list article .title {
+	order: 1;
 	display: inline-block;
 	margin-right: 1ch;
 
@@ -1612,12 +1606,33 @@ articles-list styles
 	/*outline: 1px dashed red;*/
 }
 
+.articles-list article .time {
+	order: 4;
+	display: block;
+
+	color: rgb(var(--text-color));
+	font-size: 1rem;
+	/*outline: 1px dashed red;*/
+}
+
 .articles-list article .summary {
+	order: 2;
 	display: inline;
 	margin: 0;
 
 	color: rgba(var(--text-color),0.8);
 	/*outline: 1px dashed red;*/
+}
+
+.articles-list article .rating {
+	order: 3;
+
+	color: inherit;
+}
+
+
+.articles-list article .tags {
+	/*display: none;*/
 }
 
 
@@ -1643,6 +1658,8 @@ articles-list styles
 .articles-list article.preformatted pre {
 	text-align: left;
 }
+
+
 
 /*--------------------------------------------------------------
 articles oddities classes
@@ -1686,11 +1703,9 @@ articles cross-language display
 
 
 
-
 /*--------------------------------------------------------------
 articles-list - side
 --------------------------------------------------------------*/
-
 
 .articles-list.side article a {
 	display: grid;
@@ -1700,7 +1715,7 @@ articles-list - side
 
 .articles-list.side article .thumbnail {
 	grid-column: 1;
-	grid-row: 1 / span 34;
+	grid-row: 1 / span 4;
 }
 
 .articles-list.side article .thumbnail img {
@@ -1727,6 +1742,7 @@ articles-list - side
 .articles-list.side.alternate article:nth-child(2n) .summary {
 	grid-column: 1;
 }
+
 
 
 /*--------------------------------------------------------------
@@ -1776,10 +1792,6 @@ articles-list - stack
 	white-space: nowrap;
 }
 
-.articles-list.stack .rating {
-	order: 3;
-	color: inherit;
-}
 
 
 /*--------------------------------------------------------------
@@ -1787,7 +1799,7 @@ articles-list - cluster
 --------------------------------------------------------------*/
 
 .articles-list.cluster {
-	padding: calc(var(--gutter-width)/2);
+	/*padding: calc(var(--gutter-width)/2);*/
 }
 .articles-list.cluster > .wrapper {
 	display: flex;
@@ -2322,3 +2334,43 @@ gallery
 	transform: scale(1.2);
 	transition-delay: 0s;
 }
+
+
+
+/*
+DEBUG STYLES
+testing baseline
+*/
+
+/*:root {
+	--baseline: var(--line-height);
+	--baseline-offset: 0px;
+	--color: hsla(204, 80%, 72%, 0.25);
+}
+
+:root {
+	--background-baseline: repeating-linear-gradient(
+		to bottom,
+		var(--color),
+		var(--color) 1px,
+		transparent 1px,
+		transparent var(--baseline)
+	);
+}
+
+html::before {
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	max-width: var(--max_width);
+	min-height: 100vh;
+	height: 100%;
+	content: '';
+	background-image: var(--background-baseline);
+	background-size: 100%;
+	background-position: 0 var(--baseline-offset);
+	z-index: 1000;
+	pointer-events: none;
+}*/

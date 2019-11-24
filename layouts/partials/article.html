@@ -43,7 +43,12 @@
 		</p>
 		{{- with .Params.Rating }}
 			<p class="rating">{{ range seq (int . ) }}★{{ end }}</p>
-		{{- end -}}
+		{{- end -}}		
+		{{ if .Params.Tags }}
+			<p class="tags">{{ range .Params.Tags -}}
+				<a href="/tags/{{ . | urlize }}" class="tag" rel="tag">{{ (i18n . ) }}</a>
+			{{- end }}</p>
+		{{ end }}
 	</a>
 {{- end -}}
 </article>
