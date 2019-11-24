@@ -30,6 +30,7 @@ global CSS variables
 	--line-height: 1.4rem;
 	--gutter-height: calc(1*var(--line-height));
 	--gutter-width: 1.4rem;
+	/*--offset: --gutter-width;*/
 	/*--gutter-width: 0px; /* DEBUG */
 
 	/*

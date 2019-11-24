@@ -1,9 +1,4 @@
 {{ define "main" }}
-	{{- with .Resources.GetMatch "custom.css" }}
-		<!-- with .Resources.GetMatch "custom.css" | toCSS | minify, issue with type of file -->
-		<style>{{ .Content | safeCSS }}</style>
-	{{ end -}}
-
 	<article class="h-entry{{ with .Draft }} draft{{ end }}">
 		{{ $featured := "" }}
 		{{ if .Params.image }}
