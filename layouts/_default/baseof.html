@@ -15,7 +15,7 @@
 	{{ end -}}
 	{{ partial "languages" . }}
 	{{ if ne .Site.Params.show_ui false }}{{ partial "ui" . }}{{ end }}
-	<header>
+	<header class="cluster">
 		{{ block "header" . }}{{ partial "header/inner" . }}{{end}}
 	</header>
 	<main>

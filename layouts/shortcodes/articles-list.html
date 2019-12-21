@@ -1,11 +1,12 @@
 {{- $types := (.Get "types") -}}
 {{- $tag := (.Get "tag") -}}
 {{- $filter := (.Get "filter") -}}
+{{- $id := (.Get "id") -}}
 {{- $class := (.Get "class") -}}
 {{- $title := (.Get "title") -}}
 {{- $closed := (.Get "closed") -}}
 {{- $lang := .Site.Language.Lang -}}
-<details class="articles-list {{ with $class }}{{ $class }}{{ end }}" {{ if ne $closed "true" }}open{{ end }}>
+<details id="{{ with $id }}{{ . }}{{ end }}" class="articles-list {{ with $class }}{{ . }}{{ end }}" {{ if ne $closed "true" }}open{{ end }}>
 <summary><h2>{{ $title }}</h2></summary>
 <div class="wrapper">
 {{- range .Site.AllPages -}}

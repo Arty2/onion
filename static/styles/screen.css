@@ -334,8 +334,7 @@ figcaption,
 	font-size: 0.8rem;
 }
 
-body > header .description,
-body > header nav,
+body > header,
 body > footer {
 	font-size: 0.8rem;
 	line-height: 1.3;
@@ -869,8 +868,23 @@ body > main > * {
 }
 
 body > header {
-	z-index: 103;
-	opacity: 0.999; /* z-index quickfix */
+	/*z-index: 103;*/
+	/*opacity: 0.999;*/
+	--space: 1rem;
+	overflow: hidden;
+	/*outline: 1px dashed yellow;*/
+}
+
+body > header > * {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	/*margin: calc(var(--space) / 2 * -1);*/
+}
+
+body > header > * > * {
+	/*margin: calc(var(--space) / 2);*/
+	/*outline: 1px dotted red;*/
 }
 
 body > header h1 {
@@ -883,7 +897,7 @@ body > header .description {
 
 body > header nav,
 body > footer nav {
-	/*margin: var(--line-height) auto;*/
+	min-height: var(--line-height);
 }
 
 body > header nav {
@@ -941,7 +955,6 @@ body > footer nav ul {
 	padding: 0;
 	text-align: center;
 }
-
 
 
 /*--------------------------------------------------------------
