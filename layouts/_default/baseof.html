@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ with .Site.LanguageCode }}{{ . }}{{ end }}">
 <head>
+	<meta charset="UTF-8">
 	<title>{{if .IsHome}}{{ .Site.Title }} • {{ .Title }}{{else}}{{ .Title }} • {{ .Site.Title }}{{end}}</title>
 	{{ partial "head" . }}
-
-	<!-- <link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}"> -->
 </head>
 <body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
-	{{- with .Resources.GetMatch "custom.css" }}
+	{{- with .Resources.GetMatch "custom.css" }}{{/* load custom.css located by the content, if it exists */}}
 		{{- $customcss := . | resources.Minify }}
 		<style>
 			{{ $customcss.Content | safeCSS }}
 		</style>
 	{{ end -}}
-	{{ partial "languages" . }}
+	{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 	{{ if ne .Site.Params.show_ui false }}{{ partial "ui" . }}{{ end }}
 	<header class="cluster">
 		{{ block "header" . }}{{ partial "header/inner" . }}{{end}}
@@ -22,8 +21,11 @@
 		{{ block "main" . }}{{end}}
 	</main>
 	<footer>
-		{{ block "footer" . }}{{ partial "footer/inner" . }}{{end}}
+		{{ block "footer" . }}{{ partialCached "footer/inner" . }}{{end}}
 	</footer>
-	{{ partial "scripts" . }}
+	{{ partialCached "scripts" . }}
+	{{ with .Resources.Match "script.js" }}{{/* load script.js located by the content, if it exists */}}
+	<script async src="./script.js"></script>
+	{{ end }}
 </body>
 </html>

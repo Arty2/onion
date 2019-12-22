@@ -7,8 +7,4 @@
 
 <!-- <script async src="{{ "/scripts/leader-line.min.js" | relURL }}" ></script> -->
 
-{{ with .Resources.Match "script.js" }}
-<script async src="./script.js"></script>
-{{ end }}
-
 {{ template "_internal/google_analytics_async.html" . }}
