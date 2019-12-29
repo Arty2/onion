@@ -186,6 +186,11 @@ theme styles
 	text-shadow: none;
 }
 
+/*:root {
+	scrollbar-color: rgb(var(--accent-color)) transparent !important;
+	scrollbar-width: thin !important;
+}*/
+
 body {
 	background: #fff; /* fallback */
 	background: rgb(var(--page-color));
@@ -608,7 +613,7 @@ sup {
 }
 
 
-ins, del {
+ins, del, s {
 	text-decoration-thickness: 0.5px;
 }
 
