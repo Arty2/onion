@@ -1012,13 +1012,15 @@ body > main:after,
 }
 	.panel:before,	
 	.footnotes li[id^="fn:"]:target:before {
+		display: none;
 		top: calc(-6*var(--line-height));
-		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);;
+		/*-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);*/
 	}
 		.panel:first-child:before {
 			display: none;
 		}
 	body > main:after {
+		display: none;
 		bottom: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
 	}
