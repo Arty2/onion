@@ -101,13 +101,14 @@ function scrollbarWidth() {
 scrollbarWidth();
 window.addEventListener('resize', scrollbarWidth);
 
+
 /*--------------------------------------------------------------
 Slide scroll
 --------------------------------------------------------------*/
 
 // scroll to element if it intersects the viewport
 // TODO: should reset when on top, see https://css-tricks.com/an-explanation-of-how-the-intersection-observer-watches/ for possible solution
-var snap_index = 0;
+/*var snap_index = 0;
 var slidescroll = new IntersectionObserver(function(entries) {
 	entries.forEach(function(entry) {
 		if (entry.isIntersecting) {
@@ -145,7 +146,7 @@ setTimeout(function(){
 		});
 	}	
 	// console.log("scrolled to first"); // DEBUG
-}, 2000);
+}, 2000);*/
 
 // end slide scroll
 

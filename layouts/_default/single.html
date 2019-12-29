@@ -8,12 +8,12 @@
 		{{ end }}
 
 		{{- with $featured -}}
-		<div class="hero snap">
-				{{- /* $resized := .Resize "600x" */ -}}
-				<img src="{{ .RelPermalink  }}" alt="">
+		<div class="hero">
+				{{- $resized := .Resize "1500x" -}}
+				<img src="{{ $resized.RelPermalink  }}" alt="">
 		</div>
 		{{- end -}}
-		<h1 class="title snap"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
+		<h1 class="title"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
 		<header>
 			<div class="details">
 				{{ if .Params.description }}
