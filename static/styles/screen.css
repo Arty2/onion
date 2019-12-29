@@ -1426,15 +1426,6 @@ tags styles
 	text-decoration: underline;
 }
 
-.tag:after {
-	display: inline-block;
-	margin-left: 0.25em;
-	height: 0.25rem;
-
-	text-decoration: none !important;
-	vertical-align: 20%;
-}
-
 .tag:-moz-focusring,
 .tag:focus-active,
 .tag:active {
@@ -1458,12 +1449,26 @@ article filter styles
 	pointer-events: none;
 }
 
+#articles-filter .tag {
+	
+}
+
 #articles-filter .tag:after {
-	content: ' +';
+	display: inline-block;
+	content: '×';
+	margin-left: 0.3em;
+
+	text-decoration: none !important;
+
+	text-align: center;
+	vertical-align: top;
+
+	transform: rotate(45deg);
+	font-size: 80%;
 }
 
 #articles-filter .tag[data-active='true']:after {
-	content: ' ×';
+	transform: rotate(0);
 }
 
 #articles-filter__reset {
@@ -1534,19 +1539,22 @@ articles-list styles
 
 .articles-list {
 	position: relative;
-	margin-bottom: calc(3*var(--gutter-height));
+	/*margin-bottom: calc(3*var(--gutter-height));*/
 	width: 100%;
 
 	/*outline: 1px dashed cyan;*/
 }
 
 .articles-list > summary {
-	margin-left: -1rem;
+	margin-left: -1.1rem;
 }
 
 .articles-list[open] summary::marker {
-	color: rgb(0,0,0,0);
-	/*visibility: hidden;*/
+	color: transparent;
+}
+
+.articles-list[open] summary::-webkit-details-marker { /* keep separate because Chome ignores it */
+	color: transparent;
 }
 
 .articles-list > summary:focus {
@@ -1555,8 +1563,6 @@ articles-list styles
 
 .articles-list > summary:focus h2 {
 	text-decoration: underline;
-	text-decoration-style: wavy;
-	text-decoration-skip-ink: none;
 }
 
 .articles-list > summary h2 {
@@ -1591,20 +1597,23 @@ articles-list styles
 	text-decoration: underline;
 }
 
-.articles-list article > a:hover .thumbnail {
+.articles-list article > a:hover .thumbnail img {
 	transform: scale(1.05);
 	/*outline: 1.5px solid rgb(var(--accent-color));*/
 }
 
-.articles-list article .thumbnail {
+.articles-list article .thumbnail img {
 	margin: 0;
 	/*max-height: 100vh;*/
-	/*overflow: hidden;*/
-	/*outline: 1px dashed red;*/
 
 	font-size: 0;
 
 	transition: transform .3s;
+}
+
+.articles-list article .thumbnail {
+	overflow: hidden;
+	/*outline: 1px dashed red;*/
 }
 
 .articles-list article .thumbnail:empty {
