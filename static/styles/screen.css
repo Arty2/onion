@@ -1002,7 +1002,7 @@ panel styles
 }*/
 
 body > main:after,
-.panel:before,
+.panel.fade:before,
 .footnotes li[id^="fn:"]:target:before {
 	display: block;
 	content: '';
@@ -1015,15 +1015,15 @@ body > main:after,
 	white-space: nowrap;
 	pointer-events: none;
 }
-	.panel:before,	
+	.panel.fade:before,	
 	.footnotes li[id^="fn:"]:target:before {
 		top: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
 		/*background: red;*/
 	}
-		.panel:first-child:before {
+		/*.panel:first-child:before {
 			display: none;
-		}
+		}*/
 	body > main:after {
 /*		bottom: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
