@@ -1571,7 +1571,7 @@ articles-list styles
 }
 
 .articles-list > summary h2 {
-	display: inline-block;
+	display: block;
 	margin-bottom: var(--line-height);
 
 	cursor: pointer;
