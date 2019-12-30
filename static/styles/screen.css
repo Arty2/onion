@@ -923,6 +923,7 @@ body > main {
 	min-height: 100vh;
 
 	background: inherit;
+	border-bottom: 1px solid transparent; /* to make sure no margin escapes */
 	z-index: 100;
 }
 
@@ -1015,16 +1016,16 @@ body > main:after,
 	white-space: nowrap;
 	pointer-events: none;
 }
-	.panel.fade:before,	
+	.panel.fade:before,
 	.footnotes li[id^="fn:"]:target:before {
 		top: calc(-6*var(--line-height));
-		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
-		/*background: red;*/
+		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);\
 	}
 		/*.panel:first-child:before {
 			display: none;
 		}*/
 	body > main:after {
+		display: none; /* TODO */
 		bottom: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
 		/*background: green;*/
