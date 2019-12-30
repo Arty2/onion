@@ -2181,18 +2181,12 @@ footnotes
 
 .footnotes ol {
 	padding: var(--gutter-width) 0;
-
-	list-style: none;
-	counter-reset: ftn;
+	list-style-position: inside;
 	/*outline: 1px solid green;*/
 }
 
-.footnotes li {
-	counter-increment: ftn;
-}
-
-.footnotes li:before {
-	content: counter(ftn) '. ';
+.footnotes li p {
+	display: inline;
 }
 
 .footnotes li[id^="fn:"]:target {
@@ -2223,15 +2217,15 @@ footnotes
 	}
 
 sup[id^="fnref:"] a {
-	padding-right: 0.3rem;s
+	padding-right: 0.3rem;
 }
 
 /**:target:after,*/
 sup[id^="fnref:"]:target:after {
-	content: '→';
+	content: '←';
 	/*content: '☞';*/
 	position: absolute;
-	left: 0;
+	right: 0;
 	width: var(--gutter-width);
 
 	font-size: 1rem;
