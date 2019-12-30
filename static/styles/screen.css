@@ -29,7 +29,7 @@ global CSS variables
 
 	--line-height: 1.4rem;
 	--gutter-height: calc(1*var(--line-height));
-	--gutter-width: 1.4rem;
+	/*--gutter-width: 1.4rem;*/
 	/*--offset: --gutter-width;*/
 	/*--gutter-width: 0px; /* DEBUG */
 
@@ -645,7 +645,7 @@ main figure,
 main aside {
 	/*margin-top: var(--gutter-width);*/
 	margin-bottom: 2rem; /* fallback */
-	margin-bottom: calc(1*var(--gutter-height));
+	margin-bottom: var(--gutter-height);
 }
 
 main blockquote {
@@ -1544,7 +1544,7 @@ articles-list styles
 
 .articles-list {
 	position: relative;
-	/*margin-bottom: calc(3*var(--gutter-height));*/
+	margin-bottom: var(--gutter-height);
 	width: 100%;
 
 	/*outline: 1px dashed cyan;*/
