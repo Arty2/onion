@@ -1025,9 +1025,9 @@ body > main:after,
 			display: none;
 		}
 	body > main:after {
-		bottom: calc(-6*var(--line-height));
+/*		bottom: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
-		background: green;
+		background: green;*/
 	}
 
 .panel > * {
