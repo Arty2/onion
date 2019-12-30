@@ -1572,7 +1572,7 @@ articles-list styles
 
 .articles-list > summary h2 {
 	display: inline-block;
-	margin-bottom: var(--gutter-height);
+	margin-bottom: var(--line-height);
 
 	cursor: pointer;
 }
