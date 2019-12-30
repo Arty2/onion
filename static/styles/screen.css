@@ -1017,17 +1017,17 @@ body > main:after,
 }
 	.panel:before,	
 	.footnotes li[id^="fn:"]:target:before {
-		display: none;
 		top: calc(-6*var(--line-height));
-		/*-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);*/
+		-webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
+		/*background: red;*/
 	}
 		.panel:first-child:before {
 			display: none;
 		}
 	body > main:after {
-		display: none;
 		bottom: calc(-6*var(--line-height));
 		-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0, rgba(0,0,0,0) 100%);
+		background: green;
 	}
 
 .panel > * {
@@ -2164,14 +2164,13 @@ sidenote styles
 footnotes
 --------------------------------------------------------------*/
 
-.footnote-ref a,
-.footnote-return {
+.footnote-ref, .footnote-backref {
 	display: inline-block;
 	color: inherit;
 	text-decoration: none;
 }
 
-.footnote-return {
+.footnote-backref {
 	margin-left: 0.5em;
 }
 
@@ -2211,10 +2210,10 @@ footnotes
 	animation: slidey .3s;
 }
 
-.footnotes li[id^="fn:"]:target .footnote-return {
+.footnotes li[id^="fn:"]:target .footnote-backref {
 	visibility: hidden;
 }
-	.footnotes li[id^="fn:"]:target .footnote-return:after {
+	.footnotes li[id^="fn:"]:target .footnote-backref:after {
 		content: '×';
 		visibility: visible;
 		position: absolute;
