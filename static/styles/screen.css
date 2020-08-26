@@ -589,12 +589,18 @@ kbd {
 	
 	border: 1px solid;
 	border-radius: 3px;
+	cursor: grab;
 	line-height: 1;
 	text-align: center;
 
 	-webkit-box-shadow: 2px 2px 0px 0px var(--shadow-color);
 	box-shadow:         2px 2px 0px 0px var(--shadow-color);
 }
+	kbd:hover {
+		-webkit-box-shadow: 1px 1px 0px 0px var(--shadow-color);
+		box-shadow:         1px 1px 0px 0px var(--shadow-color);
+	}
+
 
 sub, sup {
 	font-size: 0.7em;
