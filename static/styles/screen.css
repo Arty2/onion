@@ -1140,6 +1140,14 @@ a, a:visited {
 	outline: none;
 }
 
+a:not([href^="http"]), a:visited:not([href^="http"]) {
+	text-decoration-style: double;
+}
+
+a[href^="mailto"] {
+	text-decoration-style: solid;
+}
+
 a:active {
 	text-decoration-style: wavy;
 	text-decoration-skip-ink: none;
