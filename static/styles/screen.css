@@ -359,7 +359,7 @@ code, kbd {
 aside.meta,
 .sidenote, .entry-content aside,
 .footnotes,
-abbr:before, abbr:after, a[title*=' ']:before {
+abbr:before, abbr:after, a[title*=' ']:before, span[title*=' ']:before {
 	font-size: 0.8em;
 }
 
@@ -595,7 +595,6 @@ kbd {
 	-webkit-box-shadow: 2px 2px 0px 0px var(--shadow-color);
 	box-shadow:         2px 2px 0px 0px var(--shadow-color);
 }
-
 
 sub, sup {
 	font-size: 0.7em;
@@ -1283,6 +1282,7 @@ ui controls
 	cursor: pointer;
 }
 
+
 /*--------------------------------------------------------------
 link tooltip styles
 
@@ -1343,7 +1343,7 @@ span[title*=' ']:hover:before {
 	z-index: 100;
 
 	background-color: rgba(var(--page-color),var(--page-color-transparency));
-	border: 1px solid;
+	border: 0.5px dashed;
 	color: rgb(var(--text-color));
 	text-align: left;
 
@@ -1605,6 +1605,7 @@ articles-list styles
 
 .articles-list article > a:hover .thumbnail img {
 	transform: scale(1.05);
+	transition-delay: 0s;
 	/*outline: 1.5px solid rgb(var(--accent-color));*/
 }
 
@@ -1614,7 +1615,7 @@ articles-list styles
 
 	font-size: 0;
 
-	transition: transform .3s;
+	transition: transform .3s .6s;
 }
 
 .articles-list article .thumbnail {
@@ -1796,11 +1797,11 @@ articles-list - stack
 	margin-top: var(--line-height);
 }
 
-.articles-list.stack article a {
+.articles-list.stack article > a {
 	display: flex;
 }
 
-.articles-list.stack article a > * {
+.articles-list.stack article > a > * {
 	vertical-align: middle;
 }
 
@@ -1860,6 +1861,13 @@ articles-list - cluster
 }
 
 
+
+/*--------------------------------------------------------------
+articles-list - no-tags
+--------------------------------------------------------------*/
+.articles-list.no-tags .tag {
+	display: none;
+}
 
 /*--------------------------------------------------------------
 articles-list - no-summary
