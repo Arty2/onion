@@ -27,8 +27,15 @@
 			</div>
 		{{ if and (ne .Site.Params.show_meta false) (ne .Params.show_meta false) -}}
 			<aside class="meta">
-				<div class="wrapper">
-					<h2>{{ (i18n "post-details") }}</h2>
+				{{ if ge (len .TableOfContents) 150 }}
+				<details open>
+					<summary>{{ (i18n "contents") }}</summary>
+					{{.TableOfContents}}
+				</details>
+				{{ end }}
+
+				<details>
+					<summary>{{ (i18n "post-details") }}</summary>
 					<dl>
 					<!-- {{ with .Params.description }}
 						<dt>{{ i18n "description" }}</dt>
@@ -81,11 +88,11 @@
 						{{- end }}</dd>
 					{{ end }}
 					</dl>
-				</div>
+				</details>
 
 				{{- if eq .Type "review" -}}
-				<div class="wrapper">
-					<h2>{{ (i18n "publication-details") }}</h2>
+				<details open>
+					<summary>{{ (i18n "publication-details") }}</summary>
 					<dl>
 					{{ with .Params.Publication.Title }}
 						<dt>{{ i18n "title" }}</dt>
@@ -124,21 +131,15 @@
 						{{- end }}
 					{{ end -}}
 					</dl>
-				</div>
+				</details>
 
-				{{ end }}
-
-				{{ if ge (len .TableOfContents) 150 }}
-				<div class="wrapper">
-					<h2>{{ (i18n "contents") }}</h2>
-					{{.TableOfContents}}
-				</div>
 				{{ end }}
 
 				{{ with .Params.Meta }}
-				<div class="wrapper">
+				<details>
+					<summary>Meta</summary>
 					{{ . | markdownify }}
-				</div>
+				</details>
 				{{ end }}
 
 			</aside>
