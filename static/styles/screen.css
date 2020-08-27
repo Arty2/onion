@@ -127,6 +127,10 @@ body.white {
 	--text-color-inverted: 200, 200, 200;
 	--shadow-color: rgba(var(--text-color),0.2);
 }
+/*	body.white #theme-toggle {
+		cursor: not-allowed;
+		opacity: 0.1;
+	}*/
 
 body.gray, body.grey {
 	--page-color: 204, 204, 204;
@@ -1475,20 +1479,21 @@ article filter styles
 
 #articles-filter .tag:after {
 	display: inline-block;
-	content: '×';
+	content: '◇';
 	margin-left: 0.3em;
 
 	text-decoration: none !important;
 
 	text-align: center;
-	vertical-align: top;
 
-	transform: rotate(45deg);
-	font-size: 80%;
+	/*transform: rotate(45deg);*/
+	font-size: 90%;
 }
 
 #articles-filter .tag[data-active='true']:after {
-	transform: rotate(0);
+	/*transform: rotate(0);*/
+
+	content: '◆';
 }
 
 #articles-filter__reset {
@@ -2236,6 +2241,8 @@ footnotes
 		position: absolute;
 		top: -0.1rem;
 		right: 0.5rem;
+
+		cursor: alias;
 		font-size: 1.2rem;
 	}
 
