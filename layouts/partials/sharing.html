@@ -1,5 +1,5 @@
 <aside class="sharing">
-	<details open>
+	<details>
 	<summary>{{ i18n "share" }}</summary>
 		<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]={{ .Permalink | absURL | htmlEscape }}">{{ i18n "share-facebook" }}</a>
 		<a target="_blank" href="https://twitter.com/intent/tweet?original_referer=&source=tweetbutton&text={{ with .Params.description }}{{ . | htmlEscape }}{{ " → " | htmlEscape }}{{ end }}&url={{ .Permalink | absURL | htmlEscape }}">{{ i18n "share-twitter" }}</a>

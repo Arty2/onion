@@ -22,7 +22,7 @@ global CSS variables
 	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
 
 	/* layout */
-	--scrollbar-width: 2vw;
+	--scrollbar-width: 18px;
 	/*--content-width: 60ch; /* is not same for different fonts */
 	--content-width: 30rem;
 	/*--content-width: 100%;*/ /* DEBUG */
@@ -861,7 +861,8 @@ html {
 
 body {
 	position: relative;
-	max-width: 100vw;
+	max-width: 100%;
+	overflow-y: scroll;
 }
 
 body > header,
@@ -1101,20 +1102,32 @@ social sharing menu
 --------------------------------------------------------------*/
 
 .sharing {
-	/*margin-top: var(--gutter-width);*/
-	margin-bottom: var(--gutter-width);
+	margin-bottom: var(--gutter-height);
 
 	user-select: none;
 }
 
 .sharing summary {
-	/*display: inline-block;*/
-	display: none;
+	display: inline-block;
+	/*display: none;*/
+}
+
+.sharing details[open] summary::after {
+	content: ':';
+}
+
+.sharing details[open] summary ~ * {
+	animation: sweep-right .3s ease-in-out;
+}
+
+@keyframes sweep-right {
+	0%    {opacity: 0; margin-left: -1em}
+	100%  {opacity: 1; margin-left: 0}
 }
 
 .sharing a {
 	display: inline-block;
-	margin: 0 0.5rem;
+	margin: 0 0.2rem;
 
 	text-transform: lowercase;
 }
@@ -1358,19 +1371,21 @@ del[datetime]:hover:before,
 abbr[title*=' ']:hover:before,
 span[title*=' ']:hover:before {
 	content: attr(title);
-	padding-right: var(--gutter-width);
-	padding-left: 0.4rem;
-	margin: 0 2px;
+	padding: calc(var(--gutter-height)/4) calc(var(--gutter-width)/4) calc(var(--gutter-height)/4) var(--gutter-width);
+	/*padding-left: 0.4rem;*/
+	margin: calc(-1*var(--gutter-height)/4) 2px;
 	width: auto;
 	max-width: calc(var(--content-width)/1.61);
 	z-index: 100;
 
 	background-color: rgba(var(--page-color),var(--page-color-transparency));
 	border: 0.5px dashed;
+	border-right: none;
+	border-left: none;
 	color: rgb(var(--text-color));
-	text-align: left;
+	text-align: right;
 
-	outline: 1px solid rgb(var(--page-color));
+	/*outline: 1px solid red;*/
 }
 	/* wikipedia links icon */
 	a[title*=' '][href*='wikipedia.org']:before {
@@ -1484,21 +1499,24 @@ article filter styles
 
 #articles-filter .tag:after {
 	display: inline-block;
-	content: '◇';
+	/*content: '◇';*/
+	content: '×';
 	margin-left: 0.3em;
 
+	color: rgba(var(--text-color),0);
 	text-decoration: none !important;
-
 	text-align: center;
+	vertical-align: 15%;
 
 	/*transform: rotate(45deg);*/
-	font-size: 90%;
+	/*font-size: 80%;*/
 }
 
 #articles-filter .tag[data-active='true']:after {
-	/*transform: rotate(0);*/
+	/*content: '◆';*/
+	content: '×';
 
-	content: '◆';
+	color: rgb(var(--page-color));
 }
 
 #articles-filter__reset {
@@ -2032,18 +2050,27 @@ single article meta styles
 
 
 .meta + * {
-	margin-top: calc(var(--gutter-width)/2);
+	margin-top: calc(var(--gutter-height)/2);
 	outline: 1px dashed red;
 }
 
 .meta details {
-	padding: calc(var(--gutter-width)/4) calc(var(--gutter-width)/2);
+	padding: calc(var(--gutter-height)/4) calc(var(--gutter-height)/2);
 	border-top: 0.5px dashed;
 	/*outline: 1px dashed red;*/
 }
 	.meta details:last-child {
 		border-bottom: 0.5px dashed;
 	}
+
+.meta details[open] summary ~ * {
+	animation: sweep-bottom .1s ease-in-out;
+}
+
+@keyframes sweep-bottom {
+	0%    {opacity: 0; margin-top: -1em}
+	100%  {opacity: 1; margin-top: 0}
+}
 
 .meta summary {
 	margin-left: calc(-1*var(--gutter-width)/2); /* adjust for the detail handle */

@@ -5,16 +5,16 @@ reset:
 ## social sharing
 
 share:
-  other: Μοιράσου
+  other: μοιράσου
 
 share-twitter:
-  other: Τιτίβισε
+  other: twitter
 
 share-facebook:
-  other: Μοιράσου
+  other: facebook
 
 share-email:
-  other: Στείλε email
+  other: με email
 
 ## post details
 

@@ -5,16 +5,16 @@ reset:
 ## social sharing
 
 share:
-  other: Share
+  other: share
 
 share-twitter:
-  other: Tweet
+  other: twitter
 
 share-facebook:
-  other: Share
+  other: facebook
 
 share-email:
-  other: Send email
+  other: by email
 
 ## post details
 
