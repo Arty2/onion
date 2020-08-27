@@ -137,7 +137,7 @@
 
 				{{ with .Params.Meta }}
 				<details>
-					<summary>Meta</summary>
+					<summary>{{ i18n "post-meta" }}</summary>
 					{{ . | markdownify }}
 				</details>
 				{{ end }}

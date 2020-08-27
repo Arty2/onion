@@ -2048,24 +2048,37 @@ single article meta styles
 	margin-bottom: var(--gutter-height);
 }
 
-
-.meta + * {
-	margin-top: calc(var(--gutter-height)/2);
-	outline: 1px dashed red;
+.meta {
+	margin-top: calc(-1*var(--gutter-height)/4) !important;
+	/*TODO: align to baseline, but need to get rid of important*/
+	/*outline: 1px solid red;*/
 }
 
 .meta details {
 	padding: calc(var(--gutter-height)/4) calc(var(--gutter-height)/2);
 	border-top: 0.5px dashed;
 	/*outline: 1px dashed red;*/
+	transition: color 0.3s, border 0.3s;
 }
 	.meta details:last-child {
 		border-bottom: 0.5px dashed;
 	}
-
-.meta details[open] summary ~ * {
-	animation: sweep-bottom .1s ease-in-out;
-}
+	.meta details:not([open]) {
+		color: rgba(var(--text-color),.3);
+	}
+	.meta details:hover {
+		color: rgb(var(--text-color));
+	}	
+	.meta details:hover + details,
+	.meta details[open] + details {
+		border-top-color: rgb(var(--text-color));
+	}
+	.meta details[open] {
+		padding-bottom: var(--line-height);
+	}
+	.meta details[open] summary ~ * {
+		animation: sweep-bottom .1s ease-in-out;
+	}
 
 @keyframes sweep-bottom {
 	0%    {opacity: 0; margin-top: -1em}
@@ -2081,7 +2094,7 @@ single article meta styles
 
 .meta summary ~ * {
 	/*outline: 1px solid red;*/
-	margin-left: 0.2rem;  /* adjust for the detail handle */
+	margin-left: 0.15rem;  /* adjust for the detail handle */
 }
 
 @media only screen and ( max-width: 1200px ) {
@@ -2105,10 +2118,6 @@ single article meta styles
 
 .meta dd {
 	grid-column: 2;
-}
-
-.meta dd.tags {
-	grid-column: 1 / span 2;
 }
 
 #TableOfContents ul {
@@ -2294,7 +2303,9 @@ sup[id^="fnref:"] a {
 	padding-right: 0.3rem;
 }
 
-/**:target:after,*/
+sup[id^="fnref:"]:target a {
+	color: rgb(var(--accent-color));
+}
 sup[id^="fnref:"]:target:after {
 	content: '←';
 	/*content: '☞';*/
@@ -2302,6 +2313,7 @@ sup[id^="fnref:"]:target:after {
 	right: 0;
 	width: var(--gutter-width);
 
+	color: rgb(var(--accent-color));
 	font-size: 1rem;
 	text-align: center;
 
