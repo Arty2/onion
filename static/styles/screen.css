@@ -1112,6 +1112,14 @@ social sharing menu
 	/*display: none;*/
 }
 
+.sharing details summary:focus {
+	outline: none;
+}
+	.sharing details:not(:hover) summary:focus {
+		text-decoration: underline;
+	}
+
+
 .sharing details[open] summary::after {
 	content: ':';
 }
@@ -1448,6 +1456,7 @@ tags styles
 
 	cursor: pointer;
 	pointer-events: auto;
+	transition: none;
 }
 
 * > .tag:first-child {
@@ -1461,22 +1470,25 @@ tags styles
 	color: rgb(var(--text-color-inverted));
 }
 
-.tag:hover:after {
-	/*visibility: hidden;*/
-}
-
-.tag[data-active='false']:focus,
 .tag:focus {
-	text-decoration: underline;
+	border-color: rgb(var(--text-color));
+	color: rgb(var(--text-color));;
+	outline: none;
+}
+	.tag:focus:not(:hover) {
+		text-decoration: underline;
+	}
+
+.tag:hover {
+	color: rgb(var(--page-color));
 }
 
-.tag:-moz-focusring,
-.tag:focus-active,
-.tag:active {
-
+.tag[data-active='true']:focus {
+	border-color: rgb(var(--text-color));
+	color: rgb(var(--page-color));
 }
 
-.tag::-moz-focus-inner { border:0; }
+.tag::-moz-focus-inner { border: 0; }
 
 
 /*--------------------------------------------------------------
@@ -2076,26 +2088,31 @@ single article meta styles
 	.meta details[open] {
 		padding-bottom: var(--line-height);
 	}
-	.meta details[open] summary ~ * {
-		animation: sweep-bottom .1s ease-in-out;
-	}
 
 @keyframes sweep-bottom {
 	0%    {opacity: 0; margin-top: -1em}
 	100%  {opacity: 1; margin-top: 0}
 }
 
-.meta summary {
+
+.meta details summary {
 	margin-left: calc(-1*var(--gutter-width)/2); /* adjust for the detail handle */
 	cursor: pointer;
 	font-variant: small-caps;
 	text-transform: uppercase;
 }
-
-.meta summary ~ * {
-	/*outline: 1px solid red;*/
-	margin-left: 0.15rem;  /* adjust for the detail handle */
-}
+	.meta details summary:focus {
+		outline: none;
+	}
+	.meta details:not(:hover) summary:focus {
+		text-decoration: underline;
+	}
+	.meta details summary ~ * {
+		margin-left: 0.15rem;  /* adjust for the detail handle */
+	}
+	.meta details[open] summary ~ * {
+		animation: sweep-bottom .1s ease-in-out;
+	}
 
 @media only screen and ( max-width: 1200px ) {
 	.meta dl {
@@ -2242,7 +2259,7 @@ sidenote & marginalia styles
 }
 
 /*--------------------------------------------------------------
-footnotes
+footnotes and targeting
 --------------------------------------------------------------*/
 
 .footnote-ref, .footnote-backref {
@@ -2303,11 +2320,13 @@ sup[id^="fnref:"] a {
 	padding-right: 0.3rem;
 }
 
+/*h2:target, h3:target,*/
 sup[id^="fnref:"]:target a {
 	color: rgb(var(--accent-color));
 }
+h2:target:after, h3:target:after, h4:target:after,
 sup[id^="fnref:"]:target:after {
-	content: '←';
+	content: '◄';
 	/*content: '☞';*/
 	position: absolute;
 	right: 0;
