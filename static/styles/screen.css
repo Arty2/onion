@@ -1119,7 +1119,7 @@ social sharing menu
 	-webkit-tap-highlight-color: transparent;
 }
 	.sharing details:not(:hover) summary:focus {
-		text-decoration: underline;
+		text-decoration: dashed underline;
 	}
 
 
@@ -1481,7 +1481,7 @@ tags styles
 	-webkit-tap-highlight-color: transparent;
 }
 	.tag:focus:not(:hover) {
-		text-decoration: underline;
+		text-decoration: dashed underline;
 	}
 
 .tag:hover {
@@ -1628,7 +1628,7 @@ articles-list styles
 }
 
 .articles-list > summary:focus h2 {
-	text-decoration: underline;
+	text-decoration: dashed underline;
 }
 
 .articles-list > summary h2 {
@@ -1660,7 +1660,7 @@ articles-list styles
 
 .articles-list article > a:hover h3,
 .articles-list article > a:focus h3 {
-	text-decoration: underline;
+	text-decoration: dashed underline;
 }
 
 .articles-list article > a:hover .thumbnail img {
@@ -2112,7 +2112,7 @@ single article meta styles
 		-webkit-tap-highlight-color: transparent;
 	}
 	.meta details:not(:hover) summary:focus {
-		text-decoration: underline;
+		text-decoration: dashed underline;
 	}
 	.meta details summary ~ * {
 		margin-left: 0.15rem;  /* adjust for the detail handle */
