@@ -756,6 +756,7 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 textarea:focus {
 	border-color: rgb(var(--accent-color));
+	-webkit-tap-highlight-color: transparent;
 }
 
 input[type="text"],
@@ -801,6 +802,7 @@ input[type="email"] {
 	border-bottom: 1.5px solid;
 	box-shadow: inset 0 2rem 0 var(--shadow-color), 0px 3px 0px 0px var(--shadow-color);
 	outline: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .button::-moz-focus-inner { border: 0; }
@@ -1114,6 +1116,7 @@ social sharing menu
 
 .sharing details summary:focus {
 	outline: none;
+	-webkit-tap-highlight-color: transparent;
 }
 	.sharing details:not(:hover) summary:focus {
 		text-decoration: underline;
@@ -1191,6 +1194,7 @@ a:active {
 a:hover, a:focus, a:active {
 	color: #f00; /* fallback */
 	color: rgb(var(--accent-color));
+	-webkit-tap-highlight-color: transparent;
 }
 
 nav a {
@@ -1474,6 +1478,7 @@ tags styles
 	border-color: rgb(var(--text-color));
 	color: rgb(var(--text-color));;
 	outline: none;
+	-webkit-tap-highlight-color: transparent;
 }
 	.tag:focus:not(:hover) {
 		text-decoration: underline;
@@ -1619,6 +1624,7 @@ articles-list styles
 
 .articles-list > summary:focus {
 	outline: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .articles-list > summary:focus h2 {
@@ -2103,6 +2109,7 @@ single article meta styles
 }
 	.meta details summary:focus {
 		outline: none;
+		-webkit-tap-highlight-color: transparent;
 	}
 	.meta details:not(:hover) summary:focus {
 		text-decoration: underline;
