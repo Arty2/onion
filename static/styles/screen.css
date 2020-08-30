@@ -1128,7 +1128,7 @@ social sharing menu
 }
 
 .sharing details[open] summary ~ * {
-	animation: sweep-right .3s ease-in-out;
+	animation: sweep-right .3s ease-in;
 }
 
 @keyframes sweep-right {
@@ -1138,7 +1138,7 @@ social sharing menu
 
 .sharing a {
 	display: inline-block;
-	margin: 0 0.2rem;
+	margin: 0 0.5em;
 
 	text-transform: lowercase;
 }
@@ -1683,6 +1683,10 @@ articles-list styles
 	/*outline: 1px dashed red;*/
 }
 
+.articles-list article.overflow .thumbnail {
+	overflow: initial;
+}
+
 .articles-list article .thumbnail:empty {
 	display: none !important;
 }
@@ -2118,7 +2122,7 @@ single article meta styles
 		margin-left: 0.15rem;  /* adjust for the detail handle */
 	}
 	.meta details[open] summary ~ * {
-		animation: sweep-bottom .1s ease-in-out;
+		animation: sweep-bottom .1s ease-in;
 	}
 
 @media only screen and ( max-width: 1200px ) {
