@@ -550,10 +550,12 @@ abbr {
 	text-decoration: none;
 	text-transform: lowercase;
 }
+	span[title*=' '],
 	abbr[title*=' '] {
 		cursor: help;
 	}
-	abbr:after {
+	span[title*=' ']:after,
+	abbr[title*=' ']:after {
 		display: inline-block;
 		margin-left: -0.1em;
 		line-height: 1.3;
@@ -561,9 +563,9 @@ abbr {
 		font-variant: initial;
 		text-transform: initial;
 	}
+	span[title*=' ']:after,
 	abbr[title*=' ']:after {
 		content: '*';
-		/*position: absolute;*/
 		top: -0.2em;
 	}
 
@@ -1267,6 +1269,8 @@ languages selector
 
 	-webkit-user-select: none !important;
 	user-select        : none !important;
+
+	/*outline: 1px dashed red;*/
 }
 	.languages ul {
 		list-style: none;
@@ -1312,6 +1316,8 @@ ui controls
 
 	-webkit-user-select: none !important;
 	user-select: none !important;
+
+	/*outline: 1px dashed red;*/
 }
 
 .ui > * {
@@ -1359,7 +1365,7 @@ span[title*=' ']:before {
 	content: var(--tooltip-mark); 
 	display: inline-block;
 	position: absolute;
-	right: calc(-1*var(--gutter-width));
+	/*right: calc(-1*var(--gutter-width));*/
 	right: 0;
 	width: var(--gutter-width);
 

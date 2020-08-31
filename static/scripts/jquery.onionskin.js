@@ -94,7 +94,7 @@ gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
 --------------------------------------------------------------*/
 function scrollbarWidth() {
 	let width = window.innerWidth - document.querySelector('body').clientWidth;
-	// document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
+	document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
 	// console.log(width); // DEBUG
 }
 
