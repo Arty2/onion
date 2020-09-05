@@ -1,4 +1,4 @@
-<article class="{{ if eq .Type "preformatted" }} preformatted{{end}}{{ with .Draft }} draft{{ end }}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ if .Params.tags }}{{ delimit .Params.tags " " }}{{ end }}">
+<article class="{{ with .Params.cssclass }}{{ . }}{{ end }}{{ if eq .Type "preformatted" }} preformatted{{end}}{{ with .Draft }} draft{{ end }}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ if .Params.tags }}{{ delimit .Params.tags " " }}{{ end }}">
 {{- if eq .Type "preformatted" -}}
 	<pre>{{ .RawContent | safeHTML }}</pre>
 {{- else if eq .Type "ephemera" -}}
@@ -30,8 +30,8 @@
 			{{- else if .Params.dateRead -}}
 				{{- .Params.dateRead -}}
 			{{- else -}}
-				{{- if isset $.Site.Params "dateformat" -}}
-					{{- .Date.Format $.Site.Params.dateformat -}}
+				{{- if isset $.Site.Params "date_format" -}}
+					{{- .Date.Format $.Site.Params.date_format -}}
 				{{- else -}}
 					{{- .Date.Format "2006-01-02" -}}
 				{{- end -}}
@@ -42,8 +42,8 @@
 		{{- with .Params.Publication.Author -}}
 			{{ . }}
 		{{- end -}}
-		{{- with .Params.description }}
-			{{ . | plainify | markdownify }}
+		{{- with .Summary }}
+			{{ . | plainify | plainify | markdownify }}
 		{{- end -}}
 		</p>
 		{{- with .Params.Rating }}
@@ -51,7 +51,7 @@
 		{{- end -}}		
 		{{ if .Params.Tags }}
 			<p class="tags">{{ range .Params.Tags -}}
-				<a href="/tags/{{ . | urlize }}" class="tag" rel="tag">{{ (i18n . ) }}</a>
+				<a {{ if not (in $.Site.Params.disableKinds "taxonomy") }}href="/tags/{{ . | urlize }}"{{end}} class="tag" rel="tag">{{ (i18n . ) }}</a>
 			{{- end }}</p>
 		{{ end }}
 	</a>
