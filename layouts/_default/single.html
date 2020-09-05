@@ -27,21 +27,19 @@
 			</div>
 		{{ if and (ne .Site.Params.show_meta false) (ne .Params.show_meta false) -}}
 			<aside class="meta">
-				{{ if ge (len .TableOfContents) 150 }}
-				<details open>
-					<summary>{{ (i18n "contents") }}</summary>
-					{{.TableOfContents}}
-				</details>
+
+				{{ if and (ne .Site.Params.show_toc false) (ne .Params.show_toc false) -}}
+					{{ if ge (len .TableOfContents) 150 }}
+					<details open>
+						<summary>{{ (i18n "contents") }}</summary>
+						{{.TableOfContents}}
+					</details>
+					{{ end }}
 				{{ end }}
 
 				<details>
 					<summary>{{ (i18n "post-details") }}</summary>
 					<dl>
-					<!-- {{ with .Params.description }}
-						<dt>{{ i18n "description" }}</dt>
-						<dd>{{ . | markdownify }}</dd>
-					</dd>
-					{{ end }} -->
 					{{ if .Params.dateCreated }}
 						<dt>{{ i18n "created-date" }}</dt>
 							<dd>{{ .Params.dateCreated }}</dd>
@@ -50,8 +48,8 @@
 							<dd>{{- if .Params.dateCreated -}}
 									{{- .Params.dateCreated -}}
 								{{- else -}}
-									{{- if isset $.Site.Params "dateformat" -}}
-										{{- .Date.Format $.Site.Params.dateformat -}}
+									{{- if isset $.Site.Params "date_format" -}}
+										{{- .Date.Format $.Site.Params.date_format -}}
 									{{- else -}}
 										{{- .Date.Format "2006-01-02" -}}
 									{{- end -}}
@@ -78,7 +76,7 @@
 
 					{{ with .Params.license }}
 						<dt>{{ i18n "license" }}</dt>
-						<dd>{{ . | markdownify }}</dd>
+						<dd>{{ . | plainify | markdownify }}</dd>
 					{{ end }}
 
 					{{ if .Params.Tags }}
@@ -149,7 +147,13 @@
 			{{ .Content }}
 		</div>
 	</article>
-	{{ if ne .Params.show_comments false }}
-		{{ template "_internal/disqus.html" . }}
+	{{ if and (eq .Site.Params.show_comments true) (ne .Params.show_comments false) -}}
+		<section class="comments">
+		{{ if .Params.disqusShortname }}
+			{{ template "_internal/disqus.html" . }}
+		{{ else }}
+			► Error: Comments enabled but disqusShortname is missing.
+		{{ end }}
+		</section>
 	{{ end }}
 {{ end }}
