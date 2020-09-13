@@ -3,3 +3,4 @@ cd themes/xerographic
 git checkout master
 git pull
 cd ../../
+pause
