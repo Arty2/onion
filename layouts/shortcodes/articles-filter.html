@@ -81,7 +81,7 @@
 
 
 		function tag_toggle(filter, tag) {
-			var items = document.querySelectorAll('.' + filter + ' article');
+			var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
 
 			for (var i = 0; i < items.length; i++) {
 				var itemTags = items[i].getAttribute('data-tags');
@@ -103,7 +103,7 @@
 		function tag_reset(filter) {
 			filters = [];
 			document.getElementById('articles-filter__reset').style.visibility = 'hidden'; 
-			var items = document.querySelectorAll('.' + filter + ' article');
+			var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
 
 			for (var i = 0; i < items.length; i++) {
 				items[i].setAttribute('data-visibility', 'on');

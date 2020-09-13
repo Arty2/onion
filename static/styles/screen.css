@@ -146,6 +146,10 @@ body.theme-blue {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
+body.theme-blend .entry-content img {
+	mix-blend-mode: multiply;
+}
+
 @media (prefers-color-scheme: dark) {
 	:root {
 		--page-color: 34, 34, 34;
@@ -154,6 +158,11 @@ body.theme-blue {
 		--accent-color: 205, 35, 185;
 		--text-color-inverted: 20, 20, 20;
 		--shadow-color: rgba(var(--text-color),0.2);
+	}
+
+	body.theme-blend:not(.theme-light) .entry-content img {
+		filter: invert(100);
+		mix-blend-mode: screen;
 	}
 }
 
@@ -870,6 +879,7 @@ body > main > * {
 
 body > header {
 	position: relative;
+	/*position: fixed;*/
 	z-index: 103;
 	/*opacity: 0.999;*/
 	/*overflow: hidden;*/
@@ -1739,7 +1749,7 @@ articles-list styles
 }
 
 .articles-list article .summary {
-	order: 2;
+	order: 3;
 	display: inline;
 	margin: 0;
 
@@ -1748,7 +1758,7 @@ articles-list styles
 }
 
 .articles-list article .rating {
-	order: 3;
+	order: 2;
 
 	color: inherit;
 }
@@ -1759,7 +1769,7 @@ articles-list styles
 }
 
 .articles-list article .tags .tag {
-	border: none;
+	border-color: var(--shadow-color);
 	font-size: 0.6em;
 }
 
@@ -1903,7 +1913,7 @@ articles-list - stack
 	display: inline-block;
 	flex-shrink: 0;
 	flex-grow: 0;
-	flex-basis: 8ch;
+	flex-basis: 9ch;
 	margin-left: 1ch;
 	order: 3;
 	/*outline: 1px dashed red;*/
@@ -2560,16 +2570,17 @@ EXPERIMENTAL
 Snap scroll
 --------------------------------------------------------------*/
 
-/*html {
-	scroll-snap-type: y mandatory;
+html {
+	/*scroll-snap-type: y proximity;*/
+	/*scroll-snap-stop: always;*/
 }
 
 body {
-	scroll-snap-type: y mandatory;
+	scroll-snap-type: y proximity;
+	scroll-snap-stop: always;
 }
 
 .snap {
 	scroll-snap-align: start;
-	scroll-snap-stop: always;
-	border: 1px solid red;
-}*/
+	/*border: 1px solid red;*/
+}
