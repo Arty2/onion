@@ -1,11 +1,8 @@
-# onionskin
+# /xerographic
 
-An experimental theme for the [Hugo](https://gohugo.io/) static site generator. See [heracl.es](https://heracl.es) for a live preview, and [/onionskin](https://heracl.es/onionskin) for more details on the theme.
+An experimental* theme for the [Hugo](https://gohugo.io/) static site generator. See [heracl.es](https://heracl.es) for a live preview, and the theme’s Git respority [/xerographic](https://github.com/Arty2/xerographic) for more details.
 
-► Major breaking changes may occur between versions.
-
-- Hosted on GitLab: https://gitlab.com/heracles/onionskin
-- Mirrored on GitHub: https://github.com/Arty2/onionskin
+* Major breaking changes may occur between versions, both in functionality and design approach. Using versioned releases is more than encouraged.
 
 ## Features
 
