@@ -9,7 +9,6 @@
 </div>
 <script type="text/javascript">
 	// code based on https://codepen.io/brendanfalkowski/pen/QwdKMK
-	// todo: convert to vanilla JS
 
 	/*
 	[data-visibility='on'] {
@@ -39,14 +38,14 @@
 
 			if (button.getAttribute('data-reset') === 'true') {
 				var filter = button.getAttribute('data-filter');
-				resetFilter(filter);
+				tag_reset(filter);
 			}
 			else if (button.getAttribute('data-active') === 'true') {
 				var filter = button.getAttribute('data-filter');
 				var tag    = button.getAttribute('data-filter-tag');
 				filters = filters.filter(val => val !== tag);
 				button.setAttribute('data-active', 'false');
-				toggleTag(filter, tag);
+				tag_toggle(filter, tag);
 				if (filters.length < 1) {
 					document.getElementById('articles-filter__reset').style.visibility = 'hidden';
 					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-visibility', 'on'); });
@@ -57,7 +56,7 @@
 				var tag    = button.getAttribute('data-filter-tag');
 				filters.push(tag);
 				button.setAttribute('data-active', 'true');
-				toggleTag(filter, tag);
+				tag_toggle(filter, tag);
 				if (filters.length > 0) {
 					document.getElementById('articles-filter__reset').style.visibility = 'visible';
 					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-visibility', 'off'); });
@@ -65,21 +64,23 @@
 			}
 
 			// scroll back to the first visible post
-			
-			if ($( $("[data-visibility='on']")[0] ).offset().top > 0) {
-				setTimeout(function(){
-					$('html, body').animate({
-						scrollTop: $( $("[data-visibility='on']")[0] ).offset().top - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') )
-						// scrollTop: document.querySelector('[data-visibility="on"]')[0].offsetTop - $('#articles-filter').height() - parseInt( $('#articles-filter').css('padding-top') + $('#articles-filter').css('padding-bottom') ) // vanilla JS
-					}, 200);
-				}, 500);
+			if (typeof document.querySelector('[data-visibility="on"]') !== 'undefined') {
+					setTimeout(function(){
+						var onfromtop = document.querySelector('[data-visibility="on"]').getBoundingClientRect().top + window.scrollY;
+				// if (onfromtop > 0) {
+						window.scroll({
+							top: onfromtop - parseInt(document.querySelector('#articles-filter').getBoundingClientRect()['height']),
+							behavior: 'smooth'
+						});
+					}, 500);
+				// }
 			}
 			// this is really affected by performance, it should be a little bigger than the transition speed
 			
 		});
 
 
-		function toggleTag(filter, tag) {
+		function tag_toggle(filter, tag) {
 			var items = document.querySelectorAll('.' + filter + ' article');
 
 			for (var i = 0; i < items.length; i++) {
@@ -99,7 +100,7 @@
 		}
 
 
-		function resetFilter(filter) {
+		function tag_reset(filter) {
 			filters = [];
 			document.getElementById('articles-filter__reset').style.visibility = 'hidden'; 
 			var items = document.querySelectorAll('.' + filter + ' article');
