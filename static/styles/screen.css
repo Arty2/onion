@@ -22,36 +22,17 @@ global CSS variables
 	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
 
 	/* layout */
-	--scrollbar-width: 18px;
+	--scrollbar-width: 0px;
+	/*--scrollbar-width: 18px;*/
 	/*--content-width: 60ch; /* is not same for different fonts */
 	--content-width: 30rem;
 	/*--content-width: 100%;*/ /* DEBUG */
 
-	--line-height: 1.4rem;
+	--line-height: 1.4rem; /* units used implicitely */
 	--gutter-height: calc(1*var(--line-height));
 	--gutter-width: 1.4rem;
 	/*--offset: --gutter-width;*/
 	/*--gutter-width: 0px; /* DEBUG */
-
-	/*
-		- themes to be compatble with https://github.com/hundredrabbits/Themes
-		- will need probably need a way to convert hex to RGB / HSL
-		- check how color fallbacks can work with css variables
-
-
-		The Theme format holds only 9 different colors.
-
-			background, Application Background.
-			f_high, Foreground, high-contrast.
-			f_med, Foreground, medium-contrast.
-			f_low, Foreground, low-contrast.
-			f_inv, Foreground, inverted.
-			b_high, Background, high-contrast.
-			b_med, Background, medium-contrast.
-			b_low, Background, low-contrast.
-			b_inv, Background, inverted.
-
-	*/
 
 	--page-color-transparency: 0.89;
 	--page-color-blur: 2px;
@@ -69,9 +50,7 @@ global CSS variables
 	/* misc colors */
 	--text-color-error: 255, 0, 0;
 
-
 	/* text scales */
-
 	--ratio: 1.5;
 	--s-5: calc(var(--s-4) / var(--ratio));
 	--s-4: calc(var(--s-3) / var(--ratio));
@@ -92,7 +71,7 @@ global CSS variables
 themes
 --------------------------------------------------------------*/
 
-body.light {
+body.theme-light {
 	--page-color: 221, 238, 255;
 	--text-color: 34, 34, 50;
 	--hyperlink-color: 34, 34, 50;
@@ -101,7 +80,7 @@ body.light {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-body.dark {
+body.theme-dark {
 	--page-color: 34, 34, 34;
 	--text-color: 204, 204, 204;
 	--hyperlink-color: 204, 204, 204;
@@ -110,7 +89,7 @@ body.dark {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-body.black {
+body.theme-black {
 	--page-color: 0, 0, 0;
 	--text-color: 250, 250, 250;
 	--hyperlink-color: 250, 250, 250;
@@ -119,7 +98,7 @@ body.black {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-body.white {
+body.theme-white {
 	--page-color: 255, 255, 255;
 	--text-color: 34, 34, 34;
 	--hyperlink-color: 34, 34, 34;
@@ -127,12 +106,12 @@ body.white {
 	--text-color-inverted: 200, 200, 200;
 	--shadow-color: rgba(var(--text-color),0.2);
 }
-/*	body.white #theme-toggle {
+/*	body.theme-white #theme-toggle {
 		cursor: not-allowed;
 		opacity: 0.1;
 	}*/
 
-body.gray, body.grey {
+body.theme-gray, body.theme-grey {
 	--page-color: 204, 204, 204;
 	--text-color: 0, 0, 0;
 	--hyperlink-color: 0, 0, 0;
@@ -141,7 +120,7 @@ body.gray, body.grey {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-body.peach {
+body.theme-peach {
 	--page-color: 255, 204, 238;
 	--text-color: 0, 0, 0;
 	--hyperlink-color: 0, 0, 0;
@@ -149,7 +128,7 @@ body.peach {
 	--text-color-inverted: 255, 255, 255;
 }
 
-body.gold {
+body.theme-gold {
 	--page-color: 43, 0, 0;
 	--text-color: 189, 159, 92;
 	--hyperlink-color: 189, 159, 92;
@@ -158,7 +137,7 @@ body.gold {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-body.blue {
+body.theme-blue {
 	--page-color: 0, 0, 255;
 	--text-color: 255, 255, 255;
 	--hyperlink-color: 255, 255, 255;
@@ -297,26 +276,24 @@ icon font via https://icomoon.io (Brands iconset)
 
 
 :root,
-.serif {
+.font-serif {
 	font-family: serif; /* fallback */
 	font-family: var(--font-serif);
 	font-size: 125%; /* fallback */
 	font-size: calc(1rem + 0.5vw);
 }
 
-.mono,
-button,
-.monospace,
-.button, .tag,
+.font-sans {
+	font-family: sans-serif; /* fallback */
+	font-family: var(--font-sans);
+}
+
+.font-mono, .font-monospace,
+button, .button, .tag,
 .languages, .sharing, .social {
 	font-family: monospace; /* fallback */
 	font-family: var(--font-mono);
 	font-size: 0.92rem; /* adjust for x-height */
-}
-
-.sans {
-	font-family: sans-serif; /* fallback */
-	font-family: var(--font-sans);
 }
 
 body {
@@ -333,7 +310,8 @@ body * {
 }
 
 body > header h1 {
-	font-size: 1em;
+	line-height: var(--line-height);
+	font-size: inherit;
 }
 
 .tag, .button,
@@ -345,6 +323,10 @@ figcaption,
 body > header,
 body > footer {
 	font-size: 0.8rem;
+	line-height: calc(var(--line-height)/0.8);
+}
+
+body > footer {
 	line-height: 1.3;
 }
 
@@ -866,13 +848,14 @@ html {
 body {
 	position: relative;
 	max-width: 100%;
+	overflow-x: hidden;
 	overflow-y: scroll;
 }
 
 body > header,
 body > footer {
 	padding: var(--gutter-width);
-	width: calc(100vw - var(--scrollbar-width));
+	/*width: calc(100vw - var(--scrollbar-width));*/
 }
 
 body > header > *,
@@ -886,27 +869,23 @@ body > main > * {
 }
 
 body > header {
-	/*z-index: 103;*/
+	position: relative;
+	z-index: 103;
 	/*opacity: 0.999;*/
-	--space: 1rem;
 	overflow: hidden;
+
+	background: inherit;
 	/*outline: 1px dashed yellow;*/
 }
 
 body > header > * {
+	/*position: fixed;*/
+	/*top: var(--gutter-height);*/
+	left: var(--gutter-width);
+	right: var(--gutter-width);
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	/*margin: calc(var(--space) / 2 * -1);*/
-}
-
-body > header > * > * {
-	/*margin: calc(var(--space) / 2);*/
-	/*outline: 1px dotted red;*/
-}
-
-body > header h1 {
-	/*height: var(--header-height);*/
 }
 
 body > header .description {
@@ -918,36 +897,52 @@ body > footer nav {
 	min-height: var(--line-height);
 }
 
-body > header nav {
-	margin-top: 0;
+body > footer nav {
+	margin-top: var(--gutter-height);
 }
 
 body > header nav li,
 body > footer nav li {
 	display: inline-block;
-	margin-right: 0.6rem;
+	margin: 0;
+}
+
+body > header nav li ~ li,
+body > footer nav li ~ li {
+	display: inline-block;
+	margin-left: calc(var(--gutter-width)/2);
 }
 
 body > main {
 	position: relative;
 	margin-bottom: calc(6*var(--line-height));
-	/*margin-bottom: 100vh;*/
+	margin-bottom: 100vh;
 	padding: 0 var(--gutter-width);
 	min-height: 100vh;
 
 	background: inherit;
 	border-bottom: 1px solid transparent; /* to make sure no margin escapes */
 	z-index: 100;
+
+	/*outline: 2px dashed cyan;*/
 }
 
 body > footer {
-	/*position: fixed;*/
+	position: fixed;
 	bottom: 0;
 	clear: both;
-	/*height: 100vh;*/
+	height: 100vh;
+	width: 100%;
 	z-index: 1;
 
 	text-align: center;
+}
+
+body > footer > * {
+	position: fixed;
+	bottom: var(--gutter-height);
+	left: var(--gutter-width);
+	right: var(--gutter-width);
 }
 
 body > footer .author-card .avatar {
@@ -1257,14 +1252,20 @@ social menu
 .icon-youtube:hover    { color: #ff0000; }
 
 /*--------------------------------------------------------------
-languages selector
+
+es selector
 --------------------------------------------------------------*/
+header .inner { 
+	/*outline: 1px dashed yellow;*/
+}
 .languages {
-	position: fixed;
+	/*position: fixed;*/
 	top: 0;
 	right: 0;
+	display: inline-block;
 	z-index: 101;
 
+	line-height: var(--line-height);
 	text-align: right;
 
 	-webkit-user-select: none !important;
@@ -1273,11 +1274,12 @@ languages selector
 	/*outline: 1px dashed red;*/
 }
 	.languages ul {
+		display: inline-block;
 		list-style: none;
 	}
 
 	.languages ul li {
-		display: block;
+		display: inline-block;
 		margin: 0;
 
 		font-weight: bold;
@@ -1309,7 +1311,7 @@ ui controls
 
 .ui {
 	position: fixed;
-	bottom: 0;
+	bottom: calc(var(--gutter-height));
 	right: 0;
 	width: var(--gutter-width);
 	z-index: 104;
@@ -1326,6 +1328,7 @@ ui controls
 	margin-right: auto;
 	width: var(--gutter-width);
 
+	cursor: pointer;
 	text-align: center;
 	text-decoration: none;
 
@@ -1335,6 +1338,11 @@ ui controls
 .ui #theme-toggle {
 	cursor: pointer;
 }
+
+/*body:not(.theme-dark) #theme-toggle {
+	cursor: not-allowed;
+	opacity: 0.2;
+}*/
 
 
 /*--------------------------------------------------------------
