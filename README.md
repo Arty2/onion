@@ -4,6 +4,21 @@ An experimental* theme for the [Hugo](https://gohugo.io/) static site generator.
 
 * Major breaking changes may occur between versions, both in functionality and design approach. Using versioned releases is more than encouraged.
 
+## Installation
+
+The following instructions assume that you already have your site’s content in a Git repository. The official [Hugo documentation for themes](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme) suggest to install as a *submodule*, but installing as a *subtree* has [several advantages](https://training.github.com/downloads/submodule-vs-subtree-cheat-sheet/).
+
+```
+git remote add xerographic https://github.com/Arty2/xerographic.git
+git subtree add --prefix=themes/xerographic xerographic master --squash
+```
+
+To update the theme to the most current version:
+
+```
+git subtree pull --prefix=themes/xerographic xerographic master --squash
+```
+
 ## Features
 
 - Plug & Play; should work with zero configuration.
@@ -81,7 +96,8 @@ publication.title
 
 - jQuery
 - [fancybox](http://fancyapps.com/fancybox/3/)
-- Project avatar: [onion by Kyle Tezak](https://thenounproject.com/term/onion/26154) from the Noun Project
+- Alegreya font
+- Fantasque Sans Mono font
 
 
 ***
