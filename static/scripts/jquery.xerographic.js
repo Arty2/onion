@@ -2,18 +2,12 @@ jQuery(document).ready(function($) {
 
 /*--------------------------------------------------------------
 Initialize fancybox
+via https://simplelightbox.com/
 --------------------------------------------------------------*/
 
-$('.single article').fancybox({
-	selector : 'a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]',
-	loop: true,
-	buttons: [
-		// 'slideShow',
-		'close'
-	],
+var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
+	/* options */
 });
-// end fancybox
-
 
 /*--------------------------------------------------------------
 Stacked image galleries
@@ -89,21 +83,24 @@ $('div.gallery').each( function() {
 
 
 /*--------------------------------------------------------------
+EXPERIMENTAL
 Scrollbar width
 gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
 --------------------------------------------------------------*/
-function scrollbarWidth() {
+/*function scrollbarWidth() {
 	let width = window.innerWidth - document.querySelector('body').clientWidth;
-	// document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
+	document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
 	// console.log(width); // DEBUG
 }
 
 scrollbarWidth();
-window.addEventListener('resize', scrollbarWidth);
+window.addEventListener('resize', scrollbarWidth);*/
 
 
 /*--------------------------------------------------------------
+EXPERIMENTAL
 Slide scroll
+Doesn’t work well
 --------------------------------------------------------------*/
 
 // scroll to element if it intersects the viewport
@@ -150,8 +147,10 @@ setTimeout(function(){
 
 // end slide scroll
 
+
 /*--------------------------------------------------------------
-Thread lines - Work in progress
+EXPERIMENTAL
+Thread lines
 via https://anseki.github.io/leader-line/
 --------------------------------------------------------------*/
 /*
@@ -194,7 +193,8 @@ points.each(function(i, start){
 */
 
 /*--------------------------------------------------------------
-thumbnail follow
+EXPERIMENTAL
+Thumbnail follow
 --------------------------------------------------------------*/
 /*$( '.articles-list.columned article' ).on( 'mouseover', function() {
 	var thumb = $( this ).find( '.thumbnail' );
