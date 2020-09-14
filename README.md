@@ -1,8 +1,10 @@
 # /xerographic
 
-An experimental* theme for the [Hugo](https://gohugo.io/) static site generator. See [heracl.es](https://heracl.es) for a live preview, and the theme’s Git respority [/xerographic](https://github.com/Arty2/xerographic) for more details.
+An experimental theme for the [Hugo](https://gohugo.io/) static site generator. See [heracl.es](https://heracl.es) for a live preview, and the theme’s Git respority [/xerographic](https://github.com/Arty2/xerographic) for more details.
 
-* Major breaking changes may occur between versions, both in functionality and design approach. Using versioned releases is more than encouraged.
+► Major breaking changes may occur between versions, both in functionality and design approach. Using versioned releases is more than encouraged.
+
+► This README is under construction.
 
 ## Installation
 
@@ -114,14 +116,20 @@ publication.title
 
 ***
 
-## Bundled / Credits
+## Bundled webfonts
 
-- jQuery
-- [fancybox](http://fancyapps.com/fancybox/3/)
-- Alegreya font
-- Fantasque Sans Mono font
+Bundled fonts contain Latin, Greek and Cyrillic character sets.
+
+- [Alegreya](https://www.huertatipografica.com/en/fonts/alegreya-ht-pro) font (serif)
+- [Fantasque Sans Mono](https://github.com/belluzj/fantasque-sans) font (sans-serif, monospaced)
+
+
+## Bundled JavaScript
+
+- jQuery (to be phased out)
+- [simple-lightbox](https://simplelightbox.com/)
 
 
 ***
 
-© 2018-2020 [Heracles Papatheodorou](http://heracl.es) a.k.a [@Arty2](https://www.twitter.com/Arty2), [MIT Licence](LICENCE.txt)
+© 2018-2020 [Heracles Papatheodorou](http://heracl.es) a.k.a [ @Arty2](https://www.twitter.com/Arty2), [MIT Licence](LICENCE.txt)
