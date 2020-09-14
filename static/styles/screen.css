@@ -884,7 +884,7 @@ body > header {
 	/*opacity: 0.999;*/
 	/*overflow: hidden;*/
 
-	background: inherit;
+	/*background: inherit;*/
 	/*outline: 1px dashed yellow;*/
 }
 
@@ -2086,6 +2086,10 @@ articles-list - thumb ratio
 
 .articles-list.thumbnail-9\:16 article .thumbnail {
 	padding-top: 178%;
+}
+
+.articles-list.thumbnail-2\:1 article .thumbnail {
+	padding-top: 50%;
 }
 
 .articles-list.thumbnail-1\:1 article .thumbnail {
