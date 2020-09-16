@@ -94,13 +94,12 @@ gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
 --------------------------------------------------------------*/
 function scrollbarWidth() {
 	let width = window.innerWidth - document.querySelector('body').clientWidth;
-	// document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
+	document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
 	// console.log(width); // DEBUG
 }
 
 scrollbarWidth();
 window.addEventListener('resize', scrollbarWidth);
-
 
 /*--------------------------------------------------------------
 Slide scroll
@@ -108,7 +107,7 @@ Slide scroll
 
 // scroll to element if it intersects the viewport
 // TODO: should reset when on top, see https://css-tricks.com/an-explanation-of-how-the-intersection-observer-watches/ for possible solution
-/*var snap_index = 0;
+var snap_index = 0;
 var slidescroll = new IntersectionObserver(function(entries) {
 	entries.forEach(function(entry) {
 		if (entry.isIntersecting) {
@@ -146,7 +145,7 @@ setTimeout(function(){
 		});
 	}	
 	// console.log("scrolled to first"); // DEBUG
-}, 2000);*/
+}, 2000);
 
 // end slide scroll
 

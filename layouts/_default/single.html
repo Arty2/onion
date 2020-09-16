@@ -8,17 +8,17 @@
 		{{ end }}
 
 		{{- with $featured -}}
-		<div class="hero">
-				{{- $resized := .Resize "1500x" -}}
+		<div class="hero snap">
+				{{- $resized := .Resize "1000x" -}}
 				<img src="{{ $resized.RelPermalink  }}" alt="">
 		</div>
 		{{- end -}}
-		<h1 class="title"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
+		<h1 class="title snap"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
 		<header>
 			<div class="details">
-				{{ if .Params.Summary }}
+				{{ if .Params.description }}
 					<div class="summary">
-						{{ .Params.Summary | plainify | markdownify }}
+						{{ .Params.description | markdownify }}
 					</div>
 				{{ end }}
 				{{ if and (ne .Site.Params.show_share false) (ne .Params.show_share false) }}
@@ -27,19 +27,14 @@
 			</div>
 		{{ if and (ne .Site.Params.show_meta false) (ne .Params.show_meta false) -}}
 			<aside class="meta">
-
-				{{ if and (ne .Site.Params.show_toc false) (ne .Params.show_toc false) -}}
-					{{ if ge (len .TableOfContents) 150 }}
-					<details open>
-						<summary>{{ (i18n "contents") }}</summary>
-						{{.TableOfContents}}
-					</details>
-					{{ end }}
-				{{ end }}
-
-				<details>
-					<summary>{{ (i18n "post-details") }}</summary>
+				<div class="wrapper">
+					<h2>{{ (i18n "post-details") }}</h2>
 					<dl>
+					<!-- {{ with .Params.description }}
+						<dt>{{ i18n "description" }}</dt>
+						<dd>{{ . | markdownify }}</dd>
+					</dd>
+					{{ end }} -->
 					{{ if .Params.dateCreated }}
 						<dt>{{ i18n "created-date" }}</dt>
 							<dd>{{ .Params.dateCreated }}</dd>
@@ -48,8 +43,8 @@
 							<dd>{{- if .Params.dateCreated -}}
 									{{- .Params.dateCreated -}}
 								{{- else -}}
-									{{- if isset $.Site.Params "date_format" -}}
-										{{- .Date.Format $.Site.Params.date_format -}}
+									{{- if isset $.Site.Params "dateformat" -}}
+										{{- .Date.Format $.Site.Params.dateformat -}}
 									{{- else -}}
 										{{- .Date.Format "2006-01-02" -}}
 									{{- end -}}
@@ -76,7 +71,7 @@
 
 					{{ with .Params.license }}
 						<dt>{{ i18n "license" }}</dt>
-						<dd>{{ . | plainify | markdownify }}</dd>
+						<dd>{{ . | markdownify }}</dd>
 					{{ end }}
 
 					{{ if .Params.Tags }}
@@ -86,11 +81,11 @@
 						{{- end }}</dd>
 					{{ end }}
 					</dl>
-				</details>
+				</div>
 
 				{{- if eq .Type "review" -}}
-				<details open>
-					<summary>{{ (i18n "publication-details") }}</summary>
+				<div class="wrapper">
+					<h2>{{ (i18n "publication-details") }}</h2>
 					<dl>
 					{{ with .Params.Publication.Title }}
 						<dt>{{ i18n "title" }}</dt>
@@ -129,15 +124,21 @@
 						{{- end }}
 					{{ end -}}
 					</dl>
-				</details>
+				</div>
 
 				{{ end }}
 
+				{{ if ge (len .TableOfContents) 150 }}
+				<div class="wrapper">
+					<h2>{{ (i18n "contents") }}</h2>
+					{{.TableOfContents}}
+				</div>
+				{{ end }}
+
 				{{ with .Params.Meta }}
-				<details>
-					<summary>{{ i18n "post-meta" }}</summary>
+				<div class="wrapper">
 					{{ . | markdownify }}
-				</details>
+				</div>
 				{{ end }}
 
 			</aside>
@@ -147,13 +148,7 @@
 			{{ .Content }}
 		</div>
 	</article>
-	{{ if and (eq .Site.Params.show_comments true) (ne .Params.show_comments false) -}}
-		<section class="comments">
-		{{ if .Params.disqusShortname }}
-			{{ template "_internal/disqus.html" . }}
-		{{ else }}
-			► Error: Comments enabled but disqusShortname is missing.
-		{{ end }}
-		</section>
+	{{ if ne .Params.show_comments false }}
+		{{ template "_internal/disqus.html" . }}
 	{{ end }}
 {{ end }}

@@ -9,6 +9,5 @@
 			{{- with .Site.Params.Description }}<span class="description">{{ . }}</span>{{ end -}}
 		</h1>
 	</a>
-	{{ partialCached "header/nav.html" . }}
-	{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
+	{{ partial "header/nav.html" . }}
 </div>

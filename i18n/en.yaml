@@ -5,16 +5,16 @@ reset:
 ## social sharing
 
 share:
-  other: share
+  other: Share
 
 share-twitter:
-  other: twitter
+  other: Tweet
 
 share-facebook:
-  other: facebook
+  other: Share
 
 share-email:
-  other: by email
+  other: Send email
 
 ## post details
 
@@ -47,9 +47,6 @@ publish-date:
 
 post-details:
   other: Post details
-
-post-meta:
-  other: Meta
 
 publication-details:
   other: Publication details

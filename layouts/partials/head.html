@@ -1,14 +1,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="{{ with .Description }}{{ . }}{{ end }}">
+<meta name="description" content="{{ .Description }}">
 
 {{ template "_internal/opengraph.html" . }}
 {{ template "_internal/twitter_cards.html" . }}
 {{ template "_internal/schema.html" . }}
 
-{{ if (fileExists "static/favicon.png") -}}
 <link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
-{{- end }}
 
 <link rel="stylesheet" href="{{ "/styles/screen.css" | relURL }}">
 <link rel="stylesheet" href="{{ "/scripts/fancybox/jquery.fancybox.css" | relURL }}">

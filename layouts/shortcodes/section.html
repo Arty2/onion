@@ -1,3 +1,0 @@
-{{- $class := (.Get "class") -}}
-{{- $style := (.Get "style") -}}
-<section {{ with $class }}class="{{ $class | safeHTMLAttr }}"{{ end }}{{ with $style }} style="{{ $style | safeCSS }}"{{ end }}>{{ .Inner }}</section>

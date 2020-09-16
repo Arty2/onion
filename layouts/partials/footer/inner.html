@@ -17,5 +17,5 @@
 		<div class="copyright">{{ . | safeHTML  }}</div>
 	{{- end }}
 	<!-- <small>Last Modified: {{ now.Format "2006-01-02 15:04 MST" }}</small> -->
-	{{ partialCached "footer/nav.html" . }}
+	{{ partial "footer/nav.html" . }}
 </div>

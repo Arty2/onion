@@ -1,0 +1,2 @@
+{{- $class := (.Get "class") -}}
+<div class="left {{ with $class }}{{ $class }}{{ end }}">{{ .Inner | markdownify }}</div>

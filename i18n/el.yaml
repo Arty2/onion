@@ -5,16 +5,16 @@ reset:
 ## social sharing
 
 share:
-  other: μοιράσου
+  other: Μοιράσου
 
 share-twitter:
-  other: twitter
+  other: Τιτίβισε
 
 share-facebook:
-  other: facebook
+  other: Μοιράσου
 
 share-email:
-  other: με email
+  other: Στείλε email
 
 ## post details
 
@@ -47,9 +47,6 @@ publish-date:
 
 post-details:
   other: Σχετικά
-
-post-meta:
-  other: Meta
 
 publication-details:
   other: Στοιχεία έκδοσης

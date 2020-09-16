@@ -12,8 +12,8 @@
 			{{ $customcss.Content | safeCSS }}
 		</style>
 	{{ end -}}
-	<!-- {{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }} -->
-	{{ if ne .Site.Params.show_ui false }}{{ partialCached "ui" . }}{{ end }}
+	{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
+	{{ if ne .Site.Params.show_ui false }}{{ partial "ui" . }}{{ end }}
 	<header class="cluster">
 		{{ block "header" . }}{{ partial "header/inner" . }}{{end}}
 	</header>
