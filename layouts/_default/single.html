@@ -10,7 +10,7 @@
 		{{- with $featured -}}
 		<div class="hero">
 				{{- $resized := .Resize "1500x" -}}
-				<img src="{{ $resized.RelPermalink  }}" alt="">
+				<img src="{{ $resized.RelPermalink }}" alt="">
 		</div>
 		{{- end -}}
 		<h1 class="title"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
