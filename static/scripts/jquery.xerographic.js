@@ -9,6 +9,22 @@ var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".
 	/* options */
 });
 
+
+/*--------------------------------------------------------------
+Hide back #totop if at top of page
+--------------------------------------------------------------*/
+
+setInterval(function(){
+	if (window.scrollY == 0) {
+		document.getElementById('totop').style.color = 'rgba(var(--text-color),0)';
+	}
+	else {
+		document.getElementById('totop').style.color = 'rgba(var(--text-color),1)';
+	}
+	// console.log("scrolled to first"); // DEBUG
+}, 3000);
+
+
 /*--------------------------------------------------------------
 Stacked image galleries
 inspired from https://viewfromthisside.superhi.com/
@@ -53,7 +69,7 @@ $('div.gallery').each( function() {
 
 		z = z + 1;
 
-		if ( index == index_current) {
+		if ( index == index_current ) {
 			if (index_current + 1 > images.length - 1) { index_current = 0;	}
 			else { index_current = index_current + 1; }
 
@@ -74,6 +90,27 @@ $('div.gallery').each( function() {
 		// animate
 		slideAnimation();
 	});
+
+/*	images.on('click', function () {
+		// console.log(index,index_current, images.length);
+		index = 0;
+		z = z + 1;
+
+		if (index_current + 1 > images.length - 1) { index_current = 0;	}
+		else { index_current = index_current + 1; }
+
+		$( images[index_current] ).css('z-index', z);
+
+		// add class to current figure, remove from all others
+		$( images ).removeClass('top');
+		$( images[index_current] ).addClass('top');
+
+		// update gallery with current index
+		$(this).parent().attr('data-current', index_current + 1);
+
+		// animate
+		slideAnimation();
+	});*/
 
 
 	//animate
