@@ -23,7 +23,9 @@ setInterval(function(){
 	}
 	// console.log("scrolled to first"); // DEBUG
 }, 3000);
-
+document.getElementById('totop').addEventListener('click', function(){
+	this.style.color = 'rgba(var(--text-color),0)';
+});
 
 /*--------------------------------------------------------------
 Stacked image galleries
