@@ -7,9 +7,9 @@
 
 	themetoggle.onclick = function() {
 		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			document.querySelector('body').classList.toggle('toggle-light');
+			document.querySelector('body').classList.toggle('scheme-light');
 		} else {
-			document.querySelector('body').classList.toggle('toggle-dark');
+			document.querySelector('body').classList.toggle('scheme-dark');
 		}
 	}
 </script>
