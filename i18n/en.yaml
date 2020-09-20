@@ -45,6 +45,9 @@ read-date:
 publish-date:
   other: Published
 
+modified-date:
+  other: Updated
+
 post-details:
   other: Post details
 

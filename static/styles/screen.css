@@ -50,15 +50,6 @@ global CSS variables
 	--s03: calc(var(--s02) * var(--sratio));
 	--s04: calc(var(--s03) * var(--sratio));
 
-/*	--sratio: 1.618;
-	--s00: calc(100% + 0.5vw);
-	--s-2: calc(var(--s00) * 0.618);
-	--s-1: calc(var(--s00) * 0.7861);
-	--s01: calc(var(--s00) * 1.272);
-	--s02: calc(var(--s00) * 1.618);
-	--s03: calc(var(--s00) * 2.0581);
-	--s04: calc(var(--s00) * 2.61792);*/
-
 	--page-color-transparency: 0.89;
 	--page-color-blur: 2px;
 
@@ -79,7 +70,7 @@ global CSS variables
 themes
 --------------------------------------------------------------*/
 
-body.toggle-light,
+body.scheme-light,
 body.theme-light {
 	--page-color: 221, 238, 255;
 	--text-color: 34, 34, 50;
@@ -89,7 +80,7 @@ body.theme-light {
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-body.toggle-dark,
+body.scheme-dark,
 body.theme-dark {
 	--page-color: 34, 34, 34;
 	--text-color: 204, 204, 204;
@@ -170,7 +161,7 @@ body.theme-blend .entry-content img {
 		--shadow-color: rgba(var(--text-color),0.2);
 	}
 
-	body.theme-blend:not(.theme-light) .entry-content img {
+	body.theme-blend:not(.scheme-light) .entry-content img {
 		filter: invert(100);
 		mix-blend-mode: screen;
 	}
@@ -336,6 +327,10 @@ figcaption, small, table,
 body > header,
 body > footer {
 	font-size: var(--s-2);
+}
+
+.languages {
+	font-size: calc(var(--s01)*var(--xheight));
 }
 
 body > footer {
@@ -863,7 +858,7 @@ body {
 
 body > header,
 body > footer {
-	padding: var(--gutter-width);
+	padding: calc(2*var(--gutter-height)) var(--gutter-width);
 	/*width: calc(100vw - var(--scrollbar-width));*/
 }
 
@@ -880,12 +875,16 @@ body > main > * {
 body > header {
 	position: relative;
 	/*position: fixed;*/
-	z-index: 103;
+	width: 100%;
+	z-index: 102;
 	/*opacity: 0.999;*/
 	/*overflow: hidden;*/
 
 	background: inherit;
-	/*outline: 1px dashed yellow;*/
+
+	/*-webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0, 90%, rgba(0,0,0,0) 100%);*/
+
+	/*background: red !important;*/
 }
 
 body > header > * {
@@ -893,9 +892,35 @@ body > header > * {
 	/*top: var(--gutter-height);*/
 	left: var(--gutter-width);
 	right: var(--gutter-width);
+	height: var(--line-height);
 	display: flex;
+
+	align-items: center;
 	justify-content: space-between;
 	flex-wrap: wrap;
+}
+
+body > header * {
+	/*outline: 1px dashed red;*/
+}
+
+body > header > .languages {
+	margin-top: calc(-1*var(--gutter-height) - var(--line-height)/2);
+	margin-bottom: calc(var(--gutter-height) - var(--line-height)/2);
+	/*padding-top: calc(var(--line-height)/2);*/
+}
+
+body > header > * > h1 > a {
+	display: inline-block;
+	line-height: 0.5;
+}
+
+body > header > * > h1 {
+	display: inline-block;
+	margin: 0;
+	line-height: 0.5;
+
+	font-size: 100%;
 }
 
 body > header .description {
@@ -904,7 +929,8 @@ body > header .description {
 
 body > header nav,
 body > footer nav {
-	min-height: var(--line-height);
+	line-height: 1;
+	/*min-height: var(--line-height);*/
 }
 
 body > footer nav {
@@ -1007,19 +1033,13 @@ panel styles
 	/*backdrop-filter: blur(var(--page-color-blur));*/
 	/* too heavy on rendering, doesn't apply well to :before and :after */
 	background-color: rgba(var(--page-color), var(--page-color-transparency));
-	/*background: rgba(255,0,255,0.5);*/
 	justify-content: center;
+	/*background: red;*/
 }
-/*	.panel:first-child {
-		--page-color-transparency: 1;
-	}*/
-/*	.panel:last-child {
-		margin-bottom: var(--gutter-height);
-	}*/
-
-/*.panel + *:not(.panel) {
-	margin-top: var(--gutter-height);
-}*/
+	.panel:first-child {
+		/*--page-color-transparency: 1;*/
+		/*background: red;*/
+	}
 
 body > main:after,
 .panel:before,
@@ -1060,25 +1080,6 @@ body > main:after,
 	max-width: var(--content-width);
 }
 
-/*.panel.clear:nth-last-of-type(1) {*/
-/*.panel.sticky.clear {
-	--page-color-transparency: 1;
-
-	min-height: calc(100vh - 3rem);
-}
-
-.panel.sticky.clear:after {
-	display: block;
-	content: '';
-	position: absolute;
-	bottom: -3rem;
-	left: 0;
-	height: 3rem;
-	width: 100%;
-
-	background: none;
-}*/
-
 
 /*--------------------------------------------------------------
 hero & fullwidth styles
@@ -1097,8 +1098,8 @@ hero & fullwidth styles
 	/*grid-column: full;*/
 }
 
-fullwidth img,
-hero img {
+.fullwidth img,
+.hero img {
 		margin: 0;
 		width: 100%;
 		height: auto;
@@ -1400,9 +1401,9 @@ header .inner {
 }
 .languages {
 	/*position: fixed;*/
-	top: 0;
-	right: 0;
-	display: inline-block;
+	/*top: 0;*/
+	/*right: 0;*/
+	display: block;
 	z-index: 101;
 
 	line-height: var(--line-height);
@@ -1412,6 +1413,7 @@ header .inner {
 	user-select        : none !important;
 
 	/*outline: 1px dashed red;*/
+
 }
 	.languages ul {
 		display: inline-block;
@@ -1421,6 +1423,7 @@ header .inner {
 	.languages ul li {
 		display: inline-block;
 		margin: 0;
+		padding-left: calc(var(--gutter-width)/2);
 
 		font-weight: bold;
 		text-align: right;
@@ -1428,9 +1431,8 @@ header .inner {
 	}
 
 	.languages a {
-		display: inline-block;
+		display: inline;
 		min-width: var(--gutter-width);
-		padding-right: 0.2rem;
 
 		text-align: center;
 		text-decoration: none;
@@ -1482,7 +1484,7 @@ theme toggle, return to top
 	cursor: pointer;
 }
 
-body[class*=theme-] #theme-toggle {
+body[class*=theme-]:not(.theme-blend) #theme-toggle {
 	display: none;
 	cursor: not-allowed;
 	opacity: 0.2;
@@ -2171,7 +2173,8 @@ single article meta styles
 
 
 .meta details summary {
-	margin-left: calc(-1*var(--gutter-width)/2); /* adjust for the detail handle */
+	margin-left: -0.85em;
+	/* adjust for the detail handle */
 	cursor: pointer;
 	font-variant: small-caps;
 	text-transform: uppercase;
@@ -2389,7 +2392,7 @@ footnotes and targeting
 		top: -0.1rem;
 		right: 0.5rem;
 
-		cursor: alias;
+		cursor: pointer;
 		font-size: 1.2rem;
 	}
 

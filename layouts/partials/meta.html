@@ -10,6 +10,18 @@
 	<details>
 		<summary>{{ (i18n "post-details") }}</summary>
 		<dl>
+		{{ if .Lastmod }}
+			<dt>{{ i18n "modified-date" }}</dt>
+				<dd>
+					<time datetime="{{ .Lastmod }}">
+					{{- if isset $.Site.Params "date_format" -}}
+						{{- .Lastmod.Format $.Site.Params.date_format -}}
+					{{- else -}}
+						{{- .Lastmod.Format "2006-01-02" -}}
+					{{- end -}}
+					</time>
+				</dd>
+		{{ end }}
 		{{ if .Params.dateCreated }}
 			<dt>{{ i18n "created-date" }}</dt>
 				<dd>{{ .Params.dateCreated }}</dd>
@@ -18,11 +30,13 @@
 				<dd>{{- if .Params.dateCreated -}}
 						{{- .Params.dateCreated -}}
 					{{- else -}}
+						<time datetime="{{ .Date }}">
 						{{- if isset $.Site.Params "date_format" -}}
 							{{- .Date.Format $.Site.Params.date_format -}}
 						{{- else -}}
 							{{- .Date.Format "2006-01-02" -}}
 						{{- end -}}
+						</time>
 					{{- end -}}
 				</dd>
 		{{ end }}

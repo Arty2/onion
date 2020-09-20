@@ -45,6 +45,9 @@ read-date:
 publish-date:
   other: Δημοσίευση
 
+modified-date:
+  other: Ενημέρωση
+
 post-details:
   other: Σχετικά
 
