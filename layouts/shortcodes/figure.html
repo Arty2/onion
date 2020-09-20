@@ -1,8 +1,25 @@
+{{- $src := .Page.Resources.GetMatch (printf "*%s*" (path.Base (.Get "src") )) -}}
+{{- /*
+	
+internal template:
+https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shortcodes/figure.html
+
+to try:
+https://dev.to/stereobooster/responsive-images-for-hugo-dn9
+
+*/ -}}
 <figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
 	{{- if .Get "link" -}}
 		<a href="{{ .Get "link" }}"{{ with .Get "target" }} target="{{ . }}"{{ end }}{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
 	{{- end }}
-	<img src="{{ .Get "src" }}"
+	<img src="
+	{{- if $src -}}
+		{{- $resized := $src.Resize "600x" -}}
+		{{ $resized.RelPermalink }}
+	{{- else -}}
+		{{ .Get "srca"}}
+	{{- end -}}
+	"
 		 {{- if or (.Get "alt") (.Get "caption") }}
 		 alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}"
 		 {{- end -}}

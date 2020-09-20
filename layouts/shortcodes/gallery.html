@@ -14,17 +14,18 @@ based on https://github.com/liwenyip/hugo-easy-gallery/ and edits form awein
 				{{- $caption :=  . }}
 			{{- end }}
 			{{- $thumb := .Fill "300x300 q90 center" }}<!-- thumbnail image -->
-	<div class="box">
-		<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-			<div class="img" style="background-image: url('{{ $thumb.RelPermalink }}');" >
-				<img itemprop="thumbnail" src="{{ $thumb.RelPermalink }}" alt="{{ $caption }}" /><!-- <img> hidden if in .gallery -->
+			<div class="box">
+				<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+					<div class="img" style="background-image: url('{{ $thumb.RelPermalink }}');" >
+						<img itemprop="thumbnail" src="{{ $thumb.RelPermalink }}" alt="{{ $caption }}" />
+						<!-- <img> hidden if in .gallery -->
+					</div>
+					<figcaption>
+						<p>{{ $caption }}</p>
+					</figcaption>
+					<a href="{{ .RelPermalink }}" itemprop="contentUrl"></a><!-- put <a> last so it is stacked on top -->
+				</figure>
 			</div>
-			<figcaption>
-				<p>{{ $caption }}</p>
-			</figcaption>
-			<a href="{{ .RelPermalink }}" itemprop="contentUrl"></a><!-- put <a> last so it is stacked on top -->
-		</figure>
-	</div>
 			{{- end }}
 	{{- else -}}
 		<!-- If no directory was specified, include any figure shortcodes called within the gallery -->
