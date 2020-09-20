@@ -27,13 +27,13 @@ document.getElementById('totop').addEventListener('click', function(){
 	this.style.color = 'rgba(var(--text-color),0)';
 });
 
+
 /*--------------------------------------------------------------
 Stacked image galleries
 inspired from https://viewfromthisside.superhi.com/
 --------------------------------------------------------------*/
 
 $('div.gallery').each( function() {
-
 	// on load, rotate and translate all the images
 	var index_current = 0;
 	var index = 0
@@ -138,127 +138,9 @@ window.addEventListener('resize', scrollbarWidth);*/
 
 /*--------------------------------------------------------------
 EXPERIMENTAL
-Slide scroll
-Doesn’t work well
+skew everything based on mouse position
 --------------------------------------------------------------*/
-
-// scroll to element if it intersects the viewport
-// TODO: should reset when on top, see https://css-tricks.com/an-explanation-of-how-the-intersection-observer-watches/ for possible solution
-/*var snap_index = 0;
-var slidescroll = new IntersectionObserver(function(entries) {
-	entries.forEach(function(entry) {
-		if (entry.isIntersecting) {
-			var ratio            = entry.intersectionRatio;
-			var boundingRect     = entry.boundingClientRect;
-			var intersectionRect = entry.intersectionRect;
-			// console.log(entry.target.dataset.index); // DEBUG
-			if (entry.target.dataset.index > snap_index) {
-				entry.target.scrollIntoView({
-					// behavior: 'smooth',
-					block: 'start'
-				});
-				snap_index = entry.target.dataset.index*1;
-				// console.log("scrolled to: " + snap_index); // DEBUG
-			}
-			// console.log("current: " + index); // DEBUG
-			// console.log(ratio); // DEBUG
-		}
-	});
-}, { threshold: [0.1] });
-
-// apply the intersection observer to all elements with a snap class
-$('.snap').each(function(i){
-	slidescroll.observe(this);
-	this.dataset.index = i;
-	i++;
-});
-
-// scroll to first snap if at top of the page for 2 seconds
-setTimeout(function(){
-	if (window.scrollY == 0) {
-		$('.snap')[0].scrollIntoView({
-			behavior: 'smooth',
-			block: 'start'
-		});
-	}	
-	// console.log("scrolled to first"); // DEBUG
-}, 2000);*/
-
-// end slide scroll
-
-
-/*--------------------------------------------------------------
-EXPERIMENTAL
-Thread lines
-via https://anseki.github.io/leader-line/
---------------------------------------------------------------*/
-/*
-var linestyles = {
-		// middleLabel: LeaderLine.pathLabel({text: 'LABEL', outlineColor: 'rgb(var(--page-color))' }),
-		gradient: {
-			startColor: 'rgba(var(--accent-color),0.2)',
-			endColor: 'rgba(var(--accent-color),0)'
-		},
-		color: 'rgba(var(--accent-color),0.8)',
-		// path: 'arc',
-		// path: 'magnet',
-		// dash: {len: 2, gap: 5},
-		startSocket: 'bottom',
-		endSocket:   'top',
-		size: 1,
-		startPlug: 'disc',
-		endPlug: 'behind',
-		// endPlug: 'arrow2',
-		// startPlugSize: 2,
-		// endPlugSize:   2,
-	};
-
-var start = 0;
-var points = $('article[data-tags*="tag-verse"] pre');
-
-points.each(function(i, start){
-	points.each(function(j, end){
-		if (i < j) {
-			var line = new LeaderLine(
-					LeaderLine.pointAnchor(start, {x: '50%', y: '100%'}),
-					LeaderLine.pointAnchor(end  , {x: 0, y: 0}),
-					linestyles
-				);
-			// console.log('pairs:', i, j); // DEBUG
-		}
-	});
-});
-// end thread lines
-*/
-
-/*--------------------------------------------------------------
-EXPERIMENTAL
-Thumbnail follow
---------------------------------------------------------------*/
-/*$( '.articles-list.columned article' ).on( 'mouseover', function() {
-	var thumb = $( this ).find( '.thumbnail' );
-	thumb.addClass( 'active' );
-
-	$(document).on( 'mousemove', function(event) {
-		var mouseX = event.clientX + 10;
-		var mouseY = event.clientY + 10;
-
-		// thumb.css({
-		// top: mouseY,
-		// left: mouseX
-		// })
-	});
-
-	$( this ).on( 'mouseout', function() {
-		thumb.removeClass( 'active' );
-		// this unbind should be more specific
-		$(document).off( 'mousemove' );
-	});
-});*/
-// end img follow
-
-// skew everything based on mouse position
-// var t=document.getElementsByTagName('main')[0];document.documentElement.onmousemove=function(e){t.style.webkitTransform=t.style.transform='rotate3d(10, 180, -6, '+e.pageX/-20+'deg)';};
-
+/*var t=document.getElementsByTagName('main')[0];
+document.documentElement.onmousemove=function(e){t.style.webkitTransform=t.style.transform='rotate3d(10, 180, -6, '+e.pageX/-20+'deg)';};*/
 
 }); // end document ready
