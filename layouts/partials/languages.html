@@ -2,7 +2,6 @@
 <nav class="languages">
 	<ul>
 		{{- range .AllTranslations -}}
-		<!-- <li><a href="{{ .RelPermalink }}">{{ .Site.Language.Lang }}</a></li> -->
 		<li><a href="{{ .RelPermalink }}" lang="{{ .Site.LanguageCode }}" class="{{ if eq $.Page.RelPermalink .RelPermalink }}active{{ end }}">{{ .Site.Language.LanguageName }}</a></li>
 		{{- end }}
 	</ul>

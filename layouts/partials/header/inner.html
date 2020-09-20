@@ -1,14 +1,13 @@
 <div class="inner">
-	<a href="{{ "/" | relLangURL }}">
-		<h1>
+	<h1>
+		<a href="{{ "/" | relLangURL }}">
 			{{- if .Site.Params.Logo }}
 				{{ .Site.Params.Logo | safeHTML }}
 			{{- else -}}
 				{{ .Site.Title }}
 			{{- end -}}
 			{{- with .Site.Params.Description }}<span class="description">{{ . }}</span>{{ end -}}
-		</h1>
-	</a>
+		</a>
+	</h1>
 	{{ partialCached "header/nav.html" . }}
-	{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 </div>
