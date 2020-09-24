@@ -342,6 +342,7 @@ pre, input, textarea {
 	font-family: inherit;
 }
 
+/*.meta,*/
 .meta,
 .sidenote, .entry-content aside,
 .footnotes,
@@ -2138,7 +2139,8 @@ single article meta styles
 }
 
 .meta {
-	margin-top: calc(-1*var(--gutter-height)/4) !important;
+	margin-top: calc(-1*var(--line-height)/4) !important;
+	margin-bottom: var(--line-height);
 	/*TODO: align to baseline, but need to get rid of important*/
 	/*outline: 1px solid red;*/
 }
@@ -2315,7 +2317,8 @@ sidenote & marginalia styles
 
 
 @media only screen and ( min-width: 1200px ) {
-	.meta,
+	/*.meta,*/
+	header aside,
 	.sidenote,
 	.entry-content aside {
 		position: absolute;
