@@ -4,12 +4,16 @@
 {{- else if eq .Type "ephemera" -}}
 	{{ .RawContent | safeHTML }}
 {{- else -}}
-	<a href="
-	{{ with .Resources.GetMatch (printf "**%s" .Params.directURL) }}
-		{{ .RelPermalink }}
-	{{ else }}
-		{{ .RelPermalink }}
-	{{ end }}">
+	<a {{ with .Params.directURL -}}
+		{{ with $.Page.Resources.GetMatch . }}
+			{{ printf "href=%s title=' %s'" .RelPermalink .Name | safeHTMLAttr  }}
+		{{ else }}
+			{{ $url := urls.Parse . }}
+			{{ printf "href=%s target=_blank title=' %s'" . $url.Host | safeHTMLAttr  }}
+		{{ end }}
+	{{- else -}}
+		{{ printf "href=%s" .RelPermalink | safeHTMLAttr  }}
+	{{- end -}}>
 		{{ $featured := "" }}
 		{{ if .Params.image_preview }}
 			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image_preview) }}
@@ -48,12 +52,12 @@
 		</p>
 		{{- with .Params.Rating }}
 			<p class="rating">{{ range seq (int . ) }}★{{ end }}</p>
-		{{- end -}}		
+		{{- end -}}
+	</a>
 		{{ if .Params.Tags }}
 			<p class="tags">{{ range .Params.Tags -}}
 				<a {{ if not (in $.Site.Params.disableKinds "taxonomy") }}href="/tags/{{ . | urlize }}"{{end}} class="tag" rel="tag">{{ (i18n . ) }}</a>
 			{{- end }}</p>
 		{{ end }}
-	</a>
 {{- end -}}
 </article>
