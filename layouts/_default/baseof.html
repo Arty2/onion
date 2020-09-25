@@ -5,7 +5,7 @@
 	<title>{{if .IsHome}}{{ .Site.Title }} • {{ .Title }}{{else}}{{ .Title }} • {{ .Site.Title }}{{end}}</title>
 	{{ partial "head" . }}
 </head>
-<body class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
+<body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	{{- with .Resources.GetMatch "custom.css" }}{{/* load custom.css located by the content, if it exists */}}
 		{{- $customcss := . | resources.Minify }}
 		<style>
@@ -14,7 +14,7 @@
 	{{ end -}}
 	<!-- {{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }} -->
 	{{ if ne .Site.Params.show_ui false }}{{ partialCached "ui" . }}{{ end }}
-	<header id="top" class="cluster">
+	<header class="cluster">
 		{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 		{{ block "header" . }}{{ partialCached "header/inner" . }}{{end}}
 	</header>
