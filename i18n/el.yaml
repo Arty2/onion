@@ -1,20 +1,20 @@
 ## UI
 reset:
-  other: Επαναφορά
+  other: Εμφάννιση όλων
 
 ## social sharing
 
 share:
-  other: μοιράσου
+  other: Μοιράσου
 
 share-twitter:
-  other: twitter
+  other: Twitter
 
 share-facebook:
-  other: facebook
+  other: Facebook
 
 share-email:
-  other: email
+  other: Email
 
 ## post details
 
@@ -71,3 +71,18 @@ publisher:
 
 pages:
   other: Σελίδες
+
+
+## github-content
+
+hosted-on-github:
+  other: Στο GitHub
+
+github-repository:
+  other: Αποθετήριο
+
+github-license:
+  other: Άδεια χρήσης
+
+github-last-pushed:
+  other: Τελευταία ενημέρωση

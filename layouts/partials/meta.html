@@ -114,14 +114,25 @@
 		{{ end -}}
 		</dl>
 	</details>
-
 	{{ end }}
-
+	{{ with .Params.Github -}}
+		{{- $stats := getJSON "https://api.github.com/repos/" . -}}
+		<details open>
+			<summary>{{ i18n "hosted-on-github" }}</summary>
+			<dl>
+				<dt>{{ i18n "github-repository" }}</dt>
+					<dd><a href="https://github.com/{{ . }}" target="_blank">{{ . }}</a></dd>
+				{{ with $stats.license }}<dt>{{ i18n "github-license" }}</dt>
+					<dd>{{ .name }}</dd>{{ end }}
+				<dt>{{ i18n "github-last-pushed" }}</dt>
+					<dd>{{ $stats.pushed_at }}</dd>
+			</dl>	
+		</details>
+	{{ end }}
 	{{ with .Params.Meta }}
 	<details>
 		<summary>{{ i18n "post-meta" }}</summary>
 		{{ . | markdownify }}
 	</details>
 	{{ end }}
-
 </aside>

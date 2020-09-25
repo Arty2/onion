@@ -1,23 +1,9 @@
 {{- $repository := .Get "repository" -}}
-{{- $details := .Get "details" -}}
 {{- $readme := getJSON "https://api.github.com/repos/" $repository "/readme" -}}
-{{- with $details -}}
-	{{- $stats := getJSON "https://api.github.com/repos/" $repository -}}
-	<div class="meta">
-		<details open>
-			<summary>GitHub details</summary>
-			<dl>
-				<dt>Repository</dt>
-					<dd><a href="https://github.com/{{ $repository }}" target="_blank">{{ $repository }}</a></dd>
-				<dt>License</dt>
-					<dd>{{ $stats.license.name }}</dd>
-				<dt>Last Pushed</dt>
-					<dd>{{ $stats.pushed_at }}</dd>
-			</dl>	
-		</details>
-	</div>
-{{ end }}
 {{- $content := $readme.content | base64Decode -}}
+{{- with .Page.Params.Title -}}
+	{{ $content = replace $content (printf "# %s" . ) "" }}
+{{- end -}}
 {{- $content = replace $content "](./" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}}
 {{- $content = replace $content "](/" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}}
 {{- $content | markdownify -}}

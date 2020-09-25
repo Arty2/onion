@@ -1,6 +1,6 @@
 ## UI
 reset:
-  other: Reset
+  other: Show All
 
 ## social sharing
 
@@ -71,3 +71,18 @@ publisher:
 
 pages:
   other: Pages
+
+
+## github-content
+
+hosted-on-github:
+  other: Hosted on GitHub
+
+github-repository:
+  other: Repository
+
+github-license:
+  other: License
+
+github-last-pushed:
+  other: Last Pushed
