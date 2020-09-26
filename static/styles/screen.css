@@ -27,7 +27,7 @@ global CSS variables
 	/*--scrollbar-width: 18px;*/
 	/*--content-width: 60ch; /* is not same for different fonts */
 	--content-width: 30rem;
-	/*--content-width: 100%;*/ /* DEBUG */
+	/*--content-width: 100%; /* DEBUG */
 
 	--line-height: 1.4em; /* units used implicitely */
 	--gutter-height: calc(1*var(--line-height));
@@ -335,7 +335,7 @@ body > footer {
 }
 
 article.preformatted {
-	font-size: var(--s01);
+	font-size: var(--s-1);
 }
 
 body > footer {
@@ -2106,6 +2106,7 @@ articles-list - cluster
 }
 .articles-list.cluster > .wrapper {
 	display: flex;
+	flex-direction: columns;
 	flex-wrap: wrap;
 	justify-content: flex-start;
 	margin: calc(-1*var(--gutter-height)/2) calc(-1*var(--gutter-width)/2);
@@ -2113,13 +2114,17 @@ articles-list - cluster
 
 .articles-list.cluster article {
 	display: inline-block;
-	flex-basis: calc((var(--content-width)/2 - var(--gutter-width)));
+	/*flex-basis: calc((var(--content-width)/2 - var(--gutter-width)));*/
+	flex-basis: calc((var(--content-width)/4 - var(--gutter-width)));
 	flex-grow: 1;
+	flex-shrink: 0;
 	margin: calc(var(--gutter-height)/2) calc(var(--gutter-width)/2);
+	min-width: 14rem;
+	/*outline: 2px dashed red;*/
 }
 
 .articles-list.cluster article:nth-last-child(1):nth-child(odd) {
-	/*flex-grow: 0;*/
+	flex-grow: 0;
 	/*outline: 2px solid red;*/
 }
 
@@ -2308,6 +2313,7 @@ single article meta styles
 .meta details summary {
 	list-style: none;
 	cursor: pointer;
+	/*cursor: zoom-in;*/
 	font-variant: all-small-caps;
 }
 	.meta details summary::-webkit-details-marker {
@@ -2325,8 +2331,12 @@ single article meta styles
 		content: '[…]';
 		margin-left: 0.5em;
 	}
+	.meta details summary {
+		/*cursor: zoom-out;*/
+	}
 	.meta details[open] summary::after {
-		content: '';
+		content: '–';
+		float: right;
 	}
 
 .meta details[open] summary ~ * {
