@@ -752,6 +752,14 @@ form {
 	margin: var(--gutter-height) 0;
 }
 
+input,
+textarea,
+label {
+	font: inherit;
+	color: inherit;
+	font-size: var(--s-2);
+}
+
 input[type="text"],
 input[type="email"],
 textarea {
@@ -773,6 +781,8 @@ input[type="email"] {
 	border-right: none;
 }
 
+input[type="submit"],
+input[type="reset"],
 .button {
 	display: block;
 	margin: 0.5rem auto;
@@ -797,6 +807,8 @@ input[type="email"] {
 	-webkit-appearance: button; /* iOS and Safari fix */
 }
 
+input[type="submit"]:hover,
+input[type="reset"]:hover,
 .button:hover {
 	box-shadow: inset 0 2rem 0 var(--shadow-color), 0px 3px 0px 0px var(--shadow-color);
 	color: rgb(var(--text-color));
@@ -804,16 +816,80 @@ input[type="email"] {
 	transform: translate(0, 1px);
 }
 
+input[type="submit"]:focus,
+input[type="reset"]:focus,
 .button:focus {
 	border-top: 3px solid;
 	border-bottom: 1.5px solid;
 	box-shadow: inset 0 2rem 0 var(--shadow-color), 0px 3px 0px 0px var(--shadow-color);
 	outline: none;
+	/*text-decoration: underline;*/
 	-webkit-tap-highlight-color: transparent;
 }
 
+input[type="submit"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
 .button::-moz-focus-inner { border: 0; }
 
+
+/*--------------------------------------------------------------
+simple-signup form shortcode
+--------------------------------------------------------------*/
+
+.simple-signup form {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: end;
+	margin: var(--gutter-height) auto;
+
+	background: rgba(var(--page-color), 0);
+	border: 1.5px solid;
+	border-radius: 1rem;
+}
+
+.simple-signup form:focus-within {
+	border-color: rgb(var(--accent-color));
+}
+
+.simple-signup input {
+	margin: 2px;
+}
+
+.simple-signup label {
+	position: absolute;
+	margin: 0 0.8em;
+	padding-bottom: calc(var(--line-height)/2);
+	width: calc(100% - 2*0.8em);
+	line-height: 1.2;
+
+	text-align: left;
+
+	transform: translate(0,-100%);
+}
+
+.simple-signup input[type="email"] {
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: 0;
+	margin-left: 0.8em;
+
+	border-color: transparent;
+}
+	.simple-signup input[type="email"]:focus {
+		outline: none;
+	}
+	.simple-signup input[type="email"]::placeholder {
+		color: rgb(var(--text-color));
+		opacity: 1;
+	}
+	.simple-signup input[type="email"]:focus::placeholder {
+		color: var(--shadow-color);
+	}
+
+.simple-signup input[type="submit"] {
+	box-shadow: none;
+}
 
 
 /*--------------------------------------------------------------

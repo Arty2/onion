@@ -1,0 +1,14 @@
+{{- $action := (.Get "action") -}}
+{{- $name := (.Get "name") -}}
+{{- $label := (.Get "label") -}}
+{{- $placeholder := (.Get "placeholder") -}}
+{{- $subscribe := (.Get "subscribe") -}}
+<!-- https://alphapivita.us20.list-manage.com/subscribe/post?u=1be1ddf9a374f5ffdc688598f&id=ea42bc188e -->
+<!-- Θέλετε να μαθαίνετε για τις δράσεις μας; ≋✉  -->
+<div class="simple-signup">
+	<form action="{{ with $action }}{{ . | safeHTMLAttr }}{{ end }}" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+		<label for="mce-EMAIL">{{ with $label }}{{ . | markdownify | safeHTML }}{{ end }}</label>
+		<input id="mce-EMAIL" type="email" name="{{ with $name }}{{ . | safeHTMLAttr }}{{ end }}" class="email" placeholder="{{ with $placeholder }}{{ . | safeHTMLAttr }}{{ end }}" autocomplete="off" required value="" >
+		<input type="submit" name="subscribe" class="button" value="{{ with $subscribe }}{{ . | safeHTMLAttr }}{{ end }}" >
+	</form>
+</div>
