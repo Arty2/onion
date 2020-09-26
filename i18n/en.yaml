@@ -2,19 +2,24 @@
 filter-reset:
   other: Show All
 
+show-more:
+  other: Show More
+
+
 ## social sharing
 
 share:
-  other: share
+  other: Share
 
 share-twitter:
-  other: twitter
+  other: Twitter
 
 share-facebook:
-  other: facebook
+  other: Facebook
 
 share-email:
-  other: by email
+  other: By email
+
 
 ## post details
 

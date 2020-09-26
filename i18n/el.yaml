@@ -2,6 +2,10 @@
 filter-reset:
   other: Εμφάνιση όλων
 
+show-more:
+  other: Περισσότερα
+
+
 ## social sharing
 
 share:
@@ -15,6 +19,7 @@ share-facebook:
 
 share-email:
   other: Email
+
 
 ## post details
 
