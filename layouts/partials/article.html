@@ -46,8 +46,10 @@
 		{{- with .Params.Publication.Author -}}
 			{{ . }}
 		{{- end -}}
-		{{- with .Summary }}
-			{{ . | plainify | plainify | markdownify }}
+		{{ with .Description }}
+			{{ . | plainify | markdownify | plainify  }}
+		{{- else }}
+			{{ .Summary | plainify | markdownify | plainify  }}
 		{{- end -}}
 		</p>
 		{{- with .Params.Rating }}
