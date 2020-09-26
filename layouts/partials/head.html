@@ -6,7 +6,7 @@
 {{ template "_internal/twitter_cards.html" . }}
 {{ template "_internal/schema.html" . }}
 
-{{ if (fileExists "static/favicon.png") -}}
+{{ if or (fileExists "static/favicon.png") (fileExists "static/favicon.ico") -}}
 <link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
 {{- end }}
 

@@ -1543,12 +1543,12 @@ header .inner {
 
 
 /*--------------------------------------------------------------
-ui controls
+gadgets
 
 theme toggle, return to top
 --------------------------------------------------------------*/
 
-.ui {
+.gadgets {
 	position: fixed;
 	bottom: calc(var(--gutter-height));
 	right: 0;
@@ -1562,7 +1562,7 @@ theme toggle, return to top
 	/*outline: 1px dashed cyan;*/
 }
 
-.ui > * {
+.gadgets > * {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -1575,7 +1575,7 @@ theme toggle, return to top
 	/*outline: 1px dashed red;*/
 }
 
-.ui #theme-toggle {
+.gadgets #theme-toggle {
 	position: relative;
 	bottom: 0;
 	cursor: pointer;
