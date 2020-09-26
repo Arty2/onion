@@ -796,6 +796,8 @@ input[type="reset"],
 	/*letter-spacing: 1px;*/
 	line-height: 0.5;	
 	font-weight: bold;
+
+
 	text-decoration: none;
 	text-transform: uppercase;
 
@@ -846,9 +848,12 @@ simple-signup form shortcode
 	background: rgba(var(--page-color), 0);
 	border: 1.5px solid;
 	border-radius: 1rem;
+
+	transition: all .3s;
 }
 
 .simple-signup form:focus-within {
+	background: rgb(var(--page-color));
 	border-color: rgb(var(--accent-color));
 }
 
@@ -882,6 +887,7 @@ simple-signup form shortcode
 	.simple-signup input[type="email"]::placeholder {
 		color: rgb(var(--text-color));
 		opacity: 1;
+		transition: all .3s;
 	}
 	.simple-signup input[type="email"]:focus::placeholder {
 		color: var(--shadow-color);
@@ -1794,22 +1800,28 @@ articles-list styles
 
 	cursor: pointer;
 }
-	.articles-list summary h2::after {
+	.articles-list > summary h2::after {
 		display: inline-block;
 		content: '[…]';
 		margin-left: 0.5em;
 	}
-		.articles-list[open] summary h2::after {
+		.articles-list[open] > summary h2::after {
 			content: '';
 		}
 
 .articles-list > summary a {
 	display: inline-block;
+
+	/*color: rgba(var(--text-color), 1);*/
 	font-variant: all-small-caps;
 	font-weight: bold;
 	text-align: right;
 	text-decoration: none;
 	white-space: nowrap;
+}
+
+.articles-list[open] > summary a {
+	/*color: rgba(var(--text-color), 1);*/
 }
 
 .articles-list > .wrapper {
@@ -1854,6 +1866,7 @@ articles-list styles
 }
 
 .articles-list article .thumbnail {
+	margin: 0;
 	overflow: hidden;
 	/*outline: 1px dashed red;*/
 }
