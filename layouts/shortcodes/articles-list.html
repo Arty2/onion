@@ -14,7 +14,7 @@
 {{- $articles_count := len $articles -}}
 {{- if gt $articles_count 0 -}}
 <details id="{{ with $id }}{{ . }}{{ end }}" class="articles-list {{ with $class }}{{ . }}{{ end }}" data-articles-count="{{ $articles_count }}" {{ if ne $closed "true" }}open{{ end }}>
-<summary data-tags=""><h2>{{ $title }}</h2>{{ with $more }}<a href="{{ . }}">{{ i18n "show-more" }}</a>{{ end }}</summary>
+<summary data-tags=""><h2>{{ $title | plainify }}</h2>{{ with $more }}<a href="{{ . | safeHTMLAttr }}">{{ i18n "show-more" }}</a>{{ end }}</summary>
 <div class="wrapper">
 {{- range first $items $articles.ByDate.Reverse -}}
 			{{ partial "article.html" . }}
