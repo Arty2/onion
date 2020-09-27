@@ -26,10 +26,17 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
     + Abbreviations and external links display “tooltips” when a `title=""` attribute is provided. The title text must have at least one space.
 - Easily themable with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). Readily provided themes can be set in `config.yaml`.
 - Three font options to be combined with themes: 1. serif (default) 2. sans-serif 3. monospaced.
-- [Lazy](https://gohugo.io/templates/menu-templates/#section-menu-for-lazy-bloggers) menus. Can be configured. No multi-level support at the moment.
-- Responsive-ish images with the `{{< figure >}}` shortcode.
+- [Lazy](https://gohugo.io/templates/menu-templates/#section-menu-for-lazy-bloggers) menus. Can be configured. No nesting support at the moment.
 - “Hero” and listing images.
 - Additional post types: preformatted. May be used for poems, aphorisms, code fragments.
+- Full content RSS feed.
+
+
+## Work in Progress
+
+- Archive template
+- JSON feed
+- Responsive-ish images with the `{{< figure >}}` shortcode.
 
 
 ## Built-in Shortcodes
