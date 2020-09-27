@@ -47,7 +47,10 @@
 		{{ end }}
 	</channel>
 </rss>
-<!-- references:
+<!--
+via the built in template with heavy modifications
+
+references:
 
 https://validator.w3.org/feed/docs/rss2.html
 https://discourse.gohugo.io/t/full-text-rss-feed/8368
