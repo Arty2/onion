@@ -58,7 +58,7 @@
 	</a>
 		{{ if .Params.Tags }}
 			<p class="tags">{{ range .Params.Tags -}}
-				<a {{ if not (in $.Site.Params.disableKinds "taxonomy") }}href="/tags/{{ . | urlize }}"{{end}} class="tag" rel="tag">{{ (i18n . ) }}</a>
+				{{ partial "tag" . }}{{/* if not (in $.Site.Params.disableKinds "taxonomy") */}}
 			{{- end }}</p>
 		{{ end }}
 {{- end -}}
