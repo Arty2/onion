@@ -1,0 +1,33 @@
+{
+	"version": "https://jsonfeed.org/version/1",
+	"title": "{{ .Site.Title }}",
+	"home_page_url": "{{ .Site.BaseURL }}",
+	"feed_url": "{{ .Permalink}}",
+	{{ with .Site.Params "description" }}
+	"description": "{{ . | htmlUnescape | plainify }}",
+	{{ end }}
+	{{ with .Site.Params "author" }}
+	"author": { "name": "{{ . | plainify }}" },
+	{{ end }}
+	"items": [
+	{{ range $i, $e := first 10 .Site.Pages }}
+		{{ if $i }}, {{ end }}
+			{
+				"id": "{{ .Permalink }}",
+				"title": "{{ .Title }}",
+				"content_text": {{ with .Description }}{{ . | markdownify | htmlUnescape | plainify | jsonify }}{{ else }}{{ .Summary | markdownify | htmlUnescape | plainify | jsonify }}{{ end }},
+				"url": "{% raw %}{{ .Permalink }}",
+				"date_published": "{{ .Date }}",
+				"tags": ["{{ delimit .Params.tags "," }}"]
+			}
+		{{ end }}
+	]
+}
+{{/*
+via https://www.raymondcamden.com/2017/05/18/creating-a-json-feed-for-hugo
+
+
+references:
+https://ig.nore.me/2017/05/json-feed-and-hugo-output-formats/
+
+*/}}
