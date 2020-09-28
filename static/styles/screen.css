@@ -308,20 +308,32 @@ body,
 .font-mono, .font-monospace,
 code, kbd,
 button, .button, .tag,
-summary .more,
+.more,
 .languages, .sharing, .social {
 	--xheight: 0.92;
 	font-family: monospace; /* fallback */
 	font-family: var(--font-mono);
-	font-size: calc(var(--s00)*var(--xheight));
+	/*font-size: calc(var(--s00)*var(--xheight));*/
 }
 
 /*.languages {
 	font-size: calc(var(--s01)*var(--xheight));
 }*/
 
-button, .button, .tag {
+.sharing, .social,
+.tag,
+.languages, .more,
+button, .button, .tag,
+.meta details summary,
+.meta dt {
+	font-variant: small-caps;
+	text-transform: uppercase;
 	font-size: calc(var(--s-2)*var(--xheight));
+	/*font-weight: bold;*/
+}
+
+button, .button, .tag {
+	/*font-size: calc(var(--s-2)*var(--xheight));*/
 }
 
 figcaption, small, table,
@@ -329,7 +341,7 @@ figcaption, small, table,
 	font-size: var(--s-1);
 }
 
-body > header,
+/*body > header,*/
 body > footer {
 	font-size: var(--s-2);
 }
@@ -347,7 +359,6 @@ pre, input, textarea {
 	font-family: inherit;
 }
 
-/*.meta,*/
 .meta,
 .sidenote, .entry-content aside,
 .footnotes,
@@ -811,10 +822,7 @@ input[type="reset"],
 	/*letter-spacing: 1px;*/
 	line-height: 0.5;	
 	font-weight: bold;
-
-
 	text-decoration: none;
-	text-transform: uppercase;
 
 	cursor: pointer;
 	pointer-events: auto;
@@ -1416,7 +1424,6 @@ social sharing menu
 .sharing {
 	margin-bottom: var(--gutter-height);
 
-	font-variant: all-small-caps;
 	user-select: none;
 }
 
@@ -1543,7 +1550,6 @@ header .inner {
 
 		font-weight: bold;
 		text-align: right;
-		text-transform: uppercase;
 	}
 
 	.languages a {
@@ -1620,12 +1626,10 @@ tags styles
 	border: 1.5px solid rgb(var(--text-color));
 	border-radius: 2px;
 	color: rgb(var(--text-color));
-	font-variant: small-caps;
 	font-weight: bold;
 	letter-spacing: 1px;
 	line-height: 0.5;
 	text-decoration: none;
-	text-transform: uppercase;
 
 	cursor: pointer;
 	pointer-events: auto;
@@ -1832,13 +1836,15 @@ articles-list styles
 	display: inline-block;
 	opacity: 0;
 
-	font-variant: all-small-caps;
 	font-weight: bold;
 	text-align: right;
 	text-decoration: none;
 	white-space: nowrap;
 
 	transition: opacity 0.3s;
+
+	-webkit-user-select: none !important;
+	user-select: none !important;
 }
 	.articles-list[open] > summary .more {
 		opacity: 1;
@@ -2337,7 +2343,6 @@ single article meta styles
 	list-style: none;
 	cursor: pointer;
 	/*cursor: zoom-in;*/
-	font-variant: all-small-caps;
 }
 	.meta details summary::-webkit-details-marker {
 		display: none;
@@ -2369,7 +2374,6 @@ single article meta styles
 @media only screen and ( max-width: 1200px ) {
 	.meta dl {
 		display: grid;
-		/*grid-gap: var(--gutter-width);*/
 		grid-template-columns: minmax(34%, max-content) 1fr;
 	}
 }
@@ -2377,8 +2381,7 @@ single article meta styles
 .meta dt {
 	grid-column: 1;
 	margin-right: 0.5rem;
-
-	font-variant: all-small-caps;
+	margin-bottom: calc(-0.6*var(--line-height));
 }
 	.meta dt:after {
 		content: ':';
