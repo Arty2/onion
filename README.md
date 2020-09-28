@@ -1,18 +1,19 @@
 # /xerographic
 
-An experimental theme for the [Hugo](https://gohugo.io/) static site generator. See [heracl.es](https://heracl.es) for a live preview, and the theme’s Git respority [/xerographic](https://github.com/Arty2/xerographic) for more details.
+An experimental theme for the [Hugo](https://gohugo.io/) static site generator. See [heracl.es](https://heracl.es) for a live preview.
 
 ► This README is under construction and rudimentary. Major breaking changes may occur between versions, both in functionality and design approaches. Code quality may be rough. Using versioned (pre)-releases is more than encouraged.
 
 
 ## Design Principles
 
-- Plug & Play. Should work with zero proprietary params in [configuration](https://gohugo.io/getting-started/configuration/).
+- Plug & Play. Should work with zero proprietary params in [configuration file](https://gohugo.io/getting-started/configuration/).
+- [Progressive enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement) with single-purpose vanilla JavaScript libraries. As few as possible.
+- [Graceful degradation](https://developer.mozilla.org/en-US/docs/Glossary/Graceful_degradation) for older browsers, but no feature parity.
+- No pre-proccessors. No frameworks. No external depedencies.
 - Multilingual first. Greek translations included.
-- No pre-proccessors.
-- As little JavaScript as possible. As vanilla as possible.
-- Fully responsive. Two fluid breakpoints.
-- Default theme is an automatic light / dark scheme respective to user’s system preferences.
+- Mobile first. Two fluid responsive breakpoints.
+- Respect user’s system preferences: default automatic light / dark theme.
 
 
 ## Features
@@ -24,19 +25,31 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
     + “Return to top” button.
     + “Toggle dark / light theme” button. Has no memory.
     + Abbreviations and external links display “tooltips” when a `title=""` attribute is provided. The title text must have at least one space.
-- Easily themable with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). Readily provided themes can be set in `config.yaml`.
+- Easily themable with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). Readily provided themes can be set in `config.yaml` .
 - Three font options to be combined with themes: 1. serif (default) 2. sans-serif 3. monospaced.
-- [Lazy](https://gohugo.io/templates/menu-templates/#section-menu-for-lazy-bloggers) menus. Can be configured. No nesting support at the moment.
+- [Lazy menus](https://gohugo.io/templates/menu-templates/#section-menu-for-lazy-bloggers). Can be configured. No nesting support at the moment.
 - “Hero” and listing images.
 - Additional post types: preformatted. May be used for poems, aphorisms, code fragments.
 - Full content RSS feed.
-
+- Archives template. Grouped by year.
+- Privacy-first social sharing.
+- Syntax highlighting.
+- Customizable CSS and JavaScript per page.
+- Social media icons in footer. Also available as a shortcode.
+- Open Graph and Twitter metadata.
+- Image gallery (pile of images).
+- Disqus comments via built-in Hugo template.
+- Google Analytics via built-in Hugo template.
+- [Microformats](http://microformats.org/wiki/what-are-microformats) friendly.
 
 ## Work in Progress
 
-- Archive template
+- Phase out jQuery depedencies.
 - JSON feed
 - Responsive-ish images with the `{{< figure >}}` shortcode.
+- Image gallery on grid.
+- Pagination support.
+- Nested menus.
 
 
 ## Built-in Shortcodes
@@ -100,7 +113,7 @@ git subtree pull --prefix=themes/xerographic xerographic master --squash
 
 * * *
 
-## Included shortcotes
+## Built-in shortcotes guide
 
 ```
 ...
@@ -138,13 +151,22 @@ See `config.default.yml`
 
 ## Post and page frontmatter options
 
-Automatic featured images, by name `*__featured.ext`
+Automatic featured / cover images, by appending `*__featured.ext` to an image’s filename.
+
+Supports the following default parameters well:
 
 ```yaml
 title
-summary
 tags
+series
 draft
+description
+summary
+```
+
+Custom parameters:
+
+```yaml
 featured_image
 show_comments
 show_meta
@@ -156,6 +178,7 @@ datecreated
 crosspost
 publication.title
 directURL
+githubURL
 ```
 
 
@@ -173,9 +196,10 @@ Bundled fonts contain Latin, Greek and Cyrillic character sets.
 ## Bundled JavaScript libraries
 
 - jQuery (to be phased out)
+- [instant.page](https://instant.page/)
 - [simple-lightbox](https://simplelightbox.com/)
 
 
 * * *
 
-© 2018-2020 [Heracles Papatheodorou](http://heracl.es) a.k.a [ @Arty2](https://www.twitter.com/Arty2), [MIT Licence](LICENCE.txt)
+© 2018-2020 [Heracles Papatheodorou](http://heracl.es) a.k.a [ @Arty2](https://www.twitter.com/Arty2), [MIT Licence](./LICENCE.txt)
