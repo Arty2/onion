@@ -25,7 +25,7 @@
 		<figure class="thumbnail" href="{{ .RelPermalink }}">
 			{{- with $featured -}}
 			{{- $resized := .Resize "600x" -}}
-			<img src="{{ $resized.RelPermalink  }}" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $featured.Title }} alt="{{ . }}"{{ end }}>
+			<img src="{{ $resized.RelPermalink }}" loading="lazy" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $featured.Title }} alt="{{ . }}"{{ end }}>
 			{{- end -}}
 		</figure>
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
