@@ -15,7 +15,7 @@
 				{{ range $index, $value := (where .Pages "Type" $type) }}
 					{{ if not $index }}
 						<!-- Display a header in the first loop -->
-						<summary><h2>{{ .Date.Format "2006" }}</h2></summary>
+						<summary><h2>{{ .Date.Format "2006" }}</h2><span class="more">({{ $articles_count }})</span></summary>
 					{{ end }}
 					<!-- Display articles -->
 					{{ partial "article" . }}

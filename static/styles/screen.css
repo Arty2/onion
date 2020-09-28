@@ -308,7 +308,7 @@ body,
 .font-mono, .font-monospace,
 code, kbd,
 button, .button, .tag,
-summary a,
+summary .more,
 .languages, .sharing, .social {
 	--xheight: 0.92;
 	font-family: monospace; /* fallback */
@@ -1828,20 +1828,24 @@ articles-list styles
 			content: '';
 		}
 
-.articles-list > summary a {
+.articles-list > summary .more {
 	display: inline-block;
+	opacity: 0;
 
-	/*color: rgba(var(--text-color), 1);*/
 	font-variant: all-small-caps;
 	font-weight: bold;
 	text-align: right;
 	text-decoration: none;
 	white-space: nowrap;
-}
 
-.articles-list[open] > summary a {
-	/*color: rgba(var(--text-color), 1);*/
+	transition: opacity 0.3s;
 }
+	.articles-list[open] > summary .more {
+		opacity: 1;
+	}
+	.articles-list > summary:hover .more {
+		opacity: 1;
+	}
 
 .articles-list > .wrapper {
 	text-align: center;
