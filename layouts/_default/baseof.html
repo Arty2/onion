@@ -7,7 +7,8 @@
 	{{ partial "head" . }}
 </head>
 <body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
-	{{- with .Resources.GetMatch "custom.css" }}{{/* load custom.css located by the content, if it exists */}}
+	<!-- inline custom.css located by the content, if it exists -->
+	{{- with .Resources.GetMatch "custom.css" }}
 		{{- $customcss := . | resources.Minify }}
 		<style>
 			{{ $customcss.Content | safeCSS }}
@@ -26,8 +27,12 @@
 		{{ block "footer" . }}{{ partialCached "footer/inner" . }}{{end}}
 	</footer>
 	{{ partialCached "scripts" . }}
+	<!-- load script.js located by the content, if it exists */ -->
 	{{ if (fileExists "static/scripts/custom.js") -}}
-	<script async src="./scripts/custom.js"></script>
+		<script async src="./scripts/custom.js"></script>
+	{{- end }}
+	{{ if (.Resources.Match "custom.js") -}}
+		<script async src="./custom.js"></script>
 	{{- end }}
 </body>
 </html>
