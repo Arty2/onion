@@ -1,13 +1,43 @@
-jQuery(document).ready(function($) {
+/*--------------------------------------------------------------
+Vanilla jQuery(document).ready
+--------------------------------------------------------------*/
+function ready(fn) {
+	if (document.readyState != 'loading'){
+		fn();
+	} else {
+		document.addEventListener('DOMContentLoaded', fn);
+	}
+}
+
+/*--------------------------------------------------------------
+Load script
+via https://stackoverflow.com/a/55451823
+--------------------------------------------------------------*/
+function loadScript(url) {
+	return new Promise(function(resolve, reject) {
+		let newScript = document.createElement("script");
+		newScript.onerror = reject;
+		newScript.onload = resolve;
+		document.currentScript.parentNode.insertBefore(newScript, document.currentScript);
+		newScript.src = url;
+	});
+}
+
+
+
+// when DOM has loaded
+window.ready(function() {
 
 /*--------------------------------------------------------------
 Initialize fancybox
 via https://simplelightbox.com/
 --------------------------------------------------------------*/
 
-var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
-	/* options */
-});
+loadScript(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.min.js').then(() => {
+	var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
+		/* options */
+	});
+}).catch(() => { console.log('SimpleLightbox failed to load'); });
 
 
 /*--------------------------------------------------------------
@@ -22,7 +52,7 @@ setInterval(function(){
 		document.getElementById('totop').style.color = 'rgba(var(--text-color),1)';
 	}
 	// console.log("scrolled to first"); // DEBUG
-}, 3000);
+}, 2000);
 document.getElementById('totop').addEventListener('click', function(){
 	this.style.color = 'rgba(var(--text-color),0)';
 });
@@ -134,13 +164,4 @@ gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
 
 scrollbarWidth();
 window.addEventListener('resize', scrollbarWidth);*/
-
-
-/*--------------------------------------------------------------
-EXPERIMENTAL
-skew everything based on mouse position
---------------------------------------------------------------*/
-/*var t=document.getElementsByTagName('main')[0];
-document.documentElement.onmousemove=function(e){t.style.webkitTransform=t.style.transform='rotate3d(10, 180, -6, '+e.pageX/-20+'deg)';};*/
-
 }); // end document ready
