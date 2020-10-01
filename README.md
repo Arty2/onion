@@ -195,7 +195,6 @@ Bundled fonts contain Latin, Greek and Cyrillic character sets.
 
 ## Bundled JavaScript libraries
 
-- jQuery (to be phased out)
 - [instant.page](https://instant.page/)
 - [simple-lightbox](https://simplelightbox.com/)
 

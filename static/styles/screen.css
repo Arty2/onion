@@ -2695,8 +2695,7 @@ gallery
 	transition-delay: 0s;
 }
 
-.gallery .top img,
-.gallery figure:hover img {
+.gallery .top img {
 	box-shadow: 0 4px 12px 4px rgba(var(--text-color),0.5);
 
 	transform: scale(1.2);

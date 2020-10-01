@@ -29,7 +29,7 @@ function loadScript(url) {
 window.ready(function() {
 
 /*--------------------------------------------------------------
-Initialize fancybox
+Load and initialize fancybox
 via https://simplelightbox.com/
 --------------------------------------------------------------*/
 
@@ -59,91 +59,70 @@ document.getElementById('totop').addEventListener('click', function(){
 
 
 /*--------------------------------------------------------------
-Stacked image galleries
+Piled image galleries
 inspired from https://viewfromthisside.superhi.com/
 --------------------------------------------------------------*/
 
-$('div.gallery').each( function() {
-	// on load, rotate and translate all the images
+var galleries = document.querySelectorAll('div.gallery');
+Array.prototype.forEach.call(galleries, function(element, index){
 	var index_current = 0;
-	var index = 0
+	var index = 0;
 	var z = 1;
 
-	var images = $(this).find('figure');
+	var figures = element.querySelectorAll('figure');
 
-	images.each( function() {
-		$(this).data('index', index);
+	figures.forEach(function(figure) {
+		figure.setAttribute('data-index', index);
 		index = index + 1;
 	});
 
 	var slideAnimation = function() {
-		images.each( function() {
+		figures.forEach(function(figure) {
 			const x = Math.floor(Math.random() * 5) * 25 - 50;
 			const y = Math.floor(Math.random() * 5) * 25 - 50;
 			const deg = Math.random() * 5 - 2.5;
 
-			$(this).css('transform', `translate(${x}px, ${y}px) rotate(${deg}deg)`);
+			figure.style.transform = 'translate('+x+'px, '+y+'px) rotate('+deg+'deg)';
 		});
 	};
 
-
 	// update gallery with current index
-	$(this).attr('data-current', 1);
+	element.setAttribute('data-current', 1);
 
 	// add class to top figure (once)
-	$(this).find('figure:first-child').addClass('top');
+	element.querySelector('figure:first-child').classList.add('top');
 
 	// on click show next slide, or clicked slide if not on top
-	images.on('click', function () {
-		// console.log(index,index_current, images.length);
+	figures.forEach(function(figure) {
+		figure.addEventListener('click', function () {
+			index = figure.getAttribute('data-index');
+			z = z + 1;
 
-		index = $(this).data('index');
+			// console.log(index,index_current,figures.length);
+			if ( index == index_current ) {
+				if (index_current*1 + 1 > figures.length - 1) { index_current = 0;	}
+				else { index_current = index_current*1 + 1; }
 
-		z = z + 1;
+				figures[index_current].style.zIndex = z;
+			}
+			else {
+				figures[index].style.zIndex = z;
+				index_current = index;
+			}
 
-		if ( index == index_current ) {
-			if (index_current + 1 > images.length - 1) { index_current = 0;	}
-			else { index_current = index_current + 1; }
+			// add class to current figure, remove from all others
+			figures.forEach(function(fig) {
+				fig.classList.remove('top');
+			});
+			figures[index_current].classList.add('top');
 
-			$( images[index_current] ).css('z-index', z);
-		}
-		else {
-			$( images[index] ).css('z-index', z);
-			index_current = index;
-		}
+			// update gallery with current index
+			this.parentNode.setAttribute('data-current', index_current*1 + 1);
 
-		// add class to current figure, remove from all others
-		$( images ).removeClass('top');
-		$( images[index_current] ).addClass('top');
-
-		// update gallery with current index
-		$(this).parent().attr('data-current', index_current + 1);
-
-		// animate
-		slideAnimation();
+			// animate
+			slideAnimation();
+		});
 	});
-
-/*	images.on('click', function () {
-		// console.log(index,index_current, images.length);
-		index = 0;
-		z = z + 1;
-
-		if (index_current + 1 > images.length - 1) { index_current = 0;	}
-		else { index_current = index_current + 1; }
-
-		$( images[index_current] ).css('z-index', z);
-
-		// add class to current figure, remove from all others
-		$( images ).removeClass('top');
-		$( images[index_current] ).addClass('top');
-
-		// update gallery with current index
-		$(this).parent().attr('data-current', index_current + 1);
-
-		// animate
-		slideAnimation();
-	});*/
-
 
 	//animate
 	slideAnimation();
