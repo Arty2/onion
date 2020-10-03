@@ -855,70 +855,6 @@ input[type="reset"]::-moz-focus-inner,
 
 
 /*--------------------------------------------------------------
-simple-signup form shortcode
---------------------------------------------------------------*/
-
-.simple-signup form {
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: end;
-	margin: var(--gutter-height) auto;
-
-	background: rgba(var(--page-color), 0);
-	border: 1.5px solid;
-	border-radius: 1rem;
-
-	transition: all .3s;
-}
-
-.simple-signup form:focus-within {
-	background: rgb(var(--page-color));
-	border-color: rgb(var(--accent-color));
-}
-
-.simple-signup input {
-	margin: 2px;
-}
-
-.simple-signup label {
-	position: absolute;
-	margin: 0 0.8em;
-	padding-bottom: calc(var(--line-height)/2);
-	width: calc(100% - 2*0.8em);
-	line-height: 1.2;
-
-	text-align: left;
-
-	transform: translate(0,-100%);
-}
-
-.simple-signup input[type="email"] {
-	flex-grow: 1;
-	flex-shrink: 0;
-	flex-basis: 0;
-	margin-left: 0.8em;
-
-	border-color: transparent;
-}
-	.simple-signup input[type="email"]:focus {
-		outline: none;
-	}
-	.simple-signup input[type="email"]::placeholder {
-		color: rgb(var(--text-color));
-		opacity: 1;
-		transition: all .3s;
-	}
-	.simple-signup input[type="email"]:focus::placeholder {
-		color: var(--shadow-color);
-	}
-
-.simple-signup input[type="submit"] {
-	box-shadow: none;
-}
-
-
-/*--------------------------------------------------------------
 table styles
 --------------------------------------------------------------*/
 
@@ -2703,6 +2639,70 @@ gallery
 
 .gallery .top img {
 	cursor: e-resize;
+}
+
+
+/*--------------------------------------------------------------
+simple-signup form shortcode
+--------------------------------------------------------------*/
+
+.simple-signup form {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: end;
+	margin: var(--gutter-height) auto;
+
+	background: rgba(var(--page-color), 0);
+	border: 1.5px solid;
+	border-radius: 1rem;
+
+	transition: all .3s;
+}
+
+.simple-signup form:focus-within {
+	background: rgb(var(--page-color));
+	border-color: rgb(var(--accent-color));
+}
+
+.simple-signup input {
+	margin: 2px;
+}
+
+.simple-signup label {
+	position: absolute;
+	margin: 0 0.8em;
+	padding-bottom: calc(var(--line-height)/2);
+	width: calc(100% - 2*0.8em);
+	line-height: 1.2;
+
+	text-align: left;
+
+	transform: translate(0,-100%);
+}
+
+.simple-signup input[type="email"] {
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: 0;
+	margin-left: 0.8em;
+
+	border-color: transparent;
+}
+	.simple-signup input[type="email"]:focus {
+		outline: none;
+	}
+	.simple-signup input[type="email"]::placeholder {
+		color: rgb(var(--text-color));
+		opacity: 1;
+		transition: all .3s;
+	}
+	.simple-signup input[type="email"]:focus::placeholder {
+		color: var(--shadow-color);
+	}
+
+.simple-signup input[type="submit"] {
+	box-shadow: none;
 }
 
 
