@@ -11,7 +11,8 @@
 {{- end }}
 
 <link rel="stylesheet" href="{{ "/styles/screen.css" | relURL }}">
-<link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}">
+<link rel="stylesheet" href="{{ "/styles/syntax.css" | relURL }}" media="screen">
+<link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="screen">
 {{ if (fileExists "static/styles/custom.css") -}}
 <link rel="stylesheet" href="{{ "/styles/custom.css" | relURL }}">
 {{- end }}

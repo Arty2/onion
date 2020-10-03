@@ -9,7 +9,7 @@ url: https://github.com/Arty2/xerographic
 syntax highlighting: algol_nu
 via https://xyproto.github.io/splash/docs/longer/all.html
 --------------------------------------------------------------*/
-@import "./syntax.css";
+/*@import "./syntax.css";*/
 .highlight { background: none; }
 
 /*--------------------------------------------------------------
@@ -259,6 +259,14 @@ icon font via https://icomoon.io (Brands iconset)
 	font-style: normal;
 	font-display: swap;
 }
+
+/*@font-face {
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Italic.woff2') format('woff2');
+	font-weight: bold;
+	font-style: italic;
+	font-display: swap;
+}*/
 
 @font-face {
 	font-family: 'Fantasque';
