@@ -1,4 +1,4 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{if .IsHome}}{{ .Site.Title }} • {{ .Title }}{{else}}{{ .Title }} • {{ .Site.Title }}{{end}}</title>
 
 <meta name="description" content="{{ with .Description }}{{ . }}{{ end }}">
 
@@ -13,9 +13,6 @@
 <link rel="stylesheet" href="{{ "/styles/screen.css" | relURL }}" media="all">
 <link rel="preload" href="{{ "/styles/syntax.css" | relURL }}" media="screen" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="{{ "/styles/syntax.css" | relURL }}" media="screen"></noscript>
 <link rel="preload" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="screen" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="screen"></noscript>
-{{ if (fileExists "static/styles/custom.css") -}}
-<link rel="stylesheet" href="{{ "/styles/custom.css" | relURL }}" media="all">
-{{- end }}
 
 {{ range .AlternativeOutputFormats -}}
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
