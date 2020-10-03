@@ -24,8 +24,8 @@ function loadScript(url) {
 }
 
 
-
-// when DOM has loaded
+/*--------------------------------------------------------------
+When DOM is ready */
 window.ready(function() {
 
 /*--------------------------------------------------------------
@@ -44,18 +44,19 @@ loadScript(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.mi
 Hide back #totop if at top of page
 --------------------------------------------------------------*/
 
-setInterval(function(){
-	if (window.scrollY == 0) {
-		document.getElementById('totop').style.color = 'rgba(var(--text-color),0)';
-	}
-	else {
-		document.getElementById('totop').style.color = 'rgba(var(--text-color),1)';
-	}
-	// console.log("scrolled to first"); // DEBUG
-}, 2000);
-document.getElementById('totop').addEventListener('click', function(){
-	this.style.color = 'rgba(var(--text-color),0)';
-});
+if (document.body.contains(document.getElementById('totop'))) {
+	setInterval(function(){
+		if (window.scrollY == 0) {
+			document.getElementById('totop').style.color = 'rgba(var(--text-color),0)';
+		}
+		else {
+			document.getElementById('totop').style.color = 'rgba(var(--text-color),1)';
+		}
+	}, 2000);
+	document.getElementById('totop').addEventListener('click', function(){
+		this.style.color = 'rgba(var(--text-color),0)';
+	});
+}
 
 
 /*--------------------------------------------------------------
@@ -127,7 +128,6 @@ Array.prototype.forEach.call(galleries, function(element, index){
 	//animate
 	slideAnimation();
 });
-// end image gallery
 
 
 /*--------------------------------------------------------------
@@ -143,4 +143,6 @@ gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
 
 scrollbarWidth();
 window.addEventListener('resize', scrollbarWidth);*/
-}); // end document ready
+
+}); /* end DOM ready 
+--------------------------------------------------------------*/
