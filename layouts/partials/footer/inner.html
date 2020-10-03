@@ -2,7 +2,13 @@
 	{{ if ne .Site.Params.show_social false }}
 		{{ if .Site.Params.Author }}
 		<div class="media author-card" itemscope="" itemtype="http://schema.org/Person">	  
-			{{ with .Site.Params.Author.Image }}<img class="avatar" src="{{ . | relURL }}" itemprop="image" alt="">{{ end }}
+			{{ if .Site.Params.Author.Image -}}
+				{{ with $img := resources.Get .Site.Params.Author.Image }}
+					<img class="avatar" src="{{ (.Fill "200x200").Permalink }}" itemprop="image" alt="">
+				{{- else -}}
+					<img class="avatar" src="{{ .Site.Params.Author.Image | relURL }}" itemprop="image" alt="">
+				{{- end -}}
+			{{- end -}}
 			<div class="media-body">
 				{{ with .Site.Params.Author.Name }}<h3 class="card-title" itemprop="name">{{ . }}</h3>{{ end }}
 				{{ with .Site.Params.Author.Description }}<p class="card-text" itemprop="description">{{ . }}</p>{{ end }}
@@ -16,6 +22,6 @@
 	{{ with .Site.Copyright -}}
 		<div class="copyright">{{ . | safeHTML  }}</div>
 	{{- end }}
-	<!-- <small>Last Modified: {{ now.Format "2006-01-02 15:04 MST" }}</small> -->
+	<!-- Last Modified: {{ now.Format "2006-01-02 15:04 MST" }} -->
 	{{ partialCached "footer/nav.html" . }}
 </div>
