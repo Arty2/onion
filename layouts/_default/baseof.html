@@ -18,11 +18,13 @@
 			{{ $customcss.Content | safeCSS }}
 		</style>
 	{{- end }}
-	<!-- {{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }} -->
 	{{ if ne .Site.Params.show_gadgets false }}{{ partialCached "gadgets" . }}{{ end }}
 	<header class="cluster">
+		<div class="inner">
+		{{ block "header" . }}{{ partial "header-inner" . }}{{end}}
 		{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
-		{{ block "header" . }}{{ partialCached "header-inner" . }}{{end}}
+		</div>
+		{{ partialCached "header-nav" . }}
 	</header>
 	<main>
 		{{ block "main" . }}{{end}}

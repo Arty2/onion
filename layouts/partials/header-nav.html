@@ -3,7 +3,7 @@
 	<ul>
 		{{- range .Site.RegularPages -}}
 			{{ if and (eq .Section "") (ne .Params.menu_hide true) -}}
-			<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+			<li><a href="{{ .RelPermalink }}">{{ with .Title }}{{ . | title }}{{ else }}{{ .File.ContentBaseName | title }}{{ end }}</a></li>
 			{{- end }}
 		{{- end -}}
 		{{- $currentPage := . -}}
