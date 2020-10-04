@@ -2,19 +2,19 @@
 	<!-- Display any content the page already has -->
 	{{ .Content }}
 	
-	{{- $type := .Type -}}
+	{{- $type := .Params.Type -}}
 	<!-- Group articles by year and loop through them -->
 	{{- range (.Site.RegularPages.GroupByDate "2006") -}}
 		<!-- Get articles to display -->
-		{{- $articles := (where .Pages "Type" $type) -}}
+		{{- $articles := (cond (eq $type "section") .Pages (where .Pages "Type" $type)) -}}
 		<!-- Count articles returned -->
 		{{- $articles_count := len $articles -}}
 		<!-- Check if a proper year is returned and if it contains any articles -->
 		{{ if and (gt .Key 1) (gt $articles_count 0) }}
 				<details class="articles-list stack" open>
-				{{ range $index, $value := (where .Pages "Type" $type) }}
+				{{ range $index, $value := $articles.ByDate.Reverse }}
 					{{ if not $index }}
-						<!-- Display a header in the first loop -->
+						<!-- Display a header in the first loop where $index is 0 -->
 						<summary><h2>{{ .Date.Format "2006" }}</h2><span class="more">({{ $articles_count }})</span></summary>
 					{{ end }}
 					<!-- Display articles -->
@@ -23,10 +23,4 @@
 				</details>
 		{{ end }}
 	{{ end }}
-<!--
-references
-
-https://www.thedroneely.com/posts/generating-archive-pages-with-hugo/
-https://discourse.gohugo.io/t/howto-custom-archive-page-for-all-blog-posts-per-year/6958/8
--->
 {{ end }}
