@@ -22,13 +22,13 @@
 	{{ if ne .Site.Params.show_gadgets false }}{{ partialCached "gadgets" . }}{{ end }}
 	<header class="cluster">
 		{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
-		{{ block "header" . }}{{ partialCached "header/inner" . }}{{end}}
+		{{ block "header" . }}{{ partialCached "header-inner" . }}{{end}}
 	</header>
 	<main>
 		{{ block "main" . }}{{end}}
 	</main>
 	<footer>
-		{{ block "footer" . }}{{ partialCached "footer/inner" . }}{{end}}
+		{{ block "footer" . }}{{ partialCached "footer-inner" . }}{{end}}
 	</footer>
 	{{ partialCached "scripts" . }}
 	<!-- load script.js located by the content, if it exists */ -->
