@@ -1,8 +1,8 @@
-<article class="{{ with .Params.cssclass }}{{ . }}{{ end }}{{ if eq .Type "preformatted" }} preformatted{{end}}{{ with .Draft }} draft{{ end }}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ if .Params.tags }}{{ delimit .Params.tags " " }}{{ end }}">
+<article class="{{ with .Params.cssclass }}{{ . }}{{ end }}{{ if eq .Type "preformatted" }} preformatted{{end}}{{ if .Draft }} draft{{ end }}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ with .Params.tags }}{{ delimit . " " }}{{ end }}">
 {{- if eq .Type "preformatted" -}}
 	<pre>{{ .RawContent | safeHTML }}</pre>
 {{- else if eq .Type "ephemera" -}}
-	{{ .RawContent | safeHTML }}
+	{{ .RawContent | markdownify | safeHTML }}
 {{- else -}}
 	<a {{ with .Params.directURL -}}
 		{{ with $.Page.Resources.GetMatch . }}
@@ -22,12 +22,12 @@
 		{{ else }}
 			{{ $featured = (.Resources.ByType "image").GetMatch "*_featured*" }}
 		{{ end }}
+		{{- with $featured -}}
 		<figure class="thumbnail" href="{{ .RelPermalink }}">
-			{{- with $featured -}}
 			{{- $resized := .Resize "600x" -}}
 			<img src="{{ $resized.RelPermalink }}" loading="lazy" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $featured.Title }} alt="{{ . }}"{{ end }}>
-			{{- end -}}
 		</figure>
+		{{- end -}}
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
 			{{- if .Params.dateCreated -}}
 				{{- .Params.dateCreated -}}
@@ -42,24 +42,24 @@
 			{{- end -}}
 		</time>
 		<h3 class="title">{{ .Title }}</h3>
+		{{- with .Params.Author }}
+			<p class="author">{{ . }}</p>
+		{{- end -}}
 		<p class="summary">
-		{{- with .Params.Publication.Author -}}
-			{{ . }}
-		{{- end -}}
-		{{ with .Description }}
-			{{ . | plainify | markdownify | plainify  }}
+		{{- with .Description }}
+			{{ . | markdownify | plainify  }}
 		{{- else }}
-			{{ .Summary | plainify | markdownify | plainify  }}
-		{{- end -}}
-		</p>
+			{{ .Summary | markdownify | plainify  }}
+		{{- end -}}</p>
 		{{- with .Params.Rating }}
 			<p class="rating">{{ range seq (int . ) }}★{{ end }}</p>
 		{{- end -}}
 	</a>
-		{{ if .Params.Tags }}
-			<p class="tags">{{ range .Params.Tags -}}
-				{{ partial "tag" . }}{{/* if not (in $.Site.Params.disableKinds "taxonomy") */}}
+		{{- if .Params.Tags -}}
+			<p class="tags">
+			{{- range .Params.Tags -}}
+				{{- partial "tag" . -}}{{/* if not (in $.Site.Params.disableKinds "taxonomy") */}}
 			{{- end }}</p>
-		{{ end }}
+		{{- end -}}
 {{- end -}}
 </article>
