@@ -20,11 +20,12 @@
 	{{- end }}
 	{{ if ne .Site.Params.show_gadgets false }}{{ partialCached "gadgets" . }}{{ end }}
 	<header class="cluster">
+		{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 		<div class="inner">
 		{{ block "header" . }}{{ partial "header-inner" . }}{{end}}
-		{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
-		</div>
 		{{ partialCached "header-nav" . }}
+		</div>
+		<!-- {{ partialCached "header-nav" . }} -->
 	</header>
 	<main>
 		{{ block "main" . }}{{end}}

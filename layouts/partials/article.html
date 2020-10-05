@@ -1,4 +1,4 @@
-<article class="{{ with .Params.cssclass }}{{ . }}{{ end }}{{ if eq .Type "preformatted" }} preformatted{{end}}{{ if .Draft }} draft{{ end }}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ with .Params.tags }}{{ delimit . " " }}{{ end }}">
+<article class="{{ with .Params.cssclass }}{{ . }}{{ end }}{{ if .Draft }} draft{{ end }} {{ .Type }}" lang="{{ with .Lang }}{{ . }}{{ end }}" data-tags="{{ with .Params.tags }}{{ delimit . " " }}{{ end }}">
 {{- if eq .Type "preformatted" -}}
 	<pre>{{ .RawContent | safeHTML }}</pre>
 {{- else if eq .Type "ephemera" -}}
