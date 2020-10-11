@@ -2160,7 +2160,8 @@ articles-list - no-tags
 /*--------------------------------------------------------------
 articles-list - no-summary
 --------------------------------------------------------------*/
-.articles-list.no-summary > summary {
+.articles-list.no-summary > summary,
+.articles-list.no-summary > summary:after {
 	display: none;
 }
 
