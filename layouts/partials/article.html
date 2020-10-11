@@ -14,19 +14,19 @@
 	{{- else -}}
 		{{ printf "href=%s" .RelPermalink | safeHTMLAttr  }}
 	{{- end -}}>
-		{{ $featured := "" }}
-		{{ if .Params.image_preview }}
-			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image_preview) }}
-		{{ else if .Params.image }}
-			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image) }}
+		{{ $cover := "" }}
+		{{ if .Params.cover_listing }}
+			{{ $cover = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover_listing) }}
+		{{ else if .Params.cover }}
+			{{ $cover = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover) }}
 		{{ else }}
-			{{ $featured = (.Resources.ByType "image").GetMatch "*_featured*" }}
+			{{ $cover = (.Resources.ByType "image").GetMatch "*__cover*" }}
 		{{ end }}
-		{{- with $featured -}}
+		{{- with $cover -}}
 		<figure class="thumbnail" href="{{ .RelPermalink }}">
 			{{- $resized := .Resize "600x" -}}
 			{{- $placeholder := .Resize "48x q20 jpg Gaussian" -}}
-			<img src="{{ $resized.RelPermalink }}" loading="lazy" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $featured.Title }} alt="{{ . }}"{{ end }} style="background-image: url('data:image/jpg;base64,{{ $placeholder.Content | base64Encode }}');">
+			<img src="{{ $resized.RelPermalink }}" loading="lazy" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $cover.Title }} alt="{{ . }}"{{ end }} style="background-image: url('data:image/jpg;base64,{{ $placeholder.Content | base64Encode }}');">
 		</figure>
 		{{- end -}}
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">

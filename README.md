@@ -151,7 +151,7 @@ See `config.default.yml`
 
 ## Post and page frontmatter options
 
-Automatic featured / cover images, by appending `*__featured.ext` to an image’s filename.
+Automatic *cover* (also known as *hero* or *featured*) images, by appending `*__cove` (hint: double underscore) to an image’s filename.
 
 Supports the following default parameters well:
 
@@ -167,8 +167,8 @@ summary
 Custom parameters:
 
 ```yaml
-image
-image_preview
+cover
+cover_listing
 show_comments
 show_meta
 show_toc

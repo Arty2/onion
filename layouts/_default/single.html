@@ -1,14 +1,14 @@
 {{ define "main" }}
 	<article class="h-entry{{ with .Draft }} draft{{ end }}">
 		{{ $featured := "" }}
-		{{ if .Params.image }}
-			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.image) }}
+		{{ if .Params.cover }}
+			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover) }}
 		{{ else }}
 			{{ $featured = (.Resources.ByType "image").GetMatch "*_featured*" }}
 		{{ end }}
 
 		{{- with $featured -}}
-		<div class="hero">
+		<div class="cover">
 				{{- $resized := .Resize "1500x" -}}
 				<img src="{{ $resized.RelPermalink }}" alt="">
 		</div>

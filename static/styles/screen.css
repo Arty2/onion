@@ -1195,7 +1195,7 @@ hero & fullwidth styles
 --------------------------------------------------------------*/
 
 .fullwidth,
-.hero {
+.cover {
 	display: block;
 	max-width: calc(100vw - var(--scrollbar-width));
 	width: calc(100vw - var(--scrollbar-width));
@@ -1208,14 +1208,14 @@ hero & fullwidth styles
 }
 
 .fullwidth img,
-.hero img {
+.cover img {
 		margin: 0;
 		width: 100%;
 		height: auto;
 		object-fit: cover;
 	}
 
-.hero {
+.cover {
 	margin-bottom: var(--gutter-height);
 	/*font-size: 0;*/
 }
