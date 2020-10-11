@@ -41,20 +41,49 @@ loadScript(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.mi
 
 
 /*--------------------------------------------------------------
-Hide back #totop if at top of page
+Hide back #scroller if at top of page
 --------------------------------------------------------------*/
 
-if (document.body.contains(document.getElementById('totop'))) {
+if (document.body.contains(document.getElementById('scroller'))) {
+	if (window.scrollY == 0 && document.body.clientHeight > window.innerHeight) {
+		document.getElementById('scroller').classList.add('down');
+	}
 	setInterval(function(){
-		if (window.scrollY == 0) {
-			document.getElementById('totop').style.color = 'rgba(var(--text-color),0)';
+		if (window.scrollY > 0) {
+			// document.getElementById('scroller').style.color = 'rgba(var(--text-color),1)';
+			document.getElementById('scroller').classList.remove('hide');
+			document.getElementById('scroller').classList.remove('down');
+			document.getElementById('scroller').classList.add('up');
 		}
 		else {
-			document.getElementById('totop').style.color = 'rgba(var(--text-color),1)';
+				// document.getElementById('scroller').style.color = 'rgba(var(--text-color),0)';
+			if (document.body.clientHeight > window.innerHeight) {
+				document.getElementById('scroller').classList.remove('up');
+				document.getElementById('scroller').classList.add('down');
+			}
+			else {
+				document.getElementById('scroller').classList.add('hide');
+			}
 		}
 	}, 2000);
-	document.getElementById('totop').addEventListener('click', function(){
-		this.style.color = 'rgba(var(--text-color),0)';
+	// hide when clicked
+	document.getElementById('scroller').addEventListener('click', function(event){
+		// this.style.color = 'rgba(var(--text-color),0)';
+		if (this.classList.contains('down')) {
+			window.scroll({
+				top: window.innerHeight,
+				behavior: 'smooth'
+			});
+			event.preventDefault();
+		}
+		else {
+			this.classList.add('hide');
+			window.scroll({
+				top: 0,
+				behavior: 'smooth'
+			});
+			event.preventDefault();
+		}
 	});
 }
 
