@@ -1,4 +1,4 @@
-# /xerographic
+# /onion
 
 An experimental theme for the [Hugo](https://gohugo.io/) static site generator. See [heracl.es](https://heracl.es) for a live preview.
 
@@ -75,7 +75,7 @@ You may move the provided `.bat` scripts (for Windows 10)  in your root director
 
 Don’t forget to set the theme in your `config.yaml` file:
 ```
-theme: xerographic
+theme: onion
 ```
 
 ### As a submodule
@@ -84,13 +84,13 @@ The official [Hugo documentation for themes](https://gohugo.io/getting-started/q
 
 ```
 cd themes
-git submodule add https://github.com/Arty2/xerographic
+git submodule add https://github.com/Arty2/onion
 ```
 
 To update the theme to the most current version:
 
 ```
-cd themes/xerographic
+cd themes/onion
 git checkout master
 git pull
 cd ../../
@@ -101,14 +101,14 @@ cd ../../
 Installing as a *subtree* has [several advantages](https://training.github.com/downloads/submodule-vs-subtree-cheat-sheet/) if you wish to actively contribute with pull-requests:
 
 ```
-git remote add xerographic https://github.com/Arty2/xerographic.git
-git subtree add --prefix=themes/xerographic xerographic master --squash
+git remote add onion https://github.com/Arty2/onion.git
+git subtree add --prefix=themes/onion onion master --squash
 ```
 
 To update the theme to the most current version:
 
 ```
-git subtree pull --prefix=themes/xerographic xerographic master --squash
+git subtree pull --prefix=themes/onion onion master --squash
 ```
 
 * * *
