@@ -167,7 +167,8 @@ summary
 Custom parameters:
 
 ```yaml
-featured_image
+image
+image_preview
 show_comments
 show_meta
 show_toc
