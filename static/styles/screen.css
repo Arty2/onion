@@ -774,6 +774,16 @@ animations
 	to   { transform: translate(0, 0); }
 }
 
+@keyframes bounce {
+	0%   { transform: translateY(0); }
+	10%  { transform: translateY(0); }
+	30%  { transform: translateY(-0.3em); }
+	50%  { transform: translateY(0); }
+	57%  { transform: translateY(-0.05em); }
+	64%  { transform: translateY(0); }
+	100% { transform: translateY(0); }
+}
+
 
 /*--------------------------------------------------------------
 form styles
@@ -1571,13 +1581,29 @@ theme toggle, return to top
 	/*outline: 1px dashed red;*/
 }
 
+.gadgets #scroller.up {
+	animation: bounce 2s ease 1;
+}
+
+.gadgets #scroller.hide {
+	color: rgba(var(--text-color),0);
+}
+
+.gadgets #scroller.down {
+	transform: scaleY(-1);
+}
+	.gadgets #scroller.down span {
+		display: inline-block;
+		animation: bounce 2s ease 3;
+	}
+
 .gadgets #theme-toggle {
 	position: relative;
 	bottom: 0;
 	cursor: pointer;
 }
 
-body[class*=theme-]:not(.theme-blend) #theme-toggle {
+body[class*=theme-]:not(.theme-blend) .gadgets #theme-toggle {
 	display: none;
 	cursor: not-allowed;
 	opacity: 0.2;
@@ -1714,7 +1740,7 @@ article filter styles
 	margin-top: 0 !important;
 	margin-bottom: 0 !important;
 
-    transition: transform 0.5s;
+	transition: transform 0.5s;
 }
 
 [data-visibility='off'] img {
