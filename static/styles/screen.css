@@ -1280,7 +1280,7 @@ Provide tooltips in the gutter for links (if they have a title)
 and abbr tags
 --------------------------------------------------------------*/
 
-a[title*=' ']:hover,
+a[title*=' ']:not([href*='.jpg']):not([href*='.png']):hover,
 ins[datetime]:hover,
 del[datetime]:hover,
 abbr[title*=' ']:hover,
@@ -1291,7 +1291,7 @@ span[title*=' ']:hover {
 	text-decoration-thickness: 0.5px;
 }
 
-a[title*=' ']:before,
+a[title*=' ']:not([href*='.jpg']):not([href*='.png']):before,
 ins[datetime]:before,
 del[datetime]:before,
 abbr[title*=' ']:before,
@@ -1318,7 +1318,7 @@ span[title*=' ']:before {
 	/*outline: 1px dashed red;*/
 }
 
-a[title*=' ']:hover:before,
+a[title*=' ']:not([href*='.jpg']):not([href*='.png']):hover:before,
 ins[datetime]:hover:before,
 del[datetime]:hover:before,
 abbr[title*=' ']:hover:before,
