@@ -1,0 +1,9 @@
+{{ if .Site.Params.Author }}
+<div class="media author-card" itemscope="" itemtype="http://schema.org/Person">
+	{{ partialCached "author-image" . }}
+	<div class="media-body">
+		{{ with .Site.Params.Author.Name }}<h3 class="card-title" itemprop="name">{{ . }}</h3>{{ end }}
+		{{ with .Site.Params.Author.Description }}<p class="card-text" itemprop="description">{{ . }}</p>{{ end }}
+	</div>
+</div>
+{{ end }}

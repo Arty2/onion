@@ -1,24 +1,6 @@
 <div class="inner">
-	{{ if ne .Site.Params.show_social false }}
-		{{ if .Site.Params.Author }}
-		<div class="media author-card" itemscope="" itemtype="http://schema.org/Person">	  
-			{{ if .Site.Params.Author.Image -}}
-				{{ with $img := resources.Get .Site.Params.Author.Image }}
-					<img class="avatar" src="{{ (.Fill "200x200").Permalink }}" itemprop="image" alt="">
-				{{- else -}}
-					<img class="avatar" src="{{ .Site.Params.Author.Image | relURL }}" itemprop="image" alt="">
-				{{- end -}}
-			{{- end -}}
-			<div class="media-body">
-				{{ with .Site.Params.Author.Name }}<h3 class="card-title" itemprop="name">{{ . }}</h3>{{ end }}
-				{{ with .Site.Params.Author.Description }}<p class="card-text" itemprop="description">{{ . }}</p>{{ end }}
-			</div>
-		</div>
-		{{ end }}
-	{{ end }}
-
-	{{ if ne .Site.Params.show_social false }}{{ partial "social" . }}{{ end }}
-
+	{{ if ne .Site.Params.show_author false }}{{ partialCached "author-card" . }}{{ end }}
+	{{ if ne .Site.Params.show_social false }}{{ partialCached "social" . }}{{ end }}
 	{{ with .Site.Copyright -}}
 		<div class="copyright">{{ . | safeHTML  }}</div>
 	{{- end }}
