@@ -8,9 +8,9 @@ url: https://github.com/Arty2/xerographic
 /*--------------------------------------------------------------
 syntax highlighting: algol_nu
 via https://xyproto.github.io/splash/docs/longer/all.html
+loaded in the /layouts/partial/head.html 
 --------------------------------------------------------------*/
-/*@import "./syntax.css";*/
-.highlight { background: none; }
+.highlight { background: none !important; }
 
 /*--------------------------------------------------------------
 global CSS variables
@@ -324,12 +324,8 @@ button, .button, .tag,
 	--xheight: 0.92;
 	font-family: monospace; /* alternative */
 	font-family: var(--font-mono);
-	/*font-size: calc(var(--s00)*var(--xheight));*/
+	font-size: calc(var(--s-1)*var(--xheight));
 }
-
-/*.languages {
-	font-size: calc(var(--s01)*var(--xheight));
-}*/
 
 .sharing, .social,
 .tag,
@@ -337,10 +333,10 @@ button, .button, .tag,
 button, .button, .tag,
 .meta details summary,
 .meta dt {
+	/*--xheight: 0.92;*/
 	font-variant: small-caps;
 	text-transform: uppercase;
 	font-size: calc(var(--s-2)*var(--xheight));
-	/*font-weight: bold;*/
 }
 
 button, .button, .tag {
