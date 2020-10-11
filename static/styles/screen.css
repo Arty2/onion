@@ -2153,15 +2153,15 @@ articles-list - cluster
 /*--------------------------------------------------------------
 articles-list - no-tags
 --------------------------------------------------------------*/
-.articles-list.no-tags .tag {
+.articles-list.no-tags .tags {
 	display: none;
 }
 
 /*--------------------------------------------------------------
 articles-list - no-summary
 --------------------------------------------------------------*/
-.articles-list.no-summary > summary,
-.articles-list.no-summary > summary:after {
+.articles-list.no-summary > .summary,
+.articles-list.no-summary > .summary:after {
 	display: none;
 }
 
@@ -2180,7 +2180,9 @@ articles-list - no-text
 
 .articles-list.no-text article .time,
 .articles-list.no-text article .title,
-.articles-list.no-text article .summary {
+.articles-list.no-text article .tags,
+.articles-list.no-text article .summary,
+.articles-list.no-text article .summary:after {
 	display: none;
 }
 
