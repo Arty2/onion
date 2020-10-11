@@ -1,2 +1,2 @@
-git subtree push --prefix=themes/xerographic xerographic master
+git subtree push --prefix=themes/onion onion master
 pause

@@ -1,5 +1,5 @@
 rem git submodule update --rebase --remote
-cd themes/xerographic
+cd themes/onion
 git checkout master
 git pull
 cd ../../

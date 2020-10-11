@@ -1,2 +1,2 @@
-git subtree pull --prefix=themes/xerographic xerographic master --squash
+git subtree pull --prefix=themes/onion onion master --squash
 pause
