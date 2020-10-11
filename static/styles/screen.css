@@ -1860,6 +1860,11 @@ articles-list styles
 	text-decoration: solid underline;
 }
 
+.articles-list article .thumbnail {
+	margin: 0;
+	overflow: hidden;
+}
+
 .articles-list article > a:hover .thumbnail img {
 	transform: scale(1.05);
 	transition-delay: 0s;
@@ -1867,20 +1872,21 @@ articles-list styles
 
 .articles-list article .thumbnail img {
 	margin: 0;
-	/*max-height: 100vh;*/
 
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
 	font-size: 0;
 
 	transition: transform .3s .6s;
 }
 
-.articles-list article .thumbnail {
-	margin: 0;
-	overflow: hidden;
-}
-
 .articles-list article.overflow .thumbnail {
 	overflow: initial;
+}
+
+.articles-list article.overflow .thumbnail img {
+	background-size: 0 0;
 }
 
 .articles-list article .thumbnail:empty {

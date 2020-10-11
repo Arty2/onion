@@ -25,7 +25,8 @@
 		{{- with $featured -}}
 		<figure class="thumbnail" href="{{ .RelPermalink }}">
 			{{- $resized := .Resize "600x" -}}
-			<img src="{{ $resized.RelPermalink }}" loading="lazy" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $featured.Title }} alt="{{ . }}"{{ end }}>
+			{{- $placeholder := .Resize "48x q20 jpg Gaussian" -}}
+			<img src="{{ $resized.RelPermalink }}" loading="lazy" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $featured.Title }} alt="{{ . }}"{{ end }} style="background-image: url('data:image/jpg;base64,{{ $placeholder.Content | base64Encode }}');">
 		</figure>
 		{{- end -}}
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
