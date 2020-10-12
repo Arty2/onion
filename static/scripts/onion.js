@@ -41,27 +41,29 @@ loadScript(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.mi
 
 
 /*--------------------------------------------------------------
-Hide back #scroller if at top of page
+Gadget #scroller behavior
 --------------------------------------------------------------*/
 
 if (document.body.contains(document.getElementById('scroller'))) {
+	// if possible to scroll, indicate there is more
 	if (window.scrollY == 0 && document.body.clientHeight > window.innerHeight) {
 		document.getElementById('scroller').classList.add('down');
 	}
+	// check periodically for scroll position
 	setInterval(function(){
-		if (window.scrollY > 0) {
+		if (window.scrollY > 0) { // change gadget to scroll down
 			// document.getElementById('scroller').style.color = 'rgba(var(--text-color),1)';
 			document.getElementById('scroller').classList.remove('hide');
 			document.getElementById('scroller').classList.remove('down');
 			document.getElementById('scroller').classList.add('up');
 		}
 		else {
-				// document.getElementById('scroller').style.color = 'rgba(var(--text-color),0)';
-			if (document.body.clientHeight > window.innerHeight) {
+			// document.getElementById('scroller').style.color = 'rgba(var(--text-color),0)';
+			if (document.body.clientHeight > window.innerHeight) { // change gadget to scroll up
 				document.getElementById('scroller').classList.remove('up');
 				document.getElementById('scroller').classList.add('down');
 			}
-			else {
+			else { // hide gadget if not possible to scroll
 				document.getElementById('scroller').classList.add('hide');
 			}
 		}
@@ -69,14 +71,16 @@ if (document.body.contains(document.getElementById('scroller'))) {
 	// hide when clicked
 	document.getElementById('scroller').addEventListener('click', function(event){
 		// this.style.color = 'rgba(var(--text-color),0)';
-		if (this.classList.contains('down')) {
+		if (this.classList.contains('down')) { // move down
+			document.getElementById('scroller').classList.remove('down');
+			document.getElementById('scroller').classList.add('up');
 			window.scroll({
 				top: window.innerHeight,
 				behavior: 'smooth'
 			});
 			event.preventDefault();
 		}
-		else {
+		else { // return to top
 			this.classList.add('hide');
 			window.scroll({
 				top: 0,
