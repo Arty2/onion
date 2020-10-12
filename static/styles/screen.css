@@ -203,7 +203,7 @@ FantasqueSan: via https://github.com/belluzj/fantasque-sans;
 icon font via https://icomoon.io (Brands iconset)
 --------------------------------------------------------------*/
 
-/*@font-face {
+@font-face {
 	font-family: 'Alegreya';
 	src: url('../fonts/Alegreya-Regular.woff2') format('woff2');
 	font-weight: normal;
@@ -257,7 +257,7 @@ icon font via https://icomoon.io (Brands iconset)
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
-}*/
+}
 
 /*@font-face {
 	font-family: 'Fantasque';
@@ -267,7 +267,7 @@ icon font via https://icomoon.io (Brands iconset)
 	font-display: swap;
 }*/
 
-/*@font-face {
+@font-face {
 	font-family: 'Fantasque';
 	src: url('../fonts/FantasqueSansMono-Bold.woff2') format('woff2');
 	font-weight: bold;
@@ -281,7 +281,7 @@ icon font via https://icomoon.io (Brands iconset)
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
-}*/
+}
 
 html {
 	font-size: 112%; /* alternative */
@@ -1592,6 +1592,9 @@ theme toggle, return to top
 .gadgets #scroller.up {
 	animation: bounce 2s ease 1;
 }
+	.gadgets #scroller.up:hover {
+	animation-iteration-count: infinite;
+	}
 
 .gadgets #scroller.hide {
 	color: rgba(var(--text-color),0);
