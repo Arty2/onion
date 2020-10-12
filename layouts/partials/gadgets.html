@@ -1,10 +1,12 @@
 <div class="gadgets">
-	<a id="theme-toggle"><span>◑</span></a>
+	{{ with .NextInSection }}<a id="next" href="{{ .Permalink }}"><span>→</span></a>{{ end }}
+	{{ with .PrevInSection }}<a id="prev" href="{{ .Permalink }}"><span>←</span></a>{{ end }}
 	<a id="scroller" href="#top"><span>↑</span></a>
+	<a id="theme-toggle"><span>◑</span></a>
 </div>
 <script type="text/javascript">
 	var themetoggle = document.querySelector('#theme-toggle');
-
+	themetoggle.style.opacity = 1;
 	themetoggle.onclick = function() {
 		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 			document.querySelector('body').classList.toggle('scheme-light');

@@ -1,4 +1,4 @@
-<title>{{if .IsHome}}{{ .Site.Title }} • {{ .Title }}{{else}}{{ .Title }} • {{ .Site.Title }}{{end}}</title>
+<title>{{if .IsHome}}{{ .Site.Title }}{{ with .Title }} • {{ . }}{{ end }}{{else}}{{ with .Title }}{{ . }} • {{ end }}{{ .Site.Title }}{{end}}</title>
 
 <meta name="description" content="{{ with .Description }}{{ . }}{{ end }}">
 

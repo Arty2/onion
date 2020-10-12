@@ -18,7 +18,7 @@
 			{{ $customcss.Content | safeCSS }}
 		</style>
 	{{- end }}
-	{{ if ne .Site.Params.show_gadgets false }}{{ partialCached "gadgets" . }}{{ end }}
+	{{ if ne .Site.Params.show_gadgets false }}{{ partial "gadgets" . }}{{ end }}
 	<header class="cluster">
 		{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 		<div class="inner">
