@@ -65,9 +65,7 @@
 
 		{{ if .Params.Tags }}
 			<dt>{{ i18n "tags" }}</dt>
-			<dd class="tags">{{ range .Params.Tags -}}
-				{{ partial "tag" . }}
-			{{- end }}</dd>
+			<dd class="tags">{{ partial "tags-list" . }}</dd>
 		{{ end }}
 		</dl>
 	</details>

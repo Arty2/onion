@@ -203,7 +203,7 @@ FantasqueSan: via https://github.com/belluzj/fantasque-sans;
 icon font via https://icomoon.io (Brands iconset)
 --------------------------------------------------------------*/
 
-@font-face {
+/*@font-face {
 	font-family: 'Alegreya';
 	src: url('../fonts/Alegreya-Regular.woff2') format('woff2');
 	font-weight: normal;
@@ -257,7 +257,7 @@ icon font via https://icomoon.io (Brands iconset)
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
-}
+}*/
 
 /*@font-face {
 	font-family: 'Fantasque';
@@ -267,7 +267,7 @@ icon font via https://icomoon.io (Brands iconset)
 	font-display: swap;
 }*/
 
-@font-face {
+/*@font-face {
 	font-family: 'Fantasque';
 	src: url('../fonts/FantasqueSansMono-Bold.woff2') format('woff2');
 	font-weight: bold;
@@ -281,7 +281,7 @@ icon font via https://icomoon.io (Brands iconset)
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
-}
+}*/
 
 html {
 	font-size: 112%; /* alternative */
@@ -312,6 +312,7 @@ body,
 	font-family: var(--font-sans);
 }
 
+.gadgets,
 .font-mono, .font-monospace,
 code, kbd,
 button, .button, .tag,
@@ -470,7 +471,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 }
 
-code {
+code, kbd {
 	font-variant: no-common-ligatures lining-nums;
 	font-feature-settings: "kern" 0, "liga" 0, "clig" 0, "lnum";
 }
@@ -1713,8 +1714,13 @@ article filter styles
 }
 
 #articles-filter__reset {
-	visibility: hidden;
+	/*visibility: hidden;*/
+	/*border-left-width: 6px;*/
 }
+	#articles-filter__reset:after {
+		/*visibility: hidden;*/
+		content: '•' !important;
+	}
 
 [data-visibility='on'] {
 	opacity: 1;
@@ -2345,12 +2351,12 @@ single article meta styles
 
 .meta details {
 	padding: calc(var(--gutter-height)/4) calc(var(--gutter-height)/2);
-	border-top: 0.5px dashed;
+	border-top: 2px dotted;
 	/*outline: 1px dashed red;*/
 	transition: color 0.3s, border 0.3s;
 }
 	.meta details:last-child {
-		border-bottom: 0.5px dashed;
+		border-bottom: 2px dotted;
 	}
 	.meta details:not([open]) {
 		color: rgba(var(--text-color),.3);
@@ -2391,7 +2397,7 @@ single article meta styles
 		/*cursor: zoom-out;*/
 	}
 	.meta details[open] summary::after {
-		content: '·';
+		content: '::';
 		float: right;
 	}
 
@@ -2409,7 +2415,7 @@ single article meta styles
 .meta dt {
 	grid-column: 1;
 	margin-right: 0.5rem;
-	margin-bottom: calc(-0.6*var(--line-height));
+	/*margin-bottom: calc(-0.6*var(--line-height));*/
 }
 	.meta dt:after {
 		content: ':';
@@ -2492,7 +2498,7 @@ sidenote & marginalia styles
 	overflow: hidden;
 
 	background-clip: border-box;
-	border: 0.5px dashed;
+	border: 2px dotted;
 	border-right: none;
 	border-left: none;
 	text-overflow: ellipsis;

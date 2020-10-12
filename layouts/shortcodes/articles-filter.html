@@ -1,10 +1,13 @@
+<!-- layouts/shortcodes/articles-filter.html -->
 {{- $class := (.Get "class") -}}
+{{- $filter := "articles-filterable" -}}
+<!-- if not (in $.Site.Params.disableKinds "taxonomy")  -->
 <div id="articles-filter" class="{{ with $class }}{{ $class }}{{ end }}">
 	<div>
-	{{- range $tag, $tags := .Site.Taxonomies.tags -}}
-	<button class="tag tag-{{ $tag | urlize }}" data-filter-tag="{{ $tag | urlize }}" data-filter="articles-filterable">{{ (i18n $tag) }}</button>
+	<a id="articles-filter__reset" class="tag" data-filter="articles-filterable" data-active="true" data-reset="true">{{ (i18n "filter-reset") }}</a>
+	{{- range .Site.Taxonomies.tags.Alphabetical -}}
+	<a href="{{ .Page.Permalink }}" class="tag filter-{{ .Term | urlize }}" data-filter-tag="{{ .Term | urlize }}" data-count="{{ .Count }}">{{ if (i18n .Term ) }}{{ (i18n .Term ) }}{{ else }}{{ .Term }}{{ end }}</a>
 	{{- end -}}
-	<button id="articles-filter__reset" class="button" data-filter="articles-filterable" data-reset="true">{{ (i18n "filter-reset") }}</button>
 	</div>
 </div>
 <script type="text/javascript">
@@ -32,40 +35,39 @@
 
 	filters = [];
 
-	document.querySelectorAll('#articles-filter button').forEach(button => {
+	document.querySelectorAll('#articles-filter .tag').forEach(button => {
 		button.addEventListener('click', function (e) {
+			e.preventDefault(); // do not go to href
+
 			var button = e.target;
+			var filter = {{ $filter }}
 
 			if (button.getAttribute('data-reset') === 'true') {
-				var filter = button.getAttribute('data-filter');
 				tag_reset(filter);
 			}
 			else if (button.getAttribute('data-active') === 'true') {
-				var filter = button.getAttribute('data-filter');
-				var tag    = button.getAttribute('data-filter-tag');
+				var tag = button.getAttribute('data-filter-tag');
 				filters = filters.filter(val => val !== tag);
 				button.setAttribute('data-active', 'false');
 				tag_toggle(filter, tag);
 				if (filters.length < 1) {
-					document.getElementById('articles-filter__reset').style.visibility = 'hidden';
-					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-visibility', 'on'); });
+					document.getElementById('articles-filter__reset').setAttribute('data-active', 'true');
 				}
 			}
 			else {
-				var filter = button.getAttribute('data-filter');
-				var tag    = button.getAttribute('data-filter-tag');
+				var tag = button.getAttribute('data-filter-tag');
 				filters.push(tag);
 				button.setAttribute('data-active', 'true');
 				tag_toggle(filter, tag);
 				if (filters.length > 0) {
-					document.getElementById('articles-filter__reset').style.visibility = 'visible';
-					// document.querySelectorAll('.articles-list h2').forEach(header => { header.setAttribute('data-visibility', 'off'); });
+					document.getElementById('articles-filter__reset').setAttribute('data-active', 'false');
 				}
 			}
 
 			// scroll back to the first visible post
 			if (typeof document.querySelector('[data-visibility="on"]') !== 'undefined') {
 					setTimeout(function(){
+						// will throw error if no object with data-visibility=on exists
 						var onfromtop = document.querySelector('[data-visibility="on"]').getBoundingClientRect().top + window.scrollY;
 				// if (onfromtop > 0) {
 						window.scroll({
@@ -76,43 +78,40 @@
 				// }
 			}
 			// this is really affected by performance, it should be a little bigger than the transition speed
-			
 		});
-
-
-		function tag_toggle(filter, tag) {
-			var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
-
-			for (var i = 0; i < items.length; i++) {
-				var itemTags = items[i].getAttribute('data-tags');
-				if (itemTags != null) {
-					if (!filters.some(v=> itemTags.indexOf(v) >= 0)) {
-						items[i].setAttribute('data-visibility', 'off');
-					}
-					else {
-						items[i].setAttribute('data-visibility', 'on');
-					}
-				}
-				if (filters.length === 0) {
-					items[i].setAttribute('data-visibility', 'on');		
-				}
-			}
-		}
-
-
-		function tag_reset(filter) {
-			filters = [];
-			document.getElementById('articles-filter__reset').style.visibility = 'hidden'; 
-			var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
-
-			for (var i = 0; i < items.length; i++) {
-				items[i].setAttribute('data-visibility', 'on');
-			}
-
-			var tags = document.querySelectorAll('#articles-filter button.tag');
-			for (var i = 0; i < tags.length; i++) {
-				tags[i].setAttribute('data-active', 'false');
-			}
-		}
 	});
+
+	function tag_toggle(filter, tag) {
+		var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
+
+		for (var i = 0; i < items.length; i++) {
+			var itemTags = items[i].getAttribute('data-tags');
+			if (itemTags != null) {
+				if (!filters.some(v=> itemTags.indexOf(v) >= 0)) {
+					items[i].setAttribute('data-visibility', 'off');
+				}
+				else {
+					items[i].setAttribute('data-visibility', 'on');
+				}
+			}
+			if (filters.length === 0) {
+				items[i].setAttribute('data-visibility', 'on');		
+			}
+		}
+	}
+
+	function tag_reset(filter) {
+		filters = [];
+		var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
+
+		for (var i = 0; i < items.length; i++) {
+			items[i].setAttribute('data-visibility', 'on');
+		}
+
+		var tags = document.querySelectorAll('#articles-filter .tag');
+		for (var i = 0; i < tags.length; i++) {
+			tags[i].setAttribute('data-active', 'false');
+		}
+		document.getElementById('articles-filter__reset').setAttribute('data-active', 'true');
+	}
 </script>

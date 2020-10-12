@@ -57,10 +57,7 @@
 		{{- end -}}
 	</a>
 		{{- if .Params.Tags -}}
-			<p class="tags">
-			{{- range .Params.Tags -}}
-				{{- partial "tag" . -}}{{/* if not (in $.Site.Params.disableKinds "taxonomy") */}}
-			{{- end }}</p>
+			<p class="tags">{{ partial "tags-list" . }}</p>
 		{{- end -}}
 {{- end -}}
 </article>
