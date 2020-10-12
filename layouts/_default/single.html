@@ -4,7 +4,7 @@
 		{{ if .Params.cover }}
 			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover) }}
 		{{ else }}
-			{{ $featured = (.Resources.ByType "image").GetMatch "*_featured*" }}
+			{{ $featured = (.Resources.ByType "image").GetMatch "*__cover*" }}
 		{{ end }}
 
 		{{- with $featured -}}
