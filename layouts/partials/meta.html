@@ -4,7 +4,7 @@
 			<summary>{{ (i18n "in-series") }}</summary>
 			{{ with .Params.series }}
 				<dl>{{- range $name := . }}
-					<dt>{{ . }}</dt>
+					<dt>{{ i18n . }}</dt>
 					{{- $series := index $.Site.Taxonomies.series $name }}
 					{{- range $series.Pages.ByDate }}
 						<dd><a {{ if ne $.Permalink .Permalink }} href="{{ .Permalink }}"{{ end }}>{{ .Title }}</a></dd>
