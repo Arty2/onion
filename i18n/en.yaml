@@ -59,6 +59,9 @@ post-details:
 post-meta:
   other: Meta
 
+in-series:
+  other: In this Series
+
 publication-details:
   other: Publication details
 

@@ -59,6 +59,9 @@ post-details:
 post-meta:
   other: Meta
 
+in-series:
+  other: Σε αυτή τη σειρά
+
 publication-details:
   other: Στοιχεία έκδοσης
 

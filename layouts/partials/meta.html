@@ -1,7 +1,21 @@
 <aside class="meta">
+	{{ if .Params.series -}}
+		<details open>
+			<summary>{{ (i18n "in-series") }}</summary>
+			{{ with .Params.series }}
+				<dl>{{- range $name := . }}
+					<dt>{{ . }}</dt>
+					{{- $series := index $.Site.Taxonomies.series $name }}
+					{{- range $series.Pages.ByDate }}
+						<dd><a {{ if ne $.Permalink .Permalink }} href="{{ .Permalink }}"{{ end }}>{{ .Title }}</a></dd>
+					{{- end }}
+				{{ end }}
+			{{ end }}</dl>
+		</details>
+	{{ end }}
 	{{ if and (ne .Site.Params.show_toc false) (ne .Params.show_toc false) -}}
 		{{ if ge (len .TableOfContents) 150 }}
-		<details open>
+		<details>
 			<summary>{{ (i18n "contents") }}</summary>
 			{{.TableOfContents}}
 		</details>
