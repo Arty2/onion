@@ -1,5 +1,5 @@
 {{ define "main" }}
-	<article class="h-entry{{ with .Draft }} draft{{ end }}">
+	<article class="h-entry {{ with .Params.cssclass }} {{ . }} {{ end }}{{ if .Draft }} draft {{ end }} {{ .Type }}">
 		{{ $featured := "" }}
 		{{ if .Params.cover }}
 			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover) }}
@@ -28,7 +28,13 @@
 			{{ if and (ne .Site.Params.show_meta false) (ne .Params.show_meta false) -}}{{ partial "meta" . }}{{ end }}
 		</header>
 		<div class="entry-content" itemprop="articleBody">
-			{{ .Content }}
+			{{- if eq .Type "preformatted" -}}
+				<pre>{{ .RawContent | safeHTML }}</pre>
+			{{- else if eq .Type "ephemera" -}}
+				{{ .RawContent | markdownify | safeHTML }}
+			{{- else -}}
+				{{ .Content }}
+			{{- end -}}
 		</div>
 	</article>
 	{{ if and (eq .Site.Params.show_comments true) (ne .Params.show_comments false) -}}
