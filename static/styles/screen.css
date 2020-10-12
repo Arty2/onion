@@ -107,10 +107,6 @@ body.theme-white {
 	--text-color-inverted: 200, 200, 200;
 	--shadow-color: rgba(var(--text-color),0.2);
 }
-/*	body.theme-white #theme-toggle {
-		cursor: not-allowed;
-		opacity: 0.1;
-	}*/
 
 body.theme-gray, body.theme-grey {
 	--page-color: 204, 204, 204;
@@ -617,6 +613,10 @@ kbd kbd {
 	border: none;
 	box-shadow: none;
 }
+	kbd kbd:hover {
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
 
 sub, sup {
 	font-size: 0.7em;
@@ -1562,6 +1562,7 @@ theme toggle, return to top
 	/*height: calc(100% - 2*var(--gutter-height));*/
 	z-index: 104;
 
+	pointer-events: none;
 	-webkit-user-select: none !important;
 	user-select: none !important;
 
@@ -1577,8 +1578,14 @@ theme toggle, return to top
 	cursor: pointer;
 	text-align: center;
 	text-decoration: none;
+	pointer-events: auto;
 
 	/*outline: 1px dashed red;*/
+}
+
+.gadgets #scroller {
+	/*position: absolute;*/
+	bottom: 0;
 }
 
 .gadgets #scroller.up {
@@ -1599,8 +1606,9 @@ theme toggle, return to top
 
 .gadgets #theme-toggle {
 	position: relative;
-	bottom: 0;
+	top: 0;
 	cursor: pointer;
+	opacity: 0;
 }
 
 body[class*=theme-]:not(.theme-blend) .gadgets #theme-toggle {
