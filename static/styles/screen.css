@@ -31,6 +31,7 @@ global CSS variables
 
 	--line-height: 1.4em; /* units used implicitely, but could be removed if multiplied with s00 later */
 	--gutter-height: calc(1*var(--line-height));
+	/*--gutter-width: calc(1*var(--line-height));*/
 	--gutter-width: 1.4rem;
 	/*--offset: --gutter-width;*/
 	/*--gutter-width: 0px; /* DEBUG */
@@ -312,7 +313,6 @@ body,
 	font-family: var(--font-sans);
 }
 
-.gadgets,
 .font-mono, .font-monospace,
 code, kbd,
 button, .button, .tag,
@@ -363,13 +363,23 @@ pre, input, textarea {
 body > footer,
 .meta,
 .sidenote, .entry-content aside,
-.footnotes,
-abbr:before,
-abbr:after,
-ins[datetime]:before,
-del[datetime]:before,
-a[title*=' ']:before,
-span[title*=' ']:before {
+.footnotes {
+	font-size: var(--s-2);
+	/*line-height: calc(var(--line-height)/1.2);*/
+	/*line-height: 1.4;*/
+}
+
+.tag::after,
+.gadgets,
+.sidenote:before,
+.summary:after,
+abbr:not(:hover):before,
+abbr:not(:hover):after,
+ins[datetime]:not(:hover):before,
+del[datetime]:not(:hover):before,
+a[title*=' ']:not(:hover):before,
+span[title*=' ']:not(:hover):before {
+	font-family: icons;
 	font-size: var(--s-2);
 	/*line-height: calc(var(--line-height)/1.2);*/
 	/*line-height: 1.4;*/
@@ -1307,8 +1317,8 @@ ins[datetime]:before,
 del[datetime]:before,
 abbr[title*=' ']:before,
 span[title*=' ']:before {
-	--tooltip-mark: '↬';
-	/*--tooltip-mark: '→';*/
+	/*--tooltip-mark: '↬';*/
+	--tooltip-mark: '🔗';
 	content: var(--tooltip-mark); 
 	display: inline-block;
 	position: absolute;
@@ -1362,13 +1372,13 @@ span[title*=' ']:hover:before {
 	/* abbr and other notes icon */
 	abbr[title*=' ']:before,
 	span[title*=' ']:before {
-		--tooltip-mark: '※';
 		--tooltip-mark: '*';
+		--tooltip-mark: '⟜';
 	}
 	/* ins and del tags icon and content */
 	ins[datetime]:before,
 	del[datetime]:before {
-		--tooltip-mark: '¤';
+		--tooltip-mark: '🕓';
 	}
 	ins[datetime]:hover:before,
 	del[datetime]:hover:before {
@@ -1492,7 +1502,8 @@ social menu
 .icon-mastodon:before   { content: '🐘'; }
 .icon-webring:before    { content: '🕸'; }
 .icon-soundcloud:before { content: '☁'; }
-.icon-youtube:before    { content: '▶'; }
+.icon-youtube:before    { content: '📺'; }
+.icon-keybase:before    { content: '🔑'; }
 
 /*.icon-email:hover:before { color: #168de2; }*/ /* same color as links */
 .icon-gitlab:hover     { color: #e24329; }
@@ -1503,6 +1514,7 @@ social menu
 .icon-mastodon:hover   { color: #3088d4; }
 .icon-soundcloud:hover { color: #ff3300; }
 .icon-youtube:hover    { color: #ff0000; }
+.icon-keybase:hover    { color: #1da1f2; }
 
 
 /*--------------------------------------------------------------
@@ -1560,7 +1572,7 @@ theme toggle, return to top
 	bottom: calc(var(--gutter-height));
 	right: 0;
 	width: var(--gutter-width);
-	/*height: calc(100% - 2*var(--gutter-height));*/
+	height: calc(100% - 2*var(--gutter-height));
 	z-index: 104;
 
 	pointer-events: none;
@@ -1575,6 +1587,7 @@ theme toggle, return to top
 	margin-left: auto;
 	margin-right: auto;
 	width: var(--gutter-width);
+	height: var(--gutter-width);
 
 	cursor: pointer;
 	text-align: center;
@@ -1584,9 +1597,19 @@ theme toggle, return to top
 	/*outline: 1px dashed red;*/
 }
 
+.gadgets #next {
+	position: absolute;
+	top: calc(50% - var(--gutter-width)/2);
+}
+
+.gadgets #prev {
+	position: absolute;
+	top: calc(50% + var(--gutter-width)/2);
+}
+
 .gadgets #scroller {
-	/*position: absolute;*/
-	bottom: 0;
+	position: absolute;
+	bottom: var(--gutter-width);
 }
 
 .gadgets #scroller.up {
@@ -1609,8 +1632,8 @@ theme toggle, return to top
 	}
 
 .gadgets #theme-toggle {
-	position: relative;
-	top: 0;
+	position: absolute;
+	bottom: 0;
 	cursor: pointer;
 	opacity: 0;
 }
@@ -1653,7 +1676,8 @@ tags styles
 .tag[data-active='true'] {
 	background: rgb(var(--text-color));
 	border-color: rgb(var(--text-color));
-	color: rgb(var(--text-color-inverted));
+	/*color: rgb(var(--text-color-inverted));*/
+	color: rgb(var(--page-color));
 }
 
 .tag:focus {
@@ -1699,19 +1723,17 @@ article filter styles
 
 #articles-filter .tag:after {
 	display: inline-block;
-	/*content: '◇';*/
-	content: '×';
+	content: '⨯';
 	margin-left: 0.3em;
 
 	color: rgba(var(--text-color),0);
 	text-decoration: none !important;
 	text-align: center;
-	vertical-align: 15%;
 }
 
 #articles-filter .tag[data-active='true']:after {
 	/*content: '◆';*/
-	content: '×';
+	/*content: '⨯';*/
 
 	color: rgb(var(--page-color));
 }
@@ -1722,7 +1744,7 @@ article filter styles
 }
 	#articles-filter__reset:after {
 		/*visibility: hidden;*/
-		content: '•' !important;
+		content: '○' !important;
 	}
 
 [data-visibility='on'] {
@@ -2400,7 +2422,7 @@ single article meta styles
 		/*cursor: zoom-out;*/
 	}
 	.meta details[open] summary::after {
-		content: '::';
+		content: '∷';
 		float: right;
 	}
 
@@ -2472,7 +2494,8 @@ sidenote & marginalia styles
 
 .sidenote:before,
 .entry-content aside:before {
-	content: '⊕';
+	/*content: '⊕';*/
+	content: '⥊';
 	display: block;
 	position: absolute;
 	right: 0;
@@ -2599,7 +2622,7 @@ footnotes and targeting
 	visibility: hidden;
 }
 	.footnotes li[id^="fn:"]:target .footnote-backref:after {
-		content: '×';
+		content: '⨯';
 		visibility: visible;
 		position: absolute;
 		top: -0.1rem;
