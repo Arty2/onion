@@ -1,16 +1,14 @@
-{{ define "main" }}
+{{ define "main" -}}
 	<article class="h-entry {{ with .Params.cssclass }} {{ . }} {{ end }}{{ if .Draft }} draft {{ end }} {{ .Type }}">
-		{{ $featured := "" }}
-		{{ if .Params.cover }}
-			{{ $featured = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover) }}
+		{{- $cover := "" -}}
+		{{- if .Params.cover }}
+			{{ $cover = .Params.cover }}
 		{{ else }}
-			{{ $featured = (.Resources.ByType "image").GetMatch "*__cover*" }}
-		{{ end }}
-
-		{{- with $featured -}}
+			{{ $cover = (.Resources.ByType "image").GetMatch "*__cover*" }}
+		{{ end -}}
+		{{- if $cover -}}
 		<div class="cover">
-				{{- $resized := .Resize "1500x" -}}
-				<img src="{{ $resized.RelPermalink }}" alt="">
+			{{ partial "render-image" (dict "Page" .Page "Destination" $cover )}}
 		</div>
 		{{- end -}}
 		<h1 class="title"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
@@ -45,5 +43,5 @@
 			► Error: Comments enabled but disqusShortname is missing.
 		{{ end }}
 		</section>
-	{{ end }}
-{{ end }}
+	{{- end -}}
+{{- end }}

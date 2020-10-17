@@ -1,0 +1,36 @@
+<!-- layouts/partials/render-image.html -->
+<!-- get image URL from Markdown tag -->
+{{- $src := ( .Destination | safeURL ) -}}
+<!-- split # fragment and keep clean URL -->
+{{- $fragments := ( split $src "#" ) -}}
+{{- $src = index ($fragments ) 0 -}}
+<!-- get actual filename -->
+{{- $src = path.Base $src -}}
+<!-- check if it exists as a page resource -->
+{{- with ($.Page.Resources.ByType "image").GetMatch ( printf "**%s" $src ) -}}
+	<!-- resize if wider than 800px -->
+	{{- $resized := cond (lt .Width "800") . ( .Resize "800x" ) -}}
+	<!-- generate a low resolution placeholder to use as background if a JPG -->
+	{{ $placeholder := "" }}
+	{{- if or (eq (path.Ext .) ".jpg") (eq (path.Ext .) ".jpeg") }}
+		{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
+	{{ end -}}
+	<img src="{{ $resized.RelPermalink }}"
+	width="{{ $resized.Width }}"
+	height="{{ $resized.Height }}"
+	{{ with $placeholder }}style="
+		background-image: url('data:image/jpg;base64,{{ .Content | base64Encode }}');
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size: cover;"{{ end }}
+	alt="{{ $.Text }}" {{ with $.Title }} title="{{ . }}" {{ end }}
+	{{ with index ($fragments ) 1 }}class="{{ . }}"{{ end }}
+	loading="lazy"
+	>
+<!-- or otherwise simply load the URL -->
+{{- else -}}
+	<img src="{{ .Destination | safeURL }}"
+	alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }}
+	loading="lazy"
+	> 
+{{- end -}}

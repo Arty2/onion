@@ -1943,9 +1943,6 @@ articles-list styles
 .articles-list article .thumbnail img {
 	margin: 0;
 
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: cover;
 	font-size: 0;
 
 	transition: transform .3s .6s;
@@ -2748,6 +2745,7 @@ gallery
 
 .gallery img {
 	max-height: 50vh;
+	width: auto;
 	margin: 0 auto;
 
 	cursor: pointer;

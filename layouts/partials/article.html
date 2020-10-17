@@ -14,19 +14,17 @@
 	{{- else -}}
 		{{ printf "href=%s" .RelPermalink | safeHTMLAttr  }}
 	{{- end -}}>
-		{{ $cover := "" }}
-		{{ if .Params.cover_listing }}
-			{{ $cover = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover_listing) }}
+		{{- $cover := "" -}}
+		{{- if .Params.cover_listing }}
+			{{ $cover = .Params.cover_listing }}
 		{{ else if .Params.cover }}
-			{{ $cover = (.Resources.ByType "image").GetMatch (printf "**%s" .Params.cover) }}
+			{{ $cover = .Params.cover }}
 		{{ else }}
 			{{ $cover = (.Resources.ByType "image").GetMatch "*__cover*" }}
-		{{ end }}
-		{{- with $cover -}}
-		<figure class="thumbnail" href="{{ .RelPermalink }}">
-			{{- $resized := .Resize "600x" -}}
-			{{- $placeholder := .Resize "48x q20 jpg Gaussian" -}}
-			<img src="{{ $resized.RelPermalink }}" loading="lazy" width="{{ $resized.Width }}" height="{{ $resized.Height }}" {{ with $cover.Title }} alt="{{ . }}"{{ end }} style="background-image: url('data:image/jpg;base64,{{ $placeholder.Content | base64Encode }}');">
+		{{ end -}}
+		{{- if $cover -}}
+		<figure class="thumbnail">
+			{{ partial "render-image" (dict "Page" .Page "Destination" $cover )}}
 		</figure>
 		{{- end -}}
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
