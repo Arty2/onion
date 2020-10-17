@@ -1093,7 +1093,11 @@
         },
         {
           "id": 226,
-          "order": 0
+          "order": 136,
+          "prevSize": 18,
+          "code": 9733,
+          "name": "star",
+          "tempChar": ""
         },
         {
           "id": 227,
@@ -1289,7 +1293,7 @@
           "prevSize": 18,
           "code": 10799,
           "name": "close",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "id": 275,
@@ -5024,7 +5028,7 @@
           "name": "webring",
           "prevSize": 32,
           "code": 128376,
-          "tempChar": ""
+          "tempChar": ""
         }
       ],
       "id": 6,
@@ -5065,7 +5069,7 @@
           "name": "rss",
           "prevSize": 32,
           "code": 128225,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 102,
@@ -5073,7 +5077,7 @@
           "prevSize": 32,
           "code": 5076,
           "name": "wikipedia",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 103,
@@ -5081,7 +5085,7 @@
           "name": "keybase",
           "prevSize": 32,
           "code": 128273,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 104,
@@ -5089,7 +5093,7 @@
           "prevSize": 32,
           "code": 128250,
           "name": "youtube",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 118,
@@ -5097,7 +5101,7 @@
           "prevSize": 32,
           "code": 9729,
           "name": "soundcloud",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 106,
@@ -5105,7 +5109,7 @@
           "prevSize": 32,
           "code": 129418,
           "name": "gitlab",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 107,
@@ -5113,7 +5117,7 @@
           "name": "email",
           "prevSize": 32,
           "code": 128231,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 108,
@@ -5121,7 +5125,7 @@
           "name": "github",
           "prevSize": 32,
           "code": 128025,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 109,
@@ -5129,7 +5133,7 @@
           "name": "instagram",
           "prevSize": 32,
           "code": 128247,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 110,
@@ -5137,7 +5141,7 @@
           "name": "twitter",
           "prevSize": 32,
           "code": 128038,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 111,
@@ -5145,7 +5149,7 @@
           "name": "facebook",
           "prevSize": 32,
           "code": 128077,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 112,
@@ -5153,7 +5157,7 @@
           "name": "mastodon",
           "prevSize": 32,
           "code": 128024,
-          "tempChar": ""
+          "tempChar": ""
         }
       ],
       "id": 5,

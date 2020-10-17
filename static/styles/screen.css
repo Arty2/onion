@@ -17,6 +17,7 @@ global CSS variables
 --------------------------------------------------------------*/
 :root {
 	/* font stacks */
+	--font-icons: 'icons', 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
 	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
@@ -278,7 +279,7 @@ icon font via https://icomoon.io (Brands iconset)
 
 @font-face {
 	font-family: 'icons';
-	src: url('../fonts/icons.woff') format('woff');
+	src: url('../fonts/icomoon.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -373,13 +374,16 @@ body > footer,
 .gadgets,
 .sidenote:before,
 .summary:after,
+.meta summary:after,
+.rating,
+.sl-navigation button,
 abbr:not(:hover):before,
 abbr:not(:hover):after,
 ins[datetime]:not(:hover):before,
 del[datetime]:not(:hover):before,
 a[title*=' ']:not(:hover):before,
 span[title*=' ']:not(:hover):before {
-	font-family: icons;
+	font-family: var(--font-icons);
 	font-size: var(--s-2);
 	/*line-height: calc(var(--line-height)/1.2);*/
 	/*line-height: 1.4;*/
@@ -781,7 +785,7 @@ animations
 }
 
 @keyframes slidex {
-	from { transform: translate(-100%, 0); }
+	from { transform: translate(100%, 0); }
 	to   { transform: translate(0, 0); }
 }
 
@@ -1485,8 +1489,8 @@ social menu
 }
 
 .social a:before {
-	font-family: icons;
-	font-size: 1.2rem;
+	font-family: var(--font-icons);
+	font-size: 2em;
 }
 
 .social a span {
@@ -1575,9 +1579,15 @@ theme toggle, return to top
 	height: calc(100% - 2*var(--gutter-height));
 	z-index: 104;
 
+
 	pointer-events: none;
 	-webkit-user-select: none !important;
 	user-select: none !important;
+	text-shadow:
+	   -0.5px -0.5px 1px rgb(var(--page-color)),  
+	    0.5px -0.5px 1px rgb(var(--page-color)),
+	   -0.5px  0.5px 1px rgb(var(--page-color)),
+	    0.5px  0.5px 1px rgb(var(--page-color));
 
 	/*outline: 1px dashed cyan;*/
 }
@@ -1593,6 +1603,8 @@ theme toggle, return to top
 	text-align: center;
 	text-decoration: none;
 	pointer-events: auto;
+
+	transition: opacity 0.3s, color 0.3s;
 
 	/*outline: 1px dashed red;*/
 }
@@ -1620,7 +1632,7 @@ theme toggle, return to top
 	}
 
 .gadgets #scroller.hide {
-	color: rgba(var(--text-color),0);
+	opacity: 0;
 }
 
 .gadgets #scroller.down {
@@ -1717,10 +1729,6 @@ article filter styles
 	pointer-events: none;
 }
 
-#articles-filter .tag {
-	
-}
-
 #articles-filter .tag:after {
 	display: inline-block;
 	content: '⨯';
@@ -1729,6 +1737,7 @@ article filter styles
 	color: rgba(var(--text-color),0);
 	text-decoration: none !important;
 	text-align: center;
+	/*vertical-align: 15%;*/
 }
 
 #articles-filter .tag[data-active='true']:after {
@@ -1738,14 +1747,9 @@ article filter styles
 	color: rgb(var(--page-color));
 }
 
-#articles-filter__reset {
-	/*visibility: hidden;*/
-	/*border-left-width: 6px;*/
+#articles-filter__reset:after {
+	content: '👁' !important;
 }
-	#articles-filter__reset:after {
-		/*visibility: hidden;*/
-		content: '○' !important;
-	}
 
 [data-visibility='on'] {
 	opacity: 1;
@@ -1756,13 +1760,11 @@ article filter styles
 }
 
 [data-visibility='off'] {
-	/*position: absolute;*/
 	position: relative;
 	height: 0 !important;
 	margin-top: 0 !important;
 	margin-bottom: 0 !important;
 	opacity: 0.05 !important;
-	/*opacity: 0 !important;*/
 
 	pointer-events: none !important;
 	-webkit-user-select: none !important;
@@ -1793,15 +1795,15 @@ article filter styles
 }
 
 [data-visibility='off']:nth-child(3n) {
-	transform: translateZ(80px)scale(0.6);
+	transform: translateZ(80px), scale(0.6);
 }
 
 [data-visibility='off']:nth-child(even) {
-	transform: translateZ(60px)scale(0.7);
+	transform: translateZ(60px), scale(0.7);
 }
 
 [data-visibility='off']:nth-child(4n) {
-	transform: translateZ(90px)scale(0.4);
+	transform: translateZ(90px), scale(0.4);
 }
 
 
@@ -2422,7 +2424,7 @@ single article meta styles
 		/*cursor: zoom-out;*/
 	}
 	.meta details[open] summary::after {
-		content: '∷';
+		content: '⌃';
 		float: right;
 	}
 
@@ -2581,6 +2583,7 @@ footnotes and targeting
 .footnote-ref, .footnote-backref {
 	display: inline-block;
 	color: inherit;
+	font-family: var(--font-icons);
 	text-decoration: none;
 }
 
@@ -2646,10 +2649,10 @@ sup[id^="fnref:"]:target:after {
 	position: absolute;
 	right: 0;
 	width: var(--gutter-width);
-	/*line-height: calc(1*var(--line-height));*/
+	line-height: calc(1*var(--line-height));
 
 	color: rgb(var(--accent-color));
-	font-size: 1rem;
+	font-family: var(--font-icons);
 	text-align: center;
 
 	animation: slidex .3s;
