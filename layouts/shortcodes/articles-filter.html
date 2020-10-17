@@ -2,7 +2,7 @@
 {{- $class := (.Get "class") -}}
 {{- $filter := "articles-filterable" -}}
 <!-- if not (in $.Site.Params.disableKinds "taxonomy")  -->
-<div id="articles-filter" class="{{ with $class }}{{ $class }}{{ end }}">
+<div id="articles-filter" class="noscript {{ with $class }}{{ $class }}{{ end }}">
 	<div>
 	<a id="articles-filter__reset" class="tag" data-filter="articles-filterable" data-active="true" data-reset="true">{{ (i18n "filter-reset") }}</a>
 	{{- range .Site.Taxonomies.tags.Alphabetical -}}
@@ -32,6 +32,7 @@
 		transition        : all 0.3s linear;
 	}
 	*/
+	document.getElementById('articles-filter').classList.remove('noscript');
 
 	filters = [];
 

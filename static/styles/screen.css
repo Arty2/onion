@@ -1751,6 +1751,15 @@ article filter styles
 	content: '👁' !important;
 }
 
+#articles-filter.noscript #articles-filter__reset {
+	display: none;
+}
+
+#articles-filter.noscript .tag:after {
+	content: '(' attr(data-count) ')';
+	color: inherit;
+}
+
 [data-visibility='on'] {
 	opacity: 1;
 	z-index: 100;
