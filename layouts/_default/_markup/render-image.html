@@ -1,0 +1,29 @@
+<!-- layouts/_default/_markup/render-image.html -->
+<!-- get image URL from Markdown tag -->
+{{- $src := ( .Destination | safeURL ) -}}
+<!-- remove ./ before testing for resource -->
+{{- $src = ( replace $src "./" "" ) -}}
+<!-- check if it exists as a page resource -->
+{{- with ($.Page.Resources.ByType "image").GetMatch ( printf "**%s" $src ) -}}
+	<!-- resize if wider than 800px -->
+	{{- $resized := cond (lt .Width "800") . ( .Resize "800x" ) -}}
+	<!-- generate a low resolution placeholder to use as background -->
+	{{- $placeholder := .Resize "48x q20 jpg Gaussian" -}}
+	<img src="{{ $resized.RelPermalink }}"
+	width="{{ $resized.Width }}"
+	height="{{ $resized.Height }}"
+	style="
+		background-image: url('data:image/jpg;base64,{{ $placeholder.Content | base64Encode }}');
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size: cover;"
+	alt="{{ $.Text }}" {{ with $.Title }} title="{{ . }}" {{ end }}
+	loading="lazy"
+	>
+<!-- or otherwise simply load the URL -->
+{{- else -}}
+	<img src="{{ $src }}"
+	alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }}
+	loading="lazy"
+	>
+{{- end -}}
