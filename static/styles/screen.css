@@ -363,7 +363,7 @@ pre, input, textarea {
 
 body > footer,
 .meta,
-.sidenote, .entry-content aside,
+.marginalia, .entry-content aside,
 .footnotes {
 	font-size: var(--s-2);
 	/*line-height: calc(var(--line-height)/1.2);*/
@@ -372,7 +372,7 @@ body > footer,
 
 .tag::after,
 .gadgets,
-.sidenote:before,
+.marginalia:before,
 .summary:after,
 .meta summary:after,
 .rating,
@@ -2500,7 +2500,7 @@ single article meta styles
 sidenote & marginalia styles
 --------------------------------------------------------------*/
 
-.sidenote:before,
+.marginalia:before,
 .entry-content aside:before {
 	/*content: '⊕';*/
 	content: '⥊';
@@ -2519,12 +2519,12 @@ sidenote & marginalia styles
 
 	/*outline: 1px dashed red;*/
 }
-	.sidenote:hover:before,
+	.marginalia:hover:before,
 	.entry-content aside:hover:before {
 		color: rgba(var(--text-color),1);
 	}
 
-.sidenote,
+.marginalia,
 .entry-content aside {
 	margin: var(--gutter-height) 0;
 	padding: calc(var(--gutter-width)/2);
@@ -2541,7 +2541,7 @@ sidenote & marginalia styles
 	/*-webkit-mask-image: linear-gradient(top, rgba(0,0,0,1) 1rem, rgba(0,0,0,0) 90%);*/
 }
 
-.sidenote:hover,
+.marginalia:hover,
 .entry-content aside:hover {
 	max-height: 100vh;
 	z-index: 101;
@@ -2550,7 +2550,7 @@ sidenote & marginalia styles
 	/*-webkit-mask-image: none;*/
 }
 
-/*.sidenote:after,
+/*.marginalia:after,
 .entry-content aside:after {
 	content: attr(title);
 	outline: 2px dashed red;
@@ -2560,7 +2560,7 @@ sidenote & marginalia styles
 @media only screen and ( min-width: 1200px ) {
 	/*.meta,*/
 	header aside,
-	.sidenote,
+	.marginalia,
 	.entry-content aside {
 		position: absolute;
 		float: left;
@@ -2575,7 +2575,7 @@ sidenote & marginalia styles
 
 		-webkit-mask-image: none;
 	}
-	.sidenote:before,
+	.marginalia:before,
 	.entry-content aside:before {
 		display: none;
 	}
