@@ -93,12 +93,31 @@ if (document.body.contains(document.getElementById('scroller'))) {
 
 
 /*--------------------------------------------------------------
+EXPERIMENTAL
+Lazyload transition
+based on https://plainjs.com/javascript/manipulation/wrap-an-html-structure-around-an-element-28/
+--------------------------------------------------------------*/
+
+/*var lazyimages = document.querySelectorAll('img[loading=lazy]');
+lazyimages.forEach(function(img){
+	var wrapper = document.createElement('span');
+	img.parentNode.insertBefore(wrapper, img);
+	wrapper.appendChild(img);
+	wrapper.classList.add('lazyloader');
+	// wrapper.style.outline = "2px dashed red";
+	img.addEventListener('load', function(event){
+		// wrapper.style.opacity = 0;
+	});
+});
+*/
+
+/*--------------------------------------------------------------
 Piled image galleries
 inspired from https://viewfromthisside.superhi.com/
 --------------------------------------------------------------*/
 
 var galleries = document.querySelectorAll('div.gallery');
-Array.prototype.forEach.call(galleries, function(element, index){
+galleries.forEach(function(element, index){
 	var index_current = 0;
 	var index = 0;
 	var z = 1;
