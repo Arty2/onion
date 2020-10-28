@@ -10,7 +10,7 @@
 {{- with ($.Page.Resources.ByType "image").GetMatch ( printf "**%s" $src ) -}}
 	<!-- resize if wider than 800px -->
 	{{- $resized := cond (lt .Width "800") . ( .Resize "800x" ) -}}
-	<!-- generate a low resolution placeholder to use as background if a JPG -->
+	<!-- if a JPEG (certain to be opaque) generate a low resolution placeholder to use as background -->
 	{{ $placeholder := "" }}
 	{{- if or (eq (path.Ext .) ".jpg") (eq (path.Ext .) ".jpeg") }}
 		{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
@@ -24,13 +24,14 @@
 		background-repeat: no-repeat;
 		background-size: cover;"{{ end }}
 	alt="{{ $.Text }}" {{ with $.Title }} title="{{ . }}" {{ end }}
-	{{ with index ($fragments ) 1 }}class="{{ . }}"{{ end }}
+	{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
 	loading="lazy"
 	>
 <!-- or otherwise simply load the URL -->
 {{- else -}}
 	<img src="{{ .Destination | safeURL }}"
 	alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }}
+	{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
 	loading="lazy"
-	> 
+	>
 {{- end -}}
