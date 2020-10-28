@@ -64,6 +64,7 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 - menu-social
 - section
 - simple-signup
+- files-list
 
 * * *
 
@@ -192,6 +193,7 @@ Bundled fonts contain Latin, Greek and Cyrillic character sets.
 
 - [Alegreya](https://www.huertatipografica.com/en/fonts/alegreya-ht-pro) font (serif)
 - [Fantasque Sans Mono](https://github.com/belluzj/fantasque-sans) font (sans-serif, monospaced)
+- Subset of [Feather icons](https://feathericons.com/) via [IcoMoon](https://icomoon.io/) with custom character mapping.
 
 
 ## Bundled JavaScript libraries

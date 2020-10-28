@@ -1,0 +1,9 @@
+<!-- layouts/shortcodes/list-files.html -->
+<!-- based on https://discourse.gohugo.io/t/using-a-function-to-create-a-list-of-files-from-directory/28942/7?u=heracles -->
+{{ $dir := .Get "dir" }}
+{{ $regexp := .Get "regexp" }}
+{{ range sort (readDir (delimit (slice "static" $dir) "/")) "Name" }}
+	{{ if (findRE $regexp .Name) }}
+	<a href="{{ $dir }}/{{ .Name }}">{{ .Name }}</a>
+	{{ end }}
+{{ end }}
