@@ -654,7 +654,6 @@ ins, del, s {
 }
 
 
-
 /*--------------------------------------------------------------
 article styles / content elements
 .entry-content
@@ -1790,7 +1789,7 @@ article filter styles
 	margin-top: 0 !important;
 	margin-bottom: 0 !important;
 
-	transition: transform 0.5s;
+	transition: transform 0.6s;
 }
 
 [data-visibility='off'] img {
