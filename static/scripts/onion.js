@@ -131,11 +131,14 @@ galleries.forEach(function(element, index){
 
 	var slideAnimation = function() {
 		figures.forEach(function(figure) {
-			const x = Math.floor(Math.random() * 5) * 25 - 50;
-			const y = Math.floor(Math.random() * 5) * 25 - 50;
+			const x = Math.floor(Math.random() * 2);
+			const y = Math.floor(Math.random() * 2);
 			const deg = Math.random() * 5 - 2.5;
 
-			figure.style.transform = 'translate('+x+'px, '+y+'px) rotate('+deg+'deg)';
+			// figure.style.transform = 'translate('+x+'px, '+y+'px) rotate('+deg+'deg)';
+			figure.style.setProperty('--rand-x', x);
+			figure.style.setProperty('--rand-y', y);
+			figure.style.setProperty('--rand-deg', deg);
 		});
 	};
 
