@@ -1,11 +1,4 @@
 {{- $src := .Page.Resources.GetMatch (printf "*%s*" (path.Base (.Get "src") )) -}}
-<!-- internal template:
-https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shortcodes/figure.html
-
-to try:
-https://dev.to/stereobooster/responsive-images-for-hugo-dn9
-
-https://discourse.gohugo.io/t/simple-image-render-hook-template-for-responsive-images/22464/7 -->
 <figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
 	{{- if .Get "link" -}}
 		<a href="{{ .Get "link" }}"{{ with .Get "target" }} target="{{ . }}"{{ end }}{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
@@ -14,9 +7,7 @@ https://discourse.gohugo.io/t/simple-image-render-hook-template-for-responsive-i
 	{{- if .Get "link" }}</a>{{ end -}}
 	{{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
 		<figcaption>
-			{{ with (.Get "title") -}}
-				<p>{{ . }}</p>
-			{{- end -}}
+			{{ with (.Get "title") -}}{{ . }}{{- end -}}
 			{{- if or (.Get "caption") (.Get "attr") -}}<p>
 				{{- .Get "caption" | markdownify -}}
 				{{- with .Get "attrlink" }}
@@ -28,3 +19,10 @@ https://discourse.gohugo.io/t/simple-image-render-hook-template-for-responsive-i
 		</figcaption>
 	{{- end }}
 </figure>
+<!-- internal template:
+https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shortcodes/figure.html
+
+to try:
+https://dev.to/stereobooster/responsive-images-for-hugo-dn9
+
+https://discourse.gohugo.io/t/simple-image-render-hook-template-for-responsive-images/22464/7 -->
