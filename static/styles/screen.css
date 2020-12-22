@@ -54,8 +54,16 @@ global CSS variables
 
 	--page-color-transparency: 0.89;
 	--page-color-blur: 2px;
+}
 
-	/* color theme */
+
+
+/*--------------------------------------------------------------
+themes
+--------------------------------------------------------------*/
+
+body, /* default theme */
+body.scheme-light {
 	--page-color: 221, 238, 255;
 	--text-color: 34, 34, 50;
 	--hyperlink-color: 34, 34, 50;
@@ -66,30 +74,51 @@ global CSS variables
 	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-
-
-/*--------------------------------------------------------------
-themes
---------------------------------------------------------------*/
-
-body.scheme-light,
-body.theme-light {
-	--page-color: 221, 238, 255;
-	--text-color: 34, 34, 50;
-	--hyperlink-color: 34, 34, 50;
-	--accent-color: 0, 0, 255;
-	--text-color-inverted: 255, 255, 255;
-	--shadow-color: rgba(var(--text-color),0.2);
-}
-
-body.scheme-dark,
-body.theme-dark {
+body.scheme-dark {
 	--page-color: 34, 34, 34;
 	--text-color: 204, 204, 204;
 	--hyperlink-color: 204, 204, 204;
 	--accent-color: 205, 35, 185;
 	--text-color-inverted: 20, 20, 20;
-	--shadow-color: rgba(var(--text-color),0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		--page-color: 34, 34, 34;
+		--text-color: 204, 204, 204;
+		--hyperlink-color: 204, 204, 204;
+		--accent-color: 205, 35, 185;
+		--text-color-inverted: 20, 20, 20;
+	}
+}
+
+
+body.theme-gold
+body.theme-gold.scheme-light {
+	--page-color: 227, 222, 219;
+	--text-color: 43, 0, 0;
+	--hyperlink-color: 43, 0, 0;
+	--accent-color: 189, 30, 46;
+	--text-color-inverted: 189, 159, 92;
+}
+
+body.theme-gold
+body.theme-gold.scheme-dark {
+	--page-color: 43, 0, 0;
+	--text-color: 189, 159, 92;
+	--hyperlink-color: 189, 159, 92;
+	--accent-color: 189, 30, 46;
+	--text-color-inverted: 0, 0, 0;
+}
+
+@media (prefers-color-scheme: dark) {
+	body.theme-gold {
+		--page-color: 43, 0, 0;
+		--text-color: 189, 159, 92;
+		--hyperlink-color: 189, 159, 92;
+		--accent-color: 189, 30, 46;
+		--text-color-inverted: 0, 0, 0;
+	}
 }
 
 body.theme-black {
@@ -98,7 +127,6 @@ body.theme-black {
 	--hyperlink-color: 250, 250, 250;
 	--accent-color: 205, 35, 185;
 	--text-color-inverted: 20, 20, 20;
-	--shadow-color: rgba(var(--text-color),0.2);
 }
 
 body.theme-white {
@@ -107,16 +135,15 @@ body.theme-white {
 	--hyperlink-color: 34, 34, 34;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 200, 200, 200;
-	--shadow-color: rgba(var(--text-color),0.2);
 }
 
-body.theme-gray, body.theme-grey {
+body.theme-gray,
+body.theme-grey {
 	--page-color: 204, 204, 204;
 	--text-color: 0, 0, 0;
 	--hyperlink-color: 0, 0, 0;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 200, 200, 200;
-	--shadow-color: rgba(var(--text-color),0.2);
 }
 
 body.theme-peach {
@@ -128,23 +155,16 @@ body.theme-peach {
 	--text-color-inverted: 255, 255, 255;
 }
 
-body.theme-gold {
-	--page-color: 43, 0, 0;
-	--text-color: 189, 159, 92;
-	--hyperlink-color: 189, 159, 92;
-	--accent-color: 189, 30, 46;
-	--text-color-inverted: 0, 0, 0;
-	--shadow-color: rgba(var(--text-color),0.2);
-}
-
 body.theme-blue {
 	--page-color: 0, 0, 255;
 	--text-color: 255, 255, 255;
 	--hyperlink-color: 255, 255, 255;
 	--accent-color: 255, 0, 0;
 	--text-color-inverted: 0, 0, 255;
-	--shadow-color: rgba(var(--text-color),0.2);
 }
+
+
+/*blend images to bg*/
 
 body.theme-blend .entry-content img,
 .img-blend {
@@ -152,21 +172,13 @@ body.theme-blend .entry-content img,
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-		--page-color: 34, 34, 34;
-		--text-color: 204, 204, 204;
-		--hyperlink-color: 204, 204, 204;
-		--accent-color: 205, 35, 185;
-		--text-color-inverted: 20, 20, 20;
-		--shadow-color: rgba(var(--text-color),0.2);
-	}
-
 	body.theme-blend:not(.scheme-light) .entry-content img,
 	body:not(.scheme-light) .img-blend {
 		filter: invert(100);
 		mix-blend-mode: screen;
 	}
 }
+
 
 
 
