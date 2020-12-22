@@ -93,8 +93,38 @@ body.scheme-dark {
 }
 
 
-body.theme-gold
-body.theme-gold.scheme-light {
+body.theme-peach,
+body.theme-peach.scheme-light {
+	/*--page-color: 255, 204, 238;*/
+	--page-color: 255, 210, 230;
+	--text-color: 0, 0, 0;
+	--hyperlink-color: 0, 0, 0;
+	--accent-color: 0, 0, 255;
+	--text-color-inverted: 255, 255, 255;
+}
+
+body.theme-peach,
+body.theme-peach.scheme-dark {
+	--page-color: 255, 210, 230;
+	--text-color: 0, 0, 0;
+	--hyperlink-color: 0, 0, 0;
+	--accent-color: 248, 128, 120;
+	--text-color-inverted: 20, 20, 20;
+}
+
+@media (prefers-color-scheme: dark) {
+	body.theme-peach {
+		--page-color: 20, 20, 20;
+		--text-color: 255, 210, 230;
+		--hyperlink-color: 255, 210, 230;
+		--accent-color: 248, 128, 120;
+		--text-color-inverted: 20, 20, 20;
+	}
+}
+
+
+body.theme-debtron,
+body.theme-debtron.scheme-light {
 	--page-color: 227, 222, 219;
 	--text-color: 43, 0, 0;
 	--hyperlink-color: 43, 0, 0;
@@ -102,8 +132,7 @@ body.theme-gold.scheme-light {
 	--text-color-inverted: 189, 159, 92;
 }
 
-body.theme-gold
-body.theme-gold.scheme-dark {
+body.theme-debtron.scheme-dark {
 	--page-color: 43, 0, 0;
 	--text-color: 189, 159, 92;
 	--hyperlink-color: 189, 159, 92;
@@ -112,7 +141,7 @@ body.theme-gold.scheme-dark {
 }
 
 @media (prefers-color-scheme: dark) {
-	body.theme-gold {
+	body.theme-debtron {
 		--page-color: 43, 0, 0;
 		--text-color: 189, 159, 92;
 		--hyperlink-color: 189, 159, 92;
@@ -144,15 +173,6 @@ body.theme-grey {
 	--hyperlink-color: 0, 0, 0;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 200, 200, 200;
-}
-
-body.theme-peach {
-	/*--page-color: 255, 204, 238;*/
-	--page-color: 255, 210, 230;
-	--text-color: 0, 0, 0;
-	--hyperlink-color: 0, 0, 0;
-	--accent-color: 0, 0, 255;
-	--text-color-inverted: 255, 255, 255;
 }
 
 body.theme-blue {
@@ -1272,9 +1292,6 @@ a, a:visited {
 	text-decoration-thickness: 0.5px;
 	/*text-decoration-skip-ink: auto;*/
 
-	-webkit-transition: color .3s;
-	transition        : color .3s;
-
 	outline: none;
 }
 
@@ -1300,6 +1317,9 @@ a:hover, a:focus, a:active {
 	color: #f00; /* alternative */
 	color: rgb(var(--accent-color));
 	-webkit-tap-highlight-color: transparent;
+
+	-webkit-transition: color .3s;
+	transition        : color .3s;
 }
 
 nav a,
@@ -1662,11 +1682,11 @@ theme toggle, return to top
 	opacity: 0;
 }
 
-body[class*=theme-]:not(.theme-blend) .gadgets #theme-toggle {
+/*body[class*=theme-]:not(.theme-blend) .gadgets #theme-toggle {
 	display: none;
 	cursor: not-allowed;
 	opacity: 0.2;
-}
+}*/
 
 
 /*--------------------------------------------------------------
