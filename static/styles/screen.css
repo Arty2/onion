@@ -2009,7 +2009,7 @@ articles-list styles
 		/*content: ' ›';*/
 		display: inline-block;
 		color: rgb(var(--accent-color));
-		transition: all 0.3s 0.6s;
+		transition: padding 0.3s 0.6s;
 	}
 	.articles-list article:hover .summary:after {
 		padding-left: 0.25rem;
