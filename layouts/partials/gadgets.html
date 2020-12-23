@@ -1,6 +1,6 @@
 <div class="gadgets">
-	{{ with .NextInSection }}<a id="next" href="{{ .Permalink }}">→</a>{{ end }}
-	{{ with .PrevInSection }}<a id="prev" href="{{ .Permalink }}">←</a>{{ end }}
+	{{ with .NextInSection }}<a id="next" title="{{ i18n "next" }}: {{ .Title }}" href="{{ .Permalink }}">→</a>{{ end }}
+	{{ with .PrevInSection }}<a id="prev" title="{{ i18n "previous" }}: {{ .Title }}" href="{{ .Permalink }}">←</a>{{ end }}
 	<a id="scroller" href="#top">⇈</a>
 	<a id="theme-toggle">◐</a>
 </div>

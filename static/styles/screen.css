@@ -1640,6 +1640,10 @@ theme toggle, return to top
 	/*outline: 1px dashed red;*/
 }
 
+.gadgets a[title]:not(:hover):before {
+	display: none;
+}
+
 .gadgets #next {
 	position: absolute;
 	top: calc(50% - var(--gutter-width)/2);

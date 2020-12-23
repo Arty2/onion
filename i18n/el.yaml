@@ -5,6 +5,12 @@ filter-reset:
 show-more:
   other: Περισσότερα
 
+next:
+  other: Επόμενο
+
+previous:
+  other: Προηγούμενο
+
 
 ## social sharing
 

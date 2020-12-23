@@ -5,6 +5,12 @@ filter-reset:
 show-more:
   other: More
 
+next:
+  other: Next
+
+previous:
+  other: Previous
+
 
 ## social sharing
 
