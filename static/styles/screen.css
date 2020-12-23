@@ -156,7 +156,7 @@ body.theme-black {
 	--hyperlink-color: 250, 250, 250;
 	--accent-color: 205, 35, 185;
 	--text-color-inverted: 20, 20, 20;
-	--theme-toggle-opacity: 0;
+	--theme-toggle: 0;
 }
 
 body.theme-white {
@@ -165,7 +165,7 @@ body.theme-white {
 	--hyperlink-color: 34, 34, 34;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 200, 200, 200;
-	--theme-toggle-opacity: 0;
+	--theme-toggle: 0;
 }
 
 body.theme-gray,
@@ -175,7 +175,7 @@ body.theme-grey {
 	--hyperlink-color: 0, 0, 0;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 200, 200, 200;
-	--theme-toggle-opacity: 0;
+	--theme-toggle: 0;
 }
 
 body.theme-blue {
@@ -184,7 +184,7 @@ body.theme-blue {
 	--hyperlink-color: 255, 255, 255;
 	--accent-color: 255, 0, 0;
 	--text-color-inverted: 0, 0, 255;
-	--theme-toggle-opacity: 0;
+	--theme-toggle: 0;
 }
 
 
@@ -1683,8 +1683,8 @@ theme toggle, return to top
 	top: var(--gutter-height);
 
 	cursor: pointer;
-	color: rgba(var(--text-color),var(--theme-toggle-opacity,1));
-	text-shadow: 1px 1px 0 rgba(var(--page-color),var(--theme-toggle-opacity,1));
+	color: rgba(var(--text-color),var(--theme-toggle,1));
+	text-shadow: 1px 1px 0 rgba(var(--page-color),var(--theme-toggle,1));
 }
 
 
