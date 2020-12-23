@@ -1409,7 +1409,6 @@ span[title*=' ']:hover:before {
 	abbr[title*=' ']:before,
 	span[title*=' ']:before {
 		--tooltip-mark: '*';
-		--tooltip-mark: '⟜';
 	}
 	/* ins and del tags icon and content */
 	ins[datetime]:before,
