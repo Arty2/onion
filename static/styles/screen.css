@@ -1710,6 +1710,9 @@ tags styles
 	cursor: pointer;
 	pointer-events: auto;
 	transition: none;
+
+	-webkit-user-select: none !important;
+	user-select        : none !important;
 }
 
 * > .tag:first-child {
