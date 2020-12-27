@@ -4,7 +4,7 @@
 <!-- if not (in $.Site.Params.disableKinds "taxonomy")  -->
 <div id="articles-filter" class="noscript {{ with $class }}{{ $class }}{{ end }}">
 	<div>
-	<a id="articles-filter__reset" class="tag" data-filter="articles-filterable" data-active="true" data-reset="true">{{ (i18n "filter-reset") }}</a>
+	<a id="articles-filter__reset" class="tag" data-filter="articles-filterable" data-active="true" data-reset="true" href="#articles-filter">{{ (i18n "filter-reset") }}</a>
 	{{- range .Site.Taxonomies.tags.Alphabetical -}}
 	<a href="{{ .Page.Permalink }}" class="tag filter-{{ .Term | urlize }}" data-filter-tag="{{ .Term | urlize }}" data-count="{{ .Count }}">{{ if (i18n .Term ) }}{{ (i18n .Term ) }}{{ else }}{{ .Term }}{{ end }}</a>
 	{{- end -}}
