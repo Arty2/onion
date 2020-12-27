@@ -62,6 +62,23 @@ global CSS variables
 themes
 --------------------------------------------------------------*/
 
+/*
+add https://github.com/hundredrabbits/Themes support
+
+
+    background, Application Background.		      --page-color
+    f_high, Foreground, high-contrast.		      --accent-color
+    f_med, Foreground, medium-contrast.		      --text-color
+    f_low, Foreground, low-contrast.		      low contrast text
+    f_inv, Foreground, for modals and overlays.	  highlight text color
+    b_high, Background, high-contrast.		      none or hightlight bg?
+    b_med, Background, medium-contrast.		      none?
+    b_low, Background, low-contrast.		      shadow color?
+    b_inv, Background, for modals and overlays.	  highlight bg?
+
+
+*/
+
 body, /* default theme */
 body.scheme-light {
 	--page-color: 221, 238, 255;
@@ -695,16 +712,55 @@ article styles / content elements
 .entry-content
 --------------------------------------------------------------*/
 
-
 main ul li:before {
 	content: '-';
+	/*display: inline-block;*/
 	position: absolute;
 	margin-left: calc(-1*var(--gutter-width));
+	/*outline: 1px solid red;*/
 }
+
+main ul li>input[type=checkbox] {
+	appearance: none;
+	position: absolute;
+	margin-top: calc(var(--line-height)/3);
+}
+	main ul li>input[type=checkbox]:before {
+		content: '';
+		display: inline-block;
+		float: left;
+
+		width:  0.9em;
+		height: 0.9em;
+		margin-left: calc(-1*var(--gutter-width));
+
+		background: rgb(var(--page-color));
+		border: 1.5px dotted rgb(var(--text-color));
+		border-radius: 2px;
+	}
+	main ul li>input[type=checkbox]:checked:after {
+		content: '';
+		display: inline-block;
+		float: left;
+		
+		width:  0.4em;
+		height: 1em;
+		margin-top: -0.3em;
+		margin-left: calc(-1*var(--gutter-width));
+
+		border: 3px solid;
+		border-top:  none;
+		border-left: none;
+		box-shadow: 2px 1px 0px rgb(var(--page-color));
+
+		transform: rotate(45deg);
+		transform-origin: bottom right;
+	}
 
 main ul,
 main ol {
-	padding-left: var(--gutter-width);
+	padding-left: calc(var(--gutter-width));
+
 }
 
 /*restore margin to block level elements*/
