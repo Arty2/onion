@@ -378,6 +378,12 @@ button, .button, .tag,
 	font-size: calc(var(--s-1)*var(--xheight));
 }
 
+pre, input, textarea {
+	font-family: inherit;
+}
+
+header nav,
+footer nav,
 .sharing, .social,
 .tag,
 .languages, .more,
@@ -390,18 +396,14 @@ button, .button, .tag,
 	font-size: calc(var(--s-2)*var(--xheight));
 }
 
-button, .button, .tag {
-	/*font-size: calc(var(--s-2)*var(--xheight));*/
-}
-
 figcaption, small, table,
 .entry-content blockquote {
 	font-size: var(--s-2);
 }
 
 .katex,
-article.preformatted,
-article.ephemera {
+article.preformatted > *,
+article.ephemera > * {
 	font-size: var(--s-1);
 }
 
@@ -410,17 +412,10 @@ body > footer {
 	line-height: 1.3;
 }
 
-pre, input, textarea {
-	font-family: inherit;
-}
-
-body > footer,
 .meta,
 .marginalia, .entry-content aside,
 .footnotes {
 	font-size: var(--s-2);
-	/*line-height: calc(var(--line-height)/1.2);*/
-	/*line-height: 1.4;*/
 }
 
 .tag::after,
