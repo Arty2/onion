@@ -721,41 +721,10 @@ main ul li:before {
 }
 
 main ul li>input[type=checkbox] {
-	appearance: none;
 	position: absolute;
 	margin-top: calc(var(--line-height)/3);
+	margin-left: calc(-1*var(--gutter-width));
 }
-	main ul li>input[type=checkbox]:before {
-		content: '';
-		display: inline-block;
-		float: left;
-
-		width:  0.9em;
-		height: 0.9em;
-		margin-left: calc(-1*var(--gutter-width));
-
-		background: rgb(var(--page-color));
-		border: 1.5px dotted rgb(var(--text-color));
-		border-radius: 2px;
-	}
-	main ul li>input[type=checkbox]:checked:after {
-		content: '';
-		display: inline-block;
-		float: left;
-		
-		width:  0.4em;
-		height: 1em;
-		margin-top: -0.3em;
-		margin-left: calc(-1*var(--gutter-width));
-
-		border: 3px solid;
-		border-top:  none;
-		border-left: none;
-		box-shadow: 2px 1px 0px rgb(var(--page-color));
-
-		transform: rotate(45deg);
-		transform-origin: bottom right;
-	}
 
 main ul,
 main ol {
@@ -977,6 +946,48 @@ input[type="submit"]::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 .button::-moz-focus-inner { border: 0; }
 
+input[type=checkbox] {
+	appearance: none;
+}
+	input[type=checkbox]:before {
+		content: '';
+		display: inline-block;
+		position: absolute;
+
+		width:  0.9em;
+		height: 0.9em;
+
+		background: rgb(var(--page-color));
+		border: 1.5px solid;
+		border-radius: 2px;
+	}
+	input[type=checkbox]:disabled:before {
+		border-style: dotted;
+	}
+	input[type=checkbox]:checked:after {
+		content: '';
+		display: inline-block;
+		position: absolute;
+		
+		width:  0.4em;
+		height: 1em;
+		margin-top: -0.3em;
+
+		border: 3px solid;
+		border-top:  none;
+		border-left: none;
+		box-shadow: 2px 1px 0px rgb(var(--page-color));
+
+		transform: rotate(45deg);
+		transform-origin: bottom right;
+	}
+	input[type=checkbox]:focus {
+		outline: none;
+	}
+	input[type=checkbox]:focus:before,
+	input[type=checkbox]:focus:after {
+		border-color: rgb(var(--accent-color));
+	}
 
 /*--------------------------------------------------------------
 table styles
@@ -2515,6 +2526,7 @@ single article meta styles
 		display: inline-block;
 		content: '[…]';
 		margin-left: 0.5em;
+		font-size: initial;
 	}
 	.meta details summary {
 		/*cursor: zoom-out;*/
@@ -2728,7 +2740,6 @@ footnotes and targeting
 		right: 0.5rem;
 
 		cursor: pointer;
-		font-size: 1.2rem;
 	}
 
 sup[id^="fnref:"] a {
@@ -2749,6 +2760,7 @@ sup[id^="fnref:"]:target:after {
 
 	color: rgb(var(--accent-color));
 	font-family: var(--font-icons);
+	font-size: initial;
 	text-align: center;
 
 	animation: slidex .3s;
