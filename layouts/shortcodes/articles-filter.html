@@ -1,12 +1,15 @@
 <!-- layouts/shortcodes/articles-filter.html -->
 {{- $class := (.Get "class") -}}
 {{- $filter := "articles-filterable" -}}
-<!-- if not (in $.Site.Params.disableKinds "taxonomy")  -->
+{{- $tagfilter := (.Get "tagfilter") -}}
+<!-- if not (in $site.Params.disableKinds "taxonomy")  -->
 <div id="articles-filter" class="noscript {{ with $class }}{{ $class }}{{ end }}">
 	<div>
 	<a id="articles-filter__reset" class="tag" data-filter="articles-filterable" data-active="true" data-reset="true" href="#articles-filter">{{ (i18n "filter-reset") }}</a>
-	{{- range .Site.Taxonomies.tags.Alphabetical -}}
-	<a href="{{ .Page.Permalink }}" class="tag filter-{{ .Term | urlize }}" data-filter-tag="{{ .Term | urlize }}" data-count="{{ .Count }}">{{ if (i18n .Term ) }}{{ (i18n .Term ) }}{{ else }}{{ .Term }}{{ end }}</a>
+	{{- range site.Taxonomies.tags.Alphabetical -}}
+		{{- if not (in (slice $tagfilter) .Term) -}}
+		<a href="{{ .Page.Permalink }}" class="tag filter-{{ .Term | urlize }}" data-filter-tag="{{ .Term | urlize }}" data-count="{{ .Count }}">{{ if (i18n .Term ) }}{{ (i18n .Term ) }}{{ else }}{{ .Term }}{{ end }}</a>
+		{{- end -}}
 	{{- end -}}
 	</div>
 </div>
