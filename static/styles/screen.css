@@ -1336,7 +1336,6 @@ hero & fullwidth styles
 
 .fullwidth img,
 .cover img {
-		margin: 0;
 		width: 100%;
 		height: auto;
 		object-fit: cover;
@@ -1681,30 +1680,48 @@ theme toggle, return to top
 	height: 100%;
 	z-index: 104;
 
-
+	text-align: center;
 	pointer-events: none;
 	-webkit-user-select: none !important;
 	user-select: none !important;
-	text-shadow: 1px 1px 0 rgb(var(--page-color));
+	/*text-shadow: 1px 1px 0 rgb(var(--page-color));*/
 
 	/*outline: 1px dashed cyan;*/
 }
 
 .gadgets > * {
+	--gadget-gutter: 0.2rem;
+	--square-size: calc(var(--gutter-width) - var(--gadget-gutter));
 	display: block;
+	left: 0;
+	right: 0;
+
 	margin-left: auto;
 	margin-right: auto;
-	width: var(--gutter-width);
-	height: var(--gutter-width);
+	width: var(--square-size);
+	height: var(--square-size);
+	line-height: var(--square-size);
 
 	cursor: pointer;
-	text-align: center;
+	/*text-align: center;*/
 	text-decoration: none;
 	pointer-events: auto;
 
 	transition: opacity 0.3s, color 0.3s;
 
+	background: rgb(var(--page-color));
+	border-radius: 50%;
+
 	/*outline: 1px dashed red;*/
+}
+
+.gadgets #theme-toggle {
+	position: absolute;
+	top: calc(var(--gutter-width) + var(--gadget-gutter));
+
+	cursor: pointer;
+	color: rgba(var(--text-color));
+	opacity: var(--theme-toggle,1);
 }
 
 .gadgets a[title]:not(:hover):before {
@@ -1713,12 +1730,12 @@ theme toggle, return to top
 
 .gadgets #next {
 	position: absolute;
-	top: calc(50% - var(--gutter-width)/2);
+	top: calc(var(--gutter-width) + 3*var(--line-height) - var(--gutter-width)/2);
 }
 
 .gadgets #prev {
 	position: absolute;
-	top: calc(50% + var(--gutter-width)/2);
+	top: calc(var(--gutter-width) + 3*var(--line-height) + var(--gutter-width)/2);
 }
 
 .gadgets #scroller {
@@ -1744,15 +1761,6 @@ theme toggle, return to top
 		display: inline-block;
 		animation: bounce 2s ease 3;
 	}
-
-.gadgets #theme-toggle {
-	position: absolute;
-	top: var(--gutter-height);
-
-	cursor: pointer;
-	color: rgba(var(--text-color),var(--theme-toggle,1));
-	text-shadow: 1px 1px 0 rgba(var(--page-color),var(--theme-toggle,1));
-}
 
 
 /*--------------------------------------------------------------
