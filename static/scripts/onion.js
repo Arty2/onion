@@ -93,6 +93,35 @@ if (document.body.contains(document.getElementById('scroller'))) {
 
 
 /*--------------------------------------------------------------
+Gadget #theme-toggle behavior
+--------------------------------------------------------------*/
+
+if (document.body.contains(document.getElementById('theme-toggle'))) {
+	var themetoggle = document.getElementById('theme-toggle');
+
+	// update icon if the theme is already dark
+	if ( (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches || document.body.classList.contains('scheme-dark')) && !document.body.classList.contains('scheme-light') ) {
+		themetoggle.innerHTML = '◑';
+	}
+
+	// toggle light / dark scheme manually
+	themetoggle.onclick = function() {
+		if ( (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || document.body.classList.contains('scheme-light') ) {
+			document.querySelector('body').classList.toggle('scheme-light');
+		} else {
+			document.querySelector('body').classList.toggle('scheme-dark');
+		}
+
+		// toggle the icon accordingly
+		if (this.innerHTML == '◑') {
+			this.innerHTML = '◐';
+		} else {
+			this.innerHTML = '◑';
+		}
+	}
+}
+
+/*--------------------------------------------------------------
 EXPERIMENTAL
 Lazyload transition
 based on https://plainjs.com/javascript/manipulation/wrap-an-html-structure-around-an-element-28/
