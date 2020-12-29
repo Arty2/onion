@@ -1,0 +1,23 @@
+{{ if ne site.Params.Menu_main false }}
+<nav class="menu">
+	<ul>
+		{{- if site.Menus.main -}}
+			{{- range site.Menus.main -}}
+				<li class="{{ if .HasChildren }}has-children{{ end }}">{{ .Pre }}<a href="{{ .URL }}">{{ (i18n .Name) }}</a>{{ .Post }}{{ if .HasChildren -}}
+					<ul>
+						{{- range .Children -}}
+							<li><a href="{{ .URL }}">{{ .Pre }}{{ (i18n .Name) }}{{ .Post }}</a></li>
+						{{- end -}}
+					</ul>
+				{{- end -}}</li>
+			{{- end -}}
+		{{- else -}}
+			{{- range site.RegularPages -}}
+				{{ if and (eq .Section "") (ne .Params.menu_hide true) -}}
+				<li><a href="{{ .RelPermalink }}">{{ with .Title }}{{ . | title }}{{ else }}{{ .File.ContentBaseName | title }}{{ end }}</a></li>
+				{{- end }}
+			{{- end -}}
+		{{- end -}}
+	</ul>
+</nav>
+{{ end }}

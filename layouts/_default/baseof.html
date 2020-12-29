@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {{ "<!-- Built with Hugo and the https://heracl.es/onion theme. -->" | safeHTML }}
-<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ end }}">
+<html lang="{{ with site.LanguageCode }}{{ . }}{{ end }}">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="{{ "/styles/custom.css" | relURL }}" media="all">
 	{{- end }}
 </head>
-<body id="top" class="{{ .Kind }}{{ with .Site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with .Site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
+<body id="top" class="{{ .Kind }}{{ with site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	<!-- inline custom.css located by the content, if it exists -->
 	{{ with .Resources.GetMatch "custom.css" -}}
 		{{- $customcss := . | resources.Minify -}}
@@ -18,22 +18,23 @@
 			{{ $customcss.Content | safeCSS }}
 		</style>
 	{{- end }}
-	{{ if ne .Site.Params.show_gadgets false }}{{ partial "gadgets" . }}{{ end }}
+	{{ if ne site.Params.show_gadgets false }}{{ partial "gadgets" . }}{{ end }}
 	<header>
-		{{ if ne .Site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
+		{{ if ne site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 		<div class="inner">
-		{{ block "header" . }}{{ partial "header-inner" . }}{{end}}
-		{{ partialCached "header-nav" . }}
+		{{ block "header" . }}{{ partialCached "header-inner" . }}{{end}}
 		</div>
 	</header>
 	<main>
 		{{ block "main" . }}{{end}}
 	</main>
 	<footer>
+		<div class="inner">		
 		{{ block "footer" . }}{{ partialCached "footer-inner" . }}{{end}}
+		</div>
 	</footer>
 	{{ partialCached "scripts" . }}
-	<!-- load script.js located by the content, if it exists */ -->
+	<!-- load custom.js located by the content, if it exists */ -->
 	{{ if (fileExists "static/scripts/custom.js") -}}
 		<script async src="./scripts/custom.js"></script>
 	{{- end }}
