@@ -1,4 +1,5 @@
-{{- $.Scratch.Add "index" slice -}}
+{{/* layouts/_default/index.json */}}
+{{- $index := slice -}}
 {{- range where .Site.RegularPages.ByDate.Reverse "Type" "not in"  (slice "page" "json") -}}
 	{{ if .Params.dateCreated }}
 			{{ $.Scratch.Set "date" (.Params.dateCreated) }}
@@ -9,6 +10,6 @@
 				{{- $.Scratch.Set "date" (.Date.Format "2006-01-02") -}}
 			{{- end -}}
 	{{ end }}
-    {{- $.Scratch.Add "index" (dict "title" ( .Title | plainify ) "permalink" .Permalink "section" (i18n (.Section | title)) "tags" (apply .Params.tags "i18n" "." ) "categories" (apply .Params.categories "i18n" "." ) "summary" (.Params.summary | markdownify | htmlUnescape | plainify) "date" ($.Scratch.Get "date") ) -}}
+    {{- $index = $index | append (dict "title" ( .Title | plainify ) "permalink" .Permalink "section" (i18n (.Section | title)) "tags" (apply .Params.tags "i18n" "." ) "categories" (apply .Params.categories "i18n" "." ) "summary" (.Params.summary | markdownify | htmlUnescape | plainify) "date" ($.Scratch.Get "date") ) -}}
 {{- end -}}
-{{- $.Scratch.Get "index" | jsonify -}}
+{{- $index | jsonify -}}
