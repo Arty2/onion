@@ -1,0 +1,10 @@
+{{- $file := .Get 0 -}}
+{{- with site.GetPage $file -}}
+<div class="{{ .Type }}">
+{{ .Content | markdownify -}}
+</div>
+{{- else -}}
+	{{- if (fileExists $file) -}}
+		{{- $file | readFile -}}
+	{{- end -}}
+{{- end -}}
