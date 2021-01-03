@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {{ "<!-- Built with Hugo and the https://heracl.es/onion theme. -->" | safeHTML }}
-<html lang="{{ with site.LanguageCode }}{{ . }}{{ end }}">
+<html {{ with site.LanguageCode }}lang="{{ . }}"{{ end }}>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,6 +33,7 @@
 		{{ block "footer" . }}{{ partialCached "footer-inner" . }}{{end}}
 		</div>
 	</footer>
+	{{ partialCached "search" . }}
 	{{ partialCached "scripts" . }}
 	<!-- load custom.js located by the content, if it exists */ -->
 	{{ if (fileExists "static/scripts/custom.js") -}}
