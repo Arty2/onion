@@ -5,7 +5,7 @@
 		{{- else -}}
 			{{ site.Title }}
 		{{- end -}}
-		<!-- {{- with site.Params.Description }}<span class="description">{{ . }}</span>{{ end -}} -->
 	</a>
+	{{- with site.Params.Description }}<span class="description">{{ . }}</span>{{ end -}}
 </h1>
 {{ partialCached "menu-main" . }}

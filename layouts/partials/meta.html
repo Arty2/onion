@@ -5,7 +5,7 @@
 			{{ with .Params.series }}
 				<dl>{{- range $name := . }}
 					<dt>{{ i18n . }}</dt>
-					{{- $series := index $.Site.Taxonomies.series $name }}
+					{{- $series := index site.Taxonomies.series $name }}
 					{{- range $series.Pages.ByDate }}
 						<dd><a {{ if ne $.Permalink .Permalink }} href="{{ .Permalink }}"{{ end }}>{{ .Title }}</a></dd>
 					{{- end }}
@@ -28,8 +28,8 @@
 			<dt>{{ i18n "modified-date" }}</dt>
 				<dd>
 					<time datetime="{{ .Lastmod }}">
-					{{- if isset $.Site.Params "date_format" -}}
-						{{- .Lastmod.Format $.Site.Params.date_format -}}
+					{{- if isset site.Params "date_format" -}}
+						{{- .Lastmod.Format site.Params.date_format -}}
 					{{- else -}}
 						{{- .Lastmod.Format "2006-01-02" -}}
 					{{- end -}}
@@ -41,17 +41,14 @@
 				<dd>{{ .Params.dateCreated }}</dd>
 		{{ else }}
 			<dt>{{ i18n "publish-date" }}</dt>
-				<dd>{{- if .Params.dateCreated -}}
-						{{- .Params.dateCreated -}}
+				<dd>
+					<time datetime="{{ .Date }}">
+					{{- if isset site.Params "date_format" -}}
+						{{- .Date.Format site.Params.date_format -}}
 					{{- else -}}
-						<time datetime="{{ .Date }}">
-						{{- if isset $.Site.Params "date_format" -}}
-							{{- .Date.Format $.Site.Params.date_format -}}
-						{{- else -}}
-							{{- .Date.Format "2006-01-02" -}}
-						{{- end -}}
-						</time>
+						{{- .Date.Format "2006-01-02" -}}
 					{{- end -}}
+					</time>
 				</dd>
 		{{ end }}
 
