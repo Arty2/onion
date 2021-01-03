@@ -33,6 +33,8 @@ global CSS variables
 	--line-height: 1.4em; /* units used implicitely, but could be removed if multiplied with s00 later */
 	--gutter-height: 1.4rem;
 	--gutter-width: 1.4rem;
+	--icon-pad: 0.1rem;
+	--icon-size: calc(1.4rem - 2*var(--icon-pad));
 	/*--gutter-width: calc(1*var(--line-height));*/
 	/*--offset: --gutter-width;*/
 	/*--gutter-width: 0px; /* DEBUG */
@@ -369,7 +371,7 @@ body,
 
 .font-mono, .font-monospace,
 code, kbd,
-button, .button,
+button, input[type=submit], input[type=reset],
 .menu, .sharing, .languages,
 .tag, .more {
 	--xheight: 0.92;
@@ -382,7 +384,7 @@ pre, input, textarea {
 	font-family: inherit;
 }
 
-button, .button,
+button, input[type=submit], input[type=reset],
 .menu, .sharing, .languages,
 .tag, .more,
 .meta details summary,
@@ -423,9 +425,9 @@ body > footer .copyright {
 
 .menu > ul > li:after,
 .tag:after,
-.gadgets,
+.icon,
 .marginalia:before,
-.summary:after,
+article .summary:after,
 .meta summary:after,
 .rating,
 .sl-navigation button,
@@ -434,7 +436,7 @@ ins[datetime]:not(:hover):before,
 del[datetime]:not(:hover):before,
 a[title*=' ']:not(:hover):before,
 span[title*=' ']:not(:hover):before {
-	font-family: var(--font-icons);
+	font-family: var(--font-icons) !important;
 	font-size: var(--s-2);
 	/*line-height: calc(var(--line-height)/1.2);*/
 	/*line-height: 1.4;*/
@@ -875,6 +877,19 @@ label {
 	font-size: var(--s-2);
 }
 
+input:focus {
+	outline: none;
+}
+
+input::placeholder {
+	color: rgb(var(--text-color));
+	opacity: 1;
+	transition: all .3s;
+}
+input:focus::placeholder {
+	color: var(--shadow-color);
+}
+
 input[type="text"],
 input[type="email"],
 textarea {
@@ -898,7 +913,7 @@ input[type="email"] {
 
 input[type="submit"],
 input[type="reset"],
-.button {
+button {
 	display: block;
 	/*margin: 0.5rem auto;*/
 	padding: 0.6rem 0.6rem 0.5rem 0.6rem;
@@ -923,7 +938,7 @@ input[type="reset"],
 
 input[type="submit"]:hover,
 input[type="reset"]:hover,
-.button:hover {
+button:hover {
 	box-shadow: inset 0 2rem 0 var(--shadow-color), 0px 3px 0px 0px var(--shadow-color);
 	color: rgb(var(--text-color));
 	text-decoration: none;
@@ -932,7 +947,7 @@ input[type="reset"]:hover,
 
 input[type="submit"]:focus,
 input[type="reset"]:focus,
-.button:focus {
+button:focus {
 	border-top: 3px solid;
 	border-bottom: 1.5px solid;
 	box-shadow: inset 0 2rem 0 var(--shadow-color), 0px 3px 0px 0px var(--shadow-color);
@@ -944,7 +959,7 @@ input[type="reset"]:focus,
 
 input[type="submit"]::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
-.button::-moz-focus-inner { border: 0; }
+button::-moz-focus-inner { border: 0; }
 
 input[type=checkbox] {
 	appearance: none;
@@ -1116,7 +1131,9 @@ body > header h1 > a {
 }
 
 body > header .description {
-	display: block;
+	display: inline-block;
+	margin-left: 1rem;
+	/*color: red;*/
 }
 
 body > main {
@@ -1662,7 +1679,7 @@ social sharing menu
 
 
 /*--------------------------------------------------------------
-social menu
+social menu & icons
 --------------------------------------------------------------*/
 
 .social {
@@ -1715,6 +1732,12 @@ social menu
 .icon-youtube:hover    { color: #ff0000; }
 .icon-keybase:hover    { color: #1da1f2; }
 
+.icon {
+	border-width: 0 !important;
+	box-shadow: none !important;
+	text-align: center !important;
+	transform: none !important;
+}
 
 /*--------------------------------------------------------------
 language selector
@@ -1785,17 +1808,15 @@ theme toggle, return to top
 }
 
 .gadgets > * {
-	--gadget-gutter: 0.2rem;
-	--square-size: calc(var(--gutter-width) - var(--gadget-gutter));
 	display: block;
 	left: 0;
 	right: 0;
 
 	margin-left: auto;
 	margin-right: auto;
-	width: var(--square-size);
-	height: var(--square-size);
-	line-height: var(--square-size);
+	width: var(--icon-size);
+	height: var(--icon-size);
+	line-height: var(--icon-size);
 
 	cursor: pointer;
 	/*text-align: center;*/
@@ -1813,10 +1834,9 @@ theme toggle, return to top
 .gadgets #theme-toggle {
 	position: absolute;
 	top: var(--gutter-width);
-	/*top: calc(var(--gutter-width) + var(--gadget-gutter));*/
+	/*top: calc(var(--gutter-width) + var(--icon-pad));*/
 
 	cursor: pointer;
-	color: rgba(var(--text-color));
 	opacity: var(--theme-toggle,1);
 }
 
@@ -2533,12 +2553,12 @@ single article meta styles
 
 .meta details {
 	padding: calc(var(--gutter-height)/4) calc(var(--gutter-height)/2);
-	border-top: 1px dotted;
+	border-top: 0.5px dashed;
 	/*outline: 1px dashed red;*/
 	transition: color 0.3s, border 0.3s;
 }
 	.meta details:last-child {
-		border-bottom: 1px dotted;
+		border-bottom: 0.5px dashed;
 	}
 	.meta details:not([open]) {
 		color: rgba(var(--text-color),.3);
@@ -2684,7 +2704,7 @@ sidenote & marginalia styles
 	overflow: hidden;
 
 	background-clip: border-box;
-	border: 2px dotted;
+	border: 0.5 dashed;
 	border-right: none;
 	border-left: none;
 	text-overflow: ellipsis;
@@ -3129,17 +3149,6 @@ simple-signup form shortcode
 
 	border-color: transparent;
 }
-	.simple-signup input[type="email"]:focus {
-		outline: none;
-	}
-	.simple-signup input[type="email"]::placeholder {
-		color: rgb(var(--text-color));
-		opacity: 1;
-		transition: all .3s;
-	}
-	.simple-signup input[type="email"]:focus::placeholder {
-		color: var(--shadow-color);
-	}
 
 .simple-signup input[type="submit"] {
 	box-shadow: none;
