@@ -66,8 +66,16 @@ fixedsearch = function(){
 		// Use Enter (13) to move to the first result
 		if (e.keyCode == 13) {			
 			if (results_available && document.activeElement == search_input) {
-					e.preventDefault(); // stop form from being submitted
-					first.focus();
+				e.preventDefault(); // stop form from being submitted
+				first.focus();
+			}
+		}
+
+		// Use Backspace (8) to switch back to the search input
+		if (e.keyCode == 8) {			
+			if (document.activeElement != search_input) {
+				e.preventDefault(); // stop browser from going back in history
+				search_input.focus();
 			}
 		}
 	});
