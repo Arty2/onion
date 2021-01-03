@@ -11,15 +11,20 @@ function ready(fn) {
 
 /*--------------------------------------------------------------
 Load script
-via https://stackoverflow.com/a/55451823
+based on https://stackoverflow.com/a/55451823
 --------------------------------------------------------------*/
-function loadScript(url) {
+function load_script(url) {
 	return new Promise(function(resolve, reject) {
-		let newScript = document.createElement("script");
-		newScript.onerror = reject;
-		newScript.onload = resolve;
-		document.currentScript.parentNode.insertBefore(newScript, document.currentScript);
-		newScript.src = url;
+		let script = document.createElement("script");
+		script.onerror = reject;
+		script.onload = resolve;
+		if (document.currentScript) {
+			document.currentScript.parentNode.insertBefore(script, document.currentScript);
+		}
+		else {
+			document.head.appendChild(script)
+		}
+		script.src = url;
 	});
 }
 
@@ -29,15 +34,15 @@ When DOM is ready */
 window.ready(function() {
 
 /*--------------------------------------------------------------
-Load and initialize fancybox
+Load and initialize simplelightbox
 via https://simplelightbox.com/
 --------------------------------------------------------------*/
 
-loadScript(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.min.js').then(() => {
+load_script(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.min.js').then(() => {
 	var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
 		/* options */
 	});
-}).catch(() => { console.log('SimpleLightbox failed to load'); });
+}).catch((error) => { console.log('simplelightbox failed to load: ' + error); });
 
 
 /*--------------------------------------------------------------
@@ -145,73 +150,75 @@ Piled image galleries
 inspired from https://viewfromthisside.superhi.com/
 --------------------------------------------------------------*/
 
-var galleries = document.querySelectorAll('div.gallery');
-galleries.forEach(function(element, index){
-	var index_current = 0;
-	var index = 0;
-	var z = 1;
+(function(){
+	var galleries = document.querySelectorAll('div.gallery');
+	galleries.forEach(function(element, index){
+		var index_current = 0;
+		var index = 0;
+		var z = 1;
 
-	var figures = element.querySelectorAll('figure');
+		var figures = element.querySelectorAll('figure');
 
-	figures.forEach(function(figure) {
-		figure.setAttribute('data-index', index);
-		index = index + 1;
-	});
-
-	var slideAnimation = function() {
 		figures.forEach(function(figure) {
-			const x = Math.floor(Math.random() * 2);
-			const y = Math.floor(Math.random() * 2);
-			const deg = Math.random() * 5 - 2.5;
-
-			// figure.style.transform = 'translate('+x+'px, '+y+'px) rotate('+deg+'deg)';
-			figure.style.setProperty('--rand-x', x);
-			figure.style.setProperty('--rand-y', y);
-			figure.style.setProperty('--rand-deg', deg);
+			figure.setAttribute('data-index', index);
+			index = index + 1;
 		});
-	};
 
-	// update gallery with current index
-	element.setAttribute('data-current', 1);
+		var slideAnimation = function() {
+			figures.forEach(function(figure) {
+				const x = Math.floor(Math.random() * 2);
+				const y = Math.floor(Math.random() * 2);
+				const deg = Math.random() * 5 - 2.5;
 
-	// add class to top figure (once)
-	element.querySelector('figure:first-child').classList.add('top');
-
-	// on click show next slide, or clicked slide if not on top
-	figures.forEach(function(figure) {
-		figure.addEventListener('click', function () {
-			index = figure.getAttribute('data-index');
-			z = z + 1;
-
-			// console.log(index,index_current,figures.length);
-			if ( index == index_current ) {
-				if (index_current*1 + 1 > figures.length - 1) { index_current = 0;	}
-				else { index_current = index_current*1 + 1; }
-
-				figures[index_current].style.zIndex = z;
-			}
-			else {
-				figures[index].style.zIndex = z;
-				index_current = index;
-			}
-
-			// add class to current figure, remove from all others
-			figures.forEach(function(fig) {
-				fig.classList.remove('top');
+				// figure.style.transform = 'translate('+x+'px, '+y+'px) rotate('+deg+'deg)';
+				figure.style.setProperty('--rand-x', x);
+				figure.style.setProperty('--rand-y', y);
+				figure.style.setProperty('--rand-deg', deg);
 			});
-			figures[index_current].classList.add('top');
+		};
 
-			// update gallery with current index
-			this.parentNode.setAttribute('data-current', index_current*1 + 1);
+		// update gallery with current index
+		element.setAttribute('data-current', 1);
 
-			// animate
-			slideAnimation();
+		// add class to top figure (once)
+		element.querySelector('figure:first-child').classList.add('top');
+
+		// on click show next slide, or clicked slide if not on top
+		figures.forEach(function(figure) {
+			figure.addEventListener('click', function () {
+				index = figure.getAttribute('data-index');
+				z = z + 1;
+
+				// console.log(index,index_current,figures.length);
+				if ( index == index_current ) {
+					if (index_current*1 + 1 > figures.length - 1) { index_current = 0;	}
+					else { index_current = index_current*1 + 1; }
+
+					figures[index_current].style.zIndex = z;
+				}
+				else {
+					figures[index].style.zIndex = z;
+					index_current = index;
+				}
+
+				// add class to current figure, remove from all others
+				figures.forEach(function(fig) {
+					fig.classList.remove('top');
+				});
+				figures[index_current].classList.add('top');
+
+				// update gallery with current index
+				this.parentNode.setAttribute('data-current', index_current*1 + 1);
+
+				// animate
+				slideAnimation();
+			});
 		});
-	});
 
-	//animate
-	slideAnimation();
-});
+		//animate
+		slideAnimation();
+	});
+})();
 
 
 /*--------------------------------------------------------------
