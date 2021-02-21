@@ -3112,6 +3112,7 @@ simple-signup form shortcode
 	flex-wrap: wrap;
 	justify-content: end;
 	margin: var(--gutter-height) auto;
+	max-width: 15rem;
 
 	background: rgba(var(--page-color), 0);
 	border: 1.5px solid;

@@ -7,9 +7,10 @@
 {{- $title := (.Get "title") -}}
 {{- $closed := (.Get "closed") -}}
 {{- $more := (.Get "more") -}}
-{{- $articles := where (where .Site.AllPages ".IsPage" true) ".Lang" "eq" .Site.Language.Lang -}}
-{{- $articles := $articles | union (where .Site.AllPages ".Params.crosspost" true) -}}
-{{- $articles := union (where $articles ".Type" "in" $types) (where $articles ".Params.tags" "intersect" (slice $tag)) -}}
+{{- $articles := where (where site.AllPages ".IsPage" true) ".Lang" "eq" site.Language.Lang -}}
+{{- $articles := $articles | union (where site.AllPages ".Params.crosspost" true) -}}
+{{- $articles := $articles | intersect (where $articles ".Type" "in" $types) -}}
+{{/*- $articles := $articles | intersect (where $articles ".Params.tags" "intersect" (slice $tag)) -*/}}
 {{- $articles := $articles | symdiff (where $articles ".Params.tags" "intersect" (slice $tagfilter)) -}}
 {{- $articles_count := len $articles -}}
 {{- if gt $articles_count 0 -}}
@@ -17,7 +18,7 @@
 <summary data-tags=""><h2>{{ $title | plainify }}</h2><span class="more">({{ $articles_count }}){{ with $more }} & <a href="{{ . | safeHTMLAttr }}">{{ i18n "show-more" }}</a>{{ end }}</span></summary>
 <div class="wrapper">
 {{- range first $items $articles.ByDate.Reverse -}}
-			{{ partial "article" . }}
+	{{ partial "article" . }}
 {{- end -}}
 </div>
 </details>
