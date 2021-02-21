@@ -1,0 +1,11 @@
+name = "onion"
+license = "MIT"
+licenselink = "https://github.com/Arty2/onion/blob/master/LICENSE.txt"
+description = "Theme description"
+homepage = "https://heracl.es/onion/"
+tags = ["experimental", "responsive"]
+# features = ["some", "awesome", "features"]
+min_version = "0.81.0"
+[author]
+    name = "Heracles Papatheodorou"
+    homepage = "https://heracl.es/"
