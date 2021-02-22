@@ -15,6 +15,10 @@
 	{{- if or (eq (path.Ext .) ".jpg") (eq (path.Ext .) ".jpeg") }}
 		{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
 	{{ end -}}
+	<!-- if a GIF file, then revert to original to avoid resizing animations	 -->
+	{{- if (eq (path.Ext .) ".gif") }}
+		{{ $resized = . }}
+	{{ end -}}
 	<img src="{{ $resized.RelPermalink }}"
 	width="{{ $resized.Width }}"
 	height="{{ $resized.Height }}"
