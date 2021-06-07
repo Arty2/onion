@@ -1172,6 +1172,7 @@ body > footer .author-image {
 
 body > footer .author-image img {
 	max-height: calc(3*var(--line-height));
+	width: auto;
 	border-radius: 50%;
 }
 
