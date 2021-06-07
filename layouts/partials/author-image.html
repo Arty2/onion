@@ -1,9 +1,9 @@
 {{ if .Site.Params.Author.Image -}}
 <div class="author-image">
 	{{ with $img := resources.Get .Site.Params.Author.Image -}}
-		<img src="{{ (.Fill "200x200").Permalink }}" itemprop="image" alt="">
+		<img src="{{ (.Fill "200x200 webp").Permalink }}" width="200" height="200" itemprop="image" alt="">
 	{{- else -}}
-		<img src="{{ .Site.Params.Author.Image | relURL }}" itemprop="image" alt="">
+		<img src="{{ .Site.Params.Author.Image | relURL }}" width="200" height="200" itemprop="image" alt="">
 	{{- end -}}
 </div>
 {{- end }}

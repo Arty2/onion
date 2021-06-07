@@ -9,16 +9,17 @@
 <!-- check if it exists as a page resource -->
 {{- with ($.Page.Resources.ByType "image").GetMatch ( printf "**%s" $src ) -}}
 	<!-- resize if wider than 800px -->
-	{{- $resized := cond (lt .Width "800") . ( .Resize "800x" ) -}}
+	{{- $resized := cond (lt .Width "800") . ( .Resize "800x webp" ) -}}
 	<!-- if a JPEG (certain to be opaque) generate a low resolution placeholder to use as background -->
 	{{ $placeholder := "" }}
-	{{- if or (eq (path.Ext .) ".jpg") (eq (path.Ext .) ".jpeg") }}
+	{{/*- if or (eq (path.Ext .) ".jpg") (eq (path.Ext .) ".jpeg") }}
 		{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
-	{{ end -}}
-	<!-- if a GIF file, then revert to original to avoid resizing animations	 -->
-	{{- if (eq (path.Ext .) ".gif") }}
+	{{ end -*/}}
+	<!-- if a GIF file, then revert to original to avoid resizing animations -->
+	<!-- TODO: confirm webp animations work -->
+	{{/*- if (eq (path.Ext .) ".gif") }}
 		{{ $resized = . }}
-	{{ end -}}
+	{{ end -*/}}
 	<img src="{{ $resized.RelPermalink }}"
 	width="{{ $resized.Width }}"
 	height="{{ $resized.Height }}"
