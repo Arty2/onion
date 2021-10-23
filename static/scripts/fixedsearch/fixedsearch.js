@@ -4,6 +4,9 @@ fixedsearch — Super fast, client side search for Hugo.io with Fusejs.io
 based on https://gist.github.com/cmod/5410eae147e4318164258742dd053993
 --------------------------------------------------------------*/
 
+if (typeof variable !== 'undefined') {
+	console.log('fixedsearch.js already loaded');
+} else {
 fixedsearch = function(){
 	var search_form = document.getElementById('search-form'); // search form
 	var search_input = document.getElementById('search-input'); // input box for search
@@ -216,14 +219,15 @@ fixedsearch = function(){
 			search_items = '';
 		} else { // build our html
 			for (let item in results.slice(0,5)) { // only show first 5 results
-				search_items = search_items + '<li><a href="' + results[item].item.permalink + '" tabindex="0">' +
-					'<span class="title">' + results[item].item.title + '</span>' +
-					'<span class="date">' + results[item].item.date + '</span>' +
-					'<span class="summary">' + results[item].item.summary + '</span>' +
-					'<span class="section">'+ results[item].item.section +'</span>' +
-					'<span class="categories">'+ results[item].item.categories.join(', ') +'</span>' +
-					'<span class="tags">'+ results[item].item.tags.join(', ') +'</span>' +
-				'</a></li>';
+				search_items = search_items +
+`<li><a href="${results[item].item.permalink}" tabindex="0">
+	<span class="title">${results[item].item.title}</span>
+	<span class="date">${results[item].item.date}</span>
+	<span class="summary">${results[item].item.summary}</span>
+	<span class="section">${results[item].item.section}</span>
+	<span class="categories">${results[item].item.categories.join(', ')}</span>
+	<span class="tags">${results[item].item.tags.join(', ')}</span>
+</a></li>`;
 			}
 			results_available = true;
 		}
@@ -235,3 +239,4 @@ fixedsearch = function(){
 		}
 	}
 }();
+}
