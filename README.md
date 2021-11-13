@@ -44,6 +44,8 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 
 ## Work in Progress
 
+<!-- TODO: update priorities, see tasks -->
+
 - Phase out jQuery depedencies.
 - JSON feed
 - Responsive-ish images with the `{{< figure >}}` shortcode.
@@ -53,6 +55,8 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 
 
 ## Built-in Shortcodes
+
+<!-- TODO: include details about attributes -->
 
 - articles-filter
 - articles-list
@@ -198,6 +202,7 @@ Bundled fonts contain Latin, Greek and Cyrillic character sets.
 
 ## Bundled JavaScript libraries
 
+- [fixedsearch](https://gist.github.com/Arty2/8b0c43581013753438a3d35c15091a9f)
 - [instant.page](https://instant.page/)
 - [simple-lightbox](https://simplelightbox.com/)
 
