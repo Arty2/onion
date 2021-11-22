@@ -45,7 +45,7 @@ global CSS variables
 	/*https://24ways.org/2019/a-modern-typographic-scale/#comments*/
 	--xheight: 1; /* x-height adjustment */
 	--sratio: 1.15;
-	--s00: 1em; /* always 1rem */
+	--s00: 1em; /* always 1em = 1rem */
 	--s-3: calc(var(--s-2) / var(--sratio));
 	--s-2: calc(var(--s-1) / var(--sratio));
 	--s-1: calc(var(--s00) / var(--sratio));
@@ -353,7 +353,7 @@ body,
 }
 
 .font-mono, .font-monospace,
-code, kbd,
+pre, code, kbd,
 input[type=submit], input[type=reset],
 .menu, .sharing, .languages,
 .tag, .more {
@@ -769,7 +769,8 @@ helper / common classes
 
 .center {
 	display: block;
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
 	text-align: center;
 }
 
