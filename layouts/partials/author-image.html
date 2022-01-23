@@ -1,9 +1,13 @@
 {{ if .Site.Params.Author.Image -}}
 <div class="author-image">
-	{{ with $img := resources.Get .Site.Params.Author.Image -}}
-		<img src="{{ (.Fill "200x200 webp").Permalink }}" width="200" height="200" itemprop="image" alt="">
-	{{- else -}}
-		<img src="{{ .Site.Params.Author.Image | relURL }}" width="200" height="200" itemprop="image" alt="">
+	{{- $resized := .Site.Params.Author.Image | relURL -}}
+	{{- with $img := resources.Get .Site.Params.Author.Image -}}
+		{{- if hugo.IsExtended -}}
+			{{ $resized = (.Fill "200x200 webp").Permalink }}
+		{{- else -}}
+			{{ $resized = (.Fill "200x200").Permalink }}
+		{{- end -}}
 	{{- end -}}
+	<img src="{{ $resized }}" width="200" height="200" itemprop="image" alt="">
 </div>
 {{- end }}

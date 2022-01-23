@@ -8,7 +8,9 @@
 		{{ end -}}
 		{{- if $cover -}}
 		<div class="cover">
-			{{ partial "render-image" (dict "Page" .Page "Destination" $cover )}}
+			{{- .Scratch.Set "imgwidth" 2000 -}}
+			{{- partial "render-image" (dict "Page" .Page "Destination" $cover) -}}
+			{{- .Scratch.Delete "imgwidth" -}}
 		</div>
 		{{- end -}}
 		<h1 class="title"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>

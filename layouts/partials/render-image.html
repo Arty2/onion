@@ -1,25 +1,33 @@
 <!-- layouts/partials/render-image.html -->
 <!-- get image URL from Markdown tag -->
-{{- $src := ( .Destination | safeURL ) -}}
-<!-- split # fragment and keep clean URL -->
-{{- $fragments := ( split $src "#" ) -}}
-{{- $src = index ($fragments ) 0 -}}
+{{- $src := (.Destination | safeURL) -}}
+<!-- split # fragment (used for CSS classes) and keep clean URL -->
+{{- $fragments := (split $src "#") -}}
+{{- $src = index ($fragments) 0 -}}
+<!-- resize if wider than .Scratch.Get "imgwidth" -->
+{{- $imgwidth := .Page.Scratch.Get "imgwidth" | default 800 -}}
 <!-- get actual filename -->
 {{- $src = path.Base $src -}}
 <!-- check if it exists as a page resource -->
-{{- with ($.Page.Resources.ByType "image").GetMatch ( printf "**%s" $src ) -}}
-	<!-- resize if wider than 800px -->
-	{{- $resized := cond (lt .Width "800") . ( .Resize "800x webp" ) -}}
+{{- with (.Page.Resources.ByType "image").GetMatch (printf "**%s" $src) -}}
+	{{ $resized := . }}
+	{{ if (gt .Width $imgwidth) }}
+		{{ if hugo.IsExtended }}
+			{{- $resized = .Resize (print $imgwidth "x webp") -}}
+		{{ else }}
+			{{- $resized = .Resize (print $imgwidth "x") -}}
+		{{ end }}
+	{{ end }}
 	<!-- if a JPEG (certain to be opaque) generate a low resolution placeholder to use as background -->
 	{{ $placeholder := "" }}
-	{{/*- if or (eq (path.Ext .) ".jpg") (eq (path.Ext .) ".jpeg") }}
+	{{- if or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "jpeg") }}
 		{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
-	{{ end -*/}}
-	<!-- if a GIF file, then revert to original to avoid resizing animations -->
-	<!-- TODO: confirm webp animations work -->
-	{{/*- if (eq (path.Ext .) ".gif") }}
+	{{ end -}}
+	<!-- if a GIF file, then revert to original to avoid resizing animations; WebP animations don't work -->
+	{{- if (eq .MediaType.SubType "gif") }}
 		{{ $resized = . }}
-	{{ end -*/}}
+	{{ end -}}
+	<!-- TODO: parse exif https://gohugo.io/content-management/image-processing/#exif -->
 	<img src="{{ $resized.RelPermalink }}"
 	width="{{ $resized.Width }}"
 	height="{{ $resized.Height }}"
@@ -39,4 +47,5 @@
 	{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
 	loading="lazy"
 	>
+	moot
 {{- end -}}
