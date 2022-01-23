@@ -39,6 +39,7 @@
 	alt="{{ $.Text }}" {{ with $.Title }} title="{{ . }}" {{ end }}
 	{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
 	loading="lazy"
+	decoding="async"
 	>
 <!-- or otherwise simply load the URL -->
 {{- else -}}
@@ -46,6 +47,7 @@
 	alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }}
 	{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
 	loading="lazy"
+	decoding="async"
 	>
 	moot
 {{- end -}}
