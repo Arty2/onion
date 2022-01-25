@@ -1,0 +1,704 @@
+@charset "utf-8";
+/*--------------------------------------------------------------
+onion theme
+made by: Heracles Papatheodorou
+url: https://github.com/Arty2/onion
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+global CSS variables
+--------------------------------------------------------------*/
+
+:root {
+	/* font stacks */
+	--font-icons: 'icons', 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
+	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
+	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
+	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
+
+	--content-width: 30rem;
+	/*--content-width: 100%; /* DEBUG */
+
+	--line-height: 1.4; /* must be unitless? */
+	--baseline: calc(1rem * var(--line-height)); /* must be in rem units */
+	--gutter-width: 1.4rem;
+	--icon-pad: 0.1rem;
+	--icon-size: calc(1.4rem - 2*var(--icon-pad));
+
+	/* text scales */
+	/* references: 
+		https://blog.envylabs.com/responsive-typographic-scales-in-css-b9f60431d1c4
+		https://24ways.org/2019/a-modern-typographic-scale/#comments
+		https://www.gridlover.net/try
+		https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
+	*/
+	--xheight: 1; /* x-height adjustment */
+	--sratio: calc(5/6);
+	--s00: 1em; /* always 1em = 1rem */
+	--s-3: calc(var(--s-2) * var(--sratio));
+	--s-2: calc(var(--s-1) * var(--sratio));
+	--s-1: calc(var(--s00) * var(--sratio));
+	--s01: calc(var(--s00) / var(--sratio));
+	--s02: calc(var(--s01) / var(--sratio));
+	--s03: calc(var(--s02) / var(--sratio));
+	--s04: calc(var(--s03) / var(--sratio));
+
+	--page-color-transparency: 0.89;
+	--page-color-blur: 2px;
+
+	/* auto-calculated colors */
+	--shadow-color: rgba(var(--text-color),0.2);
+}
+
+
+/*--------------------------------------------------------------
+reset and core styles
+--------------------------------------------------------------*/
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	line-height: inherit;
+	text-indent: 0; /* default is inherit */
+}
+
+html, body {
+	height: 100%;
+}
+
+html:focus-within {
+	scroll-behavior: smooth;
+}
+
+body {
+	position: relative;
+	max-width: 100%;
+	min-height: 100vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	text-rendering: optimizeSpeed;
+}
+
+article, aside, figure, figcaption, 
+footer, header, main, nav, section {
+	display: block;
+}
+
+img, picture, video, canvas, svg {
+	display: block;
+	margin: auto;
+	max-width: 100%;
+	height: auto;
+}
+
+svg {
+	stroke: currentColor;
+	fill: currentColor;
+}
+
+figure {
+	page-break-inside: avoid;
+	break-inside: avoid;
+}
+
+figcaption {
+	text-align: right;
+}
+
+pre, input, button, textarea, select {
+	font: inherit;
+}
+
+ul, ol {
+	list-style-position: outside;
+}
+
+ul { list-style: ; }
+
+ol { list-style: decimal; }
+
+ol ol { list-style: lower-alpha; }
+
+:lang(el) ol ol { list-style: lower-greek; }
+
+abbr {
+	font-variant: small-caps;
+	text-decoration: none;
+	text-transform: lowercase;
+}
+	span[title],
+	abbr[title] {
+		cursor: help;
+	}
+	span[title]:after,
+	abbr[title]:after {
+		display: inline-block;
+		margin-left: -0.1em;
+
+		font-variant: initial;
+		text-transform: initial;
+	}
+	span[title]:after,
+	abbr[title]:after {
+		content: '*';
+	}
+
+mark:before, mark:after {
+	content: '\00A0';
+}
+
+kbd {
+	display: inline-block;
+	margin: 0 2px 0 0;
+	padding: 0 0.2em;
+	min-width: calc(1em + 0.4em);
+	max-height: calc(1em + 0.4em);
+	/*line-height: inherit;*/
+
+	border: 1px solid;
+	border-radius: 3px;
+	cursor: grab;
+	text-align: center;
+
+	-webkit-box-shadow: 2px 2px 0px 0px;
+	box-shadow:         2px 2px 0px 0px;
+}
+	kbd:hover {
+		-webkit-box-shadow: 2px 2px 0px 0px transparent;
+		box-shadow:         2px 2px 0px 0px transparent;
+	}
+
+kbd kbd {
+	border: none;
+	box-shadow: none;
+}
+	kbd kbd:hover {
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+
+sup, sub {
+	position: relative;
+	line-height: 0;
+	font-size: 0.7em;
+}
+
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+
+ins, del, s {
+	text-decoration-thickness: 0.5px;
+}
+
+details summary {
+	list-style: none; /* escapes line height in Firefox */
+	cursor: pointer;
+}
+
+details summary::after {
+		display: inline-block;
+		content: '[…]';
+		margin-left: 0.5em;
+	}
+		details[open] > summary::after {
+			content: '⌃';
+		}
+
+pre {
+	padding: 0;
+	overflow: hidden;
+
+	cursor: text;
+	white-space: pre;
+}
+
+code {
+	display: inline-block;
+	padding: 0.2em 0.25em 0.15em 0.25em;
+
+	border:  1px solid transparent;
+	border-radius: 1.5px;
+	line-height: 1.1;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+pre > code {
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: 1.4rem 0.7rem;
+	width: 100%;
+	overflow: hidden;
+
+	text-overflow: ellipsis;
+}
+	pre > code:hover {
+		overflow-x: auto;
+		text-overflow: initial;
+	}
+	pre > code:before {
+		content: attr(data-lang);
+		position: absolute;
+		top: 0.4rem;
+		left: 0.7rem;
+
+		/*color: rgb(var(--page-color));*/
+		/*font-size: var(--s-2);*/
+	}
+
+hr {
+	overflow: hidden;
+
+	border: 0;
+	color: inherit;
+}
+	hr:before {
+		content: '* * *'; /* ⁂ ✻ 〜 */
+		display: block;
+		text-align: center;
+	}
+
+blockquote {
+	quotes: none;
+	text-align: left;
+}
+
+blockquote::before {
+	content: '“';
+	float: left;
+	margin-left: calc(-1 * var(--gutter-width, 0.5em));
+
+	font-size: 200%;
+	line-height: 1;
+}
+	blockquote:lang(el)::before {
+		content: '»';
+		margin-top: -0.5em;
+	}
+
+blockquote + figcaption {
+	text-align: right;
+}
+
+/*--------------------------------------------------------------
+core hyperlink styles
+--------------------------------------------------------------*/
+
+a,
+a:visited {
+	vertical-align: baseline;
+
+	background: transparent;
+	text-decoration: underline;
+	text-decoration-color: inherit;
+	text-decoration-skip-ink: auto;
+	text-decoration-thickness: 0.5px;
+
+	outline: none;
+}
+
+a:not([href^="http"]),
+a:visited:not([href^="http"]) {
+	text-decoration-style: dashed;
+}
+
+a[href^="mailto"] {
+	text-decoration-style: solid;
+	text-decoration-color: inherit;
+}
+
+a:focus {
+	text-decoration: underline;
+	text-decoration-color: inherit;
+	text-decoration-style: dotted;
+	text-decoration-thickness: 2px;
+}
+
+a:hover,
+a:focus,
+a:active {
+	-webkit-tap-highlight-color: transparent;
+
+	-webkit-transition: color .3s;
+	transition        : color .3s;
+}
+
+
+/*--------------------------------------------------------------
+core table styles
+--------------------------------------------------------------*/
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	overflow-x: scroll;
+	border-spacing: 2px;
+	text-align: left;
+}
+
+table caption {
+	caption-side: bottom;
+	text-align: right;
+}
+
+thead, tbody, tr {
+	width: 100%;
+}
+
+th, td {
+	padding: 0.25em;
+
+	border-top   : 0.5px dashed currentColor;
+	border-bottom: 0.5px dashed transparent;
+}
+
+th {
+	border-top: none;
+	border-bottom: 1.5px solid currentColor;
+}
+
+th:empty {
+	display: none;
+}
+
+tr:first-child > td {
+	border-top-color: transparent;
+}
+
+tr:hover > td,
+tr:hover + tr > td {
+	border-top-color: currentColor;
+	border-top-style: solid;
+}
+
+tr:last-child:hover > td {
+	border-bottom-color: currentColor;
+	border-bottom-style: solid;
+}
+
+
+/*--------------------------------------------------------------
+core form styles
+--------------------------------------------------------------*/
+
+
+
+/*--------------------------------------------------------------
+fonts
+
+Alegrya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
+FantasqueSan: via https://github.com/belluzj/fantasque-sans;
+icon font via https://icomoon.io (Brands iconset)
+--------------------------------------------------------------*/
+
+@font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+/*@font-face {
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Italic.woff2') format('woff2');
+	font-weight: bold;
+	font-style: italic;
+	font-display: swap;
+}*/
+
+@font-face {
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'icons';
+	src: url('../fonts/icomoon.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+/*--------------------------------------------------------------
+typography & vertical rythm
+--------------------------------------------------------------*/
+
+html {
+	font-size: 112%;
+	/*font-size: calc(112% + 0.5vw);*/
+}
+
+body {
+	font-size: var(--s00);
+	line-height: var(--line-height);
+}
+
+body,
+.font-serif {
+	font-family: serif;
+	font-family: var(--font-serif);
+}
+
+.font-sans {
+	font-family: sans-serif;
+	font-family: var(--font-sans);
+}
+
+pre, code, kbd,
+button, input[type=submit], input[type=reset],
+.menu, .sharing, .languages, .tag, .more, .meta,
+.font-mono, .font-monospace {
+	--xheight: 0.92;
+	line-height: calc(var(--line-height) / var(--xheight));
+	
+	font-family: monospace;
+	font-family: var(--font-mono);
+	font-size: calc(var(--s00) * var(--xheight));
+}
+
+hr {
+	font-size: var(--s02);
+	outline: 1px solid red;
+}
+
+/*DEBUG*/
+small { color: red; }
+
+h1, h2, h3, h4, h5, h6 {
+	min-height: var(--baseline);
+	font-size: 1rem;
+	font-weight: normal;
+}
+
+main h1, main h2, main h3, main h4, main h5, main h6 {
+	/*margin-top: calc(7/4 * var(--baseline));*/
+	/*margin-bottom: calc(1/4 * var(--baseline));*/
+}
+
+main h1 { font-size: var(--s04); }
+main h2 { font-size: var(--s03); }
+main h3 { font-size: var(--s02); }
+main h4 { font-size: var(--s01); }
+main h5 { font-size: var(--s00); font-weight: bold; }
+main h6 { font-size: var(--s-1); font-weight: bold; }
+
+main p + p {
+	text-indent: var(--baseline);
+}
+
+main ul,
+main ol,
+main figure,
+main figcaption,
+main pre,
+main table,
+main blockquote {
+	margin-bottom: var(--baseline);
+}
+
+/*main table { display: none; }*/
+
+/*remove font sizing from search widget*/
+
+/*DEBUG baseline grid*/
+body:after {
+	position: absolute;
+	width: auto;
+	height: auto;
+	z-index: 9999;
+	content: '';
+	display: block;
+	pointer-events: none;
+	top: -1px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-repeat: repeat;
+	background-size: 100% var(--baseline);
+	background-position: top left;
+	background-image: linear-gradient(rgba(160, 160, 160, 1) 0px,transparent 1px, transparent 100%);
+}
+
+/*--------------------------------------------------------------
+typography
+--------------------------------------------------------------*/
+
+p {
+	hanging-punctuation: first; /* only supported by Safari */
+}
+
+/*--------------------------------------------------------------
+themes
+--------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------
+syntax highlighting: algol_nu
+via https://xyproto.github.io/splash/docs/longer/all.html
+loaded in the /layouts/partial/head.html 
+--------------------------------------------------------------*/
+.highlight { background: none !important; }
+
+
+/*--------------------------------------------------------------
+theming
+--------------------------------------------------------------*/
+
+:root {
+	scrollbar-color: rgb(var(--text-color, 0,0,128)) transparent !important;
+	scrollbar-width: thin !important;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: navy;
+	background: rgb(var(--accent-color, 0,0,128));
+}
+
+::-webkit-scrollbar-thumb {
+	background: silver;
+	background: rgb(var(--text-color, 192,192,192));
+}
+
+::selection {
+	background: navy;
+	background: rgb(var(--accent-color, 0,0,128));
+	color: silver;
+	color: rgb(var(--text-color, 192,192,192));
+	text-shadow: none;
+}
+
+mark {
+	background: navy;
+	background: rgb(var(--accent-color, 0,0,128));
+	color: silver;
+	color: rgb(var(--text-color, 192,192,192));
+}
+
+body {
+	background: silver;
+	background: rgb(var(--page-color, 192,192,192));
+	color: navy;
+	color: rgb(var(--text-color, 0,0,128));
+
+	/* transition messes with custom styles */
+	/*-webkit-transition: background 0.3s;*/
+	/*transition        : background 0.3s;*/
+}
+
+code {
+	border-color: gray;
+	border-color: rgb(var(--page-color, 128,128,128));
+}
+
+a,
+a:visited {
+	color: blue;
+	color: rgb(var(--hyperlink-color, 0,0,255));
+}
+
+a:hover,
+a:focus,
+a:active {
+	color: purple;
+	color: rgb(var(--accent-color, 128,0,128));
+}
+
+
+/*--------------------------------------------------------------
+respect browser preferences
+--------------------------------------------------------------*/
+
+@media (prefers-reduced-motion: reduce) {
+	html:focus-within {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+
+/*--------------------------------------------------------------
+fonts & typography
+
+Alegrya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
+FantasqueSan: via https://github.com/belluzj/fantasque-sans;
+icon font via https://icomoon.io (Brands iconset)
+--------------------------------------------------------------*/
+
+
