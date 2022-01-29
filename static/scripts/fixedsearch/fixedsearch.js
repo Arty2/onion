@@ -29,8 +29,8 @@ fixedsearch = function(){
 	document.addEventListener('keydown', function(e) {
 		// console.log(event); // DEBUG
 		// Ctrl + / to show or hide Search
-		// if (event.metaKey && event.which === 191) {
-		if (event.ctrlKey && event.which === 191) {
+		// if (event.which === 191) { // Key: /
+		if (event.ctrlKey && event.which === 191) { // Key: Ctrl + /
 			search_toggle_focus(e); // toggle visibility of search box
 		}
 	});
@@ -173,7 +173,7 @@ fixedsearch = function(){
 	--------------------------------------------------------------*/
 	function search_init() {
 		if (first_run) {
-			load_script(window.location.origin + '/scripts/fixedsearch/fuse.js').then(() => {
+			load_script(window.location.origin + '/scripts/fixedsearch/fuse.basic.min.js').then(() => {
 				search_input.value = ""; // reset default value
 				first_run = false; // let's never do this again
 				fetch_JSON(search_form.getAttribute('data-language-prefix') + '/index.json', function(data){
