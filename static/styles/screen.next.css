@@ -36,7 +36,7 @@ global CSS variables
 		https://www.gridlover.net/try
 		https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
 	*/
-	--xheight: 1; /* x-height adjustment */
+	--smod: 1; /* x-height adjustment */
 	--sratio: calc(5/6);
 	--s00: 1em; /* always 1em = 1rem */
 	--s-3: calc(var(--s-2) * var(--sratio));
@@ -73,8 +73,12 @@ html, body {
 	height: 100%;
 }
 
-html:focus-within {
+/*html:focus-within {
 	scroll-behavior: smooth;
+}*/
+
+html:focus-within {
+	scroll-behavior: smooth !important;
 }
 
 body {
@@ -180,7 +184,8 @@ kbd kbd {
 
 sup, sub {
 	position: normal; /* relative breaks tooltips */
-	line-height: 0;
+	display: inline-block;
+	line-height: 0.8;
 }
 
 sup {
@@ -227,25 +232,26 @@ code {
 	display: inline-block;
 	padding: 0.2em 0.25em 0.15em 0.25em;
 
-	border:  1px solid transparent;
+	/*border: 1px solid transparent;*/
 	border-radius: 1.5px;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	word-break: break-all;
 	word-break: break-word;
-
-	background: pink;
 }
 
 pre > code {
 	display: block;
 	position: relative;
 	margin: 0;
-	padding: 1.4rem 0.7rem;
+	padding: var(--baseline) calc(var(--baseline) / 2);
 	width: 100%;
 	overflow: hidden;
 
 	text-overflow: ellipsis;
+
+	-webkit-user-modify: read-write; /* deprecated but useful */
+	-moz-user-modify: read-write; /* deprecated, probably removed */
 }
 	pre > code:hover {
 		overflow-x: auto;
@@ -254,11 +260,11 @@ pre > code {
 	pre > code::before {
 		content: attr(data-lang);
 		position: absolute;
-		top: 0.4rem;
-		left: 0.7rem;
+		top: calc(var(--baseline) / 3);
+		left: calc(var(--baseline) / 2);
 
 		/*color: rgb(var(--page-color));*/
-		/*font-size: var(--s-2);*/
+		font-size: var(--s-1);
 	}
 
 hr {
@@ -350,10 +356,12 @@ a[href^="mailto"] {
 }
 
 a:focus {
-	text-decoration: underline;
+	/*text-decoration: underline;
 	text-decoration-color: inherit;
 	text-decoration-style: dotted;
-	text-decoration-thickness: 2px;
+	text-decoration-thickness: 2px;*/
+	outline: 2px;
+	outline-offset: 2px;
 }
 
 a:hover,
@@ -408,16 +416,15 @@ tr:first-child > td {
 	border-top-color: transparent;
 }
 
-tr:hover > td,
-tr:hover + tr > td {
-	border-top-color: currentColor;
-	border-top-style: solid;
+tr:hover {
+	outline: 2px solid;
+	outline-offset: 2px;
 }
 
-tr:last-child:hover > td {
+/*tr:last-child > td {
 	border-bottom-color: currentColor;
 	border-bottom-style: solid;
-}
+}*/
 
 
 /*--------------------------------------------------------------
@@ -552,12 +559,12 @@ pre, code, kbd,
 button, input[type=submit], input[type=reset],
 .menu, .sharing, .languages, .tag, .more, .meta,
 .font-mono, .font-monospace {
-	--xheight: 0.92;
-	line-height: calc(var(--line-height) / var(--xheight));
+	--smod: 0.92;
+	line-height: calc(var(--line-height) * var(--smod));
 	
 	font-family: monospace;
 	font-family: var(--font-mono);
-	font-size: calc(var(--s00) * var(--xheight));
+	font-size: calc(var(--s00) * var(--smod));
 }
 
 code { line-height: 1; } /* line-height when inline */
@@ -588,10 +595,15 @@ main h3:target::before,
 main h4:target::before,
 main h5:target::before,
 main h6:target::before,
-[id^="fnref:"]:target a::before,
+sup[id^="fnref:"]:target a::before,
 .footnote-ref, .footnote-backref, li[id^="fn:"]::marker,
 .font-icons {
 	font-family: var(--font-icons) !important;
+}
+
+sup[id^="fnref:"] a::before {
+	line-height: calc(0.75 * (var(--icon-size) - var(--icon-margin)));
+	/* TODO: introduce a line-height adjust constant? */
 }
 
 code, kbd {
@@ -772,7 +784,7 @@ themes
 
 :root {
 	--text-color: 0,0,192;
-	--accent-color: 255,192,203;
+	--accent-color: 200,0,200;
 	--page-color: 192,192,192;
 	--hyperlink-color: 0,0,255
 }
@@ -839,8 +851,17 @@ a:visited {
 }
 
 a:hover,
-a:focus,
 a:active {
+	color: rgb(var(--accent-color));
+}
+
+a[href^="#fnref:"],
+sup[id^="fnref:"] a {
+	color: rgb(var(--text-color));
+}
+
+a[href^="#fnref:"]:hover,
+sup[id^="fnref:"] a:hover {
 	color: rgb(var(--accent-color));
 }
 
@@ -863,6 +884,18 @@ browser preferences
 		scroll-behavior: auto !important;
 	}
 }
+
+@media (prefers-contrast: more) {
+
+}
+
+@media (prefers-contrast: less) {
+
+}
+
+/*@media (prefers-reduced-transparency: reduce) {
+	not implemented yet
+}*/
 
 
 /*--------------------------------------------------------------
@@ -1124,7 +1157,7 @@ main span[title]::before {
 	/*backdrop-filter: blur(var(--page-blur));*/
 	color: rgba(var(--text-color),1);
 	cursor: help;
-	font-size: 1rem !important;
+	font-size: 1rem !important; /* TODO: move to typograpy section */;
 	font-variant: initial;
 	text-align: center;
 	text-overflow: ellipsis;
@@ -1134,6 +1167,7 @@ main span[title]::before {
 	transition        : color 0s;
 	/*outline: 1px dashed red;*/
 }
+
 main h1[id]:hover::before,
 main h2[id]:hover::before,
 main h3[id]:hover::before,
@@ -1158,6 +1192,16 @@ main span[title]:hover::before {
 
 	-webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0, 10%, rgba(0,0,0,var(--page-transparency)) calc(var(--gutter) + var(--baseline)));
 }
+	/* anchor links */
+	main h1[id]::before,
+	main h2[id]::before,
+	main h3[id]::before,
+	main h4[id]::before,
+	main h5[id]::before,
+	main h6[id]::before {
+		/*--tooltip-mark: '#';*/
+		--tooltip-mark: '•';
+	}
 	/* wikipedia links icon */
 	main a[title][href*='wikipedia.org']::before {
 		--tooltip-mark: 'Ꮤ';
@@ -1177,9 +1221,11 @@ main span[title]:hover::before {
 	main del[datetime]::before {
 		--tooltip-mark: '🕓';
 	}
-	main ins[datetime]:hover::before,
+	main ins[datetime]:hover::before {
+		content: 'INS ' attr(datetime);
+	}
 	main del[datetime]:hover::before {
-		content: attr(datetime);
+		content: 'DEL ' attr(datetime);
 	}
 	main h1[id]:hover::before,
 	main h2[id]:hover::before,
@@ -1256,17 +1302,25 @@ main {
 	counter-reset: fncount;
 }
 
-[id^="fnref:"] a {
+sup[id^="fnref:"] a {
 	counter-increment: fncount;
 }
 
-[id^="fnref:"] a::before {
+sup[id^="fnref:"] a::before {
+	--icon-margin: 4px; /* requires units even if 0 */
+
+	display: inline-block;
 	content: counter(fncount);
 	position: absolute;
 	right: 0;
-	width:  var(--icon-size);
+	margin: calc(var(--icon-margin) / 2);
+	width: calc(var(--icon-size) - var(--icon-margin));
+	height: calc(var(--icon-size) - var(--icon-margin));
 
+	border: 1.5px solid;
+	border-radius: 50%;
 	text-align: center;
+	vertical-align: sub;
 }
 
 .footnotes li[id^="fn:"]:target {
@@ -1319,13 +1373,14 @@ main h3:target::before,
 main h4:target::before,
 main h5:target::before,
 main h6:target::before,
-[id^="fnref:"]:target a::before {
+sup[id^="fnref:"]:target a::before {
 	content: '◄';
 	position: absolute;
 	right: calc((var(--gutter, 0) - var(--icon-size, 0)) / 2);
 	width: var(--icon-size);
 	line-height:var(--icon-size);
 
+	border-color: transparent;
 	color: rgb(var(--accent-color));
 	font-size: initial;
 	text-align: center;
@@ -1334,9 +1389,9 @@ main h6:target::before,
 }
 
 [id^="fn:"],
-[id^="fnref:"],
+sup[id^="fnref:"],
 [id^="fn:"] a,
-[id^="fnref:"] a {
+sup[id^="fnref:"] a {
 	text-decoration: none;
 }
 
@@ -1460,13 +1515,15 @@ meta styles
 	/*font-weight: bold;*/
 }
 	.meta details summary:focus {
-		outline: none;
+		/*outline: none;*/
 		-webkit-tap-highlight-color: transparent;
 	}
 	.meta details:not(:hover) summary:focus {
-		text-decoration: underline;
-		text-decoration-style: dotted;
-		text-decoration-thickness: 2px;
+		outline: 2px solid;
+		outline-offset: 2px;
+		/*text-decoration: underline;*/
+		/*text-decoration-style: dotted;*/
+		/*text-decoration-thickness: 2px;*/
 	}
 
 .meta details > summary + * {
