@@ -12,8 +12,9 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 - [Graceful degradation](https://developer.mozilla.org/en-US/docs/Glossary/Graceful_degradation) for older browsers, but no feature parity.
 - No pre-proccessors. No frameworks. No external depedencies.
 - Multilingual first. Greek translations included.
-- Mobile first. Two fluid responsive breakpoints.
-- Respect user’s system preferences: default automatic light / dark theme.
+- [Mobile first](https://developer.mozilla.org/en-US/docs/Glossary/Mobile_First). Two fluid & responsive breakpoints.
+- Respect user’s system preferences: default automatic light / dark theme; automatically reduced motion.
+- Privacy by design. Every part of the theme is self-hosted, no cookies required.
 
 
 ## Features
@@ -202,11 +203,14 @@ Bundled fonts contain Latin, Greek and Cyrillic character sets.
 
 ## Bundled JavaScript libraries
 
-- [fixedsearch](https://gist.github.com/Arty2/8b0c43581013753438a3d35c15091a9f)
-- [instant.page](https://instant.page/)
-- [simple-lightbox](https://simplelightbox.com/)
+No core functionality depends on JavaScript being enabled. Functionality that depends on it *should* (and most do) have a `<noscript>` alternative that is progressively enhanced when JavaScript is enabled. All bundled scripts are self-hosted within the theme and there is no automated build process for updating depedencies.
+
+- [fixedsearch](https://gist.github.com/Arty2/8b0c43581013753438a3d35c15091a9f) enables searching articles
+- [fuse.js](https://fusejs.io/) fuzzy-search engine used by *fixedsearch*
+- [instant.page](https://instant.page/) page pre-loading for faster navigation
+- [simple-lightbox](https://simplelightbox.com/) a touch-friendly image lightbox
 
 
 * * *
 
-© 2018-2020 [Heracles Papatheodorou](http://heracl.es) a.k.a [ @Arty2](https://www.twitter.com/Arty2), [MIT Licence](./LICENCE.txt)
+© 2018-2021 [Heracles Papatheodorou](http://heracl.es) a.k.a [@Arty2](https://www.twitter.com/Arty2), [MIT Licence](./LICENCE.txt)
