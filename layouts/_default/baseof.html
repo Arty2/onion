@@ -11,14 +11,20 @@
 	{{- end }}
 </head>
 <body id="top" class="{{ .Kind }}{{ with site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
+<script>
+(function() { // apply color scheme from localStorage once body loads
+	const scheme = localStorage.getItem('scheme');
+	if (scheme !== null) { document.body.classList.add(scheme) }
+})();
+</script>
 	<!-- inline custom.css located by the content, if it exists -->
-	{{ with .Resources.GetMatch "custom.css" -}}
+	{{- with .Resources.GetMatch "custom.css" -}}
 		{{- $customcss := . | resources.Minify -}}
 		<style>
 			{{ $customcss.Content | safeCSS }}
 		</style>
-	{{- end }}
-	{{ if ne site.Params.show_gadgets false }}{{ partial "gadgets" . }}{{ end }}
+	{{- end -}}
+	{{- if ne site.Params.show_gadgets false }}{{ partial "gadgets" . }}{{ end -}}
 	<header>
 		{{ if ne site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 		<div class="inner">
@@ -33,7 +39,6 @@
 		{{ block "footer" . }}{{ partialCached "footer-inner" . }}{{end}}
 		</div>
 	</footer>
-	{{ partialCached "search" . }}
 	{{ partialCached "scripts" . }}
 	<!-- load custom.js located by the content, if it exists */ -->
 	{{ if (fileExists "static/scripts/custom.js") -}}

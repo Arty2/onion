@@ -32,7 +32,6 @@ function load_script(url) {
 /*--------------------------------------------------------------
 When DOM is ready */
 window.ready(function() {
-
 /*--------------------------------------------------------------
 Load and initialize simplelightbox
 via https://simplelightbox.com/
@@ -57,37 +56,32 @@ if (document.body.contains(document.getElementById('scroller'))) {
 	}
 	// check periodically for scroll position
 	setInterval(function(){
-		if (window.scrollY > 0) { // change gadget to scroll down
-			// document.getElementById('scroller').style.color = 'rgba(var(--text-color),1)';
-			document.getElementById('scroller').classList.remove('hide');
+		if (window.scrollY > 50) { // change gadget to scroll down
 			document.getElementById('scroller').classList.remove('down');
 			document.getElementById('scroller').classList.add('up');
 		}
 		else {
-			// document.getElementById('scroller').style.color = 'rgba(var(--text-color),0)';
 			if (document.body.clientHeight > window.innerHeight) { // change gadget to scroll up
 				document.getElementById('scroller').classList.remove('up');
 				document.getElementById('scroller').classList.add('down');
 			}
 			else { // hide gadget if not possible to scroll
-				document.getElementById('scroller').classList.add('hide');
+				document.getElementById('scroller').classList.add('hidden');
 			}
 		}
-	}, 2000);
+	}, 1000);
 	// hide when clicked
 	document.getElementById('scroller').addEventListener('click', function(event){
-		// this.style.color = 'rgba(var(--text-color),0)';
 		if (this.classList.contains('down')) { // move down
-			document.getElementById('scroller').classList.remove('down');
-			document.getElementById('scroller').classList.add('up');
 			window.scroll({
 				top: window.innerHeight,
 				behavior: 'smooth'
 			});
 			event.preventDefault();
+			this.classList.remove('down');
+			this.classList.add('up');
 		}
 		else { // return to top
-			this.classList.add('hide');
 			window.scroll({
 				top: 0,
 				behavior: 'smooth'
@@ -102,28 +96,32 @@ if (document.body.contains(document.getElementById('scroller'))) {
 Gadget #theme-toggle behavior
 --------------------------------------------------------------*/
 
+
 if (document.body.contains(document.getElementById('theme-toggle'))) {
 	var themetoggle = document.getElementById('theme-toggle');
+	themetoggle.classList.remove('hidden');
 
 	// update icon if the theme is already dark
-	if ( (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches || document.body.classList.contains('scheme-dark')) && !document.body.classList.contains('scheme-light') ) {
-		themetoggle.innerHTML = '◑';
+	if ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches || document.body.classList.contains('scheme-dark')) && !document.body.classList.contains('scheme-light') ) {
+		themetoggle.innerText = '◑';
 	}
 
 	// toggle light / dark scheme manually
 	themetoggle.onclick = function() {
-		if ( (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || document.body.classList.contains('scheme-light') ) {
-			document.querySelector('body').classList.toggle('scheme-light');
+		// if ( (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || document.body.classList.contains('scheme-light') ) {
+		if (document.body.classList.contains('scheme-dark') ) {
+			document.body.classList.remove('scheme-dark');
+			document.body.classList.add('scheme-light');
+			localStorage.setItem('scheme', 'scheme-light');
 		} else {
-			document.querySelector('body').classList.toggle('scheme-dark');
+			document.body.classList.remove('scheme-light');
+			document.body.classList.add('scheme-dark');
+			localStorage.setItem('scheme', 'scheme-dark');
 		}
 
 		// toggle the icon accordingly
-		if (this.innerHTML == '◑') {
-			this.innerHTML = '◐';
-		} else {
-			this.innerHTML = '◑';
-		}
+		this.innerText = (this.innerText == '◑'?'◐':'◑');
+		event.preventDefault();
 	}
 }
 
@@ -228,8 +226,8 @@ Scrollbar width
 gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
 --------------------------------------------------------------*/
 /*function scrollbarWidth() {
-	let width = window.innerWidth - document.querySelector('body').clientWidth;
-	document.querySelector('body').style.setProperty('--scrollbar-width', `${width}px`);
+	let width = window.innerWidth - document.body.clientWidth;
+	document.body.style.setProperty('--scrollbar-width', `${width}px`);
 	// console.log(width); // DEBUG
 }
 
