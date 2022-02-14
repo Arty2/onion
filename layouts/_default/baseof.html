@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {{ "<!-- Built with Hugo and the https://heracl.es/onion theme. -->" | safeHTML }}
-<html {{ with site.LanguageCode }}lang="{{ . }}"{{ end }}>
+<html class="{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.LanguageCode }} lang="{{ . }}"{{ end }}>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,24 @@
 	{{ if (fileExists "static/styles/custom.css") -}}
 		<link rel="stylesheet" href="{{ "/styles/custom.css" | relURL }}" media="all">
 	{{- end }}
+	<script>
+	const themes = ['scheme-dark','scheme-light','theme-peach','theme-peach scheme-light','theme-debtron','theme-debtron scheme-light'];
+	if (typeof themes !== 'undefined' && themes.length > 0) {
+		if (theme = localStorage.getItem('theme')) {
+			if (themes.indexOf(theme) == -1) {
+				theme = themes[0];
+			}
+		} else {
+			theme = themes[0];
+		}
+		// get current theme from classList?
+	} else {
+		theme = '{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}';
+	}
+	document.documentElement.classList.add(...theme.split(' '))
+	</script>
 </head>
-<body id="top" class="{{ .Kind }}{{ with site.Params.Theme }} {{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
-<script>
-(function() { // apply color scheme from localStorage once body loads
-	const scheme = localStorage.getItem('scheme');
-	if (scheme !== null) { document.body.classList.add(scheme) }
-})();
-</script>
+<body id="top" class="{{ .Kind }}"{{ with site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	<!-- inline custom.css located by the content, if it exists -->
 	{{- with .Resources.GetMatch "custom.css" -}}
 		{{- $customcss := . | resources.Minify -}}

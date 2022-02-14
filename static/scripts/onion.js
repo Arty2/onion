@@ -29,14 +29,14 @@ function load_script(url) {
 }
 
 
-/*--------------------------------------------------------------
+/*==============================================================
 When DOM is ready */
 window.ready(function() {
+
 /*--------------------------------------------------------------
 Load and initialize simplelightbox
 via https://simplelightbox.com/
 --------------------------------------------------------------*/
-
 load_script(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.min.js').then(() => {
 	var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
 		closeText: '×',
@@ -48,7 +48,6 @@ load_script(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.m
 /*--------------------------------------------------------------
 Gadget #scroller behavior
 --------------------------------------------------------------*/
-
 if (document.body.contains(document.getElementById('scroller'))) {
 	// if possible to scroll, indicate there is more
 	if (window.scrollY == 0 && document.body.clientHeight > window.innerHeight) {
@@ -93,35 +92,29 @@ if (document.body.contains(document.getElementById('scroller'))) {
 
 
 /*--------------------------------------------------------------
-Gadget #theme-toggle behavior
+Gadget #themer behavior
 --------------------------------------------------------------*/
+if (typeof themes !== 'undefined' && themes.length > 0 && (themer = document.getElementById('themer'))) {
+	themer.classList.remove('hidden');
+	var icurr = (themes.indexOf(theme) == -1?0:themes.indexOf(theme));
+	var inext = (icurr == themes.length - 1?0:icurr + 1)
+	document.querySelector('#themer > span').classList.add(...themes[inext].split(' '));
 
+	themer.onclick = function() {
+		var icurr = (themes.indexOf(theme) == -1?0:themes.indexOf(theme));
+		var inext = (icurr == themes.length - 1?0:icurr + 1)
+		var iaftr = (inext == themes.length - 1?0:inext + 1);
 
-if (document.body.contains(document.getElementById('theme-toggle'))) {
-	var themetoggle = document.getElementById('theme-toggle');
-	themetoggle.classList.remove('hidden');
-
-	// update icon if the theme is already dark
-	if ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches || document.body.classList.contains('scheme-dark')) && !document.body.classList.contains('scheme-light') ) {
-		themetoggle.innerText = '◑';
-	}
-
-	// toggle light / dark scheme manually
-	themetoggle.onclick = function() {
-		// if ( (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || document.body.classList.contains('scheme-light') ) {
-		if (document.body.classList.contains('scheme-dark') ) {
-			document.body.classList.remove('scheme-dark');
-			document.body.classList.add('scheme-light');
-			localStorage.setItem('scheme', 'scheme-light');
-		} else {
-			document.body.classList.remove('scheme-light');
-			document.body.classList.add('scheme-dark');
-			localStorage.setItem('scheme', 'scheme-dark');
-		}
-
-		// toggle the icon accordingly
-		this.innerText = (this.innerText == '◑'?'◐':'◑');
+		document.documentElement.classList.remove(...theme.split(' '));
+		document.documentElement.classList.remove(...themes[icurr].split(' '));
+		document.documentElement.classList.add(...themes[inext].split(' '));
+		document.querySelector('#themer > span').classList.remove(...themes[inext].split(' '));
+		document.querySelector('#themer > span').classList.add(...themes[iaftr].split(' '));
+		localStorage.setItem('theme', themes[inext]);
+		theme = themes[inext];
 		event.preventDefault();
+		// console.log(icurr,inext,iaftr,theme) // DEBUG
+		// console.log(themes) // DEBUG
 	}
 }
 
@@ -219,20 +212,5 @@ inspired from https://viewfromthisside.superhi.com/
 	});
 })();
 
-
-/*--------------------------------------------------------------
-EXPERIMENTAL
-Scrollbar width
-gets scrollbar width nd sets a CSS variable to accomodate for 100vw bug
---------------------------------------------------------------*/
-/*function scrollbarWidth() {
-	let width = window.innerWidth - document.body.clientWidth;
-	document.body.style.setProperty('--scrollbar-width', `${width}px`);
-	// console.log(width); // DEBUG
-}
-
-scrollbarWidth();
-window.addEventListener('resize', scrollbarWidth);*/
-
 }); /* end DOM ready 
---------------------------------------------------------------*/
+==============================================================*/

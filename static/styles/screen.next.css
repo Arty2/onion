@@ -246,15 +246,12 @@ pre > code {
 	margin: 0;
 	padding: var(--baseline) calc(var(--baseline) / 2);
 	width: 100%;
-	overflow: hidden;
+	overflow-x: auto;
 
+	border: thin solid;
 	text-overflow: ellipsis;
-
-	-webkit-user-modify: read-write; /* deprecated but useful */
-	-moz-user-modify: read-write; /* deprecated, probably removed */
 }
 	pre > code:hover {
-		overflow-x: auto;
 		text-overflow: initial;
 	}
 	pre > code::before {
@@ -263,7 +260,6 @@ pre > code {
 		top: calc(var(--baseline) / 3);
 		left: calc(var(--baseline) / 2);
 
-		/*color: rgb(var(--page-color));*/
 		font-size: var(--s-1);
 	}
 
@@ -589,7 +585,7 @@ pre, code, kbd,
 button, input[type=submit], input[type=reset],
 .menu, .sharing, .languages, .tag, .more, .meta,
 .font-mono, .font-monospace {
-	--smod: 0.92;
+	--smod: 0.93;
 	line-height: calc(var(--line-height) * var(--smod));
 	
 	font-family: monospace;
@@ -628,7 +624,7 @@ main h6:target::before,
 sup[id^="fnref:"]:target a::before,
 .footnote-ref, .footnote-backref, li[id^="fn:"]::marker,
 .font-icons {
-	--smod:  0.92;
+	--smod:  0.93;
 	font-family: var(--font-icons) !important;
 }
 
@@ -824,15 +820,17 @@ animations
 themes
 --------------------------------------------------------------*/
 
-:root {
+/*:root {
 	--text-color: 0,0,192;
 	--accent-color: 200,0,200;
 	--page-color: 192,192,192;
 	--hyperlink-color: 0,0,255
-}
+}*/
 
-body, /* default theme */
-body.scheme-light {
+:root,
+:root.scheme-light,
+.scheme-light {
+	--theme-icon: '◑';
 	--page-color: 221, 238, 255;
 	--text-color: 34, 34, 50;
 	--hyperlink-color: 34, 34, 50;
@@ -843,7 +841,9 @@ body.scheme-light {
 	--blend-filter: none;
 }
 
-body.scheme-dark {
+:root.scheme-dark,
+.scheme-dark {
+	--theme-icon: '◐';
 	--page-color: 34, 34, 34;
 	--text-color: 204, 204, 204;
 	--hyperlink-color: 204, 204, 204;
@@ -855,7 +855,8 @@ body.scheme-dark {
 }
 
 @media (prefers-color-scheme: dark) {
-	body { /* default theme */
+	:root {
+		--theme-icon: '◐';
 		--page-color: 34, 34, 34;
 		--text-color: 204, 204, 204;
 		--hyperlink-color: 204, 204, 204;
@@ -864,6 +865,91 @@ body.scheme-dark {
 
 		--blend-filter: invert(100);
 		--blend-mode: screen;
+	}
+}
+
+:root.theme-gray,
+.theme-gray {
+	--theme-icon: '↓';
+	--page-color: 204, 204, 204;
+	--text-color: 0, 0, 0;
+	--hyperlink-color: 0, 0, 0;
+	--accent-color: 0, 0, 255;
+	--text-color-inverted: 200, 200, 200;
+	--theme-toggle: 0;
+}
+
+:root.theme-blue,
+.theme-blue {
+	--page-color: 0, 0, 255;
+	--text-color: 255, 255, 255;
+	--hyperlink-color: 255, 255, 255;
+	--accent-color: 255, 255, 0;
+	--text-color-inverted: 0, 0, 255;
+	--theme-toggle: 0;
+}
+
+:root.theme-peach,
+:root.theme-peach.scheme-light,
+.theme-peach,
+.theme-peach.scheme-light {
+	--page-color: 255, 210, 230;
+	--text-color: 0, 0, 0;
+	--hyperlink-color: 0, 0, 0;
+	--accent-color: 0, 0, 255;
+	--text-color-inverted: 255, 255, 255;
+}
+
+:root.theme-peach,
+:root.theme-peach.scheme-dark,
+.theme-peach,
+.theme-peach.scheme-dark {
+	--page-color: 20, 20, 20;
+	--text-color: 255, 210, 230;
+	--hyperlink-color: 255, 210, 230;
+	--accent-color: 248, 128, 120;
+	--text-color-inverted: 20, 20, 20;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root.theme-peach,
+	.theme-peach {
+		--page-color: 20, 20, 20;
+		--text-color: 255, 210, 230;
+		--hyperlink-color: 255, 210, 230;
+		--accent-color: 248, 128, 120;
+		--text-color-inverted: 20, 20, 20;
+	}
+}
+
+:root.theme-debtron,
+:root.theme-debtron.scheme-light,
+.theme-debtron,
+.theme-debtron.scheme-light {
+	--page-color: 227, 222, 219;
+	--text-color: 43, 0, 0;
+	--hyperlink-color: 43, 0, 0;
+	--accent-color: 189, 30, 46;
+	--text-color-inverted: 189, 159, 92;
+}
+
+:root.theme-debtron.scheme-dark,
+.theme-debtron.scheme-dark {
+	--page-color: 43, 0, 0;
+	--text-color: 189, 159, 92;
+	--hyperlink-color: 189, 159, 92;
+	--accent-color: 189, 30, 46;
+	--text-color-inverted: 0, 0, 0;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root.theme-debtron,
+	.theme-debtron {
+		--page-color: 43, 0, 0;
+		--text-color: 189, 159, 92;
+		--hyperlink-color: 189, 159, 92;
+		--accent-color: 189, 30, 46;
+		--text-color-inverted: 0, 0, 0;
 	}
 }
 
@@ -879,7 +965,7 @@ loaded in the /layouts/partial/head.html
 theming
 --------------------------------------------------------------*/
 
-:root {
+* {
 	scrollbar-color: rgb(var(--text-color)) transparent !important;
 	scrollbar-width: thin !important;
 }
@@ -898,14 +984,14 @@ theming
 }
 
 ::selection {
-	background: rgb(var(--accent-color));
-	color: rgb(var(--text-color));
+	background: rgb(var(--text-color));
+	color: rgb(var(--text-color-inverted));
 	text-shadow: none;
 }
 
 mark {
-	background: rgb(var(--accent-color));
-	color: rgb(var(--text-color));
+	background: rgb(var(--text-color));
+	color: rgb(var(--text-color-inverted));
 }
 
 body {
@@ -1288,6 +1374,7 @@ gadgets
 
 .gadgets > a:focus {
 	outline-offset: -2px;
+	background-color: rgb(var(--page-color));
 	border-radius: 50%;
 }
 
@@ -1302,12 +1389,18 @@ gadgets
 	widows: 100%;
 }
 
-.gadgets #theme-toggle {
+.gadgets #themer {
+	--theme-icon: '◉';
 	position: absolute;
 	top: var(--gutter);
 
 	cursor: pointer;
-	opacity: var(--theme-toggle,1);
+	/*opacity: var(--themer,1);*/
+}
+
+.gadgets #themer > span::before {
+	display: block;
+	content: var(--theme-icon);
 }
 
 .gadgets #next {
@@ -1326,18 +1419,18 @@ gadgets
 	bottom: var(--gutter);
 }
 
-.gadgets #scroller span {
+.gadgets #scroller > span {
 	opacity: 0;
 	transition: opacity 3s 3s, transform 0.3s 0s;
 	transform-origin: 50% 50%;
 }
 
-.gadgets #scroller.up span {
+.gadgets #scroller.up > span {
 	animation: wiggle 0.3s ease 1;
 	opacity: 1;
 }
 
-.gadgets #scroller.down span {
+.gadgets #scroller.down > span {
 	opacity: 1;
 	transform: rotate(-180deg);
 }
@@ -1621,7 +1714,11 @@ footnotes and targeting
 }*/
 
 .footnotes ol {
-	list-style-position: inside;
+	/*list-style-position: inside;*/
+}
+
+.footnotes ol li {
+	margin-left: 0.2em;
 }
 
 .footnotes li p {
@@ -1646,7 +1743,7 @@ sup[id^="fnref:"] a::before {
 	line-height: calc(var(--icon-size) * var(--smod));
 
 	outline: 1.5px solid;
-	outline-offset: -2px;
+	outline-offset: -4px;
 	border-radius: 50%;
 	text-align: center;
 }
@@ -1654,10 +1751,11 @@ sup[id^="fnref:"] a::before {
 .footnotes li[id^="fn:"]:target {
 	position: fixed;
 	bottom: 0;
-	padding: calc(1 * var(--baseline)) 0 var(--baseline) 0;
-	width: calc(100% - 2*var(--gutter));
-	max-width: calc(var(--max-content));
-	z-index: 100;
+	margin: 0 calc(-1 * var(--gutter));
+	padding: var(--baseline) var(--gutter);
+	max-width: calc(var(--max-content) + 2 * var(--gutter));
+	width: 100%;
+	z-index: 1000;
 
 	background-color: rgba(var(--page-color), var(--page-transparency));
 	border-top: 0.5px solid;
@@ -1683,6 +1781,19 @@ sup[id^="fnref:"] a::before {
 		cursor: pointer;
 		text-align: center;
 	}
+
+.footnotes li[id^="fn:"]:target + li:before {
+	content: ' ';
+	display: block;
+	margin: calc(var(--baseline) / 2) calc(-1 * var(--gutter) / 2);
+	/*height: calc(1 * var(--baseline));*/
+	border-top: 0.5px dashed;
+}
+
+/*.footnotes li[id^="fn:"]:target + li:after {
+	content: counter(fncount);
+	display: block;
+}*/
 
 sup[id^="fnref:"] a {
 	padding: 0 0.1rem;
@@ -1760,6 +1871,10 @@ image filters
 img.blend {
 	filter: var(--blend-filter, none);
 	mix-blend-mode: var(--blend-mode, multiply);
+}
+
+img.shadow {
+	box-shadow: 0 0.5rem 1rem var(--shadow-color);
 }
 
 
