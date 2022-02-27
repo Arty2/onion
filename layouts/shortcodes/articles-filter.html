@@ -4,7 +4,7 @@
 {{- $tagfilter := (.Get "tagfilter") -}}
 <!-- if not (in $site.Params.disableKinds "taxonomy")  -->
 <div id="articles-filter" class="noscript {{ with $class }}{{ $class }}{{ end }}">
-	<div>
+	<div class="tags">
 	<a id="articles-filter__reset" class="tag" data-filter="articles-filterable" data-active="true" data-reset="true" href="#articles-filter">{{ (i18n "filter-reset") }}</a>
 	{{- range site.Taxonomies.tags.Alphabetical -}}
 		{{- if not (in (slice $tagfilter) .Term) -}}
