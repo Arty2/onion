@@ -11,7 +11,7 @@ global CSS variables
 
 :root {
 	/* font stacks */
-	--font-icons: 'icons', 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
+	--font-icons: 'brands', 'icons', 'Fantasque', monospace;
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
 	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
@@ -206,7 +206,7 @@ details > summary:hover {
 details > summary::after {
 /*details > summary > *:first-child::after {*/
 		display: inline-block;
-		content: '[…]';
+		content: '~';
 		float: right;
 		/*margin-left: 0.5em;*/
 		
@@ -370,19 +370,22 @@ a:active {
 
 .cta a {
 	display: inline-block;
-	/*padding: 0 0.5rem;*/
-	min-height: var(--baseline);
+	padding: 0 0.3em 0 0.5em;
+	/*min-height: var(--baseline);*/
 
-	/*background: rgb(var(--page-color));*/
+	background: rgb(var(--page-color));
 	border-bottom: 3px dotted;
-	/*border: 1.5px solid;*/
-	/*border-radius: 2rem;*/
+	border: 1.5px solid;
+	border-radius: 2rem;
 	text-decoration: none;
 	white-space: nowrap;
 }
 
 .cta a::after {
-	content: " ›";
+	/*content: " ›";*/
+	content: " ＞";
+	line-height: 1;
+	vertical-align: -0.1em;
 }
 
 .cta a:hover {
@@ -443,6 +446,10 @@ tr:first-child > td {
 tr:hover {
 	outline: 2px solid;
 	outline-offset: 2px;
+}
+
+tr:hover td {
+	border-color: transparent;
 }
 
 /*tr:last-child > td {
@@ -532,7 +539,15 @@ icon font via https://icomoon.io (Brands iconset)
 
 @font-face {
 	font-family: 'icons';
-	src: url('../fonts/icomoon.woff') format('woff');
+	src: url('../fonts/icons.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'brands';
+	src: url('../fonts/brands.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -570,7 +585,7 @@ body,
 
 pre, code, kbd,
 button, input[type=submit], input[type=reset],
-.menu, .sharing, .languages, .tag, .more, .meta,
+.menu, .sharing, .languages, .tag, .more, .meta summary,
 .font-mono, .font-monospace {
 	--smod: 0.93;
 	--lmod: 0.93;
@@ -584,18 +599,18 @@ button, input[type=submit], input[type=reset],
 code { line-height: 1; } /* line-height when inline */
 pre > code { line-height: inherit; } /* line-height for code block */
 
-.menu > ul > li::after,
-.tag::after,
 .icon,
+.menu > ul > li::after,
+.tag::after, .cta a::after,
 .marginalia::before,
-article .summary::after,
-.meta summary::after,
 .rating,
 .sl-wrapper button,
+summary::after,
 abbr:not(:hover)::before,
 ins[datetime]:not(:hover)::before,
 del[datetime]:not(:hover)::before,
 main a[title]:not(:hover)::before,
+main a[href*='.pdf']:not(:hover)::before,
 main span[title]:not(:hover)::before,
 main h1[id]:not(:hover)::before,
 main h2[id]:not(:hover)::before,
@@ -1261,13 +1276,9 @@ header menu
 --------------------------------------------------------------*/
 
 body > header .menu > ul > li.has-children::after {
-	content: '⌄';
-	position: relative;
-	bottom: -0.1em;
-	padding-left: 0.2em;
+	content: ' ⌄';
 	line-height: 1;
-
-	cursor: n-resize;
+	vertical-align: -0.1em;
 }
 
 body > header .menu > ul > li.has-children:hover > a {
@@ -1368,42 +1379,6 @@ gadgets
 	/*outline: 1px dashed green;*/
 }
 
-.gadgets .icon {
-	display: flex;
-	left: 0;
-	right: 0;
-
-	margin-left: auto;
-	margin-right: auto;
-	width: var(--icon-size);
-	height: var(--icon-size);
-
-	justify-content: center;
-	align-items: center;
-
-	border-radius: 50%;
-	cursor: pointer;
-	text-decoration: none;
-	pointer-events: auto;
-
-	transition: opacity 0.3s, color 0.3s;
-	transform-origin: 50% 50%;
-
-	/*outline: 1px solid red;*/
-}
-
-.gadgets .icon:hover {
-	animation: none;
-	animation: wiggle 0.3s ease 1;
-}
-
-.gadgets .icon:focus,
-.gadgets .icon:focus-visible {
-	outline: 2px solid;
-	outline-offset: -2px;
-	background-color: rgb(var(--page-color));
-}
-
 .gadgets .icon.hidden {
 	visibility: hidden;
 	position: none;
@@ -1461,6 +1436,50 @@ gadgets
 	opacity: 1;
 	transform: rotate(-180deg);
 }
+
+
+/*--------------------------------------------------------------
+icons
+--------------------------------------------------------------*/
+
+.icon {
+	display: flex;
+	left: 0;
+	right: 0;
+
+	margin-left: auto;
+	margin-right: auto;
+	width: var(--icon-size);
+	height: var(--icon-size);
+
+	justify-content: center;
+	align-items: center;
+
+	border-style: none !important;
+	border-radius: 50%;
+	box-shadow: none !important;
+	cursor: pointer;
+	text-decoration: none;
+	pointer-events: auto;
+
+	transition: opacity 0.3s, color 0.3s;
+	transform-origin: 50% 50%;
+
+	/*outline: 1px solid red;*/
+}
+
+.icon:hover {
+	animation: none;
+	animation: wiggle 0.3s ease 1;
+}
+
+.icon:focus,
+.icon:focus-visible {
+	outline: 2px solid;
+	outline-offset: -2px;
+	background-color: rgb(var(--page-color));
+}
+
 
 /*--------------------------------------------------------------
 sidenote & marginalia styles
@@ -1561,7 +1580,7 @@ header aside,
 
 
 /*--------------------------------------------------------------
-link tooltips
+link gadgets
 in the gutter for links (if they have a title) and select tags
 --------------------------------------------------------------*/
 
@@ -1583,13 +1602,14 @@ main h4[id]::before,
 main h5[id]::before,
 main h6[id]::before,
 main a[title]::before,
+main a[href*='.pdf']::before,
 main ins[datetime]::before,
 main del[datetime]::before,
 main abbr[title]::before,
 main span[title]::before {
-	/*--tooltip-mark: '↬';*/
-	--tooltip-mark: '🔗';
-	content: var(--tooltip-mark); 
+	/*--gadget-mark: '↬';*/
+	--gadget-mark: '🔗';
+	content: var(--gadget-mark); 
 	display: inline-block;
 	position: absolute;
 	right: calc((var(--gutter, 0) - var(--icon-size, 0)) / 2);;
@@ -1621,6 +1641,7 @@ main h4[id]:hover::before,
 main h5[id]:hover::before,
 main h6[id]:hover::before,
 main a[title]:hover::before,
+main a[href*='.pdf']:hover::before,
 main ins[datetime]:hover::before,
 main del[datetime]:hover::before,
 main abbr[title]:hover::before,
@@ -1647,28 +1668,33 @@ main span[title]:hover::before {
 	main h4[id]::before,
 	main h5[id]::before,
 	main h6[id]::before {
-		/*--tooltip-mark: '#';*/
-		--tooltip-mark: '•';
+		display: none;
+		--gadget-mark: '＃';
 		cursor: help;
 	}
 	/* wikipedia links icon */
 	main a[title][href*='wikipedia.org']::before {
-		--tooltip-mark: 'Ꮤ';
+		--gadget-mark: 'Ꮤ';
 	}
 	/* PDF links icon */
-	main a[title][href*='.pdf']::before {
-		/*--tooltip-mark: '🗎';*/
-		--tooltip-mark: '↯';
+	main a[href*='.pdf']::before {
+		/*--gadget-mark: '🗎';*/
+		/*--gadget-mark: '↯';*/
+		--gadget-mark: '⤈';
+	}
+	main a[href*='.pdf']:hover::before {
+		content: 'PDF' attr(title);
 	}
 	/* abbr and other notes icon */
 	main abbr[title]::before,
 	main span[title]::before {
-		--tooltip-mark: '*';
+		--gadget-mark: '*';
 	}
 	/* ins and del tags icon and content */
 	main ins[datetime]::before,
 	main del[datetime]::before {
-		--tooltip-mark: '🕓';
+		/*--gadget-mark: '🕓';*/
+		--gadget-mark: '↺';
 	}
 	main ins[datetime]:hover::before {
 		content: 'INS: ' attr(datetime);
@@ -1693,7 +1719,7 @@ main span[title]:hover::before {
 		display: none;
 	}
 
-/* disable click on link tooltips */
+/* disable click on link gadgets */
 main a[title]:active::before {
 	pointer-events: none;
 }
@@ -1761,7 +1787,7 @@ sup[id^="fnref:"] a {
 }
 
 sup[id^="fnref:"] a::before {
-	--lmod:  0.95;
+	--lmod:  0.9;
 	display: inline-block;
 	content: counter(fncount);
 	position: absolute;
@@ -1851,6 +1877,7 @@ sup[id^="fnref:"]:target a::before {
 	color: rgb(var(--accent-color));
 	font-size: initial;
 	text-align: center;
+	outline: none;
 
 	animation: slidex .3s;
 }
@@ -1994,40 +2021,44 @@ social elsewere menu & icons
 	display: none;
 }
 
-.icon-email::before      { content: '📧'; }
-.icon-gitlab::before     { content: '🦊'; }
-.icon-github::before     { content: '🐙'; }
-.icon-instagram::before  { content: '📷'; }
-.icon-twitter::before    { content: '🐦'; }
-.icon-facebook::before   { content: '👍'; }
-.icon-linkedin::before   { content: '👥'; }
-.icon-discord::before    { content: '👾'; }
-.icon-mastodon::before   { content: '🐘'; }
-.icon-webring::before    { content: '🕸'; }
-.icon-soundcloud::before { content: '☁'; }
-.icon-youtube::before    { content: '📺'; }
-.icon-keybase::before    { content: '🔑'; }
-.icon-rss::before       { content: '📡'; }
+.icon[href^="mailto:"]::before            { content: '📧'; }
+.icon[href$=".rss"]::before               { content: '📡'; }
+.icon[href*="webring.xxiivv.com"]::before { content: '🕸'; }
 
-/*.icon-email:hover:before { color: #168de2; }*/ /* same color as links */
-.icon-gitlab:hover     { color: #e24329; }
-.icon-github:hover     { color: #2188ff; }
-.icon-instagram:hover  { color: #e4405f; }
-.icon-twitter:hover    { color: #1da1f2; }
-.icon-facebook:hover   { color: #3b5998; }
-.icon-linkedin:hover   { color: #0e76a8; }
-.icon-discord:hover    { color: #5865f2; }
-.icon-mastodon:hover   { color: #3088d4; }
-.icon-soundcloud:hover { color: #ff3300; }
-.icon-youtube:hover    { color: #ff0000; }
-.icon-keybase:hover    { color: #1da1f2; }
+.icon[href*="apple-podcasts"]::before  { content: '📻'; }
+.icon[href*="discord.com"]::before     { content: '👾'; }
+.icon[href*="facebook.com"]::before    { content: '👍'; }
+.icon[href*="github.com"]::before      { content: '🐙'; }
+.icon[href*="gitlab.com"]::before      { content: '🦊'; }
+.icon[href*="instagram.com"]::before   { content: '📷'; }
+.icon[href*="keybase.io"]::before      { content: '🔑'; }
+.icon[href*="linkedin.com"]::before    { content: '👥'; }
+.icon[href*="mastodon.social"]::before { content: '🐘'; }
+.icon[href*="medium.com"]::before      { content: '✍'; }
+.icon[href*="soundcloud.com"]::before  { content: '☁️'; }
+.icon[href*="spotify.com"]::before     { content: '🔊'; }
+.icon[href*="twitch.com"]::before      { content: '💬'; }
+.icon[href*="twitter.com"]::before     { content: '🐦'; }
+.icon[href*="vimeo.com"]::before       { content: '🎥'; }
+.icon[href*="youtube.com"]::before     { content: '📺'; }
 
-.icon {
-	border-width: 0 !important;
-	box-shadow: none !important;
-	text-align: center !important;
-	/*transform: none !important;*/
-}
+.icon[href*="apple-podcasts"]::before  { color: #9933cc; }
+.icon[href*="discord.com"]:hover       { color: #5865f2; }
+.icon[href*="facebook.com"]:hover      { color: #0e76a8; }
+.icon[href*="facebook.com"]:hover      { color: #3b5998; }
+.icon[href*="github.com"]:hover        { color: #2188ff; }
+.icon[href*="gitlab.com"]:hover        { color: #e24329; }
+.icon[href*="instagram.com"]:hover     { color: #e4405f; }
+.icon[href*="keybase.io"]:hover        { color: #1da1f2; }
+.icon[href*="mastodon.social"]:hover   { color: #3088d4; }
+.icon[href*="medium.com"]:hover        { color: #444444; }
+.icon[href*="soundcloud.com"]:hover    { color: #ff3300; }
+.icon[href*="spotify.com"]::before     { color: #1ed760; }
+.icon[href*="twitch.com"]::before      { color: #6441a4; }
+.icon[href*="twitter.com"]:hover       { color: #1da1f2; }
+.icon[href*="vimeo.com"]::before       { color: #1ab7ea; }
+.icon[href*="youtube.com"]:hover       { color: #ff0000; }
+
 
 /*--------------------------------------------------------------
 meta styles
@@ -2047,8 +2078,9 @@ meta styles
 	.meta details summary:focus {
 		/*outline: none;*/
 		-webkit-tap-highlight-color: transparent;
+		outline: none;
 	}
-	.meta details:not(:hover) summary:focus {
+	.meta details:not(:hover) summary:focus-visible {
 		outline: 2px solid;
 		outline-offset: 2px;
 		/*text-decoration: underline;*/
@@ -2071,7 +2103,11 @@ meta styles
 .meta dt {
 	grid-column: dt;
 	align-self: start;
+	margin-top: var(--baseline);
 }
+	.meta dt:first-child {
+		margin-top: 0;
+	}
 	.meta dt::after {
 		content: ': ';
 		white-space: pre;
@@ -2080,10 +2116,11 @@ meta styles
 .meta dd {
 	grid-column: dd;
 	align-self: end;
-	margin-left: var(--baseline);
+	/*margin-left: var(--baseline);*/
 }
 
 .meta details[open] summary ~ * {
+	/*padding-top: var(--baseline);*/
 	animation: sweep-bottom .1s ease-in;
 }
 
@@ -2094,6 +2131,10 @@ meta styles
 		grid-template-columns:
 			[dt] 2fr
 			[dd] 5fr;
+	}
+
+	.meta dt {
+		margin-top: 0;
 	}
 
 	.meta dl {
@@ -2138,12 +2179,10 @@ tags styles
 
 .tag,
 .tag:visited {
-	/*display: inline-block;*/
 	display: inline-flex;
 	align-items: baseline;
-	/*position: relative;*/
 	/*padding: 0 calc(var(--baseline) / 4) 0;*/
-	padding: 0.2em 0.6em 0.3em 0.6em;
+	padding: 0.3em 0.6em 0.3em 0.6em;
 	height: calc(var(--baseline) / 1);
 	/*line-height: calc(var(--line-height) * var(--lmod));*/
 
@@ -2163,11 +2202,10 @@ tags styles
 
 .tag::after {
 	display: inline-block;
-	/*display: none !important;*/
 	position: relative;
 	top: 6%;
 	margin-inline-start: 0.3em;
-	/*line-height: 1;*/
+	line-height: 1;
 
 	color: rgba(var(--text-color),0);
 	text-decoration: none !important;
@@ -2209,7 +2247,6 @@ tags styles
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: calc(var(--baseline) / 4);
-	justify-content: center;
 }
 
 
@@ -2231,23 +2268,20 @@ article filter styles
 	top: 0;
 }
 
-/*#articles-filter > * {
-	display: inline-flex;
-	flex-wrap: wrap;
-	gap: calc(var(--baseline) / 2);
+#articles-filter .tags {
 	justify-content: center;
-}*/
+}
 
-#articles-filter .tag:after {
+#articles-filter .tag::after {
 	display: inline-block;
 	content: '⨯';
 }
 
-#articles-filter .tag[data-active='true']:after {
+#articles-filter .tag[data-active='true']::after {
 	color: rgb(var(--page-color));
 }
 
-#articles-filter__reset:after {
+#articles-filter__reset::after {
 	content: '👁' !important;
 }
 
@@ -2255,7 +2289,7 @@ article filter styles
 	display: none;
 }
 
-#articles-filter.noscript .tag:after {
+#articles-filter.noscript .tag::after {
 	content: '(' attr(data-count) ')';
 	color: inherit;
 }
@@ -2662,3 +2696,24 @@ askolonion.js search form
 	display: none;
 }
 
+
+/*--------------------------------------------------------------
+simple-lightbox
+--------------------------------------------------------------*/
+
+body .sl-overlay {
+	background: rgba(var(--page-color),var(--page-transparency));
+}
+
+.simple-lightbox.sl-wrapper button.sl-close,
+.simple-lightbox.sl-wrapper .sl-navigation button.sl-prev,
+.simple-lightbox.sl-wrapper .sl-navigation button.sl-next {
+	box-shadow: none;
+	font-family: icons;
+	font-size: var(--s00);
+}
+
+.simple-lightbox.sl-wrapper .sl-image .sl-caption {
+	background: rgba(var(--page-color),var(--page-transparency));
+	color:  rgb(var(--text-color));
+}
