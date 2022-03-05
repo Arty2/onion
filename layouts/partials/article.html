@@ -51,7 +51,7 @@
 			{{ .Summary | markdownify | plainify  }}
 		{{- end -}}</p>
 		{{- with .Params.Rating }}
-			<p class="rating">{{ range seq (int . ) }}★{{ end }}</p>
+			<div class="rating">{{ range seq (int . ) }}★{{ end }}</div>
 		{{- end -}}
 	</a>
 		{{- if .Params.Tags -}}
