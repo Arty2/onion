@@ -40,7 +40,8 @@ via https://simplelightbox.com/
 load_script(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.min.js').then(() => {
 	var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
 		closeText: '×',
-		navText: ['←','→']
+		navText: ['←','→'],
+		overlayOpacity: 1
 	});
 }).catch((error) => { console.log('simplelightbox failed to load: ' + error); });
 
