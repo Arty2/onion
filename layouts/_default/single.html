@@ -21,7 +21,7 @@
 						{{ .Params.Summary | plainify | markdownify }}
 					</div>
 				{{ end }}
-				{{ if and (ne .Site.Params.show_share false) (ne .Params.show_share false) }}
+				{{ if or (eq .Site.Params.show_share true) (eq .Params.show_share true) }}
 					{{ partial "sharing.html" . }}
 				{{ end }}
 			</div>
