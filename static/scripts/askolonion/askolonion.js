@@ -1,13 +1,13 @@
-// static/scripts/fixedsearch/fixedsearch.js
+// static/scripts/askolonion/askolonion.js
 /*--------------------------------------------------------------
-fixedsearch — Super fast, client side search for Hugo.io with Fusejs.io
+askolonion — Super fast, client side search for Hugo.io with Fusejs.io
 based on https://gist.github.com/cmod/5410eae147e4318164258742dd053993
 --------------------------------------------------------------*/
 
 if (typeof variable !== 'undefined') {
-	console.log('fixedsearch.js already loaded');
+	console.log('askolonion.js already loaded');
 } else {
-fixedsearch = function(){
+askolonion = function(){
 	var search_form = document.getElementById('search-form'); // search form
 	var search_input = document.getElementById('search-input'); // input box for search
 	var search_submit = document.getElementById('search-submit'); // form submit button
@@ -173,7 +173,7 @@ fixedsearch = function(){
 	--------------------------------------------------------------*/
 	function search_init() {
 		if (first_run) {
-			load_script(window.location.origin + '/scripts/fixedsearch/fuse.basic.min.js').then(() => {
+			load_script(window.location.origin + '/scripts/askolonion/fuse.basic.min.js').then(() => {
 				search_input.value = ""; // reset default value
 				first_run = false; // let's never do this again
 				fetch_JSON(search_form.getAttribute('data-language-prefix') + '/index.json', function(data){
@@ -201,7 +201,7 @@ fixedsearch = function(){
 					});
 					// console.log("index.json loaded"); // DEBUG
 				});
-			}).catch((error) => { console.log('fixedsearch failed to load: ' + error); });
+			}).catch((error) => { console.log('askolonion failed to load: ' + error); });
 		}
 	}
 
