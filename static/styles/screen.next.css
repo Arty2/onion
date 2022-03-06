@@ -17,6 +17,7 @@ global CSS variables
 	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
 
 	--max-content: 40rem; /* must be in rem or other universal unit */
+	--max-content: 30rem;
 	/*DEBUG*/
 	/*--max-content: 100%;*/
 	--max-marginalia: calc(var(--max-content) / 1.61);
@@ -560,7 +561,7 @@ typography & vertical rythm
 
 html {
 	font-size: 112%;
-	/*font-size: calc(112% + 0.5vw);*/
+	font-size: calc(112% + 0.5vw);
 }
 
 body {
@@ -1938,7 +1939,7 @@ social sharing menu
 --------------------------------------------------------------*/
 
 .sharing {
-	margin-bottom: var(--gutter-height);
+	margin-bottom: var(--baseline);
 
 	user-select: none;
 }
@@ -2379,7 +2380,7 @@ hero & fullwidth styles
 	}
 
 .cover {
-	margin-bottom: var(--gutter-height);
+	margin-bottom: var(--baseline);
 	/*font-size: 0;*/
 }
 
@@ -2393,7 +2394,7 @@ h-entry, single page styles
 	text-decoration: none;
 }
 .h-entry .summary {
-	/*margin-bottom: var(--gutter-height);*/
+	/*margin-bottom: var(--baseline);*/
 	/*outline:  1px solid red;*/
 }
 
@@ -2716,4 +2717,81 @@ body .sl-overlay {
 .simple-lightbox.sl-wrapper .sl-image .sl-caption {
 	background: rgba(var(--page-color),var(--page-transparency));
 	color:  rgb(var(--text-color));
+}
+
+
+
+/*--------------------------------------------------------------
+articles-list styles
+--------------------------------------------------------------*/
+
+.more { display: none; }
+
+details[open] > summary::after {
+	display: none;
+}
+
+.articles-list > .wrapper {
+	display: flex;
+	flex-direction: columns;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: var(--baseline);
+}
+
+.articles-list article {
+	flex-basis: 100%;
+	/*flex-grow: 1;*/
+	margin: 0;
+	/*outline: 1px dotted red;*/
+}
+
+.articles-list article:focus-within {
+	outline: 2px solid rgb(var(--accent-color));
+	outline-offset: 2px;
+}
+
+.articles-list article > a {
+	outline: none;
+	text-decoration: none;
+}
+
+.articles-list article figure {
+	margin: 0;
+}
+
+.articles-list article h3 {
+	margin: 0;
+}
+
+.articles-list article .tags {
+	margin: 0;
+}
+
+.articles-list article.preformatted {
+	display: flex;
+}
+
+.articles-list article pre {
+	display: inline-block;
+	margin: var(--baseline) auto;
+}
+
+/*--------------------------------------------------------------
+articles-list - cluster
+--------------------------------------------------------------*/
+
+.articles-list.cluster article {
+	display: inline-block;
+	flex-basis: calc((var(--max-content)/4));
+	flex-grow: 1;
+	flex-shrink: 0;
+	min-width: calc(var(--max-content) / 3);
+}
+
+/*--------------------------------------------------------------
+articles-list - no-tags
+--------------------------------------------------------------*/
+.articles-list.no-tags .tags {
+	display: none;
 }
