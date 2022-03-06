@@ -1,10 +1,15 @@
 {{ define "main" }}
-	<section class="articles-list stack">
+	{{ if gt (len .Content) 0 }}
 		{{ .Content }}
+	{{ end }}
+	<details class="articles-list" open>
+	<summary><h2>{{ .Title }}</h2></summary>
 		{{ if gt (len .Data.Pages) 0}}
+		<div class="wrapper">
 			{{ range .Data.Pages }}
 				{{ partial "article" . }}
 			{{ end }}
+		</div>
 		{{ end }}
-	</section>
+	</details>
 {{ end }}

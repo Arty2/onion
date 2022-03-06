@@ -3,9 +3,11 @@
 		{{ .Content }}
 	{{ else if gt (len .Site.RegularPages) 0}}
 		<section class="articles-list">
-		{{ range .Site.RegularPages }}
-			{{ partial "article.html" . }}
-		{{ end }}
+			<div class="wrapper">
+			{{ range .Site.RegularPages }}
+				{{ partial "article.html" . }}
+			{{ end }}
+			</div>
 		</section>
 	{{ end }}
 {{ end }}
