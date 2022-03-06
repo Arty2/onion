@@ -588,7 +588,8 @@ pre, code, kbd,
 button, input[type=submit], input[type=reset],
 .menu, .sharing, .languages, .tag, .more, .meta summary,
 .font-mono, .font-monospace {
-	--smod: 0.93;
+	/*--smod: 0.93;*/
+	--smod: 0.85;
 	--lmod: 0.93;
 	line-height: calc(var(--line-height) * var(--lmod));
 	
@@ -1519,11 +1520,12 @@ header aside,
 .marginalia,
 .entry-content aside {
 	margin-left: var(--baseline);
-	max-height: calc(3 * var(--baseline));
+	margin-bottom: calc(1.3 * var(--baseline));
+	max-height: calc(2.7 * var(--baseline));
 	overflow: hidden;
 
 	background-clip: border-box;
-	border-bottom: 3px double;
+	border-bottom: 2px dashed;
 	text-overflow: ellipsis;
 	transition: max-height 1s 1s, border-color 1s 1s;
 
@@ -1642,7 +1644,6 @@ main h4[id]:hover::before,
 main h5[id]:hover::before,
 main h6[id]:hover::before,
 main a[title]:hover::before,
-main a[href*='.pdf']:hover::before,
 main ins[datetime]:hover::before,
 main del[datetime]:hover::before,
 main abbr[title]:hover::before,
@@ -1679,12 +1680,11 @@ main span[title]:hover::before {
 	}
 	/* PDF links icon */
 	main a[href*='.pdf']::before {
-		/*--gadget-mark: '🗎';*/
 		/*--gadget-mark: '↯';*/
 		--gadget-mark: '⤈';
 	}
 	main a[href*='.pdf']:hover::before {
-		content: 'PDF' attr(title);
+		--gadget-mark: '↯';
 	}
 	/* abbr and other notes icon */
 	main abbr[title]::before,
@@ -2117,7 +2117,10 @@ meta styles
 .meta dd {
 	grid-column: dd;
 	align-self: end;
-	/*margin-left: var(--baseline);*/
+}
+
+.meta .tags {
+	grid-column: 1 / span 2;
 }
 
 .meta details[open] summary ~ * {
@@ -2510,53 +2513,49 @@ input[type="reset"]:hover {
 askolonion.js search form
 --------------------------------------------------------------*/
 
-
-#search-form {
+#search__form {
 	display: block;
-	position: fixed;
+	position: absolute;
 	right: 0;
 	margin: 0;
 	padding: 0;
 	width: var(--icon-size, 1.4rem);
 	max-height: 50vh;
 	z-index: 1000;
-
-	/*transition: padding-top 0s;*/
 }
 
-#search-form.search--display,
-#search-form[data-focus='false'] .search--display {
-	/*display: none;*/
-}
-
-#search-form:hover:not([data-focus]),
-#search-form[data-focus='true'] {
-	top: 0;
+#search__form:not([data-focus='false']):focus-within,
+#search__form[data-focus='true'] {
 	left: 0;
-	bottom: 0;
 	left: 0;
+	margin-top: calc(-1 * var(--gutter));
 	padding: var(--gutter);
 	min-height: 100vh;
 	width: 100%;
-	height: 100%;
+	height: 200%;
+
+	backdrop-filter: blur(var(--page-blur));
+}
+
+#search__form:not([data-focus='false']):focus-within::before,
+#search__form[data-focus='true']::before {
+	content:  ' ';
+	display: block;
+	position: fixed;
+	top: -20%;
+	right: -20%;
+	bottom: -80%;
+	left: -20%;
+	width: 140%;
+	height: 200%;
+	z-index: -1;
 
 	background: rgba(var(--page-color), var(--page-transparency));
 	backdrop-filter: blur(var(--page-blur));
-
-	transition: padding-top 0.3s, background-color 0.3s;
+	transition: background 1s;
 }
 
-#search-form:hover:not([data-focus]) .search--display,
-#search-form[data-focus='true'] .search--display {
-	display: block;
-}
-
-#search-form:hover:not([data-focus]) #search-submit,
-#search-form[data-focus='true'] #search-submit {
-	margin-right: calc(-1 * var(--gutter));
-}
-
-#search-form .search-bar {
+#search__form .search__bar {
 	display: flex;
 	height: var(--icon-size, 1.4rem);
 	align-items: flex-end;
@@ -2564,15 +2563,15 @@ askolonion.js search form
 	color: rgb(var(--text-color, 3,3,3));
 }
 
-#search-form[data-focus='true'] .search-bar {
+#search__form[data-focus='true'] .search__bar {
 	border-color: rgb(var(--text-color, 0,0,255));
 }
 
-#search-form[data-focus='true'] .search-bar:not(:focus-within) {
+#search__form[data-focus='true'] .search__bar:not(:focus-within) {
 	border: none;
 }
 
-#search-input {
+#search__input {
 	--eborder: 1px;
 	padding: 0;
 	margin: 0 auto;
@@ -2580,13 +2579,15 @@ askolonion.js search form
 	width: 100%;
 	height: 100%;
 
+
 	border: none;
 	border-radius: 0;
 	color: inherit;
+	font-size: var(--s00, 1rem);
+	opacity: 0;
 	outline: none;
 	text-align: left;
 
-	font-size: var(--s00, 1rem);
 
 	background-image:			
 	 linear-gradient(90deg, currentColor, currentColor),
@@ -2597,35 +2598,62 @@ askolonion.js search form
 	background-repeat: no-repeat, no-repeat, no-repeat;
 }
 
-#search-form[data-focus='true'] #search-input {
+#search__form:not([data-focus='false']):focus-within #search__input,
+#search__form[data-focus='true'] #search__input {
 	padding: calc(var(--baseline) / 4);
+	opacity: 1;
 }
 
-#search-input:focus {
+#search__input:focus {
 	--eborder: 2px;
 	background-size: 100% var(--eborder), var(--eborder) 35%, var(--eborder) 35%;
+	color:  rgb(var(--accent-color));
 }
 
-#search-submit {
-	display: block;
+#search__button {
+	--gadget-mark: '⌕';
+	display: flex;
+	position: absolute;
+	left: calc(100% - var(--icon-size));
 	flex-shrink: 0;
 	margin: 0;
 	padding: 0;
-	width:       var(--icon-size);
-	height:      var(--icon-size);
-	line-height: var(--icon-size);
+	width: var(--icon-size);
+	height: var(--icon-size);
+
+	text-align: center;
 
 	border-radius: 50%;
 	color: inherit;
 }
 
-#search-submit:hover:not([data-focus]),
-#search-submit:focus {
+#search__button > span {
+	display: none;
+}
+
+#search__button::before {
+	content: var(--gadget-mark);
+	width: 100%;
+	height: 100%;
+	line-height: calc(var(--icon-size) * var(--lmod));
+}
+
+#search__form:not([data-focus='false']):focus-within #search__button,
+#search__form[data-focus='true'] #search__button {
+	--gadget-mark: '⨯';
+}
+
+#search__form:not([data-focus]):focus-within #search__button {
+	pointer-events: none;
+}
+
+#search__button:hover,
+#search__button:focus {
 	color: rgb(var(--accent-color, 0,0,255));
 	outline-offset: -2px;
 }
 
-#search-results {
+#search__results {
 	display: block;
 	flex-grow: 2;
 	margin: 0 auto 0 auto;
@@ -2633,8 +2661,8 @@ askolonion.js search form
 	max-height: calc(100vh - 1.4rem - 0.5px);
 	max-width: var(--max-content);
 	width: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
+	/*overflow-x: hidden;*/
+	/*overflow-y: auto;*/
 
 	color: rgb(var(--text-color, 3,3,3));
 	font-size: var(--s00, 1rem);
@@ -2643,59 +2671,55 @@ askolonion.js search form
 	scrollbar-width: thin !important;
 }
 
-#search-form[data-focus='false'] #search-results,
-#search-results:empty {
+#search__form[data-focus='false'] #search__results,
+#search__results:empty {
 	display: none;
 	opacity: 0;
 }
 
-#search-results li {
-	margin: 0;
-	width: 100%;
-
-	border-top: 0.5px solid;
-	list-style: none;
+#search__results article {
+	margin: var(--baseline) 0;
 }
-	#search-results li:first-child {
-		border: none;
+	#search__results article:first-child {
+		/*margin-top: 5px;*/
 	}
 
-#search-results a {
+/*#search__results a {
 	display: block;
 	padding: 0.3rem;
 	display: block;
 
 	text-decoration: none;
-}
+}*/
 
-#search-results a:hover,
-#search-results a:focus {
+/*#search__results a:hover,
+#search__results a:focus {
 	background: rgb(var(--text-color, 3,3,3));
 	color: rgb(var(--page-color, 240,240,240));
 	outline: 0;
 }
 
-#search-results a:active {
+#search__results a:active {
 	background: rgb(var(--text-color, 0,0,255));
 	color: rgb(var(--page-color, 240,240,240));
 }
 
-#search-results li span:empty {
+#search__results > * span:empty {
 	display: none;
 }
 
-#search-results li span:not(:last-child)::after {
+#search__results > * span:not(:last-child)::after {
 	content: ' – ';
 }
 
-#search-results li .title {
+#search__results > * .title {
 	display: block;
 	margin-bottom: calc(var(--line-height, 1.4em)/3);
 }
 
-#search-results li .title::after {
+#search__results > * .title::after {
 	display: none;
-}
+}*/
 
 
 /*--------------------------------------------------------------
@@ -2725,10 +2749,23 @@ body .sl-overlay {
 articles-list styles
 --------------------------------------------------------------*/
 
-.more { display: none; }
-
-details[open] > summary::after {
+.more {
 	display: none;
+}
+
+.articles-list > summary {
+	position: relative;
+	margin-bottom: calc(var(--baseline) / 2);
+}
+
+.articles-list > summary::after {
+	position: absolute;
+	top: 20%;
+	right: 0;
+}
+
+.articles-list[open] summary ~ * {
+	animation: sweep-bottom .1s ease;
 }
 
 .articles-list > .wrapper {
@@ -2741,14 +2778,17 @@ details[open] > summary::after {
 
 .articles-list article {
 	flex-basis: 100%;
-	/*flex-grow: 1;*/
 	margin: 0;
-	/*outline: 1px dotted red;*/
 }
 
 .articles-list article:focus-within {
 	outline: 2px solid rgb(var(--accent-color));
-	outline-offset: 2px;
+	/*outline-offset: 2px;*/
+	outline-offset: calc(var(--baseline) / 2);
+}
+
+.articles-list article:focus-within > a {
+	color: rgb(var(--accent-color));
 }
 
 .articles-list article > a {
@@ -2756,25 +2796,67 @@ details[open] > summary::after {
 	text-decoration: none;
 }
 
-.articles-list article figure {
+.articles-list article .thumbnail {
 	margin: 0;
 }
 
-.articles-list article h3 {
+.articles-list article .time {
+	display: block;
+}
+
+.articles-list article .title {
+	display: inline;
 	margin: 0;
+	margin-inline-end: 0.5em;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.articles-list article .summary {
+	display: inline;
 }
 
 .articles-list article .tags {
 	margin: 0;
 }
 
+/*--------------------------------------------------------------
+articles cross-language display
+--------------------------------------------------------------*/
+
+.articles-list:lang(en) article:lang(el) a > *,
+.articles-list:lang(el) article:lang(en) a > * {
+	opacity: 0.5;
+	filter: blur(1px);
+
+	transition: opacity 0.2s, transform 1s;
+}
+	.articles-list:lang(en) article:lang(el) a:hover > *,
+	.articles-list:lang(el) article:lang(en) a:hover > *,
+	.articles-list:lang(en) article:lang(el) a:focus > *,
+	.articles-list:lang(el) article:lang(en) a:focus > * {
+		opacity: 1 !important;
+		filter: blur(0px);
+
+		transition: opacity 0.3s, transform 1s;
+	}
+
+/*--------------------------------------------------------------
+articles-list - preformatted
+--------------------------------------------------------------*/
+
 .articles-list article.preformatted {
 	display: flex;
+	max-width: 100%;
+	font-size: calc(var(--s-1));
 }
 
-.articles-list article pre {
+.articles-list article.preformatted pre {
 	display: inline-block;
 	margin: var(--baseline) auto;
+
+	text-overflow: ellipsis;
+	overflow: auto;
 }
 
 /*--------------------------------------------------------------

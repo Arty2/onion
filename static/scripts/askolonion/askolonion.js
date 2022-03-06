@@ -8,20 +8,20 @@ if (typeof variable !== 'undefined') {
 	console.log('askolonion.js already loaded');
 } else {
 askolonion = function(){
-	var search_form = document.getElementById('search-form'); // search form
-	var search_input = document.getElementById('search-input'); // input box for search
-	var search_submit = document.getElementById('search-submit'); // form submit button
-	var search_results = document.getElementById('search-results'); // targets the <ul>
+	var search__form = document.getElementById('search__form'); // search form
+	var search__input = document.getElementById('search__input'); // input box for search
+	var search__button = document.getElementById('search__button'); // form submit button
+	var search__results = document.getElementById('search__results'); // targets the <ul>
 	var fuse; // holds our search engine
 	var search__focus = false; // check to true to make visible by default
 	var results_available = false; // did we get any search results?
 	var first_run = true; // allow us to delay loading json data unless search activated
-	var first = search_results.firstChild; // first child of search list
-	var last = search_results.lastChild; // last child of search list
+	var first = search__results.firstChild; // first child of search list
+	var last = search__results.lastChild; // last child of search list
 
 
-	search_form.classList.remove('noscript'); // JavaScript is active
-	search_form.setAttribute('data-focus', search__focus);
+	search__form.classList.remove('noscript'); // JavaScript is active
+	search__form.setAttribute('data-focus', search__focus);
 
 	/*--------------------------------------------------------------
 	The main keyboard event listener running the show
@@ -38,7 +38,7 @@ askolonion = function(){
 	/*--------------------------------------------------------------
 	The main keyboard event listener running the show
 	--------------------------------------------------------------*/
-	search_form.addEventListener('keydown', function(e) {
+	search__form.addEventListener('keydown', function(e) {
 		// Allow ESC (27) to close search box
 		if (e.keyCode == 27) {
 				search__focus = true; // make sure toggle removes focus
@@ -49,7 +49,7 @@ askolonion = function(){
 		if (e.keyCode == 40) {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
-				if ( document.activeElement == search_input) { first.focus(); } // if the currently focused element is the main input --> focus the first <li>
+				if ( document.activeElement == search__input) { first.focus(); } // if the currently focused element is the main input --> focus the first <li>
 				else if ( document.activeElement == last ) { first.focus(); } // if we're at the bottom, loop to the start
 				// else if ( document.activeElement == last ) { last.focus(); } // if we're at the bottom, stay there
 				else { document.activeElement.parentElement.nextSibling.firstElementChild.focus(); } // otherwise select the next search result
@@ -60,15 +60,15 @@ askolonion = function(){
 		if (e.keyCode == 38) {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
-				if ( document.activeElement == search_input) { search_input.focus(); } // If we're in the input box, do nothing
-				else if ( document.activeElement == first) { search_input.focus(); } // If we're at the first item, go to input box
+				if ( document.activeElement == search__input) { search__input.focus(); } // If we're in the input box, do nothing
+				else if ( document.activeElement == first) { search__input.focus(); } // If we're at the first item, go to input box
 				else { document.activeElement.parentElement.previousSibling.firstElementChild.focus(); } // Otherwise, select the search result above the current active one
 			}
 		}
 
 		// Use Enter (13) to move to the first result
 		if (e.keyCode == 13) {			
-			if (results_available && document.activeElement == search_input) {
+			if (results_available && document.activeElement == search__input) {
 				e.preventDefault(); // stop form from being submitted
 				first.focus();
 			}
@@ -76,9 +76,9 @@ askolonion = function(){
 
 		// Use Backspace (8) to switch back to the search input
 		if (e.keyCode == 8) {			
-			if (document.activeElement != search_input) {
+			if (document.activeElement != search__input) {
 				e.preventDefault(); // stop browser from going back in history
-				search_input.focus();
+				search__input.focus();
 			}
 		}
 	});
@@ -86,23 +86,23 @@ askolonion = function(){
 	/*--------------------------------------------------------------
 	Load our json data and builds fuse.js search index
 	--------------------------------------------------------------*/
-	search_form.addEventListener('focusin', function(e) {
+	search__form.addEventListener('focusin', function(e) {
 		search_init(); // try to load the search index
 	});
 
 	/*--------------------------------------------------------------
-	Make submit button toggle focus
+	Make button toggle focus
 	--------------------------------------------------------------*/
-	search_form.addEventListener('submit', function(e) {
+	search__button.addEventListener('mousedown', function(e) {
 		search_toggle_focus(e);
 		e.preventDefault();
-		return false;
+		e.stopPropagation();
 	});
 
 	/*--------------------------------------------------------------
 	Remove focus on blur
 	--------------------------------------------------------------*/
-	search_form.addEventListener('focusout', function(e) {
+	search__form.addEventListener('focusout', function(e) {
 		if (e.relatedTarget === null) {
 			search_toggle_focus(e);
 		}
@@ -118,17 +118,18 @@ askolonion = function(){
 		// console.log(e); // DEBUG
 		// order of operations is very important to keep focus where it should stay
 		if (!search__focus) {
-			search_submit.value = '⨯';
-			search_form.setAttribute('data-focus', true);
-			search_input.focus(); // move focus to search box
+			// search__button.value = '⨯';
+			search__form.setAttribute('data-focus', true);
+			search__input.focus(); // move focus to search box
 			search__focus = true;
 		}
 		else {
-			search_submit.value = '⌕';
-			search_form.setAttribute('data-focus', false);
+			// search__button.value = '⌕';
+			search__form.setAttribute('data-focus', false);
 			document.activeElement.blur(); // remove focus from search box
 			search__focus = false;
 		}
+		console.log(search__focus,e);
 	}
 
 	/*--------------------------------------------------------------
@@ -174,9 +175,9 @@ askolonion = function(){
 	function search_init() {
 		if (first_run) {
 			load_script(window.location.origin + '/scripts/askolonion/fuse.basic.min.js').then(() => {
-				search_input.value = ""; // reset default value
+				search__input.value = ""; // reset default value
 				first_run = false; // let's never do this again
-				fetch_JSON(search_form.getAttribute('data-language-prefix') + '/index.json', function(data){
+				fetch_JSON(search__form.getAttribute('data-language-prefix') + '/index.json', function(data){
 					var options = { // fuse.js options; check fuse.js website for details
 						shouldSort: true,
 						location: 0,
@@ -196,7 +197,7 @@ askolonion = function(){
 
 					fuse = new Fuse(data, options); // build the index from the json file
 
-					search_input.addEventListener('keyup', function(e) { // execute search as each character is typed
+					search__input.addEventListener('keyup', function(e) { // execute search as each character is typed
 						search_exec(this.value);
 					});
 					// console.log("index.json loaded"); // DEBUG
@@ -220,22 +221,22 @@ askolonion = function(){
 		} else { // build our html
 			for (let item in results.slice(0,5)) { // only show first 5 results
 				search_items = search_items +
-`<li><a href="${results[item].item.permalink}" tabindex="0">
-	<span class="title">${results[item].item.title}</span>
-	<span class="date">${results[item].item.date}</span>
-	<span class="summary">${results[item].item.summary}</span>
+`<article><a href="${results[item].item.permalink}" tabindex="0">
+	<time class="time">${results[item].item.date}</time>
+	<h3 class="title">${results[item].item.title}</h3>
+	<p class="summary">${results[item].item.summary}</p>
 	<span class="section">${results[item].item.section}</span>
 	<span class="categories">${results[item].item.categories.join(', ')}</span>
 	<span class="tags">${results[item].item.tags.join(', ')}</span>
-</a></li>`;
+</article>`;
 			}
 			results_available = true;
 		}
 
-		search_results.innerHTML = search_items;
+		search__results.innerHTML = search_items;
 		if (results.length > 0) {
-			first = search_results.firstChild.firstElementChild; // first result container — used for checking against keyboard up/down location
-			last = search_results.lastChild.firstElementChild; // last result container — used for checking against keyboard up/down location
+			first = search__results.firstChild.firstElementChild; // first result container — used for checking against keyboard up/down location
+			last = search__results.lastChild.firstElementChild; // last result container — used for checking against keyboard up/down location
 		}
 	}
 }();

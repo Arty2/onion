@@ -1,9 +1,9 @@
 <!-- layouts/partials/search.html -->
-<form id="search-form" class="noscript" method="GET" action="https://duckduckgo.com/" data-language-prefix="{{ site.LanguagePrefix }}">
-	<div class="search-bar">
-		<input id="search-input" class="search--display" name="q" tabindex="0" autocomplete="off" {{ with site.BaseURL }}value=" site:{{ . }}"{{ end }} placeholder="{{ i18n "search" }}">
-		<input id="search-submit" class="icon" type="submit" value="⌕">
+<form id="search__form" class="noscript" method="GET" action="https://duckduckgo.com/" data-language-prefix="{{ site.LanguagePrefix }}">
+	<div class="search__bar">
+		<input id="search__input" name="q" tabindex="0" autocomplete="off" {{ with site.BaseURL }}value="site:{{ . }} "{{ end }} placeholder="{{ i18n "search" }}">
+		<label id="search__button" for="search__input" class="icon" type="button"><span>⌕</span></label>
 	</div>
-	<ul id="search-results" class="search--display"></ul>
+	<div id="search__results" class="articles-list"></div>
 </form>
 <script src="{{ "/scripts/askolonion/askolonion.js" | relURL }}"></script>
