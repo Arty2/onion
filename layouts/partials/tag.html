@@ -1,1 +1,0 @@
-<a href="{{ .Permalink }}" class="tag" rel="tag" data-count="" {{ if not (in (i18n "lang") "[i18n]") }}lang="{{ i18n "lang" }}"{{ end }}>{{ if not (in (i18n .Title) "[i18n]" ) }}{{ (i18n .Title) }}{{ else }}{{ .Title }}{{ end }}</a>

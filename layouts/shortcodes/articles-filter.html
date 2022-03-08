@@ -1,117 +1,110 @@
 <!-- layouts/shortcodes/articles-filter.html -->
+{{- $taxi := "tags" -}}
 {{- $class := (.Get "class") -}}
 {{- $filter := "articles-filterable" -}}
 {{- $tagfilter := (.Get "tagfilter") -}}
 <!-- if not (in $site.Params.disableKinds "taxonomy")  -->
-<div id="articles-filter" class="noscript {{ with $class }}{{ $class }}{{ end }}">
-	<div class="tags">
-	<a id="articles-filter__reset" class="tag" data-filter="articles-filterable" data-active="true" data-reset="true" href="#articles-filter">{{ (i18n "filter-reset") }}</a>
-	{{- range site.Taxonomies.tags.Alphabetical -}}
-		{{- if not (in (slice $tagfilter) .Term) -}}
-		<a href="{{ .Page.Permalink }}" class="tag filter-{{ .Term | urlize }}" data-filter-tag="{{ .Term | urlize }}" data-count="{{ .Count }}">{{ if (i18n .Term ) }}{{ (i18n .Term ) }}{{ else }}{{ .Term }}{{ end }}</a>
+<div class="taxonomy-filter noscript {{ with $class }}{{ $class }}{{ end }}">
+{{- range $taxonomy_term, $taxonomy := .Site.Taxonomies -}}
+	{{- with $.Site.GetPage (printf "/%s" $taxonomy_term) -}}
+		{{- if eq $taxi $taxonomy_term -}}
+			<div class="taxa {{ $taxonomy_term }}">				
+				<a class="taxonomy-filter__reset taxon {{ .Data.Singular }}" data-active="true" data-reset="true">{{ (i18n "filter-reset") }}</a>
+				{{- range $taxon, $taxa := $taxonomy -}}
+					{{- if not (in (slice $tagfilter) $taxon) -}}
+						{{- partial "taxon" .Page -}}
+					{{- end -}}
+				{{- end -}}
+			</div>
 		{{- end -}}
 	{{- end -}}
-	</div>
+{{- end }}
 </div>
 <script type="text/javascript">
-	// code based on https://codepen.io/brendanfalkowski/pen/QwdKMK
-	/*
-	[data-visibility='on'] {
-		opacity: 1;
-		-webkit-transition: all 0.3s linear;
-		transition        : all 0.3s linear;
-	}
-	[data-visibility='off'] {
-		opacity: 0.1 !important;
-		pointer-events: none !important;
-		-webkit-user-select: none !important;
-		user-select        : none !important;
-		-webkit-transition: all 0.3s linear;
-		transition        : all 0.3s linear;
-	}
-	*/
+	var txnm_filter = '.taxonomy-filter';
+	var txnm_filter__reset = '.taxonomy-filter__reset';
+	var txnm_filter__attr = 'data-{{ $taxi }}'; // TODO: Class attribute
+	var txnm_filter__able = '.articles-filterable [' + txnm_filter__attr + ']';
+	var txnm_selected = [];
+	document.querySelector(txnm_filter).classList.remove('noscript');
 
-	document.getElementById('articles-filter').classList.remove('noscript');
-
-	filters = [];
-
-	document.querySelectorAll('#articles-filter .tag').forEach(button => {
-		button.addEventListener('click', function (e) {
-			e.preventDefault(); // do not go to href
-
-			var button = e.target;
-			var filter = {{ $filter }}
-
-			if (button.getAttribute('data-reset') === 'true') {
-				tag_reset(filter);
-			}
-			else if (button.getAttribute('data-active') === 'true') {
-				var tag = button.getAttribute('data-filter-tag');
-				filters = filters.filter(val => val !== tag);
-				button.setAttribute('data-active', 'false');
-				tag_toggle(filter, tag);
-				if (filters.length < 1) {
-					document.getElementById('articles-filter__reset').setAttribute('data-active', 'true');
-				}
-			}
-			else {
-				var tag = button.getAttribute('data-filter-tag');
-				filters.push(tag);
-				button.setAttribute('data-active', 'true');
-				tag_toggle(filter, tag);
-				if (filters.length > 0) {
-					document.getElementById('articles-filter__reset').setAttribute('data-active', 'false');
-				}
-			}
-
-			// scroll back to the first visible post
-			if (typeof document.querySelector('[data-visibility="on"]') !== 'undefined') {
-					setTimeout(function(){
-						// will throw error if no object with data-visibility=on exists
-						var onfromtop = document.querySelector('[data-visibility="on"]').getBoundingClientRect().top + window.scrollY;
-				// if (onfromtop > 0) {
-						window.scroll({
-							top: onfromtop - parseInt(document.querySelector('#articles-filter').getBoundingClientRect()['height']),
-							behavior: 'smooth'
-						});
-					}, 600);
-				// }
-			}
-			// this is really affected by performance, it should be a little bigger than the transition speed
-		});
+	document.querySelectorAll(txnm_filter + ' .taxon').forEach(button => {
+		button.addEventListener('click', function (e) { txn_filter(e); });
 	});
 
-	function tag_toggle(filter, tag) {
-		var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
+	function txn_filter(e) {
+		e.preventDefault(); // do not go to href
 
-		for (var i = 0; i < items.length; i++) {
-			var itemTags = items[i].getAttribute('data-tags');
-			if (itemTags != null) {
-				if (!filters.some(v=> itemTags.indexOf(v) >= 0)) {
-					items[i].setAttribute('data-visibility', 'off');
-				}
-				else {
-					items[i].setAttribute('data-visibility', 'on');
-				}
+		var button = e.target;
+
+		if (button.getAttribute('data-reset') === 'true') {
+			txn_reset();
+		} else if (button.getAttribute('data-active') === 'true') {
+			var taxon = button.getAttribute('data-filter');
+			txnm_selected = txnm_selected.filter(val => val !== taxon);
+			button.setAttribute('data-active', 'false');
+			txn_toggle();
+			if (txnm_selected.length < 1) {
+				document.querySelectorAll(txnm_filter__reset).forEach(item => {
+					item.setAttribute('data-active', 'true');
+				});
 			}
-			if (filters.length === 0) {
-				items[i].setAttribute('data-visibility', 'on');		
+		} else {
+			var taxon = button.getAttribute('data-filter');
+			txnm_selected.push(taxon);
+			button.setAttribute('data-active', 'true');
+			txn_toggle();
+			if (txnm_selected.length > 0) {
+				document.querySelectorAll(txnm_filter__reset).forEach(item => {
+					item.setAttribute('data-active', 'false');
+				});
 			}
 		}
+
+		// scroll back to the first visible post
+		setTimeout(function(){
+			if (document.querySelector("[data-visibility='visible']") !== null) {
+				var topoffset = document.querySelector("[data-visibility='visible']").getBoundingClientRect().top; // 8px offset
+			} else {
+				var topoffset = document.querySelector('[data-visibility]').getBoundingClientRect().top;
+			}
+			window.scroll({
+				top: window.scrollY + topoffset - parseInt(e.target.closest(txnm_filter).getBoundingClientRect()['height']),
+				// top: window.scrollY + topoffset - parseInt(e.target.closest(txnm_filter).getBoundingClientRect()['height']),
+				behavior: 'smooth'
+			});
+		}, 600); // greater than the transition speed
+		
 	}
 
-	function tag_reset(filter) {
-		filters = [];
-		var items = document.querySelectorAll('.' + filter + ' article, .' + filter + ' summary');
+	function txn_toggle() {
+		var items = document.querySelectorAll(txnm_filter__able).forEach(item => {
+			var item_taxa = item.getAttribute(txnm_filter__attr);
+			if (item_taxa != null) {
+				if (!txnm_selected.some(v=> item_taxa.indexOf(v) >= 0)) {
+					item.setAttribute('data-visibility', 'hidden');
+				} else {
+					item.setAttribute('data-visibility', 'visible');
+				}
+			}
+			if (txnm_selected.length === 0) {
+				item.setAttribute('data-visibility', 'visible');
+			}
+		});
+	}
 
-		for (var i = 0; i < items.length; i++) {
-			items[i].setAttribute('data-visibility', 'on');
-		}
+	function txn_reset() {
+		txnm_selected = [];
+		document.querySelectorAll(txnm_filter__able).forEach(item => {
+			item.setAttribute('data-visibility', 'visible');
+		});
 
-		var tags = document.querySelectorAll('#articles-filter .tag');
-		for (var i = 0; i < tags.length; i++) {
-			tags[i].setAttribute('data-active', 'false');
-		}
-		document.getElementById('articles-filter__reset').setAttribute('data-active', 'true');
+		document.querySelectorAll(txnm_filter + ' .taxon').forEach(item => {
+			item.setAttribute('data-active', 'false');
+		});
+
+		document.querySelectorAll(txnm_filter__reset).forEach(item => {
+			item.setAttribute('data-active', 'true');
+		});
 	}
 </script>
