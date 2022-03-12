@@ -117,7 +117,6 @@ askolonion = function(){
 	Toggle focus UI of form
 	--------------------------------------------------------------*/
 	function search_toggle_focus(e) {
-		// console.log(e); // DEBUG
 		// order of operations is very important to keep focus where it should stay
 		if (!search__focus) {
 			// search__button.value = '⨯';
@@ -131,7 +130,7 @@ askolonion = function(){
 			document.activeElement.blur(); // remove focus from search box
 			search__focus = false;
 		}
-		console.log(search__focus,e);
+		// console.log(search__focus,e); // DEBUG
 	}
 
 	/*--------------------------------------------------------------
