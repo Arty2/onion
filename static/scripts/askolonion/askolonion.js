@@ -67,10 +67,12 @@ askolonion = function(){
 		}
 
 		// Use Enter (13) to move to the first result
-		if (e.keyCode == 13) {			
+		if (e.keyCode == 13) {		
+			e.preventDefault(); // stop form from being submitted	
 			if (results_available && document.activeElement == search__input) {
-				e.preventDefault(); // stop form from being submitted
 				first.focus();
+			} else {
+				e.preventDefault();
 			}
 		}
 
