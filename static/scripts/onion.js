@@ -43,81 +43,92 @@ load_script(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.m
 		navText: ['←','→'],
 		overlayOpacity: 1
 	});
-}).catch((error) => { console.log('simplelightbox failed to load: ' + error); });
+}).catch((error) => { console.log('simple-lightbox failed to load: ' + error); });
+
+
+/*--------------------------------------------------------------
+articles-filter
+--------------------------------------------------------------*/
+/*if (document.body.contains(document.querySelector('.articles-filter'))) {
+
+}*/
 
 
 /*--------------------------------------------------------------
 Gadget #scroller behavior
 --------------------------------------------------------------*/
-if (document.body.contains(document.getElementById('scroller'))) {
-	// if possible to scroll, indicate there is more
-	if (window.scrollY == 0 && document.body.clientHeight > window.innerHeight) {
-		document.getElementById('scroller').classList.add('down');
+(function(){
+	if (document.body.contains(document.getElementById('scroller'))) {
+		// if possible to scroll, indicate there is more
+		if (window.scrollY == 0 && document.body.clientHeight > window.innerHeight) {
+			document.getElementById('scroller').classList.add('down');
+		}
+		// check periodically for scroll position
+		setInterval(function(){
+			if (window.scrollY > 50) { // change gadget to scroll down
+				document.getElementById('scroller').classList.remove('down');
+				document.getElementById('scroller').classList.add('up');
+			}
+			else {
+				if (document.body.clientHeight > window.innerHeight) { // change gadget to scroll up
+					document.getElementById('scroller').classList.remove('up');
+					document.getElementById('scroller').classList.add('down');
+				}
+				else { // hide gadget if not possible to scroll
+					document.getElementById('scroller').classList.add('hidden');
+				}
+			}
+		}, 1000);
+		// hide when clicked
+		document.getElementById('scroller').addEventListener('click', function(event){
+			if (this.classList.contains('down')) { // move down
+				window.scroll({
+					top: window.innerHeight,
+					behavior: 'smooth'
+				});
+				event.preventDefault();
+				this.classList.remove('down');
+				this.classList.add('up');
+			}
+			else { // return to top
+				window.scroll({
+					top: 0,
+					behavior: 'smooth'
+				});
+				event.preventDefault();
+			}
+		});
 	}
-	// check periodically for scroll position
-	setInterval(function(){
-		if (window.scrollY > 50) { // change gadget to scroll down
-			document.getElementById('scroller').classList.remove('down');
-			document.getElementById('scroller').classList.add('up');
-		}
-		else {
-			if (document.body.clientHeight > window.innerHeight) { // change gadget to scroll up
-				document.getElementById('scroller').classList.remove('up');
-				document.getElementById('scroller').classList.add('down');
-			}
-			else { // hide gadget if not possible to scroll
-				document.getElementById('scroller').classList.add('hidden');
-			}
-		}
-	}, 1000);
-	// hide when clicked
-	document.getElementById('scroller').addEventListener('click', function(event){
-		if (this.classList.contains('down')) { // move down
-			window.scroll({
-				top: window.innerHeight,
-				behavior: 'smooth'
-			});
-			event.preventDefault();
-			this.classList.remove('down');
-			this.classList.add('up');
-		}
-		else { // return to top
-			window.scroll({
-				top: 0,
-				behavior: 'smooth'
-			});
-			event.preventDefault();
-		}
-	});
-}
-
+})();
 
 /*--------------------------------------------------------------
 Gadget #themer behavior
 --------------------------------------------------------------*/
-if (typeof themes !== 'undefined' && themes.length > 0 && (themer = document.getElementById('themer'))) {
-	themer.classList.remove('hidden');
-	var icurr = (themes.indexOf(theme) == -1?0:themes.indexOf(theme));
-	var inext = (icurr == themes.length - 1?0:icurr + 1)
-	document.querySelector('#themer > span').classList.add(...themes[inext].split(' '));
-
-	themer.onclick = function() {
+(function(){
+	if (typeof themes !== 'undefined' && themes.length > 0 && (themer = document.getElementById('themer'))) {
+		themer.classList.remove('hidden');
 		var icurr = (themes.indexOf(theme) == -1?0:themes.indexOf(theme));
 		var inext = (icurr == themes.length - 1?0:icurr + 1)
-		var iaftr = (inext == themes.length - 1?0:inext + 1);
+		document.querySelector('#themer > span').classList.add(...themes[inext].split(' '));
 
-		document.documentElement.classList.remove(...theme.split(' '));
-		document.documentElement.classList.remove(...themes[icurr].split(' '));
-		document.documentElement.classList.add(...themes[inext].split(' '));
-		document.querySelector('#themer > span').classList.remove(...themes[inext].split(' '));
-		document.querySelector('#themer > span').classList.add(...themes[iaftr].split(' '));
-		localStorage.setItem('theme', themes[inext]);
-		theme = themes[inext];
-		event.preventDefault();
-		// console.log(icurr,inext,iaftr,theme) // DEBUG
-		// console.log(themes) // DEBUG
+		themer.onclick = function() {
+			var icurr = (themes.indexOf(theme) == -1?0:themes.indexOf(theme));
+			var inext = (icurr == themes.length - 1?0:icurr + 1)
+			var iaftr = (inext == themes.length - 1?0:inext + 1);
+
+			document.documentElement.classList.remove(...theme.split(' '));
+			document.documentElement.classList.remove(...themes[icurr].split(' '));
+			document.documentElement.classList.add(...themes[inext].split(' '));
+			document.querySelector('#themer > span').classList.remove(...themes[inext].split(' '));
+			document.querySelector('#themer > span').classList.add(...themes[iaftr].split(' '));
+			localStorage.setItem('theme', themes[inext]);
+			theme = themes[inext];
+			event.preventDefault();
+			// console.log(icurr,inext,iaftr,theme) // DEBUG
+			// console.log(themes) // DEBUG
+		}
 	}
-}
+})();
 
 /*--------------------------------------------------------------
 EXPERIMENTAL
@@ -158,15 +169,17 @@ inspired from https://viewfromthisside.superhi.com/
 		});
 
 		var slideAnimation = function() {
+			index = 0;
 			figures.forEach(function(figure) {
-				const x = Math.floor(Math.random() * 2);
-				const y = Math.floor(Math.random() * 2);
-				const deg = Math.random() * 5 - 2.5;
+				var x = Math.floor(Math.random() * 3);
+				var y = Math.floor(Math.random() * 3);
+				var z = Math.random() * 2;
 
-				// figure.style.transform = 'translate('+x+'px, '+y+'px) rotate('+deg+'deg)';
-				figure.style.setProperty('--rand-x', x);
-				figure.style.setProperty('--rand-y', y);
-				figure.style.setProperty('--rand-deg', deg);
+				figure.style.setProperty('--rand-x', 0);
+				figure.style.setProperty('--rand-y', 0);
+				figure.style.setProperty('--rand-z', z);
+				figure.style.setProperty('--index', index);
+				index = index + 1;
 			});
 		};
 
