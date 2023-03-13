@@ -66,17 +66,20 @@ publish-date:
 modified-date:
   other: Ενημέρωση
 
-post-details:
-  other: Σχετικά
+post-publication:
+  other: Δημοσίευση
+
+post-taxonomies:
+  other: Ταξονομίες
 
 post-meta:
-  other: Meta
+  other: Σχετικά
 
-in-series:
-  other: Σε αυτή τη σειρά
+post-series:
+  other: Σειρά
 
 publication-details:
-  other: Στοιχεία έκδοσης
+  other: Έκδοση
 
 title:
   other: Τίτλος

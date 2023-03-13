@@ -66,17 +66,20 @@ publish-date:
 modified-date:
   other: Updated
 
-post-details:
-  other: Post details
+post-publication:
+  other: Publication
+
+post-taxonomies:
+  other: Taxonomies
 
 post-meta:
   other: Meta
 
-in-series:
-  other: In this Series
+post-series:
+  other: Series
 
 publication-details:
-  other: Publication details
+  other: Publication
 
 title:
   other: Title
