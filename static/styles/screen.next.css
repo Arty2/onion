@@ -319,6 +319,9 @@ li ul, li ol {
 	margin-left: max(1rem, var(--baseline));
 }
 
+li:has(input[type="checkbox"]) { list-style: none; }
+li > input[type="checkbox"] { vertical-align: sub; }
+
 
 /*--------------------------------------------------------------
 core hyperlink styles
