@@ -77,6 +77,10 @@ html {
 	scroll-behavior: smooth !important;
 }*/
 
+html.mod--fullwidth {
+	--max-content: 100%;
+}
+
 body {
 	position: relative;
 	max-width: 100%;
@@ -580,13 +584,13 @@ body {
 	font-feature-settings: "kern", "liga", "clig", "onum", "pnum";
 }
 
-body,
-.font-serif {
+html:not([class*="mod--font"]),
+.mod--font-serif {
 	font-family: serif;
 	font-family: var(--font-serif);
 }
 
-.font-sans {
+.mod--font-sans {
 	font-family: sans-serif;
 	font-family: var(--font-sans);
 }
@@ -594,8 +598,7 @@ body,
 pre, code, kbd,
 button, input[type=submit], input[type=reset],
 .menu, .sharing, .languages, .taxon, .more, .meta summary,
-.font-mono, .font-monospace {
-	/*--smod: 0.93;*/
+.mod--font-mono, .mod--font-monospace {
 	--smod: 0.85;
 	--lmod: 0.93;
 	line-height: calc(var(--line-height) * var(--lmod));
@@ -686,6 +689,11 @@ main p + p {
 	margin-top: 0;
 }
 
+.mod--newline main p + p {
+	text-indent: 0;
+	margin-top: var(--baseline);
+}
+
 main li > p { /* markdown rendered on checklist */
 	margin-top: 0;
 }
@@ -700,7 +708,8 @@ main ol,
 main figure,
 main pre,
 main table,
-main blockquote {
+main blockquote,
+main form {
 	margin-top: var(--baseline);
 }
 
@@ -846,8 +855,8 @@ themes
 }*/
 
 :root,
-:root.scheme-light,
-.scheme-light {
+:root.scheme--light,
+.scheme--light {
 	--theme-icon: '◑';
 	--page-color: 221, 238, 255;
 	--text-color: 34, 34, 50;
@@ -859,8 +868,8 @@ themes
 	--blend-filter: none;
 }
 
-:root.scheme-dark,
-.scheme-dark {
+:root.scheme--dark,
+.scheme--dark {
 	--theme-icon: '◐';
 	--page-color: 34, 34, 34;
 	--text-color: 204, 204, 204;
@@ -886,31 +895,32 @@ themes
 	}
 }
 
-:root.theme-gray,
-.theme-gray {
+:root.theme--gray,
+.theme--gray {
 	--theme-icon: '↓';
 	--page-color: 204, 204, 204;
 	--text-color: 0, 0, 0;
 	--hyperlink-color: 0, 0, 0;
 	--accent-color: 0, 0, 255;
 	--text-color-inverted: 200, 200, 200;
-	--theme-toggle: 0;
+	--theme--toggle: 0;
 }
 
-:root.theme-blue,
-.theme-blue {
+:root.theme--blue,
+.theme--blue {
+	--theme-icon: '↑';
 	--page-color: 0, 0, 255;
 	--text-color: 255, 255, 255;
 	--hyperlink-color: 255, 255, 255;
 	--accent-color: 255, 255, 0;
 	--text-color-inverted: 0, 0, 255;
-	--theme-toggle: 0;
+	--theme--toggle: 0;
 }
 
-:root.theme-peach,
-:root.theme-peach.scheme-light,
-.theme-peach,
-.theme-peach.scheme-light {
+:root.theme--peach,
+:root.theme--peach.scheme--light,
+.theme--peach,
+.theme--peach.scheme--light {
 	--page-color: 255, 210, 230;
 	--text-color: 0, 0, 0;
 	--hyperlink-color: 0, 0, 0;
@@ -918,10 +928,10 @@ themes
 	--text-color-inverted: 255, 255, 255;
 }
 
-:root.theme-peach,
-:root.theme-peach.scheme-dark,
-.theme-peach,
-.theme-peach.scheme-dark {
+:root.theme--peach,
+:root.theme--peach.scheme--dark,
+.theme--peach,
+.theme--peach.scheme--dark {
 	--page-color: 20, 20, 20;
 	--text-color: 255, 210, 230;
 	--hyperlink-color: 255, 210, 230;
@@ -930,8 +940,8 @@ themes
 }
 
 @media (prefers-color-scheme: dark) {
-	:root.theme-peach,
-	.theme-peach {
+	:root.theme--peach,
+	.theme--peach {
 		--page-color: 20, 20, 20;
 		--text-color: 255, 210, 230;
 		--hyperlink-color: 255, 210, 230;
@@ -940,10 +950,10 @@ themes
 	}
 }
 
-:root.theme-debtron,
-:root.theme-debtron.scheme-light,
-.theme-debtron,
-.theme-debtron.scheme-light {
+:root.theme--retro,
+:root.theme--retro.scheme--light,
+.theme--retro,
+.theme--retro.scheme--light {
 	--page-color: 227, 222, 219;
 	--text-color: 43, 0, 0;
 	--hyperlink-color: 43, 0, 0;
@@ -951,8 +961,8 @@ themes
 	--text-color-inverted: 189, 159, 92;
 }
 
-:root.theme-debtron.scheme-dark,
-.theme-debtron.scheme-dark {
+:root.theme--retro.scheme--dark,
+.theme--retro.scheme--dark {
 	--page-color: 43, 0, 0;
 	--text-color: 189, 159, 92;
 	--hyperlink-color: 189, 159, 92;
@@ -961,8 +971,8 @@ themes
 }
 
 @media (prefers-color-scheme: dark) {
-	:root.theme-debtron,
-	.theme-debtron {
+	:root.theme--retro,
+	.theme--retro {
 		--page-color: 43, 0, 0;
 		--text-color: 189, 159, 92;
 		--hyperlink-color: 189, 159, 92;
@@ -2489,6 +2499,7 @@ input[type="reset"] {
 
 	cursor: pointer;
 	pointer-events: auto;
+	text-transform: uppercase;
 
 	box-shadow: 0px 5px 0px 0px rgba(var(--shadow-color));
 	-webkit-appearance: button; /* iOS and Safari fix */
@@ -3086,4 +3097,65 @@ gallery
 
 .gallery.no-caption figcaption {
 	visibility: hidden;
+}
+
+
+/*--------------------------------------------------------------
+simple-signup form shortcode
+--------------------------------------------------------------*/
+.simple-signup form {
+	--eborder: 1.5px;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: end;
+	max-width: 20rem;
+	margin-left: auto;
+	margin-right: auto;
+
+	background: rgba(var(--page-color), 0);
+	border: var(--eborder) solid;
+	border-radius: 1rem;
+
+	transition: all .3s;
+}
+
+.simple-signup form:focus-within {
+	background: rgb(var(--page-color));
+	border-color: rgb(var(--accent-color));
+}
+
+.simple-signup input {
+	margin: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.simple-signup label {
+	position: absolute;
+	width: 100%;
+
+	text-align: left;
+
+	transform: translate(0,-100%);
+}
+
+.simple-signup input[type="email"] {
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: 0;
+
+	width: 100%;
+	padding-left: 0.8em;
+
+	border-color: transparent;
+}
+
+.simple-signup input[type="email"]:focus {
+	outline: none;
+}
+
+.simple-signup input[type="submit"] {
+	box-shadow: none;
+	border-radius: 1rem;
 }

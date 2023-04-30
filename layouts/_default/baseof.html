@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="{{ "/styles/custom.css" | relURL }}" media="all">
 	{{- end }}
 	<script>
-	const themes = ['scheme-dark','scheme-light','theme-peach','theme-peach scheme-light','theme-debtron','theme-debtron scheme-light'];
+	const themes = ['scheme--dark','scheme--light','theme--peach scheme--dark','theme--peach scheme--light','theme--retro scheme--dark','theme--retro scheme--light'];
 	if (typeof themes !== 'undefined' && themes.length > 0) {
 		if (theme = localStorage.getItem('theme')) {
 			if (themes.indexOf(theme) == -1) {
@@ -59,3 +59,4 @@
 	{{- end }}
 </body>
 </html>
+
