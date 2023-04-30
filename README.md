@@ -24,7 +24,7 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 - Sidenotes (marginalia) inspired by [Tufte CSS](https://edwardtufte.github.io/tufte-css/). Collapsible on mobile.
 - “Gadget” column which provides:
     + “Return to top” button.
-    + “Toggle dark / light theme” button. Has no memory.
+    + Toggle between pre-set themes, or between dark / light scheme.
     + Abbreviations and external links display “tooltips” when a `title=""` attribute is provided. The title text must have at least one space.
 - Easily themable with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). Readily provided themes can be set in `config.yaml` .
 - Three font options to be combined with themes: 1. serif (default) 2. sans-serif 3. monospaced.
@@ -70,6 +70,32 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 - section
 - simple-signup
 - files-list
+
+
+## Theming
+
+The following values can be passed to `params.theme` and modify the site’s appearance.
+
+Themes
+: `theme--default`
+: `theme--peach`
+: `theme--retro`
+: `theme--gray` — no light/dark scheme.
+: `theme--blue` — no light/dark scheme.
+
+Schemes, default: browser preference.
+: `scheme--light` f
+: `scheme--dark` 
+
+
+Modifiers
+: `mod-newline` separates paragraphs with new line instead of ident.
+: `mod--font-serif` sets serif fonts.
+: `mod--font-sans` sets sans-serif fonts.
+: `mod--font-mono` sets monospaced fonts.
+: `mod--fullwidth` forces full-width for the content area.
+
+
 
 * * *
 
