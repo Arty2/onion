@@ -9,7 +9,7 @@
 	{{- with $.Site.GetPage (printf "/%s" $taxonomy_term) -}}
 		{{- if eq $taxi $taxonomy_term -}}
 			<div class="taxa {{ $taxonomy_term }}">				
-				<a class="taxonomy-filter__reset taxon {{ .Data.Singular }}" data-active="true" data-reset="true">{{ (i18n "filter-reset") }}</a>
+				<a class="taxonomy-filter__reset taxon {{ .Data.Singular }}" data-active="true" data-reset="true" href="#">{{ (i18n "filter-reset") }}</a>
 				{{- range $taxon, $taxa := $taxonomy -}}
 					{{- if not (in (slice $tagfilter) $taxon) -}}
 						{{- partial "taxon" .Page -}}
