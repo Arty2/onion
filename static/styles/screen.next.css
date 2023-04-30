@@ -536,7 +536,7 @@ icon font via https://icomoon.io (Brands iconset)
 /*@font-face {
 	font-family: 'Fantasque';
 	src: url('../fonts/FantasqueSansMono-Italic.woff2') format('woff2');
-	font-weight: bold;
+	font-weight: normal;
 	font-style: italic;
 	font-display: swap;
 }*/
@@ -1638,7 +1638,7 @@ main span[title]::before {
 	/*backdrop-filter: blur(var(--page-blur));*/
 	color: rgba(var(--text-color), 1);
 	cursor: help;
-	font-size: 1rem !important; /* TODO: move to typograpy section */;
+	font-size: 1rem !important; /* TODO: move to typography section */;
 	font-variant: initial;
 	text-align: center;
 	text-overflow: ellipsis;
@@ -1647,11 +1647,6 @@ main span[title]::before {
 	-webkit-transition: color 0s;
 	transition        : color 0s;
 	/*outline: 1px dashed red;*/
-}
-
-
-main a[title]:focus::before {
-	pointer-events: none;
 }
 
 main h1[id]:hover::before,
@@ -2130,7 +2125,7 @@ meta styles
 }
 
 @media only screen and ( max-width: 1200px ),
-       only screen and ( min-width: 1400px ) {
+	   only screen and ( min-width: 1400px ) {
 	.meta dl {
 		display: grid;
 		grid-template-columns:
