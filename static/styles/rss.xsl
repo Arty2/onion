@@ -8,26 +8,24 @@
 								<meta charset="UTF-8" />
 								<meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1" />
 								<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no" />
-								<style type="text/css">
-										
-								</style>
+								<link rel="stylesheet" href="/styles/essential.css" type="text/css" />
 						</head>
 						<body>
 								<header>
-										<!-- <h1>RSS Feed</h1> -->
-										<h1><xsl:value-of select="/rss/channel/title"/></h2>
+										<h1>
+	 										<a hreflang="en" target="_blank">
+													<xsl:attribute name="href">
+															<xsl:value-of select="/rss/channel/link"/>
+													</xsl:attribute>
+													<xsl:value-of select="/rss/channel/title"/>
+											</a>
+										</h1>
 										<p><xsl:value-of select="/rss/channel/description"/></p>
- 										<!--<a hreflang="en" target="_blank">
-												<xsl:attribute name="href">
-														<xsl:value-of select="/rss/channel/link"/>
-												</xsl:attribute>
-												Visit Website &#x2192;
-										</a> -->
 								</header>
 								<main>
 										<xsl:for-each select="/rss/channel/item">
 												<article>
-														<h2>
+														<h2 class="title">
 																<a hreflang="en" target="_blank">
 																		<xsl:attribute name="href">
 																				<xsl:value-of select="link"/>
@@ -35,16 +33,13 @@
 																		<xsl:value-of select="title"/>
 																</a>
 														</h2>
-														<p><xsl:value-of select="description/></p>
-														<footer>
-																Published:
-																<time>
-																		<xsl:value-of select="pubDate" />
-																</time>
-														</footer>
+														<p class="summary"><xsl:value-of select="description"/></p>
 												</article>
 										</xsl:for-each>
 								</main>
+								<footer>
+									<p><xsl:value-of select="/rss/channel/copyright"/></p>
+								</footer>
 						</body>
 				</html>
 		</xsl:template>

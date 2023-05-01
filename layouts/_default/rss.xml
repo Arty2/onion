@@ -1,27 +1,29 @@
 {{- $pctx := . -}}
-{{- if .IsHome -}}{{ $pctx = .Site }}{{- end -}}
-{{- $pages := slice -}}
+{{- if .IsHome -}}
+	{{ $pctx = .Site }}
+{{- end -}}
+	{{- $pages := slice -}}
 {{- if or $.IsHome $.IsSection -}}
-{{- $pages = $pctx.RegularPages -}}
+	{{- $pages = $pctx.RegularPages -}}
 {{- else -}}
-{{- $pages = $pctx.Pages -}}
+	{{- $pages = $pctx.Pages -}}
 {{- end -}}
 {{- $limit := .Site.Config.Services.RSS.Limit -}}
 {{- if ge $limit 1 -}}
-{{- $pages = $pages | first $limit -}}
+	{{- $pages = $pages | first $limit -}}
 {{- end -}}
-{{- printf `<?xml version="1.0" encoding="utf-8" standalone="yes"?>` | safeHTML }}
+{{- printf `<?xml version="1.0" encoding="UTF-8"?>` | safeHTML }}
+{{- printf `<?xml-stylesheet href="/styles/rss.xsl" type="text/xsl"?>` | safeHTML }}
 <rss version="2.0"
 	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
 	{{ with .Site.Params.baseURL }}xml:base="{{ . }}"{{ end -}}
 >
-<?xml-stylesheet href="/styles/rss.xsl" type="text/xsl"?>
 	<channel>
 		<title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title | plainify }}{{ else }}{{ with .Title }}{{ . | plainify }} • {{ end }}{{ .Site.Title | plainify }}{{ end }}</title>
 		<link>{{ .Permalink }}</link>
-		<description>{{ with .Site.Params.Description }}{{ . | htmlUnescape | plainify }}{{ else }}{{ .Site.Title | plainify }}{{ end }}</description>
+		<description>{{ with .Description }}{{ . | plainify }}{{ else }}{{if .IsPage}}{{ .Summary | plainify }}{{ else }}{{ with .Site.Params.description }}{{ . | plainify }}{{ else }}{{ with .Site.Params.author.description }}{{ . | plainify }}{{ end }}{{ end }}{{ end }}{{ end }}</description>
 		<generator>Hugo -- gohugo.io</generator>{{ with .Site.LanguageCode }}
 		<language>{{.}}</language>{{end}}{{ with .Site.Author.email }}
 		<managingEditor>{{.}}{{ with $.Site.Author.name }} ({{ . | plainify }}){{end}}</managingEditor>{{end}}{{ with .Site.Author.email }}
@@ -35,9 +37,9 @@
 		<item>
 			<title>{{ .Title }}</title>
 			<link>{{ .Permalink }}</link>
-			<pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
-			{{ with .Site.Author.email }}<author>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</author>{{end}}
 			<guid>{{ .Permalink }}</guid>
+			<pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+			{{ with .Site.Author.name }}<author>{{.}}</author>{{end}}
 			<description>{{ with .Description }}{{ . | markdownify | htmlUnescape | plainify }}{{ else }}{{ .Summary | markdownify | htmlUnescape | plainify }}{{ end }}</description>
 			<content:encoded>
 			{{/* `<![CDATA[` | safeHTML }}{{ .Content | markdownify | safeHTML }}{{ `]]>` | safeHTML */}}
