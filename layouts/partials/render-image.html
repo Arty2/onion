@@ -1,6 +1,7 @@
 <!-- layouts/partials/render-image.html -->
 <!-- get image URL from Markdown tag -->
 {{- $src := (.Destination | safeURL) -}}
+{{ $src = replace $src "./" "" }}
 <!-- split # fragment (used for CSS classes) and keep clean URL -->
 {{- $fragments := (split $src "#") -}}
 {{- $src = index ($fragments) 0 -}}
@@ -10,6 +11,7 @@
 {{/*- $src = path.Base $src -*/}}
 <!-- check if it exists as a page resource -->
 {{- with (.Page.Resources.ByType "image").GetMatch (printf "**%s" $src) -}}
+{{/* with (.Page.Resources.GetMatch $src) */}}
 	{{- if strings.HasSuffix $src ".svg" -}}
 		{{ .Content | safeHTML }}
 	{{- else -}}
@@ -26,11 +28,12 @@
 		{{- if or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "jpeg") }}
 			{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
 		{{ end -}}
-		<!-- if a GIF file, then revert to original to avoid resizing animations; WebP animations don't work -->
+		<!-- if a GIF file revert to original to avoid resizing animations; WebP animations don't work -->
 		{{- if (eq .MediaType.SubType "gif") }}
 			{{ $resized = . }}
 		{{ end -}}
 		<!-- TODO: parse exif https://gohugo.io/content-management/image-processing/#exif -->
+		{{ with $.Title }}<figure>{{ end }}
 		<img src="{{ $resized.RelPermalink }}"
 		width="{{ $resized.Width }}"
 		height="{{ $resized.Height }}"
@@ -41,16 +44,13 @@
 			background-size: cover;"{{ end }}
 		alt="{{ $.Text }}" {{ with $.Title }} title="{{ . }}" {{ end }}
 		{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
-		loading="lazy"
-		decoding="async"
-		>
+		loading="lazy" decoding="async" >
+		{{ with $.Title }}<figcaption>{{ . | markdownify }}</figcaption></figure>{{ end }}
 	{{- end -}}
 <!-- or otherwise simply load the URL -->
 {{- else -}}
 	<img src="{{ .Destination | safeURL }}"
 	alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }}
 	{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
-	loading="lazy"
-	decoding="async"
-	>
+	loading="lazy" decoding="async" data-src="external" >
 {{- end -}}

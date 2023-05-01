@@ -114,7 +114,7 @@ figure {
 }
 
 figcaption {
-	text-align: right;
+	text-align: center;
 }
 
 figcaption > *:first-child {
@@ -665,7 +665,7 @@ hr {
 	font-size: var(--s03);
 }
 
-/*DEBUG*/
+figcaption,
 sub, sup,
 small {
 	font-size: var(--s-1);
@@ -702,6 +702,7 @@ main li > p { /* markdown rendered on checklist */
 .marginalia,
 .entry-content aside,
 main section,
+main div,
 main aside,
 main ul,
 main ol,
@@ -3157,13 +3158,12 @@ simple-signup form shortcode
 
 
 /*--------------------------------------------------------------
-embeds
+video embed
 --------------------------------------------------------------*/
 
 .video {
 	position: relative;
-	padding-bottom: 56.25%;
-	margin: var(--baseline) auto;
+	padding-bottom: 56.25%; /* or replace with aspect-ratio */
 	height: 0;
 	overflow: hidden;
 }
