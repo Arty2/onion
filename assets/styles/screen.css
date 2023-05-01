@@ -2019,7 +2019,7 @@ social elsewere menu & icons
 }
 
 .icon[href^="mailto:"]::before            { content: '📧'; }
-.icon[href$=".rss"]::before               { content: '📡'; }
+.icon[href$="feed.xml"]::before               { content: '📡'; }
 .icon[href*="webring.xxiivv.com"]::before { content: '🕸'; }
 
 .icon[href*="apple-podcasts"]::before  { content: '📻'; }
