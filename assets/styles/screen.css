@@ -486,17 +486,9 @@ icon font via https://icomoon.io (Brands iconset)
 }
 
 @font-face {
-	font-family: 'Alegreya';
-	src: url('../fonts/Alegreya-Italic.woff2') format('woff2');
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Regular.woff2') format('woff2');
 	font-weight: normal;
-	font-style: italic;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Alegreya';
-	src: url('../fonts/Alegreya-Bold.woff2') format('woff2');
-	font-weight: bold;
 	font-style: normal;
 	font-display: swap;
 }
@@ -510,11 +502,27 @@ icon font via https://icomoon.io (Brands iconset)
 }
 
 @font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: optional;
+}
+
+@font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: optional;
+}
+
+@font-face {
 	font-family: 'Alegreya Sans';
 	src: url('../fonts/AlegreyaSans-Italic.woff2') format('woff2');
 	font-weight: normal;
 	font-style: italic;
-	font-display: swap;
+	font-display: optional;
 }
 
 @font-face {
@@ -522,15 +530,7 @@ icon font via https://icomoon.io (Brands iconset)
 	src: url('../fonts/AlegreyaSans-Bold.woff2') format('woff2');
 	font-weight: bold;
 	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Fantasque';
-	src: url('../fonts/FantasqueSansMono-Regular.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
+	font-display: optional;
 }
 
 /*@font-face {
@@ -538,7 +538,7 @@ icon font via https://icomoon.io (Brands iconset)
 	src: url('../fonts/FantasqueSansMono-Italic.woff2') format('woff2');
 	font-weight: normal;
 	font-style: italic;
-	font-display: swap;
+	font-display: optional;
 }*/
 
 @font-face {
@@ -546,7 +546,7 @@ icon font via https://icomoon.io (Brands iconset)
 	src: url('../fonts/FantasqueSansMono-Bold.woff2') format('woff2');
 	font-weight: bold;
 	font-style: normal;
-	font-display: swap;
+	font-display: optional;
 }
 
 @font-face {
