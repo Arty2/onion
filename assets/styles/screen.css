@@ -2018,8 +2018,8 @@ social elsewere menu & icons
 	display: none;
 }
 
-.icon[href^="mailto:"]::before            { content: '📧'; }
-.icon[href$="feed.xml"]::before               { content: '📡'; }
+.icon[href^="mailto:"]::before         { content: '📧'; }
+.icon[href$="feed.xml"]::before        { content: '📡'; }
 .icon[href*="webring.xxiivv.com"]::before { content: '🕸'; }
 
 .icon[href*="apple-podcasts"]::before  { content: '📻'; }
@@ -3153,4 +3153,27 @@ simple-signup form shortcode
 .simple-signup input[type="submit"] {
 	box-shadow: none;
 	border-radius: 1rem;
+}
+
+
+/*--------------------------------------------------------------
+embeds
+--------------------------------------------------------------*/
+
+.video {
+	position: relative;
+	padding-bottom: 56.25%;
+	margin: var(--baseline) auto;
+	height: 0;
+	overflow: hidden;
+}
+
+.video iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	border:0;
 }
