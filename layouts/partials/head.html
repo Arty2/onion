@@ -2,19 +2,23 @@
 
 <meta name="description" content="{{ with .Description }}{{ . }}{{ end }}">
 
-{{ template "_internal/opengraph.html" . }}
-{{ template "_internal/twitter_cards.html" . }}
-{{ template "_internal/schema.html" . }}
-
 {{ if or (fileExists "static/favicon.png") (fileExists "static/favicon.ico") -}}
 <link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
 {{- end }}
 
-<link rel="stylesheet" href="{{ "/styles/screen.next.css" | relURL }}" media="all">
-<!-- <link rel="stylesheet" href="{{ "/styles/screen.css" | relURL }}" media="all"> -->
-<!-- load non essential style sheets, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/  -->
-<link rel="stylesheet" href="{{ "/styles/syntax.css" | relURL }}" media="print" onload="this.media='screen'">
+{{ $style_screen := resources.Get "/styles/screen.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $style_screen.Permalink }}" media="screen">
+<!-- load non essential style sheets, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/ -->
+<link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="print" onload="this.media='screen'">
 <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="print" onload="this.media='screen'">
+<noscript>
+    <link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="screen">
+    <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="screen">
+</noscript>
+
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . }}
+{{ template "_internal/schema.html" . }}
 
 {{ range .AlternativeOutputFormats -}}
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
