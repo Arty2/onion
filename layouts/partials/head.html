@@ -1,13 +1,13 @@
 <title>{{if .IsHome}}{{ .Site.Title }}{{ with .Title }} • {{ . }}{{ end }}{{else}}{{ with .Title }}{{ . }} • {{ end }}{{ .Site.Title }}{{end}}</title>
 
-<meta name="description" content="{{ with .Description }}{{ . }}{{ end }}">
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ else }}{{ with .Site.Params.author.description }}{{ . }}{{ end }}{{ end }}{{ end }}{{ end }}">
 
 {{ if or (fileExists "static/favicon.png") (fileExists "static/favicon.ico") -}}
 <link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
 {{- end }}
 
 {{ $style_screen := resources.Get "/styles/screen.css" | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $style_screen.Permalink }}" media="screen">
+<link rel="stylesheet" href="{{ $style_screen.RelPermalink }}" media="screen">
 <!-- load non essential style sheets, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/ -->
 <link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="print" onload="this.media='screen'">
 <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="print" onload="this.media='screen'">
@@ -16,13 +16,18 @@
     <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="screen">
 </noscript>
 
+<!-- include global custom styles, if they exist -->
+{{- if (fileExists "static/styles/custom.css") -}}
+<link rel="stylesheet" href="{{ "/styles/custom.css" | relURL }}" media="all">
+{{- end -}}
+
 {{ template "_internal/opengraph.html" . }}
 {{ template "_internal/twitter_cards.html" . }}
 {{ template "_internal/schema.html" . }}
 
-{{ range .AlternativeOutputFormats -}}
+{{- range .AlternativeOutputFormats -}}
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
-{{- end }}
+{{- end -}}
 {{ if .IsTranslated -}}
     {{ range .AllTranslations -}}
     <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" title="{{ .Language.LanguageName }}">
