@@ -1,3 +1,6 @@
+/*--------------------------------------------------------------
+global CSS variables
+--------------------------------------------------------------*/
 :root {
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
@@ -8,6 +11,11 @@
 	--line-height: 1.4;
 	--baseline: calc(1rem * var(--line-height));
 }
+
+
+/*--------------------------------------------------------------
+themes
+--------------------------------------------------------------*/
 
 :root {
 	--page-color: 204, 204, 204;
@@ -27,6 +35,90 @@
 	}
 }
 
+
+/*--------------------------------------------------------------
+reset styles
+--------------------------------------------------------------*/
+
+figure {
+	margin: 0;
+}
+
+img, picture, video, canvas, svg {
+	display: block;
+	margin: auto;
+	max-width: 100%;
+	height: auto;
+}
+
+svg {
+	stroke: currentColor;
+	fill: currentColor;
+}
+
+hr {
+	margin: var(--baseline) auto;
+	height: var(--baseline);
+	font-size: var(--s03);
+
+	border: 0;
+	color: inherit;
+	overflow: hidden;
+}
+
+	hr::before {
+		content: '* * *';
+		display: block;
+		text-align: center;
+	}
+
+
+/*--------------------------------------------------------------
+navigation styles
+--------------------------------------------------------------*/
+
+nav a {
+	text-decoration: none;
+}
+
+nav li {
+	min-height: var(--baseline);
+	vertical-align: bottom;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+
+	align-items: center;
+	justify-content: center;
+}
+
+nav > ul {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+nav > ul > li {
+	flex-basis: auto;
+	display: inline-block;
+}
+
+nav > ul > li + li {
+	margin-inline-start: 1em;
+}
+
+nav > ul > li > a {
+	display: inline-block;
+	min-height: var(--baseline);
+}
+
+
+/*--------------------------------------------------------------
+structure and style
+--------------------------------------------------------------*/
+
 html {
 	font-size: 112%;
 	font-size: calc(112% + 0.5vw);
@@ -42,10 +134,8 @@ body {
 	color: rgb(var(--text-color));
 }
 
-body > header,
-main,
-body > footer {
-	margin: 2rem;
+body > header, main, body > footer {
+	margin: var(--baseline);
 }
 
 a {
@@ -53,25 +143,89 @@ a {
 	text-decoration: underline;
 }
 
-h1, h2 {
+h1, h2, h3, h4 {
 	font-size: 1.2rem;
 	font-weight: medium;
 }
 
-article {
-	margin: 1rem auto;
-}
-
-.title, .summary {
-	display: inline;
-}
-
-.title {
-	margin-inline-end: .5em;
-	font-size: 1rem;
-}
-
 footer {
-	font-size: 0.8rem;
+	font-size: 80%;
 	text-align: center;
+}
+
+
+/*--------------------------------------------------------------
+article styles
+--------------------------------------------------------------*/
+
+article {
+	margin: var(--baseline) auto;
+}
+
+article > a {
+	text-decoration: none;
+}
+
+article > a .title {
+	text-decoration: underline;
+}
+
+article .time {
+	display: block;
+}
+
+article .title {
+	display: inline;
+	margin-inline-end: .5em;
+	font-size: 1em;
+}
+
+article .summary {
+	display: inline;
+	text-decoration: none;
+}
+
+article .thumbnail {
+	width: 100%;
+}
+
+.meta {
+	font-size: 80%;
+	margin: var(--baseline) 0;
+}
+
+.meta details {
+	border-top: 2px dashed;
+}
+
+.meta details:last-child {
+	border-bottom: 2px dashed;
+}
+
+
+/*--------------------------------------------------------------
+taxonomy styles
+--------------------------------------------------------------*/
+
+.taxa {
+	text-align: center;
+}
+
+.taxon {
+	display: inline;
+	font-size: 80%;
+}
+
+.taxon + .taxon {
+	margin-inline-start: 1em;
+}
+
+
+/*--------------------------------------------------------------
+temporary / in progress
+--------------------------------------------------------------*/
+
+#search__form,
+.gadgets {
+	display: none;
 }

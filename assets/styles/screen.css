@@ -16,7 +16,8 @@ global CSS variables
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
 	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
 
-	--max-content: 40rem; /* must be in rem or other universal unit */
+	/* must be in rem or other universal unit */
+	/*--max-content: 40rem;*/
 	--max-content: 30rem;
 	/*DEBUG*/
 	/*--max-content: 100%;*/
@@ -266,10 +267,9 @@ pre > code {
 	}
 
 hr {
-	overflow: hidden;
-
 	border: 0;
 	color: inherit;
+	overflow: hidden;
 }
 	hr::before {
 		content: '* * *'; /* ⁂ ✻ 〜 */
@@ -1244,51 +1244,47 @@ body > footer .menu {
 
 
 /*--------------------------------------------------------------
-menu styles
+navigation styles
 --------------------------------------------------------------*/
 
-.menu {
-	text-align: left;
-}
-
-/*DEBUG*/
-/*.menu * { outline: 1px dashed red; }*/
-
-.menu a {
+nav a {
 	text-decoration: none;
 }
 
-.menu li {
+nav li {
 	min-height: var(--baseline);
 	vertical-align: bottom;
 }
 
-.menu ul {
+nav ul {
 	margin: 0;
+	text-align: center;
+
+	align-items: center;
+	justify-content: center;
 }
 
-.menu > ul {
+nav > ul {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.menu > ul > li {
-	padding: 0 var(--baseline) 0 0;
+nav > ul > li {
 	flex-basis: auto;
+	display: inline-block;
 }
 
-.menu > ul > li:last-child {
-	padding-right: 0;
+nav > ul > li + li {
+	margin-inline-start: 1em;
 }
 
-.menu > ul > li:first-child {
-	padding-left: 0;
-}
-
-.menu > ul > li > a {
+nav > ul > li > a {
 	display: inline-block;
 	min-height: var(--baseline);
 }
+
+/*DEBUG*/
+/*nav * { outline: 1px dashed red; }*/
 
 
 /*--------------------------------------------------------------
@@ -1990,8 +1986,6 @@ social elsewere menu & icons
 .social {
 	margin: var(--baseline) auto;
 	z-index: 104;
-
-	text-align: center;
 
 	-webkit-user-select: none;
 	user-select: none;
