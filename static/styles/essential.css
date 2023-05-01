@@ -1,0 +1,77 @@
+:root {
+	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
+	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
+	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
+
+	--max-content: 30rem;
+
+	--line-height: 1.4;
+	--baseline: calc(1rem * var(--line-height));
+}
+
+:root {
+	--page-color: 204, 204, 204;
+	--text-color: 30, 30, 30;
+	--hyperlink-color: 0, 0, 0;
+	--accent-color: 0, 0, 255;
+	--text-color-inverted: 200, 200, 200;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--page-color: 30, 30, 30;
+		--text-color: 204, 204, 204;
+		--hyperlink-color: 255, 255, 255;
+		--accent-color: 0, 0, 255;
+		--text-color-inverted: 100, 100, 100;
+	}
+}
+
+html {
+	font-size: 112%;
+	font-size: calc(112% + 0.5vw);
+}
+
+body {
+	max-width: 30em;
+	margin: 0 auto;
+
+	background: rgb(var(--page-color));
+	font-family: var(--font-sans);
+	font-size: 1.1rem;
+	color: rgb(var(--text-color));
+}
+
+body > header,
+main,
+body > footer {
+	margin: 2rem;
+}
+
+a {
+	color: rgb(var(--hyperlink-color));
+	text-decoration: underline;
+}
+
+h1, h2 {
+	font-size: 1.2rem;
+	font-weight: medium;
+}
+
+article {
+	margin: 1rem auto;
+}
+
+.title, .summary {
+	display: inline;
+}
+
+.title {
+	margin-inline-end: .5em;
+	font-size: 1rem;
+}
+
+footer {
+	font-size: 0.8rem;
+	text-align: center;
+}

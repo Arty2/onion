@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
+	<meta charset="UTF-8" />
 	<meta name="robots" content="noindex" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<style>
-		body {
-			margin: 4em;
-			background: #ccc;
-		}
-		a { color: #333; }
-	</style>
+	<link rel="stylesheet" href="/styles/essential.css" media="screen">
 </head>
 <body>
-	<h1><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>
-	<h2>Error 404: Page Not Found</h2>
-	<p><a href="{{ .Site.BaseURL }}">« Return to the homepage</a></p>
+	<main>
+		<h1>Error 404: Page Not Found • {{ .Site.Title }}</h1>
+		<p><a href="{{ .Site.BaseURL }}">Back to the homepage</a></p>
+	</main>
 </body>
 </html>
