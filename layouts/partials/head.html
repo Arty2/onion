@@ -2,23 +2,28 @@
 
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ else }}{{ with .Site.Params.author.description }}{{ . }}{{ end }}{{ end }}{{ end }}{{ end }}">
 
-{{ if or (fileExists "static/favicon.png") (fileExists "static/favicon.ico") -}}
-<link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
-{{- end }}
-
-<link rel="preload" href="../fonts/Alegreya-Regular.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="preload" href="../fonts/FantasqueSansMono-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+<!-- preload essential fonts -->
+{{- if in .Site.Params.them "sans" }}
 <link rel="preload" href="../fonts/AlegreyaSans-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+{{- else -}}
+<link rel="preload" href="../fonts/Alegreya-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+{{- end }}
+<link rel="preload" href="../fonts/FantasqueSansMono-Regular.woff2" as="font" type="font/woff2" crossorigin/>
 
-{{ $style_screen := resources.Get "/styles/screen.css" | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $style_screen.RelPermalink }}" media="screen">
 <!-- load non essential style sheets, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/ -->
+{{- $style_screen := resources.Get "/styles/screen.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $style_screen.RelPermalink }}" media="screen">
 <link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="print" onload="this.media='screen'">
 <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="print" onload="this.media='screen'">
 <noscript>
     <link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="screen">
     <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="screen">
 </noscript>
+
+<!-- load facicon from /static/ folder (default: blank file) -->
+{{- if or (fileExists "static/favicon.png") (fileExists "static/favicon.ico") -}}
+<link rel="icon" type="image/png" href="{{ "/favicon.png" | relURL }}">
+{{- end }}
 
 <!-- include global custom styles, if they exist -->
 {{- if (fileExists "static/styles/custom.css") -}}
