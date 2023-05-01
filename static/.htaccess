@@ -1,0 +1,65 @@
+# https://github.com/h5bp/server-configs-apache/blob/master/dist/.htaccess
+
+# Disable Indexes on directories
+<IfModule mod_autoindex.c>
+    # Options -Indexes
+</IfModule>
+
+# BEGIN GZIP
+<ifmodule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript  application/rss+xml image/svg+xml
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4.0[678] no-gzip
+BrowserMatch bMSIE !no-gzip !gzip-only-text/html
+</ifmodule>
+# END GZIP
+
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+# BEGIN FORCE HTTPS
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://heracl.es/$1 [R=301,L]
+# END FORCE HTTPS
+
+# # BEGIN CACHING RULES
+# <filesMatch ".(css|jpg|jpeg|png|gif|js|svg|ico)$">
+# Header set Cache-Control "max-age=2628000, public"
+# </filesMatch>
+# # END CACHING RULES
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+
+# Perhaps better to whitelist expires rules? Perhaps.
+  ExpiresDefault                          "access plus 1 month"
+
+# Data
+  ExpiresByType text/xml                  "access plus 0 seconds"
+  ExpiresByType application/xml           "access plus 0 seconds"
+  ExpiresByType application/json          "access plus 0 seconds"
+
+# Favicon (cannot be renamed)
+  ExpiresByType image/x-icon              "access plus 1 week"
+
+# Media: images, video, audio
+  ExpiresByType image/gif                 "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType video/ogg                 "access plus 1 month"
+  ExpiresByType audio/ogg                 "access plus 1 month"
+  ExpiresByType video/mp4                 "access plus 1 month"
+  ExpiresByType video/webm                "access plus 1 month"
+
+# Webfonts
+  ExpiresByType application/x-font-ttf    "access plus 1 month"
+  ExpiresByType font/opentype             "access plus 1 month"
+  ExpiresByType application/x-font-woff   "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+
+# CSS and JavaScript
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+
+</IfModule>

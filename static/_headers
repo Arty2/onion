@@ -1,0 +1,39 @@
+/*
+  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Expect-CT: max-age=0
+  Vary: Accept-Encoding
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=604800; includeSubDomains; preload
+  Feature-Policy: accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'
+  Permissions-Policy: interest-cohort=()
+
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type = "font/woff2"
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type = "font/woff"
+
+/*.webp
+  Cache-Control: public, max-age=2592000
+
+/*.png
+  Cache-Control: public, max-age=2592000
+
+/*.gif
+  Cache-Control: public, max-age=2592000
+
+/*.jpg
+  Cache-Control: public, max-age=2592000
+
+/*.jpeg
+  Cache-Control: public, max-age=2592000
+
+/.well-known/webfinger
+  Content-Type = "application/jrd+json"
+
