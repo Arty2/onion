@@ -4,7 +4,7 @@ global CSS variables
 :root {
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
-	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
+	--font-sans: 'Alegreya Sansa', 'Helveticaa', 'Arial', serif;
 
 	--max-content: 30rem;
 
@@ -40,6 +40,20 @@ themes
 reset styles
 --------------------------------------------------------------*/
 
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+/*	margin: 0;*/
+/*	padding: 0;*/
+	line-height: inherit;
+	text-indent: 0;
+}
+
+html {
+	height: 100%;
+}
+
 figure {
 	margin: 0;
 }
@@ -59,7 +73,7 @@ svg {
 hr {
 	margin: var(--baseline) auto;
 	height: var(--baseline);
-	font-size: var(--s03);
+	font-size: 180%;
 
 	border: 0;
 	color: inherit;
@@ -71,6 +85,50 @@ hr {
 		display: block;
 		text-align: center;
 	}
+
+
+/*--------------------------------------------------------------
+structure and style
+--------------------------------------------------------------*/
+
+html {
+	font-size: 112%;
+	font-size: calc(112% + 0.5vw);
+}
+
+body {
+	padding: var(--baseline);
+	background: rgb(var(--page-color));
+	font-family: var(--font-sans);
+	font-size: 1.1rem;
+	color: rgb(var(--text-color));
+}
+
+body > header,
+main,
+body > footer {
+	margin: 0 auto;
+	max-width: var(--max-content);
+}
+
+a {
+	color: rgb(var(--hyperlink-color));
+	text-decoration: underline;
+}
+
+h1, h2, h3, h4 {
+	font-size: 1.2rem;
+	font-weight: medium;
+}
+
+header h1 {
+	margin: 0;
+}
+
+footer {
+	font-size: 80%;
+	text-align: center;
+}
 
 
 /*--------------------------------------------------------------
@@ -112,45 +170,6 @@ nav > ul > li + li {
 nav > ul > li > a {
 	display: inline-block;
 	min-height: var(--baseline);
-}
-
-
-/*--------------------------------------------------------------
-structure and style
---------------------------------------------------------------*/
-
-html {
-	font-size: 112%;
-	font-size: calc(112% + 0.5vw);
-}
-
-body {
-	max-width: 30em;
-	margin: 0 auto;
-
-	background: rgb(var(--page-color));
-	font-family: var(--font-sans);
-	font-size: 1.1rem;
-	color: rgb(var(--text-color));
-}
-
-body > header, main, body > footer {
-	margin: var(--baseline);
-}
-
-a {
-	color: rgb(var(--hyperlink-color));
-	text-decoration: underline;
-}
-
-h1, h2, h3, h4 {
-	font-size: 1.2rem;
-	font-weight: medium;
-}
-
-footer {
-	font-size: 80%;
-	text-align: center;
 }
 
 
@@ -207,17 +226,26 @@ article .thumbnail {
 taxonomy styles
 --------------------------------------------------------------*/
 
-.taxa {
+.taxonomy-filter  {
 	text-align: center;
 }
 
+.taxa {
+	margin-top: 0;
+}
+
 .taxon {
-	display: inline;
-	font-size: 80%;
+	display: inline-block;
+/*	padding-inline: 0.25em;*/
+
+/*	border: 1px solid;*/
+	font-size: 70%;
+/*	text-decoration: none;*/
+	text-transform: uppercase;
 }
 
 .taxon + .taxon {
-	margin-inline-start: 1em;
+	margin-inline-start: 1rem;
 }
 
 

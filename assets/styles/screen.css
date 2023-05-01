@@ -67,16 +67,12 @@ reset and core styles
 	margin: 0;
 	padding: 0;
 	line-height: inherit;
-	text-indent: 0; /* default is inherit */
+	text-indent: 0;
 }
 
 html {
 	height: 100%;
 }
-
-/*html:focus-within {
-	scroll-behavior: smooth !important;
-}*/
 
 html.mod--fullwidth {
 	--max-content: 100%;
