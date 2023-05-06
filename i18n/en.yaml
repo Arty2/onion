@@ -119,3 +119,9 @@ github-last-pushed:
 
 404-error:
   other: 'Error 404: Page Not Found'
+
+
+## RSS feed
+
+rss-about:
+  other: 'This is an [RSS feed](https://aboutfeeds.com/), a machine-readable page with recent articles from this website. You can subscribe and receive updates with a newsreader.'

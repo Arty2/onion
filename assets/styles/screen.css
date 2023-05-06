@@ -2010,8 +2010,11 @@ social elsewere menu & icons
 }
 
 .icon[href^="mailto:"]::before         { content: '📧'; }
-.icon[href$="feed.xml"]::before        { content: '📡'; }
-.icon[href*="webring.xxiivv.com"]::before { content: '🕸'; }
+.icon[href*="webring"]::before         { content: '🕸'; }
+
+
+.icon[href$="rss"]::before,
+.icon[href$="xml"]::before             { content: '📡'; }
 
 .icon[href*="apple-podcasts"]::before  { content: '📻'; }
 .icon[href*="discord.com"]::before     { content: '👾'; }
@@ -2021,7 +2024,6 @@ social elsewere menu & icons
 .icon[href*="instagram.com"]::before   { content: '📷'; }
 .icon[href*="keybase.io"]::before      { content: '🔑'; }
 .icon[href*="linkedin.com"]::before    { content: '👥'; }
-.icon[href*="mastodon.social"]::before { content: '🐘'; }
 .icon[href*="medium.com"]::before      { content: '✍'; }
 .icon[href*="soundcloud.com"]::before  { content: '☁️'; }
 .icon[href*="spotify.com"]::before     { content: '🔊'; }
@@ -2029,23 +2031,26 @@ social elsewere menu & icons
 .icon[href*="twitter.com"]::before     { content: '🐦'; }
 .icon[href*="vimeo.com"]::before       { content: '🎥'; }
 .icon[href*="youtube.com"]::before     { content: '📺'; }
+.icon[href*="/@"]::before              { content: '🐘'; }
 
-.icon[href*="apple-podcasts"]::before  { color: #9933cc; }
+.icon[href*="apple-podcasts"]:hover    { color: #9933cc; }
 .icon[href*="discord.com"]:hover       { color: #5865f2; }
-.icon[href*="facebook.com"]:hover      { color: #0e76a8; }
 .icon[href*="facebook.com"]:hover      { color: #3b5998; }
 .icon[href*="github.com"]:hover        { color: #2188ff; }
 .icon[href*="gitlab.com"]:hover        { color: #e24329; }
 .icon[href*="instagram.com"]:hover     { color: #e4405f; }
 .icon[href*="keybase.io"]:hover        { color: #1da1f2; }
-.icon[href*="mastodon.social"]:hover   { color: #3088d4; }
 .icon[href*="medium.com"]:hover        { color: #444444; }
 .icon[href*="soundcloud.com"]:hover    { color: #ff3300; }
-.icon[href*="spotify.com"]::before     { color: #1ed760; }
-.icon[href*="twitch.com"]::before      { color: #6441a4; }
+.icon[href*="spotify.com"]:hover       { color: #1ed760; }
+.icon[href*="twitch.com"]:hover        { color: #6441a4; }
 .icon[href*="twitter.com"]:hover       { color: #1da1f2; }
-.icon[href*="vimeo.com"]::before       { color: #1ab7ea; }
+.icon[href*="vimeo.com"]:hover         { color: #1ab7ea; }
 .icon[href*="youtube.com"]:hover       { color: #ff0000; }
+.icon[href*="/@"]:hover                { color: #3088d4; }
+
+.icon[href$="rss"]:hover,
+.icon[href$="xml"]:hover               { color: #f26522; }
 
 
 /*--------------------------------------------------------------

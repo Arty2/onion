@@ -13,12 +13,11 @@
 	{{- $pages = $pages | first $limit -}}
 {{- end -}}
 {{- printf `<?xml version="1.0" encoding="UTF-8"?>` | safeHTML }}
-{{- printf `<?xml-stylesheet href="/feed.xsl" type="text/xsl"?>` | safeHTML }}
+{{- (printf `<?xml-stylesheet href=%#v type="text/xsl"?>` ("/feed.xsl" | relLangURL) ) | safeHTML }}
 <rss version="2.0"
 	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
-	{{ with .Site.Params.baseURL }}xml:base="{{ . }}"{{ end -}}
 >
 	<channel>
 		<title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title | plainify }}{{ else }}{{ with .Title }}{{ . | plainify }} • {{ end }}{{ .Site.Title | plainify }}{{ end }}</title>

@@ -4,14 +4,16 @@
 	<meta charset="UTF-8" />
 	<meta name="robots" content="noindex" />
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<base href="{{ .Site.BaseURL }}">
-	{{- $inlinecss := resources.Get "/styles/essential.css" | minify -}}
-	<style>{{ $inlinecss.Content | safeCSS }}</style>
+	{{- $inlineCSS := resources.Get "/styles/essential.css" | minify -}}
+	<style>{{ $inlineCSS.Content | safeCSS }}</style>
 </head>
 <body>
 	<main>
-		<h1>{{ i18n "404-error" }} • {{ .Site.Title }}</h1>
-		<p><a href="{{ .Site.BaseURL | relLangURL  }}">{{ i18n "404-back" }}</a></p>
+		<h1>{{ i18n "404-error" }}{{ with .Site.Title }} • {{ . }}{{ end }}</h1>
+		<p>
+		{{- with .Site.BaseURL }}<a href="{{ . | relLangURL  }}">{{ i18n "404-back" }}</a>
+		{{- else }}…{{ end -}}
+		</p>
 	</main>
 </body>
 </html>
