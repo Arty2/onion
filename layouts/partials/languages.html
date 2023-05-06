@@ -1,8 +1,11 @@
 {{ if .IsTranslated -}}
 <nav class="languages">
 	<ul>
-		{{- range .AllTranslations -}}
+		{{- $translations := .AllTranslations -}}
+		{{- $len := (len $translations) -}}
+		{{- range $index, $element := $translations }}
 		<li><a href="{{ .RelPermalink }}" lang="{{ .Site.LanguageCode }}" class="{{ if eq $.Page.RelPermalink .RelPermalink }}active{{ end }}">{{ .Site.Language.LanguageName }}</a></li>
+		{{- if eq (add $index 1) $len }}.{{ else }}, {{ end -}}
 		{{- end }}
 	</ul>
 </nav>

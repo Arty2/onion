@@ -27,8 +27,20 @@
 										</h1>
 										<p><xsl:value-of select="/rss/channel/description"/></p>
 										<p><small>{{ i18n "rss-about" | markdownify }}</small></p>
-										<!-- TODO: display available feeds in alternate languages
-										{{ if ne site.Params.show_languages false }}{{ partial "languages" . }}{{ end }} -->
+										<p><small>{{ i18n "rss-languages" | markdownify }}
+										{{ if ne site.Params.show_languages false }}
+											{{- $translations := .AllTranslations -}}
+											{{- $len := (len $translations) -}}
+											{{- range $index, $element := $translations }}
+												{{- if eq $.Page.RelPermalink .RelPermalink -}}
+													{{ .Site.Language.LanguageName }}
+												{{- else -}}
+													<a href="{{ replace (replace .Permalink "/styles" "") ".xsl" ".xml" }}" lang="{{ .Site.LanguageCode }}">{{ .Site.Language.LanguageName }}</a>
+												{{- end -}}
+												{{- if eq (add $index 1) $len }}.{{ else }}, {{ end -}}
+											{{- end }}
+										{{- end }}
+										</small></p>
 								</header>
 								<hr/>
 								<main>

@@ -5,22 +5,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 {{ partial "head" . }}
-	<script>
-	const themes = ['scheme--dark','scheme--light','theme--peach scheme--dark','theme--peach scheme--light','theme--retro scheme--dark','theme--retro scheme--light'];
-	if (typeof themes !== 'undefined' && themes.length > 0) {
-		if (theme = localStorage.getItem('theme')) {
-			if (themes.indexOf(theme) == -1) {
-				theme = themes[0];
-			}
-		} else {
+<script>
+const themes = ['scheme--dark','scheme--light','theme--peach scheme--dark','theme--peach scheme--light','theme--retro scheme--dark','theme--retro scheme--light'];
+if (typeof themes !== 'undefined' && themes.length > 0) {
+	if (theme = localStorage.getItem('theme')) {
+		if (themes.indexOf(theme) == -1) {
 			theme = themes[0];
 		}
-		// get current theme from classList?
 	} else {
-		theme = '{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}';
+		theme = themes[0];
 	}
-	document.documentElement.classList.add(...theme.split(' '))
-	</script>
+	// get current theme from classList?
+} else {
+	theme = '{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}';
+}
+document.documentElement.classList.add(...theme.split(' '))
+</script>
 </head>
 <body id="top" class="{{ .Kind }}"{{ with site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	<!-- inline custom.css located by the content, if it exists -->

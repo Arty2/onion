@@ -178,7 +178,7 @@ askolonion = function(){
 			load_script(window.location.origin + '/scripts/askolonion/fuse.basic.min.js').then(() => {
 				search__input.value = ""; // reset default value
 				first_run = false; // let's never do this again
-				fetch_JSON(search__form.getAttribute('data-language-prefix') + '/index.json', function(data){
+				fetch_JSON(search__form.getAttribute('data-language-prefix') + '/feed.json', function(data){
 					var options = { // fuse.js options; check fuse.js website for details
 						shouldSort: true,
 						location: 0,
@@ -188,20 +188,19 @@ askolonion = function(){
 						keys: [
 							'permalink',
 							'title',
-							'date',
-							'summary',
+							'date_created',
+							'content_html',
 							'section',
-							'categories',
 							'tags'
 							]
 					};
 
-					fuse = new Fuse(data, options); // build the index from the json file
+					fuse = new Fuse(data.items, options); // build the index from the json file
 
 					search__input.addEventListener('keyup', function(e) { // execute search as each character is typed
 						search_exec(this.value);
 					});
-					// console.log("index.json loaded"); // DEBUG
+					// console.log("feed.json loaded"); // DEBUG
 				});
 			}).catch((error) => { console.log('askolonion failed to load: ' + error); });
 		}
@@ -223,12 +222,10 @@ askolonion = function(){
 			for (let item in results.slice(0,5)) { // only show first 5 results
 				search_items = search_items +
 `<article><a href="${results[item].item.permalink}" tabindex="0">
-	<time class="time">${results[item].item.date}</time>
+	<time class="time">${results[item].item.date_created}</time>
 	<h3 class="title">${results[item].item.title}</h3>
-	<p class="summary">${results[item].item.summary}</p>
-	<span class="section">${results[item].item.section}</span>
-	<span class="categories">${results[item].item.categories.join(', ')}</span>
-	<span class="tags">${results[item].item.tags.join(', ')}</span>
+	<p class="summary">${results[item].item.content_html}</p>
+	<p class="taxa">${results[item].item.tags.join(', ')}</p>
 </article>`;
 			}
 			results_available = true;

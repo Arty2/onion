@@ -1,0 +1,47 @@
+{{/* layouts/index.json */}}
+{
+"version": "https://jsonfeed.org/version/1.1",
+"title": "{{ if eq  .Title  .Site.Title }}{{ .Site.Title | plainify }}{{ else }}{{ with .Title }}{{ . | plainify }} • {{ end }}{{ .Site.Title | plainify }}{{ end }}",
+"home_page_url": "{{- with .Site.BaseURL }}{{ . | absLangURL  }}{{ end -}}",
+"feed_url": "{{ .Permalink | absLangURL }}",
+{{ with .Site.Params.Author -}}
+	"authors": [{
+		"name": "{{ .name }}"{{ if .email }},
+		"url": "mailto:{{ .email }}"{{ end }}{{ if .image }},
+		"avatar": "{{ .image | absLangURL }}" {{ end }}
+	}],
+{{- end }}
+"items":
+{{- $index := slice -}}
+{{- range where .Site.RegularPages.ByDate.Reverse "Type" "not in"  (slice "page" "json") -}}
+	{{- if .Params.dateCreated -}}
+			{{ $.Scratch.Set "date_created" (.Params.dateCreated) }}
+	{{- else -}}
+			{{- if isset site.Params "date_format" -}}
+				{{- $.Scratch.Set "date_created" (.Date.Format site.Params.date_format) -}}
+			{{- else -}}
+				{{- $.Scratch.Set "date_created" (.Date.Format "2006-01-02") -}}
+			{{- end -}}
+	{{- end -}}
+	{{- if .Description -}}
+		{{ $.Scratch.Set "content" (.Description | markdownify) }}
+	{{- else if .Summary -}}
+		{{ $.Scratch.Set "content" (.Summary | markdownify) }}
+	{{- else if .Content -}}
+		{{ $.Scratch.Set "content" (.Content | markdownify) }}
+	{{- else -}}
+		{{ $.Scratch.Set "content" "no content" }}
+	{{- end -}}
+    {{- $index = $index | append (dict
+    	"title" ( .Title | plainify )
+    	"id" (md5 .Permalink)
+    	"url" .Permalink
+    	"section" (i18n (.Section | title))
+    	"tags" (apply .Params.tags "i18n" "." )
+    	"content_html" ($.Scratch.Get "content")
+    	"date_created" ($.Scratch.Get "date_created")
+    	"date_published" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    ) -}}
+{{- end -}}
+{{- $index | jsonify -}}
+}
