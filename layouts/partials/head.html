@@ -3,16 +3,19 @@
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ else }}{{ with .Site.Params.author.description }}{{ . }}{{ end }}{{ end }}{{ end }}{{ end }}">
 
 <!-- preload essential fonts -->
-{{- if in .Site.Params.them "sans" }}
+{{- if not (in .Site.Params.theme ",mod--font-local") -}}
+{{- if in .Site.Params.theme "mod--font-sans" }}
 <link rel="preload" href="../fonts/AlegreyaSans-Regular.woff2" as="font" type="font/woff2" crossorigin/>
 {{- else -}}
 <link rel="preload" href="../fonts/Alegreya-Regular.woff2" as="font" type="font/woff2" crossorigin/>
 {{- end }}
 <link rel="preload" href="../fonts/FantasqueSansMono-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+{{- end }}
 
 <!-- load non essential style sheets, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/ -->
-{{- $style_screen := resources.Get "/styles/screen.css" | minify | fingerprint -}}
-<link rel="stylesheet" href="{{ $style_screen.RelPermalink }}" media="screen">
+{{- $style := resources.Get "/styles/screen.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" media="screen">
+<!-- <link rel="stylesheet" href="/styles/essential.css" media="screen"> -->
 <link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="print" onload="this.media='screen'">
 <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="print" onload="this.media='screen'">
 <noscript>
