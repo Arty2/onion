@@ -4,12 +4,14 @@
 	<meta charset="UTF-8" />
 	<meta name="robots" content="noindex" />
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="/styles/essential.css" media="screen">
+	<base href="{{ .Site.BaseURL }}">
+	{{ $style := resources.Get "/styles/essential.css" | minify | fingerprint }}
+	<link rel="stylesheet" href="{{ $style.RelPermalink }}" media="screen">
 </head>
 <body>
 	<main>
-		<h1>Error 404: Page Not Found • {{ .Site.Title }}</h1>
-		<p><a href="{{ .Site.BaseURL }}">Back to the homepage</a></p>
+		<h1>{{ i18n "404-error" }} • {{ .Site.Title }}</h1>
+		<p><a href="{{ .Site.BaseURL | relLangURL  }}">{{ i18n "404-back" }}</a></p>
 	</main>
 </body>
 </html>

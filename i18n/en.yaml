@@ -110,3 +110,12 @@ github-license:
 
 github-last-pushed:
   other: Last Pushed
+
+
+## 404 error
+
+404-back:
+  other: Back to the homepage
+
+404-error:
+  other: 'Error 404: Page Not Found'

@@ -110,3 +110,12 @@ github-license:
 
 github-last-pushed:
   other: Τελευταία ενημέρωση
+
+
+## 404 error
+
+404-back:
+  other: Επιστροφή στην αρχική
+
+404-error:
+  other: 'Σφάλμα 404: Η σελίδα δεν βρέθηκε'
