@@ -13,8 +13,8 @@
 {{- end }}
 
 <!-- load non essential style sheets, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/ -->
-{{- $style := resources.Get "/styles/screen.css" | minify | fingerprint -}}
-<link rel="stylesheet" href="{{ $style.RelPermalink }}" media="screen">
+{{- $corecss := resources.Get "/styles/screen.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $corecss.RelPermalink }}" media="screen">
 <!-- <link rel="stylesheet" href="/styles/essential.css" media="screen"> -->
 <link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="print" onload="this.media='screen'">
 <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="print" onload="this.media='screen'">

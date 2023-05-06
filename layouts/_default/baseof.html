@@ -25,9 +25,9 @@
 <body id="top" class="{{ .Kind }}"{{ with site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>
 	<!-- inline custom.css located by the content, if it exists -->
 	{{- with .Resources.GetMatch "custom.css" -}}
-		{{- $customcss := . | resources.Minify -}}
+		{{- $inlinecss := . | resources.Minify -}}
 		<style>
-			{{ $customcss.Content | safeCSS }}
+			{{ $inlinecss.Content | safeCSS }}
 		</style>
 	{{- end -}}
 	{{- if ne site.Params.show_gadgets false }}{{ partial "gadgets" . }}{{ end -}}

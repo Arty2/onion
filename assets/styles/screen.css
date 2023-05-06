@@ -1129,7 +1129,7 @@ body > footer {
 	max-width: var(--max-content);
 	/*outline: 1px dashed pink;*/
 
-	background: rgba(var(--page-color), var(--page-transparency));
+/*	background: rgba(var(--page-color), var(--page-transparency));*/
 }
 
 body > header {
@@ -1243,16 +1243,16 @@ body > footer .menu {
 navigation styles
 --------------------------------------------------------------*/
 
-nav a {
+menu a {
 	text-decoration: none;
 }
 
-nav li {
+menu li {
 	min-height: var(--baseline);
 	vertical-align: bottom;
 }
 
-nav ul {
+nav menu {
 	margin: 0;
 	text-align: center;
 
@@ -1260,21 +1260,21 @@ nav ul {
 	justify-content: center;
 }
 
-nav > ul {
+nav > menu {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-nav > ul > li {
+nav > menu > li {
 	flex-basis: auto;
 	display: inline-block;
 }
 
-nav > ul > li + li {
+nav > menu > li + li {
 	margin-inline-start: 1em;
 }
 
-nav > ul > li > a {
+nav > menu > li > a {
 	display: inline-block;
 	min-height: var(--baseline);
 }

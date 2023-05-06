@@ -5,8 +5,8 @@
 	<meta name="robots" content="noindex" />
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<base href="{{ .Site.BaseURL }}">
-	{{ $style := resources.Get "/styles/essential.css" | minify | fingerprint }}
-	<link rel="stylesheet" href="{{ $style.RelPermalink }}" media="screen">
+	{{- $inlinecss := resources.Get "/styles/essential.css" | minify -}}
+	<style>{{ $inlinecss.Content | safeCSS }}</style>
 </head>
 <body>
 	<main>

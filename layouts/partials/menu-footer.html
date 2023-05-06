@@ -1,14 +1,14 @@
 {{ if ne site.Params.Menu_footer false }}
 <nav class="menu">
-	<ul>
+	<menu>
 		{{- if site.Menus.footer -}}
 			{{- range site.Menus.footer -}}
 				<li class="{{ if .HasChildren }}has-children{{ end }}">{{ .Pre }}<a href="{{ .URL }}">{{ (i18n .Name) }}</a>{{ .Post }}{{ if .HasChildren -}}
-					<ul>
+					<menu>
 						{{- range .Children -}}
 							<li><a href="{{ .URL }}">{{ .Pre }}{{ (i18n .Name) }}{{ .Post }}</a></li>
 						{{- end -}}
-					</ul>
+					</menu>
 				{{- end -}}</li>
 			{{- end -}}
 		{{- else -}}
@@ -18,6 +18,6 @@
 				{{- end }}
 			{{- end -}}
 		{{- end -}}
-	</ul>
+	</menu>
 </nav>
 {{ end }}
