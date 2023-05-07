@@ -57,6 +57,103 @@ global CSS variables
 
 
 /*--------------------------------------------------------------
+fonts
+
+Alegrya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
+FantasqueSan: via https://github.com/belluzj/fantasque-sans;
+icon font via https://icomoon.io (Brands iconset)
+--------------------------------------------------------------*/
+
+@font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: 'Alegreya';
+	src: url('../fonts/Alegreya-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: 'Alegreya Sans';
+	src: url('../fonts/AlegreyaSans-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: fallback;
+}
+
+/*@font-face {
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: fallback;
+}*/
+
+@font-face {
+	font-family: 'Fantasque';
+	src: url('../fonts/FantasqueSansMono-Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: 'icons';
+	src: url('../fonts/icons.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'brands';
+	src: url('../fonts/brands.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+/*--------------------------------------------------------------
 reset and base styles
 --------------------------------------------------------------*/
 
@@ -409,167 +506,6 @@ a:active {
 
 
 /*--------------------------------------------------------------
-core table styles
---------------------------------------------------------------*/
-
-table {
-	margin-left: auto;
-	margin-right: auto;
-	width: 100%;
-	overflow-x: scroll;
-	border-spacing: 2px;
-	text-align: left;
-}
-
-table caption {
-	caption-side: bottom;
-	text-align: right;
-}
-
-thead, tbody, tr {
-	width: 100%;
-}
-
-th, td {
-	padding: 0.25em;
-
-	border-top   : 0.5px dashed currentColor;
-	border-bottom: 0.5px dashed transparent;
-}
-
-th {
-	border-top: none;
-	border-bottom: 1.5px solid currentColor;
-}
-
-th:empty {
-	display: none;
-}
-
-tr:first-child > td {
-	border-top-color: transparent;
-}
-
-tr:hover {
-	color: rgb(var(--text-color-inverted));
-	background: rgb(var(--text-color));
-/*	outline: 2px solid;*/
-/*	outline-offset: 2px;*/
-}
-
-tr:hover td {
-	border-color: transparent;
-}
-
-thead tr:hover {
-/*	outline: none;*/
-	color: inherit;
-	background: none;
-}
-
-/*tr:last-child > td {
-	border-bottom-color: currentColor;
-	border-bottom-style: solid;
-}*/
-
-/*--------------------------------------------------------------
-fonts
-
-Alegrya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
-FantasqueSan: via https://github.com/belluzj/fantasque-sans;
-icon font via https://icomoon.io (Brands iconset)
---------------------------------------------------------------*/
-
-@font-face {
-	font-family: 'Alegreya';
-	src: url('../fonts/Alegreya-Regular.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Fantasque';
-	src: url('../fonts/FantasqueSansMono-Regular.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Alegreya Sans';
-	src: url('../fonts/AlegreyaSans-Regular.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Alegreya';
-	src: url('../fonts/Alegreya-Italic.woff2') format('woff2');
-	font-weight: normal;
-	font-style: italic;
-	font-display: fallback;
-}
-
-@font-face {
-	font-family: 'Alegreya';
-	src: url('../fonts/Alegreya-Bold.woff2') format('woff2');
-	font-weight: bold;
-	font-style: normal;
-	font-display: fallback;
-}
-
-@font-face {
-	font-family: 'Alegreya Sans';
-	src: url('../fonts/AlegreyaSans-Italic.woff2') format('woff2');
-	font-weight: normal;
-	font-style: italic;
-	font-display: fallback;
-}
-
-@font-face {
-	font-family: 'Alegreya Sans';
-	src: url('../fonts/AlegreyaSans-Bold.woff2') format('woff2');
-	font-weight: bold;
-	font-style: normal;
-	font-display: fallback;
-}
-
-/*@font-face {
-	font-family: 'Fantasque';
-	src: url('../fonts/FantasqueSansMono-Italic.woff2') format('woff2');
-	font-weight: normal;
-	font-style: italic;
-	font-display: fallback;
-}*/
-
-@font-face {
-	font-family: 'Fantasque';
-	src: url('../fonts/FantasqueSansMono-Bold.woff2') format('woff2');
-	font-weight: bold;
-	font-style: normal;
-	font-display: fallback;
-}
-
-@font-face {
-	font-family: 'icons';
-	src: url('../fonts/icons.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'brands';
-	src: url('../fonts/brands.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
-
-/*--------------------------------------------------------------
 typography & vertical rythm
 --------------------------------------------------------------*/
 
@@ -836,6 +772,69 @@ main > *:first-child {
 }*/
 
 
+/*--------------------------------------------------------------
+table styles
+--------------------------------------------------------------*/
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	overflow-x: scroll;
+	border-spacing: 2px;
+	text-align: left;
+}
+
+table caption {
+	caption-side: bottom;
+	text-align: right;
+}
+
+thead, tbody, tr {
+	width: 100%;
+}
+
+th, td {
+	padding: 0.25em;
+
+	border-top   : 0.5px dashed currentColor;
+	border-bottom: 0.5px dashed transparent;
+}
+
+th {
+	border-top: none;
+	border-bottom: 1.5px solid currentColor;
+}
+
+th:empty {
+	display: none;
+}
+
+tr:first-child > td {
+	border-top-color: transparent;
+}
+
+tr:hover {
+	color: rgb(var(--text-color-inverted));
+	background: rgb(var(--text-color));
+/*	outline: 2px solid;*/
+/*	outline-offset: 2px;*/
+}
+
+tr:hover td {
+	border-color: transparent;
+}
+
+thead tr:hover {
+/*	outline: none;*/
+	color: inherit;
+	background: none;
+}
+
+/*tr:last-child > td {
+	border-bottom-color: currentColor;
+	border-bottom-style: solid;
+}*/
 
 /*--------------------------------------------------------------
 animations
