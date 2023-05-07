@@ -1,9 +1,15 @@
+{{/* /layouts/shortcodes/github-content.html */}}
 {{- $repository := .Get "repository" -}}
 {{- $readme := getJSON "https://api.github.com/repos/" $repository "/readme" -}}
-{{- $content := $readme.content | base64Decode -}}
-{{- with .Page.Params.Title -}}
-	{{ $content = replace $content (printf "# %s" . ) "" }}
+{{- $content := printf `%s <a href="https://github.com/%s">%s</a>` (i18n "github-error") $repository $repository -}}
+{{- if gt (len $readme) 0 -}}
+	{{- $content = $readme.content | base64Decode -}}
+	<!-- remove title if same with the document's H1 -->
+	{{- with .Page.Params.Title -}}
+		{{ $content = replace $content (printf "# %s" . ) "" }}
+	{{- end -}}
+	<!-- make links relative -->
+	{{- $content = replace $content "](./" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}} 
+	{{- $content = replace $content "](/" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}}
 {{- end -}}
-{{- $content = replace $content "](./" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}}
-{{- $content = replace $content "](/" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}}
 {{- $content | markdownify -}}

@@ -97,10 +97,10 @@ pages:
   other: Pages
 
 
-## github-content
+## github-content and meta
 
-hosted-on-github:
-  other: Hosted on GitHub
+github-hosted:
+  other: GitHub Repository
 
 github-repository:
   other: Repository
@@ -109,7 +109,10 @@ github-license:
   other: License
 
 github-last-pushed:
-  other: Last Pushed
+  other: Last Push
+
+github-error:
+  other: "Error fetching content. View repository on GitHub:"
 
 
 ## 404 error

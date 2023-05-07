@@ -70,7 +70,7 @@ post-publication:
   other: Δημοσίευση
 
 post-taxonomies:
-  other: Ταξονομίες
+  other: Κατηγοριοποίηση
 
 post-meta:
   other: Σχετικά
@@ -97,10 +97,10 @@ pages:
   other: Σελίδες
 
 
-## github-content
+## github-content and meta
 
-hosted-on-github:
-  other: Στο GitHub
+github-hosted:
+  other: Αποθετήριο GitHub
 
 github-repository:
   other: Αποθετήριο
@@ -109,7 +109,10 @@ github-license:
   other: Άδεια χρήσης
 
 github-last-pushed:
-  other: Τελευταία ενημέρωση
+  other: Eνημέρωση
+
+github-error:
+  other: "Σφάλμα φόρτωσης. Προβολή αποθετηρίου στο GitHub:"
 
 
 ## 404 error

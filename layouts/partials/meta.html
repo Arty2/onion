@@ -1,6 +1,6 @@
 <aside class="meta">
 {{ if and (ne .Site.Params.show_toc false) (ne .Params.show_toc false) -}}
-	{{ if ge (len .TableOfContents) 200 }}
+	{{ if ge (len .TableOfContents) 400 }}
 	<details>
 		<summary>{{ (i18n "contents") }}</summary>
 		{{.TableOfContents}}
@@ -134,15 +134,15 @@
 {{ end }}
 {{ with .Params.Github -}}
 	{{- $stats := getJSON "https://api.github.com/repos/" . -}}
-	<details open>
-		<summary>{{ i18n "hosted-on-github" }}</summary>
+	<details>
+		<summary>{{ i18n "github-hosted" }}</summary>
 		<dl>
 			<dt>{{ i18n "github-repository" }}</dt>
 				<dd><a href="https://github.com/{{ . }}" target="_blank">{{ . }}</a></dd>
 			{{ with $stats.license }}<dt>{{ i18n "github-license" }}</dt>
 				<dd>{{ .name }}</dd>{{ end }}
-			<dt>{{ i18n "github-last-pushed" }}</dt>
-				<dd>{{ $stats.pushed_at }}</dd>
+			{{ with $stats.pushed_at }}<dt>{{ i18n "github-last-pushed" }}</dt>
+				<dd>{{ . }}</dd>{{ end }}
 		</dl>	
 	</details>
 {{ end }}

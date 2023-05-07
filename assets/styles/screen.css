@@ -2111,6 +2111,7 @@ meta styles
 .meta dd {
 	grid-column: dd;
 	align-self: end;
+	word-wrap: anywhere;
 }
 
 .meta .tags {
@@ -2123,7 +2124,7 @@ meta styles
 }
 
 @media only screen and ( max-width: 1200px ),
-	   only screen and ( min-width: 1400px ) {
+       only screen and ( min-width: 1700px ) {
 	.meta dl {
 		display: grid;
 		grid-template-columns:
