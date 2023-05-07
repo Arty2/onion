@@ -12,8 +12,9 @@
 								<meta charset="UTF-8" />
 								{{- printf `<title><xsl:value-of select="/rss/channel/title"/></title>` | safeHTML }}
 								<meta name="viewport" content="width=device-width,initial-scale=1"/>
-								{{- $inlineCSS := resources.Get "/styles/essential.css" | minify }}
-								<style>{{ $inlineCSS.Content | safeCSS }}</style>
+								{{- with resources.Get "/styles/essential.css" | minify }}
+								<style>{{ .Content | safeCSS }}</style>
+								{{ end -}}
 						</head>
 						<body>
 								<header>
@@ -28,14 +29,16 @@
 										<p><xsl:value-of select="/rss/channel/description"/></p>
 										<p><small>{{ i18n "rss-about" | markdownify }}</small></p>
 										<p><small>{{ i18n "rss-languages" | markdownify }}
-										{{ if ne site.Params.show_languages false }}
+										{{ if ne site.Params.show_languages false -}}
 											{{- $translations := .AllTranslations -}}
 											{{- $len := (len $translations) -}}
-											{{- range $index, $element := $translations }}
+											{{- $xsl_file := replace .RelPermalink (printf `/%s/` .Language.Lang) "/" -}}
+											{{- range $index, $language := $translations }}
 												{{- if eq $.Page.RelPermalink .RelPermalink -}}
-													{{ .Site.Language.LanguageName }}
+													{{- .Site.Language.LanguageName -}}
 												{{- else -}}
-													<a href="{{ replace (replace .Permalink "/styles" "") ".xsl" ".xml" }}" lang="{{ .Site.LanguageCode }}">{{ .Site.Language.LanguageName }}</a>
+													{{- $rss_file := printf `%s%s` "/" (path.Base ($.OutputFormats.Get "rss").Permalink) -}}
+													<a href="{{ replace .Permalink $xsl_file $rss_file }}" lang="{{ .Language }}">{{ .Language.LanguageName }}</a>
 												{{- end -}}
 												{{- if eq (add $index 1) $len }}.{{ else }}, {{ end -}}
 											{{- end }}

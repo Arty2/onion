@@ -4,7 +4,7 @@ global CSS variables
 :root {
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
-	--font-sans: 'Alegreya Sansa', 'Helveticaa', 'Arial', serif;
+	--font-sans: 'Alegreya Sansa', 'Helvetica', 'Arial', serif;
 
 	--max-content: 30rem;
 
