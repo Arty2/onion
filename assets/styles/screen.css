@@ -14,7 +14,7 @@ global CSS variables
 	--font-icons: 'brands', 'icons', 'Fantasque', monospace;
 	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
 	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
-	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', serif;
+	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', sans-serif;
 
 	/* must be in rem or other universal unit */
 	/*--max-content: 40rem;*/
@@ -144,7 +144,9 @@ abbr {
 		content: '*';
 	}
 
-mark::before, mark::after {
+mark::before, mark::after,
+del::before, del::after,
+s::before, s::after {
 	content: ' ';
 	white-space: pre;
 }
@@ -319,8 +321,8 @@ li ul, li ol {
 	margin-left: max(1rem, var(--baseline));
 }
 
-li:has(input[type="checkbox"]) { list-style: none; }
-li > input[type="checkbox"] { vertical-align: sub; }
+main li:has(input[type="checkbox"]) { list-style: none; }
+main li > input[type="checkbox"] { vertical-align: sub; }
 
 
 /*--------------------------------------------------------------
@@ -728,6 +730,7 @@ h1, h2, h3, h4, h5, h6 {
 
 main h1, main h2, main h3, main h4, main h5, main h6 {
 	margin-top: calc(1 * var(--baseline));
+	line-height: 1;
 }
 
 main h1 { font-size: var(--s04); }
@@ -770,6 +773,32 @@ main > *:first-child {
 	font-size: var(--s-2);
 	font-weight: bold;
 	letter-spacing: 1px;
+}
+
+main dl {
+	display: grid;
+	grid-column: dt;
+	align-self: start;
+
+	margin-top: calc(1 * var(--baseline));
+	margin-left: 0;
+
+	grid-template-columns:
+		[dt] 2fr
+		[dd] 5fr;
+}
+
+main dt {
+	margin-top: 0;
+}
+	main dt::after {
+		content: ': ';
+		white-space: pre;
+	}
+
+main dd {
+	grid-column: dd;
+	align-self: end;
 }
 
 /*TODO:  remove font sizing from search widget*/
@@ -2010,12 +2039,12 @@ social elsewere menu & icons
 }
 
 .icon[href^="mailto:"]::before         { content: '📧'; }
-.icon[href*="webring"]::before         { content: '🕸'; }
+.icon[href*="webring.xxiivv"]::before  { content: '🕸'; }
 
 
 .icon[href$=".json"]::before,
 .icon[href$=".rss"]::before,
-.icon[href$=".xml"]::before             { content: '📡'; }
+.icon[href$=".xml"]::before            { content: '📡'; }
 
 .icon[href*="apple-podcasts"]::before  { content: '📻'; }
 .icon[href*="discord.com"]::before     { content: '👾'; }
