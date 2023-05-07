@@ -10,11 +10,11 @@ global CSS variables
 --------------------------------------------------------------*/
 
 :root {
-	/* font stacks */
-	--font-icons: 'brands', 'icons', 'Fantasque', monospace;
-	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
-	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
-	--font-sans: 'Alegreya Sans', 'Helvetica', 'Arial', sans-serif;
+	/* local font stacks */
+	--font-icons: 'Emoji One BW', 'Noto Emoji', 'Segoe UI', monospace;
+	--font-mono: 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
+	--font-serif: 'Source Serif', 'New York', 'Cambria', 'Georgia', 'Roboto Serif', 'DejaVu Serif', serif;
+	--font-sans: 'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
 
 	/* must be in rem or other universal unit */
 	/*--max-content: 40rem;*/
@@ -57,7 +57,7 @@ global CSS variables
 
 
 /*--------------------------------------------------------------
-reset and core styles
+reset and base styles
 --------------------------------------------------------------*/
 
 *,
@@ -297,8 +297,9 @@ blockquote + figcaption {
 	text-align: right;
 }
 
+
 /*--------------------------------------------------------------
-core list styles
+list styles
 --------------------------------------------------------------*/
 
 ul, ol {
@@ -326,7 +327,7 @@ main li > input[type="checkbox"] { vertical-align: sub; }
 
 
 /*--------------------------------------------------------------
-core hyperlink styles
+hyperlink styles
 --------------------------------------------------------------*/
 
 a,
@@ -450,8 +451,10 @@ tr:first-child > td {
 }
 
 tr:hover {
-	outline: 2px solid;
-	outline-offset: 2px;
+	color: rgb(var(--text-color-inverted));
+	background: rgb(var(--text-color));
+/*	outline: 2px solid;*/
+/*	outline-offset: 2px;*/
 }
 
 tr:hover td {
@@ -459,7 +462,9 @@ tr:hover td {
 }
 
 thead tr:hover {
-	outline: none;
+/*	outline: none;*/
+	color: inherit;
+	background: none;
 }
 
 /*tr:last-child > td {
@@ -582,27 +587,35 @@ body {
 	font-feature-settings: "kern", "liga", "clig", "onum", "pnum";
 }
 
-html:not([class*="mod--font"]),
+html:not([class*="mod--font-local"]) {
+	--font-icons: 'brands', 'icons', 'Emoji One BW', 'Noto Emoji', 'Segoe UI', monospace;
+	--font-mono: 'Fantasque', 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
+	--font-serif: 'Alegreya', 'Source Serif', 'New York', 'Cambria', 'Georgia', 'Roboto Serif', 'DejaVu Serif', serif;
+	--font-sans: 'Alegreya Sans', 'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
+
+	--smod: 0.93;
+/*	--lmod: 0.93;*/
+}
+
+html, /* default font */
 .mod--font-serif {
-	font-family: serif;
-	font-family: var(--font-serif);
+	font-family: var(--font-serif, serif);
 }
 
 .mod--font-sans {
-	font-family: sans-serif;
-	font-family: var(--font-sans);
+	font-family: var(--font-sans, sans-serif);
+}
+
+.mod--font-mono, .mod--font-monospace {
+	font-family: var(--font-mono, monospace);
 }
 
 pre, code, kbd,
 button, input[type=submit], input[type=reset],
-.menu, .sharing, .languages, .taxon, .more, .meta summary,
-.mod--font-mono, .mod--font-monospace {
-	--smod: 0.85;
-	--lmod: 0.93;
+.menu, .sharing, .languages, .taxon, .more, .meta summary {
 	line-height: calc(var(--line-height) * var(--lmod));
 	
-	font-family: monospace;
-	font-family: var(--font-mono);
+	font-family: var(--font-mono, monospace);
 	font-size: calc(var(--s00) * var(--smod));
 }
 
@@ -637,8 +650,8 @@ main h6:target::before,
 sup[id^="fnref:"]:target a::before,
 .footnote-ref, .footnote-backref, li[id^="fn:"]::marker,
 .font-icons {
-	--smod:  0.93;
-	--lmod:  0.985;
+/*	--smod:  0.93;*/
+/*	--lmod:  0.985;*/
 	font-family: var(--font-icons) !important;
 }
 
@@ -775,7 +788,7 @@ main > *:first-child {
 	letter-spacing: 1px;
 }
 
-main dl {
+.entry-content dl {
 	display: grid;
 	grid-column: dt;
 	align-self: start;
@@ -788,15 +801,15 @@ main dl {
 		[dd] 5fr;
 }
 
-main dt {
+.entry-content dt {
 	margin-top: 0;
 }
-	main dt::after {
+	.entry-content dt::after {
 		content: ': ';
 		white-space: pre;
 	}
 
-main dd {
+.entry-content dd {
 	grid-column: dd;
 	align-self: end;
 }
@@ -2437,7 +2450,7 @@ form styles
 input, button, textarea, fieldset {
 	min-height: var(--baseline);
 	margin: calc(var(--baseline) / 1) 0 0 0;
-	padding: calc(var(--baseline) / 2);
+	padding: calc(var(--baseline) / 4);
 
 	background: none;
 	border: 0.5px solid;	
