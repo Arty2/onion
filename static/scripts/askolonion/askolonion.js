@@ -189,7 +189,7 @@ askolonion = function(){
 							'permalink',
 							'title',
 							'date_created',
-							'content_html',
+							'content_text',
 							'section',
 							'tags'
 							]
@@ -224,7 +224,7 @@ askolonion = function(){
 `<article><a href="${results[item].item.permalink}" tabindex="0">
 	<time class="time">${results[item].item.date_created}</time>
 	<h3 class="title">${results[item].item.title}</h3>
-	<p class="summary">${results[item].item.content_html}</p>
+	<p class="summary">${results[item].item.content_text}</p>
 	<p class="taxa">${results[item].item.tags.join(', ')}</p>
 </article>`;
 			}
