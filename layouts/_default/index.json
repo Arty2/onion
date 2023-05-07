@@ -13,7 +13,12 @@
 {{- end }}
 "items":
 {{- $index := slice -}}
-{{- range where .Site.RegularPages.ByDate.Reverse "Type" "not in"  (slice "page" "json") -}}
+{{- $pages := where .Site.RegularPages.ByDate.Reverse "Type" "not in"  (slice "page" "section") -}}
+{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 -}}
+	{{- $pages = $pages | first $limit -}}
+{{- end -}}
+{{- range $pages -}}
 	{{- if .Params.dateCreated -}}
 			{{ $.Scratch.Set "date_created" (.Params.dateCreated) }}
 	{{- else -}}
@@ -41,6 +46,7 @@
     	"content_html" ($.Scratch.Get "content")
     	"date_created" ($.Scratch.Get "date_created")
     	"date_published" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    	"type" .Type
     ) -}}
 {{- end -}}
 {{- $index | jsonify -}}

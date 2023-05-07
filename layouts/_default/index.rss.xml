@@ -4,7 +4,7 @@
 {{- end -}}
 	{{- $pages := slice -}}
 {{- if or $.IsHome $.IsSection -}}
-	{{- $pages = $pctx.RegularPages -}}
+	{{- $pages = where $pctx.RegularPages "Type" "not in"  (slice "page" "section") -}}
 {{- else -}}
 	{{- $pages = $pctx.Pages -}}
 {{- end -}}
@@ -13,7 +13,7 @@
 	{{- $pages = $pages | first $limit -}}
 {{- end -}}
 {{- printf `<?xml version="1.0" encoding="UTF-8"?>` | safeHTML }}
-{{- (printf `<?xml-stylesheet href=%#v type="text/xsl"?>` ("/styles/feed.xsl" | relLangURL) ) | safeHTML }}
+{{ (printf `<?xml-stylesheet href=%q type="text/xsl"?>` ("/styles/feed.xsl" | relLangURL) | safeHTML ) }}
 <rss version="2.0"
 	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
