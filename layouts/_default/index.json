@@ -43,10 +43,9 @@
     	"url" .Permalink
     	"section" (i18n (.Section | title))
     	"tags" (apply .Params.tags "i18n" "." )
-    	"content_html" ($.Scratch.Get "content")
+    	"content_text" ($.Scratch.Get "content" | htmlUnescape | plainify)
     	"date_created" ($.Scratch.Get "date_created")
     	"date_published" (.Date.Format "2006-01-02T15:04:05Z07:00")
-    	"type" .Type
     ) -}}
 {{- end -}}
 {{- $index | jsonify -}}
