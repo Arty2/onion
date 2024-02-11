@@ -1,0 +1,10 @@
+{{- $src := (.Get "src") -}}
+{{- $alt := (.Get "alt") -}}
+{{- $caption := (.Get "caption") -}}
+{{- $poster := (.Get "poster") -}}
+{{- $camera_orbit := (.Get "camera_orbit") -}}
+<script src="{{ "/scripts/model-viewer.min.js" | relURL }}" type="module" defer></script>
+<figure>
+<model-viewer src="{{ $src }}" {{ with $alt }}alt="{{ . }}"{{ end }} {{ with $poster }}poster="{{ . }}"{{ end }} loading="eager" {{ with $camera_orbit }}camera-orbit="{{ . }}"{{ end }} interaction-prompt="none" ar-modes="webxr scene-viewer quick-look" ar-status="not-presenting" ar autoplay auto-rotate camera-controls ></model-viewer>
+{{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>
