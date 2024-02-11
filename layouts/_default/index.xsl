@@ -33,11 +33,11 @@
 											{{- $translations := .AllTranslations -}}
 											{{- $len := (len $translations) -}}
 											{{- $xsl_file := replace .RelPermalink (printf `/%s/` .Language.Lang) "/" -}}
+											{{- $rss_file := printf `%s%s` "/" (path.Base ($.OutputFormats.Get "rss").Permalink) -}}
 											{{- range $index, $language := $translations }}
 												{{- if eq $.Page.RelPermalink .RelPermalink -}}
 													{{- .Site.Language.LanguageName -}}
 												{{- else -}}
-													{{- $rss_file := printf `%s%s` "/" (path.Base ($.OutputFormats.Get "rss").Permalink) -}}
 													<a href="{{ replace .Permalink $xsl_file $rss_file }}" lang="{{ .Language }}">{{ .Language.LanguageName }}</a>
 												{{- end -}}
 												{{- if eq (add $index 1) $len }}.{{ else }}, {{ end -}}
