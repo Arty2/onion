@@ -367,7 +367,7 @@ hr {
 	overflow: hidden;
 }
 	hr::before {
-		content: '* * *'; /* ⁂ ✻ 〜 */
+		content: '* * *';
 		display: block;
 		text-align: center;
 	}
@@ -419,8 +419,8 @@ li ul, li ol {
 	margin-left: max(1rem, var(--baseline));
 }
 
-main li:has(input[type="checkbox"]) { list-style: none; }
-main li > input[type="checkbox"] { vertical-align: sub; }
+li:has(input[type="checkbox"]) { list-style: none; }
+li > input[type="checkbox"] { vertical-align: sub; }
 
 
 /*--------------------------------------------------------------
@@ -1959,6 +1959,16 @@ img.blend {
 	mix-blend-mode: var(--blend-mode, multiply);
 }
 
+img.screen {
+	filter: none;
+	mix-blend-mode: screen;
+}
+
+img.multiply {
+	filter: none;
+	mix-blend-mode: multiply;
+}
+
 img.shadow {
 	box-shadow: 0 0.5rem 1rem rgba(var(--shadow-color));
 }
@@ -3215,4 +3225,16 @@ video embed
 	height: 100%;
 
 	border:0;
+}
+
+/*--------------------------------------------------------------
+model-viewer
+--------------------------------------------------------------*/
+
+model-viewer {
+	aspect-ratio: 1;
+	width: 100%;
+	height: auto;
+	max-height: 100vh;
+	margin-top: var(--baseline);
 }
