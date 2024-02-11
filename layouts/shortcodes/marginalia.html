@@ -1,6 +1,5 @@
 {{- $class := (.Get "class") -}}
 {{- $title := (.Get "title") -}}
 <aside class="marginalia{{ with $class }} {{ . }}{{ end }}" title="{{ with $title }}{{ . }}{{ end }}">
-	{{ .Inner | safeHTML }}
+	{{ .Inner | markdownify  | safeHTML }}
 </aside>
-<!-- see issue with block markdownify https://github.com/gohugoio/hugo/issues/5975 -->
