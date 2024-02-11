@@ -28,7 +28,7 @@
 		{{- if or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "jpeg") }}
 			{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
 		{{ end -}}
-		<!-- if a GIF file revert to original to avoid resizing animations; WebP animations don't work -->
+		<!-- if a GIF file revert to original to avoid resizing animations; WebP animations don't work, but are very rare -->
 		{{- if (eq .MediaType.SubType "gif") }}
 			{{ $resized = . }}
 		{{ end -}}
@@ -42,15 +42,15 @@
 			background-position: 50% 50%;
 			background-repeat: no-repeat;
 			background-size: cover;"{{ end }}
-		alt="{{ $.Text }}" {{ with $.Title }} title="{{ . }}" {{ end }}
-		{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
+		alt="{{ $.Text | plainify }}" {{ with $.Title }} title="{{ . | plainify }}" {{ end }}
+		{{ with index ($fragments ) 1 }}class="{{ . | plainify }}" {{ end }}
 		loading="lazy" decoding="async" >
 		{{ with $.Title }}<figcaption>{{ . | markdownify }}</figcaption></figure>{{ end }}
 	{{- end -}}
 <!-- or otherwise simply load the URL -->
 {{- else -}}
 	<img src="{{ .Destination | safeURL }}"
-	alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }}
-	{{ with index ($fragments ) 1 }}class="{{ . }}" {{ end }}
+	alt="{{ .Text | plainify }}" {{ with .Title }} title="{{ . | plainify }}" {{ end }}
+	{{ with index ($fragments ) 1 }}class="{{ . | plainify }}" {{ end }}
 	loading="lazy" decoding="async" data-src="external" >
 {{- end -}}

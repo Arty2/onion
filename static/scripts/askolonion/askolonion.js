@@ -40,13 +40,13 @@ askolonion = function(){
 	--------------------------------------------------------------*/
 	search__form.addEventListener('keydown', function(e) {
 		// Allow ESC (27) to close search box
-		if (e.keyCode == 27) {
+		if (e.key == 27) {
 				search__focus = true; // make sure toggle removes focus
 				search_toggle_focus(e);
 		}
 
 		// DOWN (40) arrow
-		if (e.keyCode == 40) {
+		if (e.key == 40) {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
 				if ( document.activeElement == search__input) { first.focus(); } // if the currently focused element is the main input --> focus the first <li>
@@ -57,7 +57,7 @@ askolonion = function(){
 		}
 
 		// UP (38) arrow
-		if (e.keyCode == 38) {
+		if (e.key == 38) {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
 				if ( document.activeElement == search__input) { search__input.focus(); } // If we're in the input box, do nothing
@@ -67,7 +67,7 @@ askolonion = function(){
 		}
 
 		// Use Enter (13) to move to the first result
-		if (e.keyCode == 13) {		
+		if (e.key == 13) {		
 			e.preventDefault(); // stop form from being submitted	
 			if (results_available && document.activeElement == search__input) {
 				first.focus();
@@ -77,7 +77,7 @@ askolonion = function(){
 		}
 
 		// Use Backspace (8) to switch back to the search input
-		if (e.keyCode == 8) {			
+		if (e.key == 8) {			
 			if (document.activeElement != search__input) {
 				e.preventDefault(); // stop browser from going back in history
 				search__input.focus();
