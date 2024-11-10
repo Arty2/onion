@@ -133,18 +133,28 @@
 	</details>
 {{ end }}
 {{ with .Params.Github -}}
-	{{- $stats := getJSON "https://api.github.com/repos/" . -}}
-	<details>
-		<summary>{{ i18n "github-hosted" }}</summary>
-		<dl>
-			<dt>{{ i18n "github-repository" }}</dt>
-				<dd><a href="https://github.com/{{ . }}" target="_blank">{{ . }}</a></dd>
-			{{ with $stats.license }}<dt>{{ i18n "github-license" }}</dt>
-				<dd>{{ .name }}</dd>{{ end }}
-			{{ with $stats.pushed_at }}<dt>{{ i18n "github-last-pushed" }}</dt>
-				<dd>{{ . }}</dd>{{ end }}
-		</dl>	
-	</details>
+	{{ $stats := dict }}
+	{{ $url := printf "https://api.github.com/repos/%s" . }}
+	{{ with resources.GetRemote $url }}
+		{{ with .Err }}
+			{{ errorf "%s" . }}
+		{{ else }}
+			{{ $stats = . | transform.Unmarshal }}
+			<details>
+				<summary>{{ i18n "github-hosted" }}</summary>
+				<dl>
+					<dt>{{ i18n "github-repository" }}</dt>
+						<dd><a href="https://github.com/{{ $.Params.Github }}" target="_blank">{{ $.Params.Github }}</a></dd>
+					{{ with $stats.license }}<dt>{{ i18n "github-license" }}</dt>
+						<dd>{{ .name }}</dd>{{ end }}
+					{{ with $stats.pushed_at }}<dt>{{ i18n "github-last-pushed" }}</dt>
+						<dd>{{ . }}</dd>{{ end }}
+				</dl>	
+			</details>
+		{{ end }}
+	{{ else }}
+		{{ errorf "Unable to get Github README from %q" $.Params.Github }}
+	{{ end }}
 {{ end }}
 {{ with .Params.Meta }}
 	<details>

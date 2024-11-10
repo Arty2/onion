@@ -6,7 +6,7 @@
 {{- $fragments := (split $src "#") -}}
 {{- $src = index ($fragments) 0 -}}
 <!-- resize if wider than .Scratch.Get "imgwidth" -->
-{{- $imgwidth := .Page.Scratch.Get "imgwidth" | default 800 -}}
+{{- $imgwidth := .Page.Store.Get "imgwidth" | default 800 -}}
 <!-- get actual filename -->
 {{/*- $src = path.Base $src -*/}}
 <!-- check if it exists as a page resource -->
