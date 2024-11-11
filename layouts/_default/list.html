@@ -3,7 +3,7 @@
 		{{ .Content }}
 	{{ end }}
 	<details class="articles-list" open>
-	<summary><h2>{{ .Title }}</h2></summary>
+	<summary><h2>{{ if not (in (i18n .Name) "[i18n]" ) }}{{ (i18n .Name) }}{{ else }}{{ (i18n .Name) }}{{ end }}</h2></summary>
 		{{ if gt (len .Data.Pages) 0}}
 		<div class="wrapper">
 			{{ range .Data.Pages }}
