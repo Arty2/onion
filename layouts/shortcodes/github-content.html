@@ -5,7 +5,7 @@
 {{- $content := printf `%s <a href="https://github.com/%s">%s</a>` (i18n "github-error") $repository $repository -}}
 {{ with resources.GetRemote $readme }}
 	{{ with .Err }}
-		{{ errorf "%s" . }}
+		{{ warnf "%s" . }}
 	{{ else }}
 		{{ $data = . | transform.Unmarshal }}
 		{{- if gt (len $data) 0 -}}
@@ -21,5 +21,5 @@
 		{{- $content | markdownify -}}
 	{{ end }}
 {{ else }}
-	{{ errorf "Unable to get Github README from %q" $repository }}
+	{{ warnf "Unable to get Github README from %q" $repository }}
 {{ end }}

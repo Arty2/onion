@@ -137,7 +137,7 @@
 	{{ $url := printf "https://api.github.com/repos/%s" . }}
 	{{ with resources.GetRemote $url }}
 		{{ with .Err }}
-			{{ errorf "%s" . }}
+			{{ warnf "%s" . }}
 		{{ else }}
 			{{ $stats = . | transform.Unmarshal }}
 			<details>
@@ -153,7 +153,7 @@
 			</details>
 		{{ end }}
 	{{ else }}
-		{{ errorf "Unable to get Github README from %q" $.Params.Github }}
+		{{ warnf "Unable to get Github Stats from %q" $.Params.Github }}
 	{{ end }}
 {{ end }}
 {{ with .Params.Meta }}
