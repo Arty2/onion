@@ -1,11 +1,15 @@
-{{/* /layouts/shortcodes/github-content.html */}}
-{{- $repository := .Get "repository" -}}
+<!-- /layouts/shortcodes/github-content.html -->
+{{- $repository := "" -}}
+{{- $branch := "master" -}}
 {{- $data := dict -}}
+{{- $repository := .Get "repository" -}}
+{{- $branch := default $branch (.Get "branch") -}}
 {{- $readme := printf "https://api.github.com/repos/%s/readme" $repository -}}
 {{- $content := printf `%s <a href="https://github.com/%s">%s</a>` (i18n "github-error") $repository $repository -}}
+{{- $branchURL := printf "https://raw.githubusercontent.com/%s/%s/" $repository $branch -}}
 {{ with resources.GetRemote $readme }}
 	{{ with .Err }}
-		{{ warnf "%s" . }}
+		{{ warnf "Github-Content: Error %s" . }}
 	{{ else }}
 		{{ $data = . | transform.Unmarshal }}
 		{{- if gt (len $data) 0 -}}
@@ -14,12 +18,12 @@
 			{{ with $.Page.Params.Title -}}
 				{{ $content = replace $content (printf "# %s" . ) "" }}
 			{{ end }}
-			{{/* make links relative */}}
-			{{- $content = replace $content "](./" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}} 
-			{{- $content = replace $content "](/" (printf "](https://raw.githubusercontent.com/%s/master/" $repository) -}}
+			{{/* make links absolute, useful for images */}}
+			{{- $content = replace $content "](./" (printf "%s%s" "](" $branchURL) -}} 
+			{{- $content = replace $content "](/"  (printf "%s%s" "](" $branchURL) -}}
 		{{- end -}}
 		{{- $content | markdownify -}}
 	{{ end }}
 {{ else }}
-	{{ warnf "Unable to get Github README from %q" $repository }}
+	{{ warnf "Github-Content: Unable to get README from %q at %s" $repository .Page.Title }}
 {{ end }}
