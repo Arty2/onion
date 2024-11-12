@@ -43,17 +43,6 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 - Google Analytics via built-in Hugo template.
 - [Microformats](http://microformats.org/wiki/what-are-microformats) friendly.
 
-## Work in Progress
-
-<!-- TODO: update priorities, see tasks -->
-
-- Phase out jQuery depedencies.
-- JSON feed
-- Responsive-ish images with the `{{< figure >}}` shortcode.
-- Image gallery on grid.
-- Pagination support.
-- Nested menus.
-
 
 ## Built-in Shortcodes
 
@@ -72,27 +61,39 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 - files-list
 
 
+## Feature toggles
+
+Several features can be enabled or disabled on a site or page level.
+You can adjust as follows …
+
+- show_toc
+- show_meta (default: true)
+- …
+
+
 ## Theming
 
 The following values can be passed to `params.theme` and modify the site’s appearance.
+Most themes have a light/dark color scheme. Themes and Color Schemes can also be applied to individual pages.
 
 Themes
 : `theme--default`
 : `theme--peach`
 : `theme--retro`
-: `theme--gray` — no light/dark scheme.
-: `theme--blue` — no light/dark scheme.
+: `theme--gray` (no light/dark scheme)
+: `theme--blue` (no light/dark scheme)
 
-Schemes, default: browser preference.
-: `scheme--light` f
+Color Schemes (default: browser preference)
+: `scheme--light`
 : `scheme--dark` 
 
 
-Modifiers
+Theme Modifiers
 : `mod-newline` separates paragraphs with new line instead of ident.
 : `mod--font-serif` sets serif fonts.
 : `mod--font-sans` sets sans-serif fonts.
 : `mod--font-mono` sets monospaced fonts.
+: `mod--font-local` disables webfonts in favor of local fonts.
 : `mod--fullwidth` forces full-width for the content area.
 
 
@@ -220,7 +221,7 @@ githubURL
 
 ## Bundled webfonts
 
-Bundled fonts contain Latin, Greek and Cyrillic character sets.
+Included fonts contain Latin, Greek and Cyrillic character sets.
 
 - [Alegreya](https://www.huertatipografica.com/en/fonts/alegreya-ht-pro) font (serif)
 - [Fantasque Sans Mono](https://github.com/belluzj/fantasque-sans) font (sans-serif, monospaced)
@@ -229,7 +230,7 @@ Bundled fonts contain Latin, Greek and Cyrillic character sets.
 
 ## Bundled JavaScript libraries
 
-No core functionality depends on JavaScript being enabled. Functionality that depends on it *should* (and most do) have a `<noscript>` alternative that is progressively enhanced when JavaScript is enabled. All bundled scripts are self-hosted within the theme and there is no automated build process for updating depedencies.
+No core functionality depends on JavaScript being enabled. Functionality that depends on JavaScript *should* have a `<noscript>` alternative that is progressively enhanced when enabled. All bundled scripts are self-hosted within the theme and there is no automated build process for updating depedencies.
 
 - [fixedsearch](https://gist.github.com/Arty2/8b0c43581013753438a3d35c15091a9f) enables searching articles
 - [fuse.js](https://fusejs.io/) fuzzy-search engine used by *fixedsearch*
@@ -239,4 +240,4 @@ No core functionality depends on JavaScript being enabled. Functionality that de
 
 * * *
 
-© 2018-2021 [Heracles Papatheodorou](http://heracl.es) a.k.a [@Arty2](https://www.twitter.com/Arty2), [MIT Licence](./LICENCE.txt)
+© 2018-2024 [Heracles Papatheodorou](http://heracl.es) a.k.a [@heracles](https://www.mastodon.social/@heracles), [MIT Licence](./LICENCE.txt)
