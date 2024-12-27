@@ -59,8 +59,8 @@ global CSS variables
 /*--------------------------------------------------------------
 fonts
 
-Alegrya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
-FantasqueSan: via https://github.com/belluzj/fantasque-sans;
+Alegreya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
+FantasqueSans: via https://github.com/belluzj/fantasque-sans;
 icon font via https://icomoon.io (Brands iconset)
 --------------------------------------------------------------*/
 
@@ -73,7 +73,7 @@ icon font via https://icomoon.io (Brands iconset)
 }
 
 @font-face {
-	font-family: 'Fantasque';
+	font-family: 'Fantasque Sans Mono';
 	src: url('../fonts/FantasqueSansMono-Regular.woff2') format('woff2');
 	font-weight: normal;
 	font-style: normal;
@@ -121,7 +121,7 @@ icon font via https://icomoon.io (Brands iconset)
 }
 
 /*@font-face {
-	font-family: 'Fantasque';
+	font-family: 'Fantasque Sans Mono';
 	src: url('../fonts/FantasqueSansMono-Italic.woff2') format('woff2');
 	font-weight: normal;
 	font-style: italic;
@@ -129,7 +129,7 @@ icon font via https://icomoon.io (Brands iconset)
 }*/
 
 @font-face {
-	font-family: 'Fantasque';
+	font-family: 'Fantasque Sans Mono';
 	src: url('../fonts/FantasqueSansMono-Bold.woff2') format('woff2');
 	font-weight: bold;
 	font-style: normal;
@@ -525,7 +525,7 @@ body {
 
 html:not([class*="mod--font-local"]) {
 	--font-icons: 'brands', 'icons', 'Emoji One BW', 'Noto Emoji', 'Segoe UI', monospace;
-	--font-mono: 'Fantasque', 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
+	--font-mono: 'Fantasque Sans Mono', 'Fantasque', 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
 	--font-serif: 'Alegreya', 'Source Serif', 'New York', 'Cambria', 'Georgia', 'Roboto Serif', 'DejaVu Serif', serif;
 	--font-sans: 'Alegreya Sans', 'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
 
@@ -1275,6 +1275,11 @@ body > footer .menu > ul {
 menu styles
 --------------------------------------------------------------*/
 
+.menu {
+	font-variant: small-caps;
+	text-transform: uppercase;
+}
+
 body > footer .menu {
 	margin-bottom: var(--baseline);
 }
@@ -1446,7 +1451,7 @@ gadgets
 .gadgets #themer {
 	--theme-icon: '◉';
 	position: absolute;
-	top: var(--gutter);
+	bottom: calc(var(--gutter) - var(--icon-size));
 
 	cursor: pointer;
 	/*opacity: var(--themer,1);*/
