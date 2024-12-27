@@ -30,7 +30,8 @@ askolonion = function(){
 		// console.log(event); // DEBUG
 		// Ctrl + / to show or hide Search
 		// if (event.which === 191) { // Key: /
-		if (event.ctrlKey && event.which === 191) { // Key: Ctrl + /
+		// if (event.ctrlKey && event.which === 191) { // Key: Ctrl + /
+		if (event.key === '/') { // Key: Ctrl + /
 			search_toggle_focus(e); // toggle visibility of search box
 		}
 	});
@@ -40,13 +41,13 @@ askolonion = function(){
 	--------------------------------------------------------------*/
 	search__form.addEventListener('keydown', function(e) {
 		// Allow ESC (27) to close search box
-		if (e.key == 27) {
+		if (e.key == 'Escape') {
 				search__focus = true; // make sure toggle removes focus
 				search_toggle_focus(e);
 		}
 
 		// DOWN (40) arrow
-		if (e.key == 40) {
+		if (e.key == 'ArrowDown') {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
 				if ( document.activeElement == search__input) { first.focus(); } // if the currently focused element is the main input --> focus the first <li>
@@ -57,7 +58,7 @@ askolonion = function(){
 		}
 
 		// UP (38) arrow
-		if (e.key == 38) {
+		if (e.key == 'ArrowUp') {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
 				if ( document.activeElement == search__input) { search__input.focus(); } // If we're in the input box, do nothing
@@ -67,7 +68,7 @@ askolonion = function(){
 		}
 
 		// Use Enter (13) to move to the first result
-		if (e.key == 13) {		
+		if (e.key == 'Enter') {		
 			e.preventDefault(); // stop form from being submitted	
 			if (results_available && document.activeElement == search__input) {
 				first.focus();
@@ -77,7 +78,7 @@ askolonion = function(){
 		}
 
 		// Use Backspace (8) to switch back to the search input
-		if (e.key == 8) {			
+		if (e.key == 'Backspace') {			
 			if (document.activeElement != search__input) {
 				e.preventDefault(); // stop browser from going back in history
 				search__input.focus();
@@ -186,8 +187,9 @@ askolonion = function(){
 						threshold: 0.4,
 						minMatchCharLength: 2,
 						keys: [
-							'permalink',
+							'url',
 							'title',
+							'date_published',
 							'date_created',
 							'content_text',
 							'section',
@@ -221,12 +223,14 @@ askolonion = function(){
 		} else { // build our html
 			for (let item in results.slice(0,5)) { // only show first 5 results
 				search_items = search_items +
-`<article><a href="${results[item].item.permalink}" tabindex="0">
+`<article><a href="${results[item].item.url}" tabindex="0">
 	<time class="time">${results[item].item.date_created}</time>
 	<h3 class="title">${results[item].item.title}</h3>
 	<p class="summary">${results[item].item.content_text}</p>
-	<p class="taxa">${results[item].item.tags.join(', ')}</p>
-</article>`;
+	<p class="taxa tags">${results[item].item.tags.map(
+		(x) => '<span class="taxon tag" rel="tag">'+x+'</span>'
+	).join('')}</p>
+</a></article>`;
 			}
 			results_available = true;
 		}
