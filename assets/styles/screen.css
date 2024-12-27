@@ -378,7 +378,7 @@ blockquote {
 	quotes: none;
 }
 
-blockquote::before {
+blockquote:not([class*="alert"])::before {
 	float: left;
 	content: '“';
 	text-indent: -1rem;
@@ -1451,7 +1451,7 @@ gadgets
 .gadgets #themer {
 	--theme-icon: '◉';
 	position: absolute;
-	bottom: calc(var(--gutter) - var(--icon-size));
+	bottom: calc(var(--icon-size)/3);
 
 	cursor: pointer;
 	/*opacity: var(--themer,1);*/
