@@ -29,7 +29,7 @@
 		<language>{{.}}</language>{{end}}{{ with .Site.Params.Author.email }}
 		<managingEditor>{{.}}{{ with $.Site.Params.Author.name }} ({{ . | plainify }}){{end}}</managingEditor>{{end}}{{ with .Site.Params.Author.email }}
 		<webMaster>{{ . | plainify }}{{ with $.Site.Params.Author.name }} ({{ . | plainify }}){{end}}</webMaster>{{end}}{{ with .Site.Copyright }}
-		<copyright>{{ . | htmlUnescape | plainify }}</copyright>{{end}}{{ if not .Date.IsZero }}
+		<copyright>{{ . | htmlUnescape | plainify | transform.XMLEscape }}</copyright>{{end}}{{ if not .Date.IsZero }}
 		<lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
 		{{- with .OutputFormats.Get "RSS" }}
 		{{ printf `<atom:link href=%q rel="self" type=%q />` .Permalink .MediaType | safeHTML }}
@@ -41,7 +41,7 @@
 			<guid isPermaLink="false">{{ md5 .Permalink }}</guid>
 			<pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
 			{{ with .Site.Params.Author.email }}<author>{{.}}{{ with $.Site.Params.Author.name }} ({{.}}){{end}}</author>{{end}}
-			<description>{{ with .Description }}{{ . | markdownify | htmlUnescape | plainify }}{{ else }}{{ .Summary | markdownify | htmlUnescape | plainify }}{{ end }}</description><!--
+			<description>{{ with .Description }}{{ . | markdownify | htmlUnescape | plainify | transform.XMLEscape }}{{ else }}{{ .Summary | markdownify | htmlUnescape | plainify | transform.XMLEscape }}{{ end }}</description><!--
 			<content:encoded>
 			{{/* `<![CDATA[` | safeHTML }}{{ .Content | markdownify | safeHTML }}{{ `]]>` | safeHTML */}}
 			</content:encoded> -->
