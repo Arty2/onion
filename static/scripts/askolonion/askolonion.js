@@ -10,7 +10,7 @@ if (typeof variable !== 'undefined') {
 askolonion = function(){
 	var search__form = document.getElementById('search__form'); // search form
 	var search__input = document.getElementById('search__input'); // input box for search
-	var search__button = document.getElementById('search__button'); // form submit button
+	// var search__button = document.getElementById('search__button'); // form submit button
 	var search__results = document.getElementById('search__results'); // targets the <ul>
 	var fuse; // holds our search engine
 	var search__focus = false; // check to true to make visible by default
@@ -28,10 +28,9 @@ askolonion = function(){
 	--------------------------------------------------------------*/
 	document.addEventListener('keydown', function(e) {
 		// console.log(event); // DEBUG
-		// Ctrl + / to show or hide Search
-		// if (event.which === 191) { // Key: /
-		// if (event.ctrlKey && event.which === 191) { // Key: Ctrl + /
-		if (event.key === '/') { // Key: Ctrl + /
+		// if (event.ctrlKey && event.which === 191) {
+		// / (191) key to open search box
+		if (e.key === '/') {
 			search_toggle_focus(e); // toggle visibility of search box
 		}
 	});
@@ -40,13 +39,14 @@ askolonion = function(){
 	The main keyboard event listener running the show
 	--------------------------------------------------------------*/
 	search__form.addEventListener('keydown', function(e) {
-		// Allow ESC (27) to close search box
+		// console.log(e); // DEBUG
+		// Escape (27) to close search box
 		if (e.key == 'Escape') {
 				search__focus = true; // make sure toggle removes focus
 				search_toggle_focus(e);
 		}
 
-		// DOWN (40) arrow
+		// ArrowDown (40)
 		if (e.key == 'ArrowDown') {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
@@ -57,7 +57,7 @@ askolonion = function(){
 			}
 		}
 
-		// UP (38) arrow
+		// ArrowUp (38)
 		if (e.key == 'ArrowUp') {
 			if (results_available) {
 				e.preventDefault(); // stop window from scrolling
@@ -67,22 +67,29 @@ askolonion = function(){
 			}
 		}
 
-		// Use Enter (13) to move to the first result
-		if (e.key == 'Enter') {		
+		// Enter (13) to move to the first result, or go to result
+		if (e.key == 'Enter') {
 			e.preventDefault(); // stop form from being submitted	
 			if (results_available && document.activeElement == search__input) {
 				first.focus();
 			} else {
 				e.preventDefault();
+				window.location.href = document.activeElement.href;
 			}
 		}
 
-		// Use Backspace (8) to switch back to the search input
-		if (e.key == 'Backspace') {			
+		// Backspace (8) to switch back to the search input
+		if (e.key == 'Backspace') {
 			if (document.activeElement != search__input) {
 				e.preventDefault(); // stop browser from going back in history
 				search__input.focus();
 			}
+		}
+
+		// / (191) key to type when in the text area
+		if (e.key == '/') {
+			search__input.value = search__input.value + '/';
+			e.stopPropagation();
 		}
 	});
 
@@ -96,11 +103,11 @@ askolonion = function(){
 	/*--------------------------------------------------------------
 	Make button toggle focus
 	--------------------------------------------------------------*/
-	search__button.addEventListener('mousedown', function(e) {
-		search_toggle_focus(e);
-		e.preventDefault();
-		e.stopPropagation();
-	});
+	// search__button.addEventListener('mousedown', function(e) {
+	// 	search_toggle_focus(e);
+	// 	e.preventDefault();
+	// 	e.stopPropagation();
+	// });
 
 	/*--------------------------------------------------------------
 	Remove focus on blur
@@ -120,16 +127,15 @@ askolonion = function(){
 	function search_toggle_focus(e) {
 		// order of operations is very important to keep focus where it should stay
 		if (!search__focus) {
-			// search__button.value = '⨯';
-			search__form.setAttribute('data-focus', true);
+			search__form.setAttribute('data-focus', 'true');
 			search__input.focus(); // move focus to search box
 			search__focus = true;
 		}
 		else {
-			// search__button.value = '⌕';
-			search__form.setAttribute('data-focus', false);
+			search__form.setAttribute('data-focus', 'false');
 			document.activeElement.blur(); // remove focus from search box
 			search__focus = false;
+			e.preventDefault(); // required for Firefox
 		}
 		// console.log(search__focus,e); // DEBUG
 	}

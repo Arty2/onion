@@ -454,6 +454,16 @@ a[href^="mailto"] {
 	text-decoration-color: inherit;
 }
 
+/* external links */
+/*a[href]:not(:where( 
+	[href^="#"],
+	[href^="./"],
+	[href^="/"]:not([href^="//"]),
+)):after {
+  content: '´';
+  display: inline-block;
+}*/
+
 a:focus,
 a:focus-visible {
 	outline: 2px solid;
@@ -548,7 +558,7 @@ html, /* default font */
 
 pre, code, kbd,
 button, input[type=submit], input[type=reset], input[type=file]::file-selector-button,
-.menu, .sharing, .languages, .taxon, .more, .meta summary {
+header h1, .menu, .sharing, .languages, .taxon, .more, .meta summary {
 	line-height: calc(var(--line-height) * var(--lmod));
 	
 	font-family: var(--font-mono, monospace);
@@ -749,8 +759,6 @@ main > *:first-child {
 	grid-column: dd;
 	align-self: end;
 }
-
-/*TODO:  remove font sizing from search widget*/
 
 /*DEBUG baseline grid*/
 /*body::after {
@@ -1276,10 +1284,10 @@ body > footer .menu > ul {
 menu styles
 --------------------------------------------------------------*/
 
-.menu {
+/*.menu {
 	font-variant: small-caps;
 	text-transform: uppercase;
-}
+}*/
 
 body > footer .menu {
 	margin-bottom: var(--baseline);
@@ -2687,7 +2695,7 @@ askolonion.js search form
 	color:  rgb(var(--accent-color));
 }
 
-#search__button {
+/*#search__button {
 	--gadget-mark: '⌕';
 	display: flex;
 	position: absolute;
@@ -2713,7 +2721,7 @@ askolonion.js search form
 	width: 100%;
 	height: 100%;
 	line-height: calc(var(--icon-size) * var(--lmod));
-}
+}*/
 
 #search__form:not([data-focus='false']):focus-within #search__button,
 #search__form[data-focus='true'] #search__button {
@@ -2724,11 +2732,11 @@ askolonion.js search form
 	pointer-events: none;
 }
 
-#search__button:hover,
+/*#search__button:hover,
 #search__button:focus {
 	color: rgb(var(--accent-color, 0,0,255));
 	outline-offset: -2px;
-}
+}*/
 
 #search__results {
 	display: block;
