@@ -22,15 +22,15 @@
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
 >
 	<channel>
-		<title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title | plainify }}{{ else }}{{ with .Title }}{{ . | plainify }} • {{ end }}{{ .Site.Title | plainify }}{{ end }}</title>
+		<title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title | plainify | transform.XMLEscape }}{{ else }}{{ with .Title }}{{ . | plainify | transform.XMLEscape }} • {{ end }}{{ .Site.Title | plainify | transform.XMLEscape }}{{ end }}</title>
 		<link>{{ .Permalink }}</link>
-		<description>{{ with .Description }}{{ . | plainify }}{{ else }}{{if .IsPage}}{{ .Summary | plainify }}{{ else }}{{ with .Site.Params.description }}{{ . | plainify }}{{ else }}{{ with .Site.Params.Author.description }}{{ . | plainify }}{{ end }}{{ end }}{{ end }}{{ end }}</description>
-		<generator>Hugo -- gohugo.io</generator>{{ with .Site.LanguageCode }}
+		<description>{{ with .Description }}{{ . | markdownify | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{if .IsPage}}{{ .Summary | plainify }}{{ else }}{{ with .Site.Params.description }}{{ . | markdownify | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{ with .Site.Params.Author.description }}{{ . | markdownify | plainify | transform.XMLEscape | safeHTML }}{{ end }}{{ end }}{{ end }}{{ end }}</description>
+		<generator>Hugo</generator>{{ with .Site.LanguageCode }}
 		<language>{{.}}</language>{{end}}{{ with .Site.Params.Author.email }}
 		<managingEditor>{{.}}{{ with $.Site.Params.Author.name }} ({{ . | plainify }}){{end}}</managingEditor>{{end}}{{ with .Site.Params.Author.email }}
-		<webMaster>{{ . | plainify }}{{ with $.Site.Params.Author.name }} ({{ . | plainify }}){{end}}</webMaster>{{end}}{{ with .Site.Copyright }}
-		<copyright>{{ . | htmlUnescape | plainify | transform.XMLEscape }}</copyright>{{end}}{{ if not .Date.IsZero }}
-		<lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
+		<webMaster>{{ . | plainify | transform.XMLEscape }}{{ with $.Site.Params.Author.name }} ({{ . | plainify }}){{end}}</webMaster>{{end}}{{ with .Site.Copyright }}
+		<copyright>{{ . | plainify | transform.XMLEscape }}</copyright>{{end}}{{ if not .Date.IsZero }}
+		<lastBuildDate>{{ (index $pages.ByLastmod.Reverse 0).Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
 		{{- with .OutputFormats.Get "RSS" }}
 		{{ printf `<atom:link href=%q rel="self" type=%q />` .Permalink .MediaType | safeHTML }}
 		{{- end -}}
@@ -41,10 +41,7 @@
 			<guid isPermaLink="false">{{ md5 .Permalink }}</guid>
 			<pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
 			{{ with .Site.Params.Author.email }}<author>{{.}}{{ with $.Site.Params.Author.name }} ({{.}}){{end}}</author>{{end}}
-			<description>{{ with .Description }}{{ . | markdownify | htmlUnescape | plainify | transform.XMLEscape }}{{ else }}{{ .Summary | markdownify | htmlUnescape | plainify | transform.XMLEscape }}{{ end }}</description><!--
-			<content:encoded>
-			{{/* `<![CDATA[` | safeHTML }}{{ .Content | markdownify | safeHTML }}{{ `]]>` | safeHTML */}}
-			</content:encoded> -->
+			<description>{{ with .Description }}{{ . | markdownify | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{ .Summary | markdownify | plainify | transform.XMLEscape | safeHTML }}{{ end }}</description>
 		</item>
 		{{- end }}
 	</channel>
