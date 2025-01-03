@@ -378,7 +378,7 @@ blockquote {
 	quotes: none;
 }
 
-blockquote:not([class*="alert"])::before {
+blockquote::before {
 	float: left;
 	content: '“';
 	text-indent: -1rem;
@@ -547,7 +547,7 @@ html, /* default font */
 }
 
 pre, code, kbd,
-button, input[type=submit], input[type=reset],
+button, input[type=submit], input[type=reset], input[type=file]::file-selector-button,
 .menu, .sharing, .languages, .taxon, .more, .meta summary {
 	line-height: calc(var(--line-height) * var(--lmod));
 	
@@ -560,7 +560,7 @@ pre > code { line-height: inherit; } /* line-height for code block */
 
 .icon,
 .menu > ul > li::after,
-.taxon::after, .cta a::after,
+.taxonomy-filter .taxon::after, .cta a::after,
 .marginalia::before,
 .rating,
 .sl-wrapper button,
@@ -1102,9 +1102,10 @@ textarea {
 	color: rgb(var(--text-color));
 }
 
-input:focus,
+input:not([type=file]):focus,
 button:focus,
-textarea:focus {
+textarea:focus,
+input[type=file]:focus::file-selector-button {
 	border-color: rgb(var(--accent-color));
 	outline: 2px solid rgb(var(--accent-color));
 	outline-offset: 0;
@@ -2234,7 +2235,7 @@ taxon (tag etc) styles
 
 .taxon,
 .taxon:visited {
-	display: inline-flex;
+	display: inline;
 	align-items: baseline;
 	/*padding: 0 calc(var(--baseline) / 4) 0;*/
 	padding: 0.3em 0.6em 0.3em 0.6em;
@@ -2242,7 +2243,8 @@ taxon (tag etc) styles
 	/*line-height: calc(var(--line-height) * var(--lmod));*/
 
 	background: rgb(var(--page-color));
-	border: 1.5px solid rgb(var(--text-color));
+	border-color: rgb(var(--text-color));
+	border-width: 1.5px;
 	border-radius: 2px;
 	color: rgb(var(--text-color));
 	text-decoration: none;
@@ -2255,7 +2257,7 @@ taxon (tag etc) styles
 	user-select        : none !important;
 }
 
-.taxon::after {
+.taxonomy-filter .taxon::after {
 	display: inline-block;
 	position: relative;
 	top: 6%;
@@ -2277,7 +2279,7 @@ taxon (tag etc) styles
 	background: rgb(var(--text-color));
 	border-color: rgb(var(--text-color));
 	/*color: rgb(var(--text-color-inverted));*/
-	color: rgb(var(--page-color));
+	color: rgb(var(--page-color)) !important;
 }
 
 .taxon:focus {
@@ -2295,13 +2297,17 @@ taxon (tag etc) styles
 .taxon:active {
 	background-color: rgb(var(--accent-color));
 	border-color: rgb(var(--accent-color));
-	color: rgb(var(--page-color));
+	color: rgb(var(--page-color)) !important;
 }
 
 .taxa {
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: calc(var(--baseline) / 4);
+}
+
+.tags .taxon {
+	border-style: solid;
 }
 
 .series .taxon {
@@ -2413,7 +2419,8 @@ hero & fullwidth styles
 --------------------------------------------------------------*/
 
 .fullwidth,
-.cover {
+.cover,
+body.page article .thumbnail {
 	display: block;
 	/*max-width: calc(100vw);*/
 	/*width: calc(100vw);*/
@@ -2427,19 +2434,20 @@ hero & fullwidth styles
 	/*margin-right: calc(-1 * var(--gutter));*/
 
 	text-align: center;
-	/*outline: 2px solid red;*/
+/*	outline: 2px solid red;*/
 }
 
 .fullwidth img,
-.cover img {
+.cover img,
+body.page article .thumbnail img {
 		width: 100%;
 		height: auto;
 		object-fit: cover;
 	}
 
-.cover {
+.cover,
+body.page article .thumbnail {
 	margin-bottom: var(--baseline);
-	/*font-size: 0;*/
 }
 
 
@@ -2461,7 +2469,8 @@ h-entry, single page styles
 form styles
 --------------------------------------------------------------*/
 
-input, button, textarea, fieldset {
+input, button, textarea, fieldset,
+input[type=file]::file-selector-button {
 	min-height: var(--baseline);
 	margin: calc(var(--baseline) / 1) 0 0 0;
 	padding: calc(var(--baseline) / 4);
@@ -2469,6 +2478,7 @@ input, button, textarea, fieldset {
 	background: none;
 	border: 0.5px solid;	
 	border-radius: 2px;
+	color: inherit;
 }
 
 fieldset {
@@ -2479,6 +2489,15 @@ input + input,
 input + button,
 button + input {
 	margin-left: calc(var(--baseline) / 1);
+}
+
+input[type=file] {
+	display: block;
+	width: 100%;
+}
+
+input[type=file]::file-selector-button {
+	margin: 0 calc(var(--baseline) / 4) 0 0;
 }
 
 textarea {
@@ -2542,7 +2561,8 @@ input[type=radio] {
 
 button,
 input[type="submit"],
-input[type="reset"] {
+input[type="reset"],
+input[type=file]::file-selector-button {
 	border: 1.5px solid;
 	border-bottom: 3px solid;
 	/*border-radius: 2rem;*/
@@ -2557,7 +2577,8 @@ input[type="reset"] {
 
 button:hover,
 input[type="submit"]:hover,
-input[type="reset"]:hover {
+input[type="reset"]:hover,
+input[type=file]:hover::file-selector-button {
 	box-shadow: inset 0 2rem 0 rgba(var(--shadow-color)), 0px 3px 0px 0px rgba(var(--shadow-color));
 	color: currentColor;
 	text-decoration: none;
@@ -2835,6 +2856,7 @@ articles-list styles
 .articles-list article {
 	flex-basis: 100%;
 	margin: 0;
+	content-visibility: auto;
 
 	outline-offset: calc(var(--baseline) / 2);
 }
@@ -2843,8 +2865,10 @@ articles-list styles
 	outline: 2px solid rgb(var(--accent-color));
 }
 
-.articles-list article:focus-within > a {
+.articles-list article:hover > *,
+.articles-list article:focus-within > * {
 	color: rgb(var(--accent-color));
+
 }
 
 .articles-list article > a {
@@ -2872,9 +2896,46 @@ articles-list styles
 	display: inline;
 }
 
-.articles-list article .tags {
-	margin: 0;
+.articles-list article .taxa {
+	display: flex;
+	margin-top: calc(var(--baseline) / 4);
 }
+
+.articles-list .taxon {
+	border: none;
+	color: inherit;
+
+	padding: 0.1em 0.2em;
+	height: auto;
+}
+
+.articles-list .taxon::before,
+.articles-list .taxon::after {
+	display: inline-block;
+	color: inherit;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.articles-list .taxon::before {
+/*	content: '[';*/
+}
+
+.articles-list .taxon::after {
+/*	content: ']';*/
+}
+
+/*.articles-list .taxon:has(+ .taxon)::after {
+	content: ',';
+}
+
+.articles-list .taxon:has(+ .taxon):hover::after {
+	content: '';
+}
+
+.articles-list .taxon:hover + .taxon::before {
+	content: ',';
+}*/
 
 /*--------------------------------------------------------------
 articles cross-language display
@@ -2907,11 +2968,13 @@ articles-list - preformatted
 	font-size: calc(var(--s-1));
 }
 
-.articles-list article.preformatted pre {
+.articles-list article.preformatted pre,
+.articles-list article.preformatted .summary {
 	display: inline-block;
 	margin: var(--baseline) auto;
 
 	text-overflow: ellipsis;
+	white-space: pre;
 	overflow: auto;
 }
 
@@ -3243,3 +3306,29 @@ model-viewer {
 	max-height: 100vh;
 	margin-top: var(--baseline);
 }
+
+
+/*--------------------------------------------------------------
+alert / admonition styles
+--------------------------------------------------------------*/
+/* reference: https://github.com/whatwg/html/issues/10100 */
+
+.alert {
+	border-left: dotted 3px;
+/*	border-radius: 1.5px;*/	
+	padding: 0 calc(var(--baseline) / 2);
+}
+
+.alert .alert__title {
+	margin: 0;
+}
+
+.alert .alert__title + * {
+	margin-top: 0;
+}
+
+.alert.alert-caution   .alert__title::before { content: '🛑'; }
+.alert.alert-important .alert__title::before { content: 'ℹ️'; }
+.alert.alert-note      .alert__title::before { content: '💬'; }
+.alert.alert-tip       .alert__title::before { content: '💡'; }
+.alert.alert-warning   .alert__title::before { content: '⚠️'; }
