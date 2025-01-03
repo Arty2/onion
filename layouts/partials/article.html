@@ -14,19 +14,7 @@
 	{{- else -}}
 		{{ printf "href=%s" .RelPermalink | safeHTMLAttr  }}
 	{{- end -}}>
-		{{- $cover := "" -}}
-		{{- if .Params.cover_listing }}
-			{{ $cover = .Params.cover_listing }}
-		{{ else if .Params.cover }}
-			{{ $cover = .Params.cover }}
-		{{ else }}
-			{{ $cover = (.Resources.ByType "image").GetMatch "*__cover*" }}
-		{{ end -}}
-		{{- if $cover -}}
-		<figure class="thumbnail">
-			{{ partial "render-image" (dict "Page" .Page "Destination" $cover )}}
-		</figure>
-		{{- end -}}
+		{{ partial "featured-img" . }}
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
 			{{- if .Params.dateCreated -}}
 				{{- .Params.dateCreated -}}

@@ -1,0 +1,13 @@
+{{- $featured := "" -}}
+{{- if .Params.thumbnail }}
+	{{ $featured = .Params.thumbnail }}
+{{ else if .Params.cover }}
+	{{ $featured = .Params.cover }}
+{{ else }}
+	{{ $featured = (.Resources.ByType "image").GetMatch "{*featured*,*cover*,*thumbnail*}" }}
+{{ end -}}
+{{- if $featured -}}
+<figure class="thumbnail">
+	{{ partial "render-image" (dict "Page" .Page "Destination" $featured )}}
+</figure>
+{{- end -}}

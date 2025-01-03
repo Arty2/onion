@@ -1,18 +1,8 @@
 {{ define "main" -}}
 	<article class="h-entry {{ with .Params.cssclass }} {{ . }} {{ end }}{{ if .Draft }} draft {{ end }} {{ .Type }}">
-		{{- $cover := "" -}}
-		{{- if .Params.cover }}
-			{{ $cover = .Params.cover }}
-		{{ else }}
-			{{ $cover = (.Resources.ByType "image").GetMatch "*__cover*" }}
-		{{ end -}}
-		{{- if $cover -}}
-		<div class="cover">
-			{{- .Scratch.Set "imgwidth" 1400 -}}
-			{{- partial "render-image" (dict "Page" .Page "Destination" $cover) -}}
-			{{- .Scratch.Delete "imgwidth" -}}
-		</div>
-		{{- end -}}
+		{{- .Store.Set "imgwidth" 1400 -}}
+		{{ partial "featured-img" . }}
+		{{- .Scratch.Delete "imgwidth" -}}
 		<h1 class="title"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
 		<header>
 			<div class="details">
