@@ -34,7 +34,7 @@ document.documentElement.classList.add(...theme.split(' '))
 	<header>
 		{{ if ne site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
 		<div class="inner">
-		{{ block "header" . }}{{ partialCached "header-inner" . }}{{end}}
+		{{ block "header" . }}{{ partial "header-inner" . }}{{end}}
 		</div>
 	</header>
 	<main>
