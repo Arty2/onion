@@ -1,6 +1,5 @@
-{{ if site.Params.Author.Image }}{{ partialCached "author-image" . }}{{ end }}
 {{ if ne site.Params.show_author false }}{{ partialCached "author-card" . }}{{ end }}
 {{ if ne site.Params.show_social false }}{{ partialCached "social" . }}{{ end }}
 {{ partialCached "menu-footer" . }}
-{{ with site.Copyright -}}<div class="copyright">{{ . | safeHTML  }}</div>{{- end }}
+{{ with site.Params.Copyright -}}<div class="copyright">{{ . | safeHTML  }}</div>{{- end }}
 <!-- Last Modified: {{ now.Format "2006-01-02 15:04 MST" }} -->

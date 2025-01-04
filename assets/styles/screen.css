@@ -1269,10 +1269,15 @@ body > header h1 svg {
 footer specifics
 --------------------------------------------------------------*/
 
+body > header .author-image,
 body > footer .author-image img {
-	max-height: calc(var(--baseline) * 4);
+	height: calc(var(--baseline) * 3);
 	width: auto;
 	border-radius: 50%;
+}
+
+body > header .author-image {
+	margin-top: calc(var(--baseline) * -1);
 }
 
 body > footer .menu > ul {

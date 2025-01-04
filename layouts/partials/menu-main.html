@@ -1,12 +1,12 @@
 {{ if ne site.Params.Menu_main false }}
 <nav class="menu">
 	<menu>
-		{{- if site.Menus.main -}}
-			{{- range site.Menus.main -}}
-				<li class="{{ if .HasChildren }}has-children{{ end }}">{{ .Pre }}<a href="{{ .URL }}">{{ (i18n .Name) }}</a>{{ .Post }}{{ if .HasChildren -}}
+		{{- with index site.Menus.main -}}
+			{{- range . -}}
+				<li class="{{ if .HasChildren }}has-children{{ end }}">{{ .Pre }}<a href="{{ .URL }}">{{ .Name }}</a>{{ .Post }}{{ if .HasChildren -}}
 					<menu>
 						{{- range .Children -}}
-							<li><a href="{{ .URL }}">{{ .Pre }}{{ (i18n .Name) }}{{ .Post }}</a></li>
+							<li><a href="{{ .URL }}">{{ .Pre }}{{ .Name }}{{ .Post }}</a></li>
 						{{- end -}}
 					</menu>
 				{{- end -}}</li>

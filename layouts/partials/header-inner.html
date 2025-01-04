@@ -1,12 +1,12 @@
 <h1>
 	<a href="{{ "/" | relLangURL }}">
-		{{- if site.Params.Logo }}
-			{{ site.Params.Logo | safeHTML }}
+		{{- with (or .Params.logo site.Params.logo) }}
+			{{ . | markdownify | safeHTML }}
 		{{- else -}}
-			{{ site.Title }}
+			{{ site.title | markdownify | safeHTML }}
 		{{- end -}}
 	</a>
-	{{- with site.Params.Description }}<span class="description">{{ . }}</span>{{ end -}}
+	{{- with site.Params.description }}<span class="description">{{ . }}</span>{{ end -}}
 </h1>
 {{ partialCached "menu-main" . }}
 {{- with site.Params.show_search }}{{ partialCached "search" . }}{{ end -}}
