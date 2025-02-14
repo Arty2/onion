@@ -37,3 +37,7 @@
 		</section>
 	{{- end -}}
 {{- end }}
+{{/* publish downloadable resources, see: https://gohugo.io/content-management/page-resources/ */}}
+{{- with Resources.Match "*.pdf" -}}
+    {{ range . }}{{ $downloads := .RelPermalink }}{{ end }}
+{{- end -}}
