@@ -6,7 +6,7 @@
 <!-- if not (in $site.Params.disableKinds "taxonomy")  -->
 <div class="taxonomy-filter noscript {{ with $class }}{{ $class }}{{ end }}">
 {{- range $taxonomy_term, $taxonomy := .Site.Taxonomies -}}
-	{{- with $.Site.GetPage (printf "/%s" $taxonomy_term) -}}
+	{{- with $.Site.GetPage path.Join $taxonomy_term -}}
 		{{- if eq $taxi $taxonomy_term -}}
 			<div class="taxa {{ $taxonomy_term }}">				
 				<a class="taxonomy-filter__reset taxon {{ .Data.Singular }}" data-active="true" data-reset="true" href="#">{{ (i18n "filter-reset") }}</a>

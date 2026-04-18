@@ -4,7 +4,7 @@ lang:
   other: el
 
 filter-reset:
-  other: Όλα
+  other: Άπαντα
 
 show-more:
   other: Περισσότερα
@@ -17,6 +17,9 @@ previous:
 
 search:
   other: Αναζήτηση
+
+play-on:
+  other: 'Αναπαραγωγή στο {{ .platform }}'
 
 
 ## social sharing
@@ -38,9 +41,6 @@ share-email:
 
 description:
   other: Σύνοψη
-
-license:
-  other: Άδεια χρήσης
 
 tags:
   other: Ετικέτες
@@ -77,6 +77,9 @@ post-meta:
 
 post-series:
   other: Σειρά
+
+post-license:
+  other: Άδεια χρήσης
 
 publication-details:
   other: Έκδοση
@@ -124,10 +127,12 @@ github-error:
   other: 'Σφάλμα 404: Η σελίδα δεν βρέθηκε'
 
 
+## Language switcher
+
+languages-available:
+  other: Διαθέσιμες μεταφράσεις
+
 ## RSS feed
 
 rss-about:
-  other: 'Αυτή είναι μια [ροή RSS](https://el.wikipedia.org/wiki/RSS), μια μηχαναγνώσιμη σελίδα με πρόσφατα άρθρα από αυτό τον ιστότοπο. Μπορείς να πρακολουθείς τις ανανεώσεις με ένα πρόγραμμα ανάγνωσης RSS.'
-
-rss-languages:
-  other: 'Διαθέσιμες γλώσσες: '
+  other: 'Αυτή είναι μια [ροή RSS](https://el.wikipedia.org/wiki/RSS), μια μηχαναγνώσιμη σελίδα με πρόσφατα άρθρα από αυτό τον ιστότοπο. Μπορείς να παρακολουθείς τις ανανεώσεις με ένα πρόγραμμα ανάγνωσης ροών RSS.'

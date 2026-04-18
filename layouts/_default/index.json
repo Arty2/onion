@@ -20,33 +20,33 @@
 {{- end -}}
 {{- range $pages -}}
 	{{- if .Params.dateCreated -}}
-			{{ $.Scratch.Set "date_created" (.Params.dateCreated) }}
+			{{ $.Store.Set "date_created" (.Params.dateCreated) }}
 	{{- else -}}
 			{{- if isset site.Params "date_format" -}}
-				{{- $.Scratch.Set "date_created" (.Date.Format site.Params.date_format) -}}
+				{{- $.Store.Set "date_created" (.Date.Format site.Params.date_format) -}}
 			{{- else -}}
-				{{- $.Scratch.Set "date_created" (.Date.Format "2006-01-02") -}}
+				{{- $.Store.Set "date_created" (.Date.Format "2006-01-02") -}}
 			{{- end -}}
 	{{- end -}}
 	{{- if .Description -}}
-		{{ $.Scratch.Set "content" (.Description | markdownify) }}
+		{{ $.Store.Set "content" (.Description | $.RenderString) }}
 	{{- else if .Summary -}}
-		{{ $.Scratch.Set "content" (.Summary | markdownify) }}
+		{{ $.Store.Set "content" (.Summary | $.RenderString) }}
 	{{- else if .Content -}}
-		{{ $.Scratch.Set "content" (.Content | markdownify) }}
+		{{ $.Store.Set "content" (.Content | $.RenderString) }}
 	{{- else -}}
-		{{ $.Scratch.Set "content" "no content" }}
+		{{ $.Store.Set "content" "no content" }}
 	{{- end -}}
-    {{- $index = $index | append (dict
-    	"title" ( .Title | plainify )
-    	"id" (md5 .Permalink)
-    	"url" .Permalink
-    	"section" (i18n (.Section | title))
-    	"tags" (apply .Params.tags "i18n" "." )
-    	"content_text" ($.Scratch.Get "content" | htmlUnescape | plainify)
-    	"date_created" ($.Scratch.Get "date_created")
-    	"date_published" (.Date.Format "2006-01-02T15:04:05Z07:00")
-    ) -}}
+	{{- $index = $index | append (dict
+		"title" ( .Title | plainify )
+		"id" (md5 .Permalink)
+		"url" .Permalink
+		"types" (i18n .Page.Type )
+		"tags" (apply .Params.tags "i18n" "." )
+		"content_text" ($.Store.Get "content" | $.RenderString | plainify)
+		"date_created" ($.Store.Get "date_created")
+		"date_published" (.Date.Format "2006-01-02T15:04:05Z07:00")
+	) -}}
 {{- end -}}
 {{- $index | jsonify -}}
 }

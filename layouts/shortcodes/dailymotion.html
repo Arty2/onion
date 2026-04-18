@@ -1,0 +1,43 @@
+{{- /*
+Renders an embedded Dailymotion video.
+
+@param {string} [id] The video id. Optional if the id is provided as first positional argument.
+@param {string} [player] The player id.
+
+@returns {template.HTML}
+@reference https://faq.dailymotion.com/hc/en-us/articles/4411096679954-Integrate-your-Player-Embed
+@reference https://developers.dailymotion.com/sdk/player-sdk/web/#runtime-player-parameters
+@reference https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shortcodes/youtube.html
+*/}}
+{{- $params := .Site.Params.Shortcodes.Dailymotion }}
+{{- $id := or (.Get "id") (.Get 0) }}
+{{- with $id }}
+{{- $class := or ($.Get "class") "" }}
+{{- $player := or ($.Get "player") (or $params.ID "") }}
+{{- $mute := or ($.Get "mute") "false" }}
+{{- $loading := or ($.Get "loading") "lazy" }}
+{{- $csswrapper := or ($.Get "csswrapper") "display:flex;min-height:120px;" }}
+{{- $cssinner := or ($.Get "cssinner") "flex:1;border:none;" }}
+{{- $ratio := or ($.Get "ratio") (cond (eq $class "") "16/9" "") }}
+{{- $width := or ($.Get "width") (cond (eq $class "") "100%" "") }}
+{{- $src := printf "https://geo.dailymotion.com/player%s%s.html?video=%s&mute=%s" (cond (eq $player "") "" "/") $player $id $mute }}
+<div{{ with $class }} class="{{ . }}"{{ end }} style="
+	{{- if eq $class "" }}{{ with $csswrapper }}{{ . | safeCSS }}{{ end }}{{ end -}}
+	{{- with $width }}width:{{ . | safeCSS }};{{ end -}}
+	{{- with $ratio }}aspect-ratio:{{ . | safeCSS }};{{ end -}}
+	">
+	{{- if not $params.Disable }}
+		<iframe
+			src="{{ $src }}"
+			allowfullscreen 
+			allow="autoplay; fullscreen; picture-in-picture; web-share"
+			{{- with $loading }} loading="{{ . }}" {{- end }}
+			{{- if eq $class "" }} style="{{ with $cssinner }}{{ . | safeCSS }}{{ end }}"{{ end -}}
+			>
+		</iframe>
+	{{- else }}
+		<a href="{{ $src }}" target="_blank" rel="noopener noreferrer">
+		{{- (i18n "play-on" (dict "platform" "Dailymotion") ) }}</a>
+	{{- end }}
+</div>
+{{ end }}

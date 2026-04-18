@@ -1,13 +1,24 @@
-{{- $featured := "" -}}
-{{- if .Params.thumbnail }}
-	{{ $featured = .Params.thumbnail }}
-{{ else if .Params.cover }}
-	{{ $featured = .Params.cover }}
+{{ $featured := false }}
+{{ $featuredClass := .Page.Store.Get "featuredClass" | default "thumbnail" }}
+{{ if eq $featuredClass "cover" }}
+	{{ with .Params.cover }}
+		{{ $featured = . }}
+	{{ else with .Params.featured }}
+		{{ $featured = . }}
+	{{ else }}
+		{{ $featured = (.Resources.ByType "image").GetMatch "{*cover*,*featured*}" }}
+	{{ end }}
 {{ else }}
-	{{ $featured = (.Resources.ByType "image").GetMatch "{*featured*,*cover*,*thumbnail*}" }}
-{{ end -}}
-{{- if $featured -}}
-<figure class="thumbnail">
+	{{ with .Params.thumbnail }}
+		{{ $featured = . }}
+	{{ else with .Params.featured }}
+		{{ $featured = . }}
+	{{ else }}
+		{{ $featured = (.Resources.ByType "image").GetMatch "{*thumbnail*,*featured*}" }}
+	{{ end }}
+{{ end }}
+{{ if ne $featured false }}
+<figure class="{{ $featuredClass }}">
 	{{ partial "render-image" (dict "Page" .Page "Destination" $featured )}}
 </figure>
-{{- end -}}
+{{ end }}

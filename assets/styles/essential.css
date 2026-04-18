@@ -2,9 +2,9 @@
 global CSS variables
 --------------------------------------------------------------*/
 :root {
-	--font-mono: 'Fantasque', 'Segoe UI', 'Ubuntu Mono', 'Consolas', monospace;
-	--font-serif: 'Alegreya', 'Gentium', 'Georgia', serif;
-	--font-sans: 'Alegreya Sansa', 'Helvetica', 'Arial', serif;
+	--font-mono: 'Fantasque Sans Mono', 'Fantasque', 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
+	--font-serif: 'Alegreya', 'Source Serif', 'New York', 'Cambria', 'Georgia', 'Roboto Serif', 'DejaVu Serif', serif;
+	--font-sans: 'Alegreya Sans', 'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
 
 	--max-content: 30rem;
 
@@ -17,21 +17,41 @@ global CSS variables
 themes
 --------------------------------------------------------------*/
 
-:root {
-	--page-color: 204, 204, 204;
-	--text-color: 30, 30, 30;
-	--hyperlink-color: 0, 0, 0;
+:root,
+:root.scheme--light,
+.scheme--light {
+	--page-color: 221, 238, 255;
+	--text-color: 34, 34, 50;
+	--hyperlink-color: 34, 34, 50;
 	--accent-color: 0, 0, 255;
-	--text-color-inverted: 200, 200, 200;
+	--text-color-inverted: 255, 255, 255;
+
+	--blend-mode: multiply;
+	--blend-filter: none;
+}
+
+:root.scheme--dark,
+.scheme--dark {
+	--page-color: 34, 34, 34;
+	--text-color: 204, 204, 204;
+	--hyperlink-color: 204, 204, 204;
+	--accent-color: 205, 35, 185;
+	--text-color-inverted: 20, 20, 20;
+
+	--blend-filter: invert(100);
+	--blend-mode: screen;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--page-color: 30, 30, 30;
+		--page-color: 34, 34, 34;
 		--text-color: 204, 204, 204;
-		--hyperlink-color: 255, 255, 255;
-		--accent-color: 0, 0, 255;
-		--text-color-inverted: 100, 100, 100;
+		--hyperlink-color: 204, 204, 204;
+		--accent-color: 205, 35, 185;
+		--text-color-inverted: 20, 20, 20;
+
+		--blend-filter: invert(100);
+		--blend-mode: screen;
 	}
 }
 
@@ -44,8 +64,6 @@ reset styles
 *::before,
 *::after {
 	box-sizing: border-box;
-/*	margin: 0;*/
-/*	padding: 0;*/
 	line-height: inherit;
 	text-indent: 0;
 }
@@ -99,7 +117,7 @@ html {
 body {
 	padding: var(--baseline);
 	background: rgb(var(--page-color));
-	font-family: var(--font-sans);
+	font-family: var(--font-serif);
 	font-size: 1.1rem;
 	color: rgb(var(--text-color));
 }
@@ -128,6 +146,62 @@ header h1 {
 footer {
 	font-size: 80%;
 	text-align: center;
+}
+
+
+/*--------------------------------------------------------------
+hyperlink styles
+--------------------------------------------------------------*/
+
+a,
+a:visited {
+	vertical-align: baseline;
+
+	background: transparent;
+	text-decoration: underline;
+	text-decoration-color: inherit;
+	text-decoration-skip-ink: auto;
+	text-decoration-thickness: 0.5px;
+
+	outline: none;
+}
+
+a:visited:not([href^="http"]) {
+	text-decoration-style: dashed;
+}
+
+a[href^="mailto"] {
+	text-decoration-style: solid;
+	text-decoration-color: inherit;
+}
+
+a:focus,
+a:focus-visible {
+	outline: 2px solid;
+	outline-offset: 2px;
+}
+
+a:focus:not(:focus-visible) {
+	outline: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+	-webkit-tap-highlight-color: transparent;
+
+	transition: color 0s;
+}
+
+a,
+a:visited {
+	color: rgb(var(--hyperlink-color));
+	outline-color: rgb(var(--accent-color));
+}
+
+a:hover,
+a:active {
+	color: rgb(var(--accent-color));
 }
 
 
@@ -174,19 +248,73 @@ nav > menu > li > a {
 
 
 /*--------------------------------------------------------------
+language selector
+--------------------------------------------------------------*/
+
+.languages {
+	display: block;
+	z-index: 101;
+/*	margin: calc(-1 * var(--baseline)) 0 0 0;*/
+	
+	font-family: var(--font-mono);
+	font-size: 80%;
+	text-transform: uppercase;
+	line-height: var(--baseline);
+	text-align: right;
+
+	-webkit-user-select: none !important;
+	user-select        : none !important;
+
+}
+	.languages ul {
+		display: inline-block;
+		list-style: none;
+	}
+
+	.languages ul li {
+		display: inline-block;
+		margin: 0;
+		padding-left: 0.5rem;
+
+		text-align: right;
+	}
+
+	.languages a {
+		display: inline;
+
+		text-align: center;
+		text-decoration: none;
+	}
+
+	.languages [aria-current='page'] {
+		text-decoration: underline;
+	}
+
+
+/*--------------------------------------------------------------
 article styles
 --------------------------------------------------------------*/
 
 article {
+	display: block;
 	margin: var(--baseline) auto;
+
+	outline-offset: calc(var(--baseline) / 2);
+}
+
+article:focus-within {
+	outline: 0.5px solid rgb(var(--accent-color));
+}
+
+article:hover > *,
+article:focus-within * {
+	color: rgb(var(--accent-color));
+	outline: none;
 }
 
 article > a {
+	outline: none;
 	text-decoration: none;
-}
-
-article > a .title {
-	text-decoration: underline;
 }
 
 article .time {
@@ -201,24 +329,10 @@ article .title {
 
 article .summary {
 	display: inline;
-	text-decoration: none;
 }
 
 article .thumbnail {
 	width: 100%;
-}
-
-.meta {
-	font-size: 80%;
-	margin: var(--baseline) 0;
-}
-
-.meta details {
-	border-top: 2px dashed;
-}
-
-.meta details:last-child {
-	border-bottom: 2px dashed;
 }
 
 
@@ -226,34 +340,41 @@ article .thumbnail {
 taxonomy styles
 --------------------------------------------------------------*/
 
-.taxonomy-filter  {
-	text-align: center;
-}
-
 .taxa {
-	margin-top: 0;
+	margin: 0;
+	font-family: var(--font-mono);
 }
 
 .taxon {
 	display: inline-block;
-/*	padding-inline: 0.25em;*/
-
-/*	border: 1px solid;*/
 	font-size: 70%;
-/*	text-decoration: none;*/
 	text-transform: uppercase;
 }
 
 .taxon + .taxon {
-	margin-inline-start: 1rem;
+	margin-inline-start: 1ch;
 }
 
+.taxon.type:has(+ .taxon.tag)::after {
+	content: '·';
+	margin-inline-start: 1ch;
+}
 
 /*--------------------------------------------------------------
-temporary / in progress
+alert / admonition styles
 --------------------------------------------------------------*/
 
-#search__form,
-.gadgets {
-	display: none;
+.alert {
+	border-left: dotted 3px;
+	font-size: 80%;
+
+	padding: 0 calc(var(--baseline) / 2);
+}
+
+.alert .alert__title {
+	margin: 0;
+}
+
+.alert .alert__title + * {
+	margin-top: 0;
 }

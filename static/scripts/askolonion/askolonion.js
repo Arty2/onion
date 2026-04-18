@@ -68,7 +68,7 @@ askolonion = function(){
 		}
 
 		// Enter (13) to move to the first result, or go to result
-		if (e.key == 'Enter') {
+		if (e.key == 'Enter' || e.key == 'ArrowRight' ) {
 			e.preventDefault(); // stop form from being submitted	
 			if (results_available && document.activeElement == search__input) {
 				first.focus();
@@ -79,7 +79,7 @@ askolonion = function(){
 		}
 
 		// Backspace (8) to switch back to the search input
-		if (e.key == 'Backspace') {
+		if (e.key == 'Backspace' || e.key == 'ArrowLeft' ) {
 			if (document.activeElement != search__input) {
 				e.preventDefault(); // stop browser from going back in history
 				search__input.focus();
@@ -198,7 +198,7 @@ askolonion = function(){
 							'date_published',
 							'date_created',
 							'content_text',
-							'section',
+							'types',
 							'tags'
 							]
 					};
@@ -230,12 +230,12 @@ askolonion = function(){
 			for (let item in results.slice(0,5)) { // only show first 5 results
 				search_items = search_items +
 `<article><a href="${results[item].item.url}" tabindex="0">
-	<time class="time">${results[item].item.date_created}</time>
-	<h3 class="title">${results[item].item.title}</h3>
-	<p class="summary">${results[item].item.content_text}</p>
-	<p class="taxa tags">${results[item].item.tags.map(
+	<p class="taxa"><span class="taxon type">${results[item].item.types}</span>${results[item].item.tags.map(
 		(x) => '<span class="taxon tag" rel="tag">'+x+'</span>'
 	).join('')}</p>
+	<h3 class="title">${results[item].item.title}</h3>
+	<p class="summary">${results[item].item.content_text}</p>
+	<time class="time">${results[item].item.date_created}</time>
 </a></article>`;
 			}
 			results_available = true;

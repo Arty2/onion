@@ -6,7 +6,7 @@
 	"warning" "⚠️"
 -}}
 {{- if eq .Type "alert" }}
-	<div role="note" class="alert alert-{{ .AlertType }}">
+<div role="note" class="alert alert-{{ .AlertType }}">
 	<div role="heading" class="alert__title">
 	{{ with .AlertTitle }}
 		{{ . }}
@@ -14,10 +14,10 @@
 		{{ or (i18n .AlertType) (title .AlertType) }}
 	{{ end }}
 	</div>
-	{{ .Text }}
-	</div>
+{{ .Text }}
+</div>
 {{- else }}
-	<blockquote>
-	{{ .Text }}
-	</blockquote>
+<blockquote>
+{{ .Text }}
+</blockquote>
 {{ end -}}

@@ -1,10 +1,8 @@
 {{ if .IsTranslated -}}
-<nav class="languages">
+<nav class="languages" aria-label="{{ i18n "languages-available" }}" aria-role="navigation">
 	<ul>
-		{{- $translations := .AllTranslations -}}
-		{{- $len := (len $translations) -}}
-		{{- range $index, $element := $translations }}
-		<li><a href="{{ .RelPermalink }}" lang="{{ .Site.LanguageCode }}" class="{{ if eq $.Page.RelPermalink .RelPermalink }}active{{ end }}">{{ .Site.Language.LanguageName }}</a></li>
+		{{- range $index, $language := .AllTranslations }}
+		<li><a rel="alternate" href="{{ .RelPermalink }}" hreflang="{{ .Site.LanguageCode }}" lang="{{ .Site.LanguageCode }}" {{ if eq $.Page.RelPermalink .RelPermalink }}aria-current="page"{{ end }}>{{ .Site.Language.LanguageName }}</a></li>
 		{{- end }}
 	</ul>
 </nav>

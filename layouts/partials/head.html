@@ -32,6 +32,9 @@
 {{- if (fileExists "static/styles/custom.css") -}}
 <link rel="stylesheet" href="{{ "/styles/custom.css" | relURL }}" media="all">
 {{- end -}}
+{{- with .Params.CustomCSS }}
+<style>{{ . | safeCSS }}</style>
+{{ end }}
 
 {{ template "_internal/opengraph.html" . }}
 {{ template "_internal/schema.html" . }}

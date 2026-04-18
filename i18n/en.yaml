@@ -18,6 +18,9 @@ previous:
 search:
   other: Search
 
+play-on:
+  other: 'Play on {{ .platform }}'
+
 
 ## social sharing
 
@@ -38,9 +41,6 @@ share-email:
 
 description:
   other: Summary
-
-license:
-  other: License
 
 rating:
   other: Rating
@@ -78,8 +78,11 @@ post-meta:
 post-series:
   other: Series
 
+post-license:
+  other: License
+
 publication-details:
-  other: Publication
+  other: Publication Details
 
 title:
   other: Title
@@ -124,10 +127,12 @@ github-error:
   other: 'Error 404: Page Not Found'
 
 
+## Language switcher
+
+languages-available:
+  other: Available translations
+
 ## RSS feed
 
 rss-about:
-  other: 'This is an [RSS feed](https://aboutfeeds.com/), a machine-readable page with recent articles from this website. You can subscribe and receive updates with a newsreader.'
-
-rss-languages:
-  other: 'Available languages: '
+  other: 'This is an [RSS feed](https://aboutfeeds.com/), a machine-readable page with recent articles from this website. You can subscribe and receive updates with a [feed reader](https://en.wikipedia.org/wiki/Comparison_of_feed_aggregators).'

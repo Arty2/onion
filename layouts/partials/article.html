@@ -4,6 +4,12 @@
 {{- else if eq .Type "ephemera" -}}
 	{{ .RawContent | markdownify | safeHTML }}
 {{- else -}}
+	<p class="taxa">
+	{{- with .Page.Type }}<span class="taxon type" {{ with $.Page.Language }} hreflang="{{ . }}"{{ end }}{{ if not (in (i18n "lang") "[i18n]") }} lang="{{ i18n "lang" }}"{{ end }}>{{ i18n . }}</span>{{ end }}
+	{{- if .Params.Tags -}}
+		{{ partial "tags-list" . }}
+	{{- end -}}
+	</p>
 	<a {{ with .Params.directURL -}}
 		{{ with $.Page.Resources.GetMatch . }}
 			{{ printf "href=%s title=' %s'" .RelPermalink .Name | safeHTMLAttr  }}
@@ -15,6 +21,19 @@
 		{{ printf "href=%s" .RelPermalink | safeHTMLAttr  }}
 	{{- end -}}>
 		{{ partial "featured-img" . }}
+		<h3 class="title">{{ .Title }}</h3>
+		{{- with .Params.Author }}
+			<!-- <p class="author">{{ . }}</p> -->
+		{{- end -}}
+		<p class="summary">
+		{{- with .Description }}
+			{{ . | markdownify | plainify  }}
+		{{- else }}
+			{{ .Summary | markdownify | plainify  }}
+		{{- end -}}</p>
+		{{- with .Params.Rating }}
+			<div class="rating" data-rating="{{ . }}">{{ range seq (int . ) }}★{{ end }}</div>
+		{{- end -}}
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
 			{{- if .Params.dateCreated -}}
 				{{- .Params.dateCreated -}}
@@ -28,22 +47,6 @@
 				{{- end -}}
 			{{- end -}}
 		</time>
-		<h3 class="title">{{ .Title }}</h3>
-		{{- with .Params.Author }}
-			<!-- <p class="author">{{ . }}</p> -->
-		{{- end -}}
-		<p class="summary">
-		{{- with .Description }}
-			{{ . | markdownify | plainify  }}
-		{{- else }}
-			{{ .Summary | markdownify | plainify  }}
-		{{- end -}}</p>
-		{{- with .Params.Rating }}
-			<div class="rating">{{ range seq (int . ) }}★{{ end }}</div>
-		{{- end -}}
 	</a>
-		{{- if .Params.Tags -}}
-			<p class="taxa tags">{{ partial "tags-list" . }}</p>
-		{{- end -}}
 {{- end -}}
 </article>
