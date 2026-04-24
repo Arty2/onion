@@ -34,24 +34,24 @@ When DOM is ready */
 window.ready(function() {
 
 /*--------------------------------------------------------------
-Load and initialize simplelightbox
+Load and initialize simplelightbox — only on pages that actually
+contain image links (avoids shipping ~50 kB of JS/CSS everywhere).
 via https://simplelightbox.com/
 --------------------------------------------------------------*/
-load_script(window.location.origin + '/scripts/simple-lightbox/simple-lightbox.min.js').then(() => {
-	var lightbox = new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
-		closeText: '×',
-		navText: ['←','→'],
-		overlayOpacity: 1
-	});
-}).catch((error) => { console.log('simple-lightbox failed to load: ' + error); });
-
-
-/*--------------------------------------------------------------
-articles-filter
---------------------------------------------------------------*/
-/*if (document.body.contains(document.querySelector('.articles-filter'))) {
-
-}*/
+if (document.querySelector('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]')) {
+	var lbBase = window.location.origin + '/scripts/simple-lightbox/';
+	var lbCss = document.createElement('link');
+	lbCss.rel = 'stylesheet';
+	lbCss.href = lbBase + 'simple-lightbox.min.css';
+	document.head.appendChild(lbCss);
+	load_script(lbBase + 'simple-lightbox.min.js').then(() => {
+		new SimpleLightbox('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]', {
+			closeText: '×',
+			navText: ['←','→'],
+			overlayOpacity: 1
+		});
+	}).catch((error) => { console.log('simple-lightbox failed to load: ' + error); });
+}
 
 
 /*--------------------------------------------------------------
@@ -124,30 +124,9 @@ Gadget #themer behavior
 			localStorage.setItem('theme', themes[inext]);
 			theme = themes[inext];
 			event.preventDefault();
-			// console.log(icurr,inext,iaftr,theme) // DEBUG
-			// console.log(themes) // DEBUG
 		}
 	}
 })();
-
-/*--------------------------------------------------------------
-EXPERIMENTAL
-Lazyload transition
-based on https://plainjs.com/javascript/manipulation/wrap-an-html-structure-around-an-element-28/
---------------------------------------------------------------*/
-
-/*var lazyimages = document.querySelectorAll('img[loading=lazy]');
-lazyimages.forEach(function(img){
-	var wrapper = document.createElement('span');
-	img.parentNode.insertBefore(wrapper, img);
-	wrapper.appendChild(img);
-	wrapper.classList.add('lazyloader');
-	// wrapper.style.outline = "2px dashed red";
-	img.addEventListener('load', function(event){
-		// wrapper.style.opacity = 0;
-	});
-});
-*/
 
 /*--------------------------------------------------------------
 Piled image galleries

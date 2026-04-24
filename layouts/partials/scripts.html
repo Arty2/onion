@@ -1,5 +1,6 @@
 <script src="{{ "/scripts/onion.js" | relURL }}" async></script>
-<!-- lightbox loaded from onion.js -->
-<!-- <script src="{{ "/scripts/simple-lightbox/simple-lightbox.min.js" | relURL }}" async></script> -->
 <script src="{{ "/scripts/instantpage.js" | relURL }}" type="module" defer></script>
+{{- if .Page.Store.Get "needs_model_viewer" }}
+<script src="{{ "/scripts/model-viewer.min.js" | relURL }}" type="module" defer></script>
+{{- end }}
 {{ template "_internal/google_analytics.html" . }}
