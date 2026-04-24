@@ -1,1 +1,7 @@
-# theme config
+# Theme-level Hugo configuration. Enables distribution as a Hugo module.
+# Downstream sites: hugo mod init <your-module> && hugo mod get github.com/arty2/onion
+
+module:
+  hugoVersion:
+    min: "0.128.0"
+    extended: false
