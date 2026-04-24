@@ -1,0 +1,49 @@
+baseURL = "https://example.org/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "Onion — example site"
+theme = "onion"
+
+# When Hugo loads this exampleSite for local testing,
+# tell it to look for the theme one directory up.
+themesDir = "../.."
+
+enableRobotsTXT = true
+
+[params]
+  description = "Example site for the onion Hugo theme."
+  theme = "theme--default"
+  show_gadgets = true
+  show_languages = true
+  show_meta = true
+  show_toc = true
+  show_share = false
+  show_author = true
+  show_social = true
+
+  [params.author]
+    name = "Jane Doe"
+    description = "A demo author for the onion theme."
+    email = "jane@example.org"
+
+[taxonomies]
+  tag = "tags"
+  series = "series"
+
+[services.rss]
+  limit = 20
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.goldmark.extensions.extras]
+  delete.enable = true
+  insert.enable = true
+  mark.enable = true
+  subscript.enable = true
+  superscript.enable = true
+
+[markup.goldmark.parser]
+  [markup.goldmark.parser.attribute]
+    block = true
+    title = true
