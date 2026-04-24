@@ -4,7 +4,7 @@
 	
 	{{- $type := .Params.Type -}}
 	<!-- Group articles by year and loop through them -->
-	{{- range (.Site.RegularPages.GroupByDate "2006") -}}
+	{{- range (site.RegularPages.GroupByDate "2006") -}}
 		<!-- Get articles to display -->
 		{{- $articles := (cond (eq $type "section") .Pages (where .Pages "Type" $type)) -}}
 		<!-- Count articles returned -->

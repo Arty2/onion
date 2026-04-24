@@ -1,6 +1,6 @@
 <nav class="social">
 	<menu>
-	{{- range .Site.Params.Social -}}
+	{{- range site.Params.Social -}}
 		<li><a href="{{ if in .link ":" }}{{ .link }}{{ else }}{{ .link | relLangURL }}{{ end }}" rel="me noopener" class="icon icon-{{ .name }}" title="{{ .name }}" target="_blank"><span>{{ .name }}</span></a></li>
 	{{- end }}
 	</menu>

@@ -1,10 +1,10 @@
 {{ define "main" }}
 	{{ if gt (len .Content) 0 }}
 		{{ .Content }}
-	{{ else if gt (len .Site.RegularPages) 0}}
+	{{ else if gt (len site.RegularPages) 0}}
 		<section class="articles-list">
 			<div class="wrapper">
-			{{ range .Site.RegularPages }}
+			{{ range site.RegularPages }}
 				{{ partial "article.html" . }}
 			{{ end }}
 			</div>

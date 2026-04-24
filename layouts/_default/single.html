@@ -3,8 +3,8 @@
 		{{- .Store.Set "imgwidth" 1400 -}}
 		{{- .Store.Set "featuredClass" "cover" -}}
 		{{ partial "featured-img" . }}
-		{{- .Scratch.Delete "imgwidth" -}}
-		{{- .Scratch.Delete "featuredClass" -}}
+		{{- .Store.Delete "imgwidth" -}}
+		{{- .Store.Delete "featuredClass" -}}
 		<h1 class="title"><a href="#">{{ with .Title }}{{ . }}{{ end }}</a></h1>
 		<header>
 			<div class="details">
@@ -13,11 +13,11 @@
 						{{ .Params.Summary | plainify | markdownify }}
 					</div>
 				{{ end }}
-				{{ if or (eq .Site.Params.show_share true) (eq .Params.show_share true) }}
+				{{ if or (eq site.Params.show_share true) (eq .Params.show_share true) }}
 					{{ partial "sharing.html" . }}
 				{{ end }}
 			</div>
-			{{ if and (ne .Site.Params.show_meta false) (ne .Params.show_meta false) -}}{{ partial "meta" . }}{{ end }}
+			{{ if and (ne site.Params.show_meta false) (ne .Params.show_meta false) -}}{{ partial "meta" . }}{{ end }}
 		</header>
 		<div class="entry-content" itemprop="articleBody">
 			{{- if eq .Type "preformatted" -}}

@@ -40,8 +40,8 @@
 			{{- else if .Params.dateRead -}}
 				{{- .Params.dateRead -}}
 			{{- else -}}
-				{{- if isset $.Site.Params "date_format" -}}
-					{{- .Date.Format $.Site.Params.date_format -}}
+				{{- if isset site.Params "date_format" -}}
+					{{- .Date.Format site.Params.date_format -}}
 				{{- else -}}
 					{{- .Date.Format "2006-01-02" -}}
 				{{- end -}}

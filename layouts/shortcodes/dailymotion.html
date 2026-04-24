@@ -9,7 +9,7 @@ Renders an embedded Dailymotion video.
 @reference https://developers.dailymotion.com/sdk/player-sdk/web/#runtime-player-parameters
 @reference https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shortcodes/youtube.html
 */}}
-{{- $params := .Site.Params.Shortcodes.Dailymotion }}
+{{- $params := site.Params.Shortcodes.Dailymotion }}
 {{- $id := or (.Get "id") (.Get 0) }}
 {{- with $id }}
 {{- $class := or ($.Get "class") "" }}

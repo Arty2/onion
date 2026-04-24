@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {{ "<!-- Built with Hugo and the https://heracl.es/onion theme. -->" | safeHTML }}
-<html class="{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.LanguageCode }} lang="{{ . }}"{{ end }}>
+<html class="{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.Language.Lang }} lang="{{ . }}"{{ end }}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">

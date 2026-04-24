@@ -3,7 +3,7 @@
 		{{- with (or .Params.logo site.Params.logo) }}
 			{{ . | markdownify | safeHTML }}
 		{{- else -}}
-			{{ site.title | markdownify | safeHTML }}
+			{{ site.Title | markdownify | safeHTML }}
 		{{- end -}}
 	</a>
 	{{- with site.Params.description }}<span class="description">{{ . }}</span>{{ end -}}
