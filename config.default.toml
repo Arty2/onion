@@ -1,0 +1,97 @@
+# --------------------------------------------------------------------------- #
+# Onion — default site configuration (copy into your site's hugo.toml and edit)
+#
+# Only parameters the theme reads are listed; Hugo's own defaults still apply
+# to anything not mentioned here. See:
+#   https://gohugo.io/configuration/
+#   https://github.com/arty2/onion
+# --------------------------------------------------------------------------- #
+
+baseURL              = "https://example.org/"
+title                = "My Onion site"
+languageCode         = "en-us"
+defaultContentLanguage = "en"
+theme                = "onion"
+
+enableRobotsTXT      = true
+
+# ------ Taxonomies ---------------------------------------------------------- #
+[taxonomies]
+  tag    = "tags"
+  series = "series"
+
+# ------ RSS / JSON Feed ----------------------------------------------------- #
+[services.rss]
+  limit = 20
+
+# ------ Markdown (Goldmark) ------------------------------------------------- #
+[markup.goldmark.renderer]
+  unsafe = true          # inline HTML in Markdown, needed for some shortcodes
+[markup.goldmark.parser]
+  [markup.goldmark.parser.attribute]
+    block = true
+    title = true
+
+# ------ Theme parameters ---------------------------------------------------- #
+[params]
+  description    = "Site tagline shown in <meta description> and feeds."
+
+  # Theme + modifiers. Combine space-separated values.
+  #   themes          : theme--default | theme--peach | theme--retro |
+  #                     theme--gray    | theme--blue
+  #   color scheme    : scheme--light  | scheme--dark  (default: OS preference)
+  #   layout mods     : mod-newline    | mod--fullwidth
+  #   font mods       : mod--font-serif | mod--font-sans | mod--font-mono |
+  #                     mod--font-local (disables bundled webfonts)
+  theme          = "theme--default"
+
+  # Feature toggles (all optional; sensible defaults shown).
+  show_gadgets   = true   # floating return-to-top + theme-switcher
+  show_languages = true   # language switcher in the <header>
+  show_meta      = true   # per-article sidebar: ToC, dates, taxonomies, …
+  show_toc       = true   # auto table of contents on long articles
+  show_share     = false  # per-article share links (fb/twitter/email)
+  show_author    = true   # footer author card
+  show_social    = true   # footer social-media icons
+  show_search    = false  # client-side search (askolonion + Fuse.js)
+
+  # Optional Markdown logo rendered in the header (falls back to site title).
+  # logo         = "![alt](/logo.svg)"
+
+  # Go time layout used wherever the theme renders a date.
+  date_format    = "2006-01-02"
+
+  # Set for right-to-left languages.
+  # LanguageDir  = "rtl"
+
+  [params.author]
+    name        = "Jane Doe"
+    description = "One-line bio shown in the author card and <meta>."
+    email       = "jane@example.org"      # optional
+    image       = "avatar.png"            # path relative to /static or bundle
+    Fediverse   = "@jane@example.social"  # emits <meta name="fediverse:creator">
+
+  # Footer social icons. `name` matches an icon glyph in the icon font.
+  # [[params.social]]
+  #   name = "mastodon"
+  #   link = "https://mastodon.social/@jane"
+  # [[params.social]]
+  #   name = "github"
+  #   link = "https://github.com/jane"
+
+  # Shortcode defaults.
+  # [params.shortcodes.dailymotion]
+  #   ID      = ""     # your Dailymotion player ID
+  #   Disable = false  # set true to render a link instead of an iframe
+
+# ------ Menus (standard Hugo) ----------------------------------------------- #
+# [[menu.main]]
+#   name   = "Archives"
+#   url    = "/archives/"
+#   weight = 10
+# [[menu.footer]]
+#   name   = "colophon"   # looked up via i18n/
+#   url    = "/colophon/"
+
+# ------ Google Analytics ---------------------------------------------------- #
+# googleAnalytics = "G-XXXXXXXXXX"
