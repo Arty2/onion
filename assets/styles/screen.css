@@ -10,6 +10,10 @@ global CSS variables
 --------------------------------------------------------------*/
 
 :root {
+	/* Tell the browser this document supports both schemes, so that form
+	   controls, scrollbars and other UA UI follow the active scheme. */
+	color-scheme: light dark;
+
 	/* local font stacks */
 	--font-icons: 'Emoji One BW', 'Noto Emoji', 'Segoe UI', monospace;
 	--font-mono: 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
