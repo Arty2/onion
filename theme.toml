@@ -1,6 +1,6 @@
 name = "onion"
 license = "MIT"
-licenselink = "https://github.com/Arty2/onion/blob/master/LICENSE.txt"
+licenselink = "https://github.com/arty2/onion/blob/master/LICENSE.txt"
 description = "Plug-and-play, progressively-enhanced, mobile-first Hugo theme with multilingual support, sidenotes, automatic light/dark mode and a self-hosted privacy-first toolkit."
 homepage = "https://heracl.es/onion/"
 demosite = "https://heracl.es/onion/"

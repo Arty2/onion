@@ -24,6 +24,23 @@ directory. Click one on the live site to cycle.
 
 {{< gallery dir="gallery" class="pile" />}}
 
+## gallery (inner mode)
+
+Without `dir=`, the shortcode renders any nested `figure` shortcodes inside
+a `<div class="gallery">` wrapper.
+
+{{< gallery class="row" >}}
+{{< figure src="gallery/a.png" caption="Alpha" >}}
+{{< figure src="gallery/b.png" caption="Bravo" >}}
+{{< figure src="gallery/c.png" caption="Charlie" >}}
+{{< /gallery >}}
+
+## dailymotion
+
+Iframe embed for a Dailymotion video. The id below is a public sample.
+
+{{< dailymotion id="x9aohq6" >}}
+
 ## marginalia
 
 Sidenotes stay in the margin on wide viewports and collapse to inline

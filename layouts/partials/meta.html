@@ -1,5 +1,6 @@
+{{- $dateFormat := or site.Params.date_format site.Params.dateformat "2006-01-02" -}}
 <aside class="meta">
-{{ if and (ne site.Params.show_toc false) (ne .Params.show_toc false) -}}
+{{ if and (ne site.Params.show_toc false) (ne site.Params.showtoc false) (ne .Params.show_toc false) (ne .Params.showtoc false) -}}
 	{{ if ge (len .TableOfContents) 400 }}
 	<details>
 		<summary>{{ (i18n "contents") }}</summary>
@@ -27,13 +28,7 @@
 		{{ if .Lastmod }}
 			<dt>{{ i18n "modified-date" }}</dt>
 				<dd>
-					<time datetime="{{ .Lastmod }}">
-					{{- if isset site.Params "date_format" -}}
-						{{- .Lastmod.Format site.Params.date_format -}}
-					{{- else -}}
-						{{- .Lastmod.Format "2006-01-02" -}}
-					{{- end -}}
-					</time>
+					<time datetime="{{ .Lastmod }}">{{- .Lastmod.Format $dateFormat -}}</time>
 				</dd>
 		{{ end }}
 		{{ if .Params.dateCreated }}
@@ -42,13 +37,7 @@
 		{{ else }}
 			<dt>{{ i18n "publish-date" }}</dt>
 				<dd>
-					<time datetime="{{ .Date }}">
-					{{- if isset site.Params "date_format" -}}
-						{{- .Date.Format site.Params.date_format -}}
-					{{- else -}}
-						{{- .Date.Format "2006-01-02" -}}
-					{{- end -}}
-					</time>
+					<time datetime="{{ .Date }}">{{- .Date.Format $dateFormat -}}</time>
 				</dd>
 		{{ end }}
 

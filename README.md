@@ -56,13 +56,31 @@ dailymotion
 
 ## Feature toggles
 
-A handful of features are togglable at site and/or page level via front-matter:
+A handful of features are togglable at site and/or page level via front-matter. Both the legacy `snake_case` and the more conventional `camelCase` form are accepted:
 
 ```
-show_toc          show_meta          show_share
-show_comments     show_gadgets       show_languages
-show_author       show_social        show_search
+showToc           showMeta           showShare
+showComments      showGadgets        showLanguages
+showAuthor        showSocial         showSearch
 ```
+
+Set either form to `false` at site level to disable, or override per page in front-matter.
+
+
+## Migrating from another theme
+
+Onion's parameter names overlap with the conventions used by [PaperMod](https://adityatelange.github.io/hugo-PaperMod/), [Hextra](https://imfing.github.io/hextra/), [Stack](https://stack.jimmycai.com/), [Congo / Blowfish](https://blowfish.page/) and [Anatole](https://github.com/lxndrblz/anatole). Most keys can be pasted across; here are the ones worth knowing about:
+
+| Their key | onion equivalent |
+| --- | --- |
+| `params.images` (default OG image) | `params.images` — pass-through |
+| `params.mainSections` | `params.mainSections` — pass-through |
+| `params.dateFormat` / `params.DateFormat` | `params.dateFormat` |
+| `params.author` (object) | `params.author` — same shape (`name`, `email`, `image`, …) |
+| `params.socialIcons` (PaperMod) | `[[params.social]]` with `name` + `url` |
+| `params.ShowToc`, `params.ShowReadingTime`, etc. | `params.showToc`, etc. (camelCase) |
+| `params.defaultTheme = "dark"` (PaperMod) | `params.theme = "theme--default scheme--dark"` |
+| `params.colorScheme` (Congo) | `params.theme = "… scheme--dark"` (or omit for OS-driven) |
 
 
 ## Theming
@@ -229,8 +247,10 @@ Prefetch/prerender is delegated to the browser via [Speculation Rules](https://d
 ## Development
 
 - `cd exampleSite && hugo server` for local preview.
-- CI (`.github/workflows/build.yml`) runs `hugo --gc --minify --printPathWarnings` on every push.
+- CI (`.github/workflows/build.yml`) builds the example site on every push against two Hugo versions (a pinned reproducible one and `latest`) and runs `html-validate` plus a deprecation grep against the output.
 - Minimum supported Hugo: **0.128.0**. Bumped here whenever the theme relies on a newer template feature.
+
+Releases follow [`RELEASING.md`](./RELEASING.md): tag `vX.Y.Z`, push the tag, and the Go module proxy serves it as `hugo mod get github.com/arty2/onion@vX.Y.Z`.
 
 
 * * *
