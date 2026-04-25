@@ -1,73 +1,63 @@
 @charset "utf-8";
-/*--------------------------------------------------------------
-onion theme
-made by: Heracles Papatheodorou
-url: https://github.com/Arty2/onion
---------------------------------------------------------------*/
+/* ============================================================
+   onion theme
+   made by: Heracles Papatheodorou
+   url:     https://github.com/arty2/onion
+   ============================================================ */
 
-/*--------------------------------------------------------------
-global CSS variables
---------------------------------------------------------------*/
 
+/* ============================================================
+   1. RESET & CRITICAL
+   ============================================================ */
+
+
+/* ----------------------------------------------------------
+   global CSS variables
+   ---------------------------------------------------------- */
 :root {
-	/* Tell the browser this document supports both schemes, so that form
-	   controls, scrollbars and other UA UI follow the active scheme. */
+	/* Form controls, scrollbars and other UA UI follow the active scheme. */
 	color-scheme: light dark;
 
-	/* local font stacks */
+	/* Generic font stacks; overridden in the typography section when the
+	   site bundles webfonts. */
 	--font-icons: 'Emoji One BW', 'Noto Emoji', 'Segoe UI', monospace;
-	--font-mono: 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
+	--font-mono:  'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
 	--font-serif: 'Source Serif', 'New York', 'Cambria', 'Georgia', 'Roboto Serif', 'DejaVu Serif', serif;
-	--font-sans: 'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
+	--font-sans:  'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
 
-	/* must be in rem or other universal unit */
-	/*--max-content: 40rem;*/
-	--max-content: 30rem;
-	/*DEBUG*/
-	/*--max-content: 100%;*/
+	/* Layout primitives — keep in rem so they scale with html font-size. */
+	--max-content:    30rem;
 	--max-marginalia: calc(var(--max-content) / 1.61);
+	--line-height:    1.4;                                  /* must be unitless */
+	--baseline:       calc(1rem * var(--line-height));      /* must be in rem  */
+	--gutter:         1.4rem;
+	--icon-size:      1.4rem;
 
-	--line-height: 1.4; /* must be unitless! */
-	--baseline: calc(1rem * var(--line-height)); /* must be in rem units */
-	--gutter: 1.4rem; /* convert to plain gutter? */
-	/*--gutter: 0rem;*/
-	--icon-size: 1.4rem;
+	/* x-height adjustments for font / line-height. */
+	--smod: 1;
+	--lmod: 1;
 
-	/* text scales */
-	/* references:
-		https://blog.envylabs.com/responsive-typographic-scales-in-css-b9f60431d1c4
-		https://24ways.org/2019/a-modern-typographic-scale/#comments
-		https://www.gridlover.net/try
-		https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
-	*/
-	--smod: 1; /* x-height adjustment for font size */
-	--lmod: 1; /* x-height adjustment for line-height */
-	--sratio: calc(5/6);
-	--s00: 1em; /* always 1em = 1rem */
-	--s-3: calc(var(--s-2) * var(--sratio));
-	--s-2: calc(var(--s-1) * var(--sratio));
-	--s-1: calc(var(--s00) * var(--sratio));
-	--s01: calc(var(--s00) / var(--sratio));
-	--s02: calc(var(--s01) / var(--sratio));
-	--s03: calc(var(--s02) / var(--sratio));
-	--s04: calc(var(--s03) / var(--sratio));
+	/* 5-step type scale on a perfect-fourth ratio (4:3). Five sizes drive
+	   the default cascade: s-2, s-1, s00, s01, s02. The outer steps
+	   (s-3, s03, s04) are kept for site-level overrides. */
+	--sratio: calc(3/4);
+	--s00: 1em;                                  /* body, also = 1rem */
+	--s-3: calc(var(--s-2) * var(--sratio));     /* ≈ 0.422rem */
+	--s-2: calc(var(--s-1) * var(--sratio));     /* ≈ 0.563rem — taxon, badges */
+	--s-1: calc(var(--s00) * var(--sratio));     /* ≈ 0.750rem — small, meta */
+	--s01: calc(var(--s00) / var(--sratio));     /* ≈ 1.333rem — h2 */
+	--s02: calc(var(--s01) / var(--sratio));     /* ≈ 1.778rem — h1 */
+	--s03: calc(var(--s02) / var(--sratio));     /* ≈ 2.370rem */
+	--s04: calc(var(--s03) / var(--sratio));     /* ≈ 3.160rem */
 
 	--page-transparency: 0.95;
-	--page-blur: 2px;
-
-	/* auto-calculated colors */
-	--shadow-color: var(--text-color),0.2;
+	--page-blur:         2px;
+	--shadow-color:      var(--text-color), 0.2;
 }
 
-
-/*--------------------------------------------------------------
-fonts
-
-Alegreya: via https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
-FantasqueSans: via https://github.com/belluzj/fantasque-sans;
-icon font via https://icomoon.io (Brands iconset)
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   fonts (@font-face)
+   ---------------------------------------------------------- */
 @font-face {
 	font-family: 'Alegreya';
 	src: url('../fonts/Alegreya-Regular.woff2') format('woff2');
@@ -156,11 +146,9 @@ icon font via https://icomoon.io (Brands iconset)
 	font-display: swap;
 }
 
-
-/*--------------------------------------------------------------
-reset and base styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   reset and base styles
+   ---------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -410,512 +398,125 @@ blockquote + figcaption {
 	text-align: right;
 }
 
+/* ----------------------------------------------------------
+   browser preferences (reduced-motion, contrast)
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	html:focus-within {
+		scroll-behavior: auto;
+	}
 
-/*--------------------------------------------------------------
-list styles
---------------------------------------------------------------*/
-
-ul, ol {
-	list-style-position: outside;
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
 
-ul { list-style: none; }
-
-main ul { list-style-type: '-  '; }
-
-ol { list-style: decimal; }
-
-ol ol { list-style: lower-alpha; }
-
-:lang(el) ol ol { list-style: lower-greek; }
-
-li ul, li ol {
-	margin-top: 0 !important;
-	margin-bottom: 0 !important;
-	margin-left: max(1rem, var(--baseline));
-}
-
-li:has(input[type="checkbox"]) { list-style: none; }
-li > input[type="checkbox"] { vertical-align: sub; }
+/* prefers-contrast / prefers-reduced-transparency hooks intentionally
+   left unimplemented — add overrides here when the design calls for them. */
 
 
-/*--------------------------------------------------------------
-hyperlink styles
---------------------------------------------------------------*/
-
-a,
-a:visited {
-	vertical-align: baseline;
-
-	background: transparent;
-	text-decoration: underline;
-	text-decoration-color: inherit;
-	text-decoration-skip-ink: auto;
-	text-decoration-thickness: 0.5px;
-
-	outline: none;
-}
-
-a:visited:not([href^="http"]) {
-	text-decoration-style: dashed;
-}
-
-a[href^="mailto"] {
-	text-decoration-style: solid;
-	text-decoration-color: inherit;
-}
-
-a:focus,
-a:focus-visible {
-	outline: 2px solid;
-	outline-offset: 2px;
-}
-
-a:focus:not(:focus-visible) {
-	outline: none;
-}
-
-a:hover,
-a:focus,
-a:active {
-	-webkit-tap-highlight-color: transparent;
-
-	transition: color 0s;
-}
-
-.cta a {
-	display: inline-block;
-	padding: 0 0.3em 0 0.5em;
-	/*min-height: var(--baseline);*/
-
-	background: rgb(var(--page-color));
-	border-bottom: 3px dotted;
-	border: 1.5px solid;
-	border-radius: 2rem;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.cta a::after {
-	/*content: " ›";*/
-	content: " ＞";
-	line-height: 1;
-	vertical-align: -0.1em;
-}
-
-.cta a:hover {
-	background: rgb(var(--text-color));
-	border-color: rgb(var(--text-color));
-	color: rgb(var(--page-color));
-}
-
-.cta a:active {
-	background: rgb(var(--accent-color));
-	border-color: rgb(var(--accent-color));
-	color: rgb(var(--page-color));
-}
-
-/* external links */
-/*a[href]:not(:where(
-	[href^="#"],
-	[href^="./"],
-	[href^="/"]:not([href^="//"]),
-)):after {
-  content: '´';
-  display: inline-block;
-}*/
+/* ============================================================
+   2. STRUCTURE
+   ============================================================ */
 
 
-/*--------------------------------------------------------------
-typography & vertical rythm
---------------------------------------------------------------*/
-
-html {
-	font-size: 112%;
-	font-size: calc(112% + 0.5vw);
-}
-
+/* ----------------------------------------------------------
+   page scaffold (body, header, main, footer)
+   ---------------------------------------------------------- */
 body {
-	font-size: var(--s00);
-	line-height: var(--line-height);
-
-	font-kerning: normal;
-	font-variant: common-ligatures oldstyle-nums proportional-nums;
-	font-feature-settings: "kern", "liga", "clig", "onum", "pnum";
+	position: relative;
+	padding: var(--gutter);
 }
 
-html:not([class*="mod--font-local"]) {
-	--font-icons: 'brands', 'icons', 'Emoji One BW', 'Noto Emoji', 'Segoe UI', monospace;
-	--font-mono: 'Fantasque Sans Mono', 'Fantasque', 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
-	--font-serif: 'Alegreya', 'Source Serif', 'New York', 'Cambria', 'Georgia', 'Roboto Serif', 'DejaVu Serif', serif;
-	--font-sans: 'Alegreya Sans', 'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
-
-	--smod: 0.93;
-/*	--lmod: 0.93;*/
+body > header,
+main,
+body > footer {
+	margin: auto;
+	max-width: var(--max-content);
 }
 
-html, /* default font */
-.mod--font-serif {
-	font-family: var(--font-serif, serif);
+body > header {
+	top: 0;
+	padding-top: var(--baseline);
 }
 
-.mod--font-sans {
-	font-family: var(--font-sans, sans-serif);
-}
-
-.mod--font-mono, .mod--font-monospace {
-	font-family: var(--font-mono, monospace);
-}
-
-pre, code, kbd,
-button, input[type=submit], input[type=reset], input[type=file]::file-selector-button,
-.sharing, .languages, .taxon, .more, .meta summary, .video {
-/*	line-height: calc(var(--line-height) * var(--lmod));*/
-
-	font-family: var(--font-mono, monospace);
-	font-size: calc(var(--s00) * var(--smod));
-}
-
-code { line-height: 1; } /* line-height when inline */
-pre > code { line-height: inherit; } /* line-height for code block */
-
-.icon,
-.menu > ul > li::after,
-.taxonomy-filter .taxon::after, .cta a::after,
-.marginalia::before,
-.rating,
-.sl-wrapper button,
-summary::after,
-abbr:not(:hover)::before,
-ins[datetime]:not(:hover)::before,
-del[datetime]:not(:hover)::before,
-main a[title]:not(:hover)::before,
-main a[href*='.pdf']:not(:hover)::before,
-main span[title]:not(:hover)::before,
-main h1[id]:not(:hover)::before,
-main h2[id]:not(:hover)::before,
-main h3[id]:not(:hover)::before,
-main h4[id]:not(:hover)::before,
-main h5[id]:not(:hover)::before,
-main h6[id]:not(:hover)::before,
-main h1:target::before,
-main h2:target::before,
-main h3:target::before,
-main h4:target::before,
-main h5:target::before,
-main h6:target::before,
-sup[id^="fnref:"]:target a::before,
-.footnote-ref, .footnote-backref, li[id^="fn:"]::marker,
-.font-icons {
-/*	--smod:  0.93;*/
-/*	--lmod:  0.985;*/
-	font-family: var(--font-icons) !important;
-}
-
-sup[id^="fnref:"] a::before {
-	line-height: calc(0.75 * (var(--icon-size) - var(--icon-margin)));
-	/* TODO: introduce a line-height adjust constant? */
-}
-
-code, kbd {
-	font-variant: no-common-ligatures lining-nums;
-	font-feature-settings: "kern" 0, "liga" 0, "clig" 0, "lnum";
-}
-
-table {
-	font-variant-numeric: lining-nums tabular-nums;
-	font-feature-settings: "kern", "lnum", "tnum";
-}
-
-hr {
-	margin: var(--baseline) auto;
-	height: var(--baseline);
-	font-size: var(--s03);
-}
-
-figcaption,
-sub, sup,
-small {
-	font-size: var(--s-1);
-}
-
-main p, main li, main dt, main dd {
-	font-variant-ligatures: normal;
-
-	-webkit-hyphens	: auto;
-	hyphens			: auto;
-	white-space: normal;
-}
-
-main p {
-	hanging-punctuation: first;
-	margin-top: var(--baseline);
-}
-
-main p + p {
-	text-indent: var(--baseline);
-	margin-top: 0;
-}
-
-.mod--newline main p + p {
-	text-indent: 0;
-	margin-top: var(--baseline);
-}
-
-main li > p { /* markdown rendered on checklist */
-	margin-top: 0;
-}
-
-.gallery,
-.marginalia,
-.entry-content aside,
-main section,
-main div,
-main aside,
-main ul,
-main ol,
-main figure,
-main pre,
-main table,
-main blockquote,
-main form {
-	margin-top: var(--baseline);
-}
-
-main p > img,
-main p > a > img {
-	margin: var(--baseline) auto;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	min-height: var(--baseline);
-
-	font-size: var(--s00);
-	font-weight: normal;
-
-	font-variant: common-ligatures lining-nums proportional-nums;
-	font-feature-settings: "kern", "liga", "clig", "lnum", "pnum";
-	font-weight: normal;
-}
-
-main h1, main h2, main h3, main h4, main h5, main h6 {
-	margin-top: calc(1 * var(--baseline));
-	line-height: 1;
-}
-
-main h1 { font-size: var(--s04); }
-main h2 { font-size: var(--s03); }
-main h3 { font-size: var(--s02); }
-main h4 { font-size: var(--s01); }
-main h5 { font-size: var(--s00); font-variant: small-caps; }
-main h6 { font-size: var(--s-1); font-variant: small-caps; }
-
-main h1 + *,
-main h2 + *,
-main h3 + *,
-main h4 + *,
-main h5 + *,
-main h6 + * {
-	margin-top: 0;
-}
-
-main .entry-content {
-	margin-top: calc(1 * var(--baseline));
-}
-
-/*hacky:  remove top margin of first element*/
-main .entry-content > *:first-child,
-main > *:first-child {
-	margin-top: 0;
-}
-
-/*center any text after hr in articles*/
-main .entry-content > hr + p:last-child {
+body > footer {
 	text-align: center;
 }
 
-.languages,
-.sharing,
-.meta summary,
-.meta dt {
-	text-transform: uppercase;
-	font-size: var(--s-1);
-	line-height: var(--baseline);
+body > main {
+	/* static required for tooltip absolute-positioning to work */
+	position: static;
+	top: initial;
 }
 
-.taxon {
-	text-transform: uppercase;
-	font-size: var(--s-2);
-	font-weight: bold;
-	letter-spacing: 1px;
+
+/* ----------------------------------------------------------
+   header
+   ---------------------------------------------------------- */
+body > header > * {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }
 
-.entry-content dl {
-	display: grid;
-	grid-column: dt;
-	align-self: start;
-
-	margin-top: calc(1 * var(--baseline));
-	margin-left: 0;
-
-	grid-template-columns:
-		[dt] 2fr
-		[dd] 5fr;
+body > header h1,
+body > header .menu {
+	margin: 0 0 var(--baseline);
 }
 
-.entry-content dt {
-	margin-top: 0;
-}
-	.entry-content dt::after {
-		content: ': ';
-		white-space: pre;
-	}
-
-.entry-content dd {
-	grid-column: dd;
-	align-self: end;
+body > header h1 {
+	display: inline-block;
+	height: var(--baseline);
 }
 
-/*DEBUG baseline grid*/
-/*body::after {
-	position: absolute;
+body > header h1 > * {
+	margin-right: var(--baseline);
+}
+
+body > header h1 a {
+	text-decoration: none;
+}
+
+body > header h1 img,
+body > header h1 svg {
+	display: inline-block;
 	width: auto;
-	height: auto;
-	z-index: 9999;
-	content: '';
-	display: block;
-	pointer-events: none;
-	top: -1px;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background-repeat: repeat;
-	background-size: 100% var(--baseline);
-	background-position: top left;
-	background-image: linear-gradient(rgba(160, 160, 160, 1) 0px,transparent 1px, transparent 100%);
-}*/
-
-
-/*--------------------------------------------------------------
-table styles
---------------------------------------------------------------*/
-
-table {
-	margin-left: auto;
-	margin-right: auto;
-	width: 100%;
-	overflow-x: scroll;
-	border-spacing: 2px;
-	text-align: left;
+	height: 100%;
 }
 
-table caption {
-	caption-side: bottom;
-	text-align: right;
+/* ----------------------------------------------------------
+   footer
+   ---------------------------------------------------------- */
+body > header .author-image,
+body > footer .author-image img {
+	height: calc(var(--baseline) * 3);
+	width: auto;
+	border-radius: 50%;
 }
 
-thead, tbody, tr {
-	width: 100%;
+body > header .author-image {
+	margin-top: calc(var(--baseline) * -1);
 }
 
-th, td {
-	padding: 0.25em;
-
-	border-top   : 0.5px dashed currentColor;
-	border-bottom: 0.5px dashed transparent;
+body > footer .menu > ul {
+	align-items: center;
+	justify-content: center;
 }
 
-th {
-	border-top: none;
-	border-bottom: 1.5px solid currentColor;
-}
-
-th:empty {
-	display: none;
-}
-
-tr:first-child > td {
-	border-top-color: transparent;
-}
-
-tr:hover {
-	color: rgb(var(--text-color-inverted));
-	background: rgb(var(--text-color));
-/*	outline: 2px solid;*/
-/*	outline-offset: 2px;*/
-}
-
-tr:hover td {
-	border-color: transparent;
-}
-
-thead tr:hover {
-/*	outline: none;*/
-	color: inherit;
-	background: none;
-}
-
-/*tr:last-child > td {
-	border-bottom-color: currentColor;
-	border-bottom-style: solid;
-}*/
-
-/*--------------------------------------------------------------
-animations
---------------------------------------------------------------*/
-
-@keyframes sweep-right {
-	0%    { opacity: 0; margin-left: -1rem; }
-	100%  { opacity: 1; }
-}
-
-@keyframes sweep-bottom {
-	0%    { opacity: 0; margin-top: -1rem; }
-	100%  { opacity: 1; }
-}
-
-@keyframes slidey {
-	from { transform: translate(0, 100%); }
-	to   { transform: translate(0, 0); }
-}
-
-@keyframes slidex {
-	from { transform: translate(100%, 0); }
-	to   { transform: translate(0, 0); }
-}
-
-@keyframes bounce {
-	0%   { transform: translateY(0); }
-	10%  { transform: translateY(0); }
-	30%  { transform: translateY(-0.5em); }
-	50%  { transform: translateY(0); }
-	57%  { transform: translateY(-0.3em); }
-	64%  { transform: translateY(0); }
-	100% { transform: translateY(0); }
-}
-
-@keyframes wiggle {
-	0%   { transform: rotate( 06deg); }
-	10%  { transform: rotate(-06deg); }
-	30%  { transform: rotate( 12deg); }
-	50%  { transform: rotate(-12deg); }
-	57%  { transform: rotate( 06deg); }
-	64%  { transform: rotate(-06deg); }
-	100% { transform: rotate( 00deg); }
-}
+/* ============================================================
+   3. THEMING
+   ============================================================ */
 
 
-/*--------------------------------------------------------------
-themes
---------------------------------------------------------------*/
-
-/*:root {
-	--text-color: 0,0,192;
-	--accent-color: 200,0,200;
-	--page-color: 192,192,192;
-	--hyperlink-color: 0,0,255
-}*/
-
+/* ----------------------------------------------------------
+   color schemes & theme variants
+   ---------------------------------------------------------- */
 :root,
 :root.scheme--light,
 .scheme--light {
@@ -1043,18 +644,14 @@ themes
 	}
 }
 
-/*--------------------------------------------------------------
-syntax highlighting: algol_nu
-via https://xyproto.github.io/splash/docs/longer/all.html
-loaded in the /layouts/partial/head.html
---------------------------------------------------------------*/
+/* ----------------------------------------------------------
+   syntax highlighting (algol_nu)
+   ---------------------------------------------------------- */
 .highlight { background: none !important; }
 
-
-/*--------------------------------------------------------------
-theming
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   themed UI (selection, scrollbars, links, forms)
+   ---------------------------------------------------------- */
 * {
 	scrollbar-color: rgb(var(--text-color)) transparent !important;
 	scrollbar-width: thin !important;
@@ -1151,164 +748,484 @@ input[type=checkbox]:focus::after {
 	color: rgb(var(--accent-color));
 }
 
-/*--------------------------------------------------------------
-browser preferences
---------------------------------------------------------------*/
+/* ============================================================
+   4. TYPOGRAPHY
+   ============================================================ */
 
-@media (prefers-reduced-motion: reduce) {
-	html:focus-within {
-		scroll-behavior: auto;
-	}
 
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
-	}
+/* ----------------------------------------------------------
+   lists
+   ---------------------------------------------------------- */
+ul, ol {
+	list-style-position: outside;
 }
 
-@media (prefers-contrast: more) {
+ul { list-style: none; }
 
+main ul { list-style-type: '-  '; }
+
+ol { list-style: decimal; }
+
+ol ol { list-style: lower-alpha; }
+
+:lang(el) ol ol { list-style: lower-greek; }
+
+li ul, li ol {
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	margin-left: max(1rem, var(--baseline));
 }
 
-@media (prefers-contrast: less) {
+li:has(input[type="checkbox"]) { list-style: none; }
+li > input[type="checkbox"] { vertical-align: sub; }
 
+/* ----------------------------------------------------------
+   hyperlinks
+   ---------------------------------------------------------- */
+a,
+a:visited {
+	vertical-align: baseline;
+
+	background: transparent;
+	text-decoration: underline;
+	text-decoration-color: inherit;
+	text-decoration-skip-ink: auto;
+	text-decoration-thickness: 0.5px;
+
+	outline: none;
 }
 
-/*@media (prefers-reduced-transparency: reduce) {
-	not implemented yet
+a:visited:not([href^="http"]) {
+	text-decoration-style: dashed;
+}
+
+a[href^="mailto"] {
+	text-decoration-style: solid;
+	text-decoration-color: inherit;
+}
+
+a:focus,
+a:focus-visible {
+	outline: 2px solid;
+	outline-offset: 2px;
+}
+
+a:focus:not(:focus-visible) {
+	outline: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+	-webkit-tap-highlight-color: transparent;
+
+	transition: color 0s;
+}
+
+.cta a {
+	display: inline-block;
+	padding: 0 0.3em 0 0.5em;
+	/*min-height: var(--baseline);*/
+
+	background: rgb(var(--page-color));
+	border-bottom: 3px dotted;
+	border: 1.5px solid;
+	border-radius: 2rem;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.cta a::after {
+	/*content: " ›";*/
+	content: " ＞";
+	line-height: 1;
+	vertical-align: -0.1em;
+}
+
+.cta a:hover {
+	background: rgb(var(--text-color));
+	border-color: rgb(var(--text-color));
+	color: rgb(var(--page-color));
+}
+
+.cta a:active {
+	background: rgb(var(--accent-color));
+	border-color: rgb(var(--accent-color));
+	color: rgb(var(--page-color));
+}
+
+/* external links */
+/*a[href]:not(:where(
+	[href^="#"],
+	[href^="./"],
+	[href^="/"]:not([href^="//"]),
+)):after {
+  content: '´';
+  display: inline-block;
 }*/
 
-
-/*--------------------------------------------------------------
-structural
---------------------------------------------------------------*/
+/* ----------------------------------------------------------
+   type scale & vertical rhythm
+   ---------------------------------------------------------- */
+html {
+	font-size: 112%;
+	font-size: calc(112% + 0.5vw);
+}
 
 body {
-	position: relative;
-	padding: var(--gutter);
+	font-size: var(--s00);
+	line-height: var(--line-height);
+
+	font-kerning: normal;
+	font-variant: common-ligatures oldstyle-nums proportional-nums;
+	font-feature-settings: "kern", "liga", "clig", "onum", "pnum";
 }
 
-body > header,
-main,
-body > footer {
-	margin: auto;
-	max-width: var(--max-content);
-	/*outline: 1px dashed pink;*/
+html:not([class*="mod--font-local"]) {
+	--font-icons: 'brands', 'icons', 'Emoji One BW', 'Noto Emoji', 'Segoe UI', monospace;
+	--font-mono: 'Fantasque Sans Mono', 'Fantasque', 'Source Code Pro', 'SF Mono', 'Consolas', 'Roboto Mono', 'DejaVu Mono', monospace;
+	--font-serif: 'Alegreya', 'Source Serif', 'New York', 'Cambria', 'Georgia', 'Roboto Serif', 'DejaVu Serif', serif;
+	--font-sans: 'Alegreya Sans', 'Source Sans', 'SF Pro', 'Candara', 'Verdana', 'Roboto', 'DejaVu Sans', sans-serif;
 
-/*	background: rgba(var(--page-color), var(--page-transparency));*/
+	--smod: 0.93;
+/*	--lmod: 0.93;*/
 }
 
-body > header {
-	/*position: sticky;*/
-	top: 0;
-/*	position: fixed;
-	left: 50%;
-	transform: translateX(-50%);
-	width: calc(100% - 2 * var(--gutter));*/
-	padding-top:  var(--baseline);
+html, /* default font */
+.mod--font-serif {
+	font-family: var(--font-serif, serif);
 }
 
-body > footer {
-/*	position: fixed;
-	bottom: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	clear: both;
-	height: 100vh;
-	width: 100%;
-	z-index: 1;*/
+.mod--font-sans {
+	font-family: var(--font-sans, sans-serif);
+}
 
+.mod--font-mono, .mod--font-monospace {
+	font-family: var(--font-mono, monospace);
+}
+
+pre, code, kbd,
+button, input[type=submit], input[type=reset], input[type=file]::file-selector-button,
+.sharing, .languages, .taxon, .more, .meta summary, .video {
+/*	line-height: calc(var(--line-height) * var(--lmod));*/
+
+	font-family: var(--font-mono, monospace);
+	font-size: calc(var(--s00) * var(--smod));
+}
+
+code { line-height: 1; } /* line-height when inline */
+pre > code { line-height: inherit; } /* line-height for code block */
+
+.icon,
+.menu > ul > li::after,
+.taxonomy-filter .taxon::after, .cta a::after,
+.marginalia::before,
+.rating,
+.sl-wrapper button,
+summary::after,
+abbr:not(:hover)::before,
+ins[datetime]:not(:hover)::before,
+del[datetime]:not(:hover)::before,
+main a[title]:not(:hover)::before,
+main a[href*='.pdf']:not(:hover)::before,
+main span[title]:not(:hover)::before,
+main h1[id]:not(:hover)::before,
+main h2[id]:not(:hover)::before,
+main h3[id]:not(:hover)::before,
+main h4[id]:not(:hover)::before,
+main h5[id]:not(:hover)::before,
+main h6[id]:not(:hover)::before,
+main h1:target::before,
+main h2:target::before,
+main h3:target::before,
+main h4:target::before,
+main h5:target::before,
+main h6:target::before,
+sup[id^="fnref:"]:target a::before,
+.footnote-ref, .footnote-backref, li[id^="fn:"]::marker,
+.font-icons {
+/*	--smod:  0.93;*/
+/*	--lmod:  0.985;*/
+	font-family: var(--font-icons) !important;
+}
+
+sup[id^="fnref:"] a::before {
+	line-height: calc(0.75 * (var(--icon-size) - var(--icon-margin)));
+	/* TODO: introduce a line-height adjust constant? */
+}
+
+code, kbd {
+	font-variant: no-common-ligatures lining-nums;
+	font-feature-settings: "kern" 0, "liga" 0, "clig" 0, "lnum";
+}
+
+table {
+	font-variant-numeric: lining-nums tabular-nums;
+	font-feature-settings: "kern", "lnum", "tnum";
+}
+
+hr {
+	margin: var(--baseline) auto;
+	height: var(--baseline);
+	font-size: var(--s02);
+}
+
+figcaption,
+sub, sup,
+small {
+	font-size: var(--s-1);
+}
+
+main p, main li, main dt, main dd {
+	font-variant-ligatures: normal;
+
+	-webkit-hyphens	: auto;
+	hyphens			: auto;
+	white-space: normal;
+}
+
+main p {
+	hanging-punctuation: first;
+	margin-top: var(--baseline);
+}
+
+main p + p {
+	text-indent: var(--baseline);
+	margin-top: 0;
+}
+
+.mod--newline main p + p {
+	text-indent: 0;
+	margin-top: var(--baseline);
+}
+
+main li > p { /* markdown rendered on checklist */
+	margin-top: 0;
+}
+
+.gallery,
+.marginalia,
+.entry-content aside,
+main section,
+main div,
+main aside,
+main ul,
+main ol,
+main figure,
+main pre,
+main table,
+main blockquote,
+main form {
+	margin-top: var(--baseline);
+}
+
+main p > img,
+main p > a > img {
+	margin: var(--baseline) auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	min-height: var(--baseline);
+
+	font-size: var(--s00);
+	font-weight: normal;
+	font-variant: common-ligatures lining-nums proportional-nums;
+	font-feature-settings: "kern", "liga", "clig", "lnum", "pnum";
+}
+
+main h1, main h2, main h3, main h4, main h5, main h6 {
+	margin-top: calc(1 * var(--baseline));
+	line-height: 1;
+}
+
+main h1 { font-size: var(--s02); }
+main h2 { font-size: var(--s01); }
+main h3 { font-size: var(--s00); font-weight: bold; }
+main h4 { font-size: var(--s00); font-variant: small-caps; font-weight: bold; }
+main h5 { font-size: var(--s-1); font-variant: small-caps; }
+main h6 { font-size: var(--s-1); font-variant: small-caps; font-style: italic; }
+
+main h1 + *,
+main h2 + *,
+main h3 + *,
+main h4 + *,
+main h5 + *,
+main h6 + * {
+	margin-top: 0;
+}
+
+main .entry-content {
+	margin-top: calc(1 * var(--baseline));
+}
+
+/*hacky:  remove top margin of first element*/
+main .entry-content > *:first-child,
+main > *:first-child {
+	margin-top: 0;
+}
+
+/*center any text after hr in articles*/
+main .entry-content > hr + p:last-child {
 	text-align: center;
 }
 
-body > footer {
-	/*position: relative;*/
-	/*padding: var(--gutter) var(--gutter);*/
-	/*width: calc(100vw - var(--scrollbar-width));*/
+.languages,
+.sharing,
+.meta summary,
+.meta dt {
+	text-transform: uppercase;
+	font-size: var(--s-1);
+	line-height: var(--baseline);
 }
 
-body > main {
-	position: static; /*static required for tooltips*/
-	top: initial;
-	/*isolation: isolate;*/
-	/*padding-top: var(--baseline);*/
-	/*border-bottom: 0.01px solid transparent;*/
-	/*outline: 1px solid red;*/
-	/*border-top: 0.5px solid;*/
+.taxon {
+	text-transform: uppercase;
+	font-size: var(--s-2);
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
+.entry-content dl {
+	display: grid;
+	grid-column: dt;
+	align-self: start;
+
+	margin-top: calc(1 * var(--baseline));
+	margin-left: 0;
+
+	grid-template-columns:
+		[dt] 2fr
+		[dd] 5fr;
+}
+
+.entry-content dt {
+	margin-top: 0;
+}
+	.entry-content dt::after {
+		content: ': ';
+		white-space: pre;
+	}
+
+.entry-content dd {
+	grid-column: dd;
+	align-self: end;
 }
 
 
-/*--------------------------------------------------------------
-header specifics
---------------------------------------------------------------*/
-
-body > header {
-	/*background: rgba(var(--page-color), var(--page-transparency));*/
-	/*border-bottom: 0.5px solid;*/
+/* ----------------------------------------------------------
+   tables
+   ---------------------------------------------------------- */
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	overflow-x: scroll;
+	border-spacing: 2px;
+	text-align: left;
 }
 
-body > header > * {
-	display: flex;
-
-	flex-wrap: wrap;
-	justify-content: space-between;
-	/*outline: 1px dashed red;*/
+table caption {
+	caption-side: bottom;
+	text-align: right;
 }
 
-body > header h1,
-body > header .menu {
-	margin: 0 0 var(--baseline);
+thead, tbody, tr {
+	width: 100%;
 }
 
-body > header h1 {
-	display: inline-block;
-	height: var(--baseline);
-	/*margin-right: var(--baseline);*/
+th, td {
+	padding: 0.25em;
+
+	border-top   : 0.5px dashed currentColor;
+	border-bottom: 0.5px dashed transparent;
 }
 
-body > header h1 > * {
-	margin-right: var(--baseline);
+th {
+	border-top: none;
+	border-bottom: 1.5px solid currentColor;
 }
 
-body > header h1 a {
-	text-decoration: none;
+th:empty {
+	display: none;
 }
 
-body > header h1 img,
-body > header h1 svg {
-	display: inline-block;
-	height: 100%;
-	width: auto;
+tr:first-child > td {
+	border-top-color: transparent;
 }
 
-/*--------------------------------------------------------------
-footer specifics
---------------------------------------------------------------*/
-
-body > header .author-image,
-body > footer .author-image img {
-	height: calc(var(--baseline) * 3);
-	width: auto;
-	border-radius: 50%;
+tr:hover {
+	color: rgb(var(--text-color-inverted));
+	background: rgb(var(--text-color));
+/*	outline: 2px solid;*/
+/*	outline-offset: 2px;*/
 }
 
-body > header .author-image {
-	margin-top: calc(var(--baseline) * -1);
+tr:hover td {
+	border-color: transparent;
 }
 
-body > footer .menu > ul {
-	align-items: center;
-	justify-content: center;
+thead tr:hover {
+/*	outline: none;*/
+	color: inherit;
+	background: none;
 }
 
-/*--------------------------------------------------------------
-menu styles
---------------------------------------------------------------*/
+/*tr:last-child > td {
+	border-bottom-color: currentColor;
+	border-bottom-style: solid;
+}*/
 
+/* ============================================================
+   5. HELPERS
+   ============================================================ */
+
+
+/* ----------------------------------------------------------
+   @keyframes (animation primitives)
+   ---------------------------------------------------------- */
+@keyframes sweep-right {
+	0%    { opacity: 0; margin-left: -1rem; }
+	100%  { opacity: 1; }
+}
+
+@keyframes sweep-bottom {
+	0%    { opacity: 0; margin-top: -1rem; }
+	100%  { opacity: 1; }
+}
+
+@keyframes slidey {
+	from { transform: translate(0, 100%); }
+	to   { transform: translate(0, 0); }
+}
+
+@keyframes slidex {
+	from { transform: translate(100%, 0); }
+	to   { transform: translate(0, 0); }
+}
+
+@keyframes bounce {
+	0%   { transform: translateY(0); }
+	10%  { transform: translateY(0); }
+	30%  { transform: translateY(-0.5em); }
+	50%  { transform: translateY(0); }
+	57%  { transform: translateY(-0.3em); }
+	64%  { transform: translateY(0); }
+	100% { transform: translateY(0); }
+}
+
+@keyframes wiggle {
+	0%   { transform: rotate( 06deg); }
+	10%  { transform: rotate(-06deg); }
+	30%  { transform: rotate( 12deg); }
+	50%  { transform: rotate(-12deg); }
+	57%  { transform: rotate( 06deg); }
+	64%  { transform: rotate(-06deg); }
+	100% { transform: rotate( 00deg); }
+}
+
+/* ----------------------------------------------------------
+   menus (shared)
+   ---------------------------------------------------------- */
 /*.menu {
 	font-variant: small-caps;
 	text-transform: uppercase;
@@ -1318,11 +1235,9 @@ body > footer .menu {
 	margin-bottom: var(--baseline);
 }
 
-
-/*--------------------------------------------------------------
-navigation styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   navigation (shared)
+   ---------------------------------------------------------- */
 menu a {
 	text-decoration: none;
 }
@@ -1362,11 +1277,114 @@ nav > menu > li > a {
 /*DEBUG*/
 /*nav * { outline: 1px dashed red; }*/
 
+/* ----------------------------------------------------------
+   icons
+   ---------------------------------------------------------- */
+.icon {
+	display: flex;
+	left: 0;
+	right: 0;
 
-/*--------------------------------------------------------------
-header menu
---------------------------------------------------------------*/
+	margin-left: auto;
+	margin-right: auto;
+	width: var(--icon-size);
+	height: var(--icon-size);
 
+	justify-content: center;
+	align-items: center;
+
+	border-style: none !important;
+	border-radius: 50%;
+	box-shadow: none !important;
+	cursor: pointer;
+	text-decoration: none;
+	pointer-events: auto;
+
+	transition: opacity 0.3s, color 0.3s;
+	transform-origin: 50% 50%;
+
+	/*outline: 1px solid red;*/
+}
+
+.icon:hover {
+	animation: none;
+	animation: wiggle 0.3s ease 1;
+}
+
+.icon:focus,
+.icon:focus-visible {
+	outline: 2px solid;
+	outline-offset: -2px;
+	background-color: rgb(var(--page-color));
+}
+
+/* ----------------------------------------------------------
+   image filters
+   ---------------------------------------------------------- */
+img.blend {
+	filter: var(--blend-filter, none);
+	mix-blend-mode: var(--blend-mode, multiply);
+}
+
+img.screen {
+	filter: none;
+	mix-blend-mode: screen;
+}
+
+img.multiply {
+	filter: none;
+	mix-blend-mode: multiply;
+}
+
+img.shadow {
+/*	box-shadow: 0 0.5rem 1rem rgba(var(--shadow-color));*/
+	filter: drop-shadow(0 0.5rem 1rem rgba(var(--shadow-color)));
+}
+
+/*colorize .blend images*/
+/*figure:has(img.blend) {
+	position: relative;
+}
+
+figure:has(img.blend)::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+
+	background: rgb(var(--text-color));
+	mix-blend-mode: darken;
+	mix-blend-mode: lighten;
+}
+
+figure:has(img.blend):hover::after {
+	background: rgb(var(--accent-color));
+}
+*/
+
+/* ----------------------------------------------------------
+   h-entry / microformats helpers
+   ---------------------------------------------------------- */
+.h-entry .title a {
+	color: inherit;
+	text-decoration: none;
+}
+.h-entry .summary {
+	/*margin-bottom: var(--baseline);*/
+	/*outline:  1px solid red;*/
+}
+
+/* ============================================================
+   6. MODULES
+   ============================================================ */
+
+
+/* ----------------------------------------------------------
+   header menu
+   ---------------------------------------------------------- */
 body > header .menu > ul > li.has-children::after {
 	content: ' ⌄';
 	line-height: 1;
@@ -1407,11 +1425,9 @@ body > header .menu > ul {
 	/*justify-content: stretch;*/
 }
 
-
-/*--------------------------------------------------------------
-language switcher
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   language switcher
+   ---------------------------------------------------------- */
 .languages {
 	display: block;
 	z-index: 101;
@@ -1447,10 +1463,9 @@ language switcher
 		text-decoration: underline;
 	}
 
-/*--------------------------------------------------------------
-gadgets
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   gadgets (return-to-top, theme toggle)
+   ---------------------------------------------------------- */
 .gadgets {
 	position: fixed;
 	top: 0;
@@ -1526,54 +1541,9 @@ gadgets
 	transform: rotate(-180deg);
 }
 
-
-/*--------------------------------------------------------------
-icons
---------------------------------------------------------------*/
-
-.icon {
-	display: flex;
-	left: 0;
-	right: 0;
-
-	margin-left: auto;
-	margin-right: auto;
-	width: var(--icon-size);
-	height: var(--icon-size);
-
-	justify-content: center;
-	align-items: center;
-
-	border-style: none !important;
-	border-radius: 50%;
-	box-shadow: none !important;
-	cursor: pointer;
-	text-decoration: none;
-	pointer-events: auto;
-
-	transition: opacity 0.3s, color 0.3s;
-	transform-origin: 50% 50%;
-
-	/*outline: 1px solid red;*/
-}
-
-.icon:hover {
-	animation: none;
-	animation: wiggle 0.3s ease 1;
-}
-
-.icon:focus,
-.icon:focus-visible {
-	outline: 2px solid;
-	outline-offset: -2px;
-	background-color: rgb(var(--page-color));
-}
-
-
-/*--------------------------------------------------------------
-sidenote & marginalia styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   marginalia / sidenotes
+   ---------------------------------------------------------- */
 header aside,
 .marginalia,
 .entry-content aside {
@@ -1668,12 +1638,9 @@ header aside,
 	}
 }
 
-
-/*--------------------------------------------------------------
-link gadgets
-in the gutter for links (if they have a title) and select tags
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   link gadgets (gutter affordances)
+   ---------------------------------------------------------- */
 main a[title]:hover,
 main ins[datetime]:hover,
 main del[datetime]:hover,
@@ -1818,11 +1785,9 @@ main a[title]:active::before {
 	}
 }
 
-
-/*--------------------------------------------------------------
-footnotes and targeting
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   footnotes & :target affordances
+   ---------------------------------------------------------- */
 .footnote-ref, .footnote-backref {
 	display: inline-block;
 	color: inherit;
@@ -1972,10 +1937,9 @@ sup[id^="fnref:"] a {
 	text-decoration: none;
 }
 
-/*--------------------------------------------------------------
-article listing
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   article (listing)
+   ---------------------------------------------------------- */
 article {
 	margin-bottom: var(--baseline);
 	/*outline: 1px dashed darkmagenta;*/
@@ -1985,60 +1949,9 @@ article h3 {
 	/*margin: 0;*/
 }
 
-
-/*--------------------------------------------------------------
-image filters
---------------------------------------------------------------*/
-
-img.blend {
-	filter: var(--blend-filter, none);
-	mix-blend-mode: var(--blend-mode, multiply);
-}
-
-img.screen {
-	filter: none;
-	mix-blend-mode: screen;
-}
-
-img.multiply {
-	filter: none;
-	mix-blend-mode: multiply;
-}
-
-img.shadow {
-/*	box-shadow: 0 0.5rem 1rem rgba(var(--shadow-color));*/
-	filter: drop-shadow(0 0.5rem 1rem rgba(var(--shadow-color)));
-}
-
-/*colorize .blend images*/
-/*figure:has(img.blend) {
-	position: relative;
-}
-
-figure:has(img.blend)::after {
-	content: '';
-	display: block;
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-
-	background: rgb(var(--text-color));
-	mix-blend-mode: darken;
-	mix-blend-mode: lighten;
-}
-
-figure:has(img.blend):hover::after {
-	background: rgb(var(--accent-color));
-}
-*/
-
-
-/*--------------------------------------------------------------
-social sharing menu
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   social sharing menu
+   ---------------------------------------------------------- */
 .sharing {
 	margin-bottom: var(--baseline);
 
@@ -2086,11 +1999,9 @@ social sharing menu
 		margin-right: 0;
 	}
 
-
-/*--------------------------------------------------------------
-social elsewere menu & icons
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   social elsewhere (menu + icons)
+   ---------------------------------------------------------- */
 .social {
 	margin: var(--baseline) auto;
 	z-index: 104;
@@ -2166,11 +2077,9 @@ social elsewere menu & icons
 .icon[href$=".rss"]:hover,
 .icon[href$=".xml"]:hover              { color: #f26522; }
 
-
-/*--------------------------------------------------------------
-meta styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   post meta sidebar
+   ---------------------------------------------------------- */
 .meta details:first-child {
 	border-top: 0.5px solid;
 }
@@ -2253,11 +2162,9 @@ meta styles
 	}
 }
 
-
-/*--------------------------------------------------------------
-goldmark table of contents
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   table of contents (Goldmark)
+   ---------------------------------------------------------- */
 #TableOfContents ul {
 	padding: 0;
 	margin: 0;
@@ -2283,11 +2190,9 @@ goldmark table of contents
 	counter-reset: item;
 }
 
-
-/*--------------------------------------------------------------
-taxon (tag etc) styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   taxon (tags etc.)
+   ---------------------------------------------------------- */
 .taxon,
 .taxon:visited {
 	display: inline;
@@ -2372,11 +2277,9 @@ taxon (tag etc) styles
 	border-style: dashed;
 }*/
 
-
-/*--------------------------------------------------------------
-article filter styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   article filter
+   ---------------------------------------------------------- */
 .taxonomy-filter {
 	position: relative;
 	padding-top: 0.4rem;
@@ -2498,10 +2401,9 @@ article filter styles
 	transform: translateZ(90px), scale(0.4);
 }
 
-/*--------------------------------------------------------------
-hero & fullwidth styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   hero & full-width covers
+   ---------------------------------------------------------- */
 body.page .cover {
 	display: block;
 	min-width: calc(100% + 2 * var(--gutter));
@@ -2522,25 +2424,9 @@ body.page .cover img,
 		object-fit: cover;
 	}
 
-
-/*--------------------------------------------------------------
-h-entry, single page styles
---------------------------------------------------------------*/
-
-.h-entry .title a {
-	color: inherit;
-	text-decoration: none;
-}
-.h-entry .summary {
-	/*margin-bottom: var(--baseline);*/
-	/*outline:  1px solid red;*/
-}
-
-
-/*--------------------------------------------------------------
-form styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   forms
+   ---------------------------------------------------------- */
 input, button, textarea, fieldset,
 input[type=file]::file-selector-button {
 	min-height: var(--baseline);
@@ -2657,11 +2543,9 @@ input[type=file]:hover::file-selector-button {
 	/*transform: translate(0, 1px);*/
 }
 
-
-/*--------------------------------------------------------------
-askolonion.js search form
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   search (askolonion)
+   ---------------------------------------------------------- */
 #search__form {
 	display: block;
 	position: absolute;
@@ -2870,11 +2754,9 @@ askolonion.js search form
 	display: none;
 }*/
 
-
-/*--------------------------------------------------------------
-simple-lightbox
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   simple-lightbox
+   ---------------------------------------------------------- */
 body .sl-overlay {
 	background: rgba(var(--page-color),var(--page-transparency));
 }
@@ -2892,12 +2774,9 @@ body .sl-overlay {
 	color:  rgb(var(--text-color));
 }
 
-
-
-/*--------------------------------------------------------------
-articles-list styles
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   articles-list
+   ---------------------------------------------------------- */
 .more {
 	display: none;
 }
@@ -3000,10 +2879,9 @@ articles-list styles
 /*	content: ']';*/
 }
 
-/*--------------------------------------------------------------
-articles cross-language display
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   articles-list — cross-language display
+   ---------------------------------------------------------- */
 .articles-list:lang(en) article:lang(el) a > *,
 .articles-list:lang(el) article:lang(en) a > * {
 	opacity: 0.5;
@@ -3021,10 +2899,15 @@ articles cross-language display
 		transition: opacity 0.3s, transform 1s;
 	}
 
-/*--------------------------------------------------------------
-articles-list - preformatted
---------------------------------------------------------------*/
+/* ----------------------------------------------------------
+   articles-list — variants
 
+   - .preformatted        : narrow, monospace summary
+   - .cluster             : 3-up flex grid
+   - .no-taxa / .no-types / .no-tags : hide taxonomy bits
+   - .no-summary / .no-time / .no-text : hide article fields
+   - .no-gap              : collapse the gutter between cards
+   ---------------------------------------------------------- */
 .articles-list article.preformatted {
 	display: flex;
 	max-width: 100%;
@@ -3040,102 +2923,37 @@ articles-list - preformatted
 	white-space: pre;
 }
 
-/*--------------------------------------------------------------
-articles-list - cluster
---------------------------------------------------------------*/
-
 .articles-list.cluster article {
 	flex-basis: calc((var(--max-content) / 3));
 	flex-grow: 1;
 	flex-shrink: 0;
 }
 
-/*--------------------------------------------------------------
-articles-list - no-taxa
---------------------------------------------------------------*/
-.articles-list.no-taxa .taxa {
-	display: none;
-}
-
-/*--------------------------------------------------------------
-articles-list - no-types
---------------------------------------------------------------*/
-.articles-list.no-types .type {
-	display: none;
-}
-
-/*--------------------------------------------------------------
-articles-list - no-tags
---------------------------------------------------------------*/
-.articles-list.no-tags .tag {
-	display: none;
-}
-
-/*--------------------------------------------------------------
-articles-list - no-summary
---------------------------------------------------------------*/
+.articles-list.no-taxa    .taxa,
+.articles-list.no-types   .type,
+.articles-list.no-tags    .tag,
+.articles-list.no-time    article .time,
 .articles-list.no-summary > .summary,
-.articles-list.no-summary > .summary:after {
+.articles-list.no-summary > .summary:after,
+.articles-list.no-text    article .time,
+.articles-list.no-text    article .title,
+.articles-list.no-text    article .tags,
+.articles-list.no-text    article .summary,
+.articles-list.no-text    article .summary:after {
 	display: none;
 }
 
+.articles-list.no-text article .thumbnail {
+	display: block;
+}
 
-/*--------------------------------------------------------------
-articles-list - no-gap
---------------------------------------------------------------*/
 .articles-list.no-gap {
 	--gutter: 0px;
 }
 
-
-/*--------------------------------------------------------------
-articles-list - no-text
---------------------------------------------------------------*/
-
-.articles-list.no-text article .time,
-.articles-list.no-text article .title,
-.articles-list.no-text article .tags,
-.articles-list.no-text article .summary,
-.articles-list.no-text article .summary:after {
-	display: none;
-}
-
-.articles-list.no-text article .thumbnail{
-	display: block;
-}
-
-
-/*--------------------------------------------------------------
-articles-list - no-time
---------------------------------------------------------------*/
-.articles-list.no-time article .time {
-	display: none;
-}
-
-
-
-
-
-/*--------------------------------------------------------------
-img gallery
---------------------------------------------------------------*/
-
-/*.gallery {
-	columns: calc(var(--max-content) / 4) auto;
-	column-gap: var(--baseline);
-	font-size: 0;
-}
-
-.gallery figure {
-	display: inline-flex;
-	margin: 0 0 var(--baseline) 0;
-}*/
-
-
-/*--------------------------------------------------------------
-gallery
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   gallery
+   ---------------------------------------------------------- */
 .gallery {
 	position: relative;
 	margin: var(--gutter) auto;
@@ -3288,10 +3106,9 @@ gallery
 	visibility: hidden;
 }
 
-
-/*--------------------------------------------------------------
-simple-signup form shortcode
---------------------------------------------------------------*/
+/* ----------------------------------------------------------
+   simple-signup
+   ---------------------------------------------------------- */
 .simple-signup form {
 	--eborder: 1.5px;
 	position: relative;
@@ -3349,11 +3166,9 @@ simple-signup form shortcode
 	border-radius: 1rem;
 }
 
-
-/*--------------------------------------------------------------
-video embed
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   video embed
+   ---------------------------------------------------------- */
 /*.video {
 	position: relative;
 	padding-bottom: 56.25%;
@@ -3412,10 +3227,9 @@ video embed
 	font-size: 8rem;
 }
 
-/*--------------------------------------------------------------
-model-viewer
---------------------------------------------------------------*/
-
+/* ----------------------------------------------------------
+   model-viewer
+   ---------------------------------------------------------- */
 model-viewer {
 	aspect-ratio: 1;
 	width: 100%;
@@ -3424,10 +3238,9 @@ model-viewer {
 	margin-top: var(--baseline);
 }
 
-
-/*--------------------------------------------------------------
-alert / admonition styles
---------------------------------------------------------------*/
+/* ----------------------------------------------------------
+   alert / admonition
+   ---------------------------------------------------------- */
 /* reference: https://github.com/whatwg/html/issues/10100 */
 
 .alert {
