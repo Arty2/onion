@@ -3,5 +3,5 @@
 
 module:
   hugoVersion:
-    min: "0.128.0"
+    min: "0.154.0"
     extended: false

@@ -13,7 +13,7 @@ jobs:
       matrix:
         include:
           # Pinned, reproducible happy path. Runs the extra validators.
-          - hugo: '0.140.2'
+          - hugo: '0.154.0'
             label: pinned
             validate: true
           # Tracks Hugo's latest release. Build-only, no validators, so

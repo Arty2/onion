@@ -100,7 +100,7 @@ Values are whitespace-separated, so you can combine them — e.g. `theme = "them
 
 ## Installation
 
-The theme works on **Hugo ≥ 0.128** (Extended is strongly recommended for WebP conversion). Pick one install path:
+The theme works on **Hugo ≥ 0.154** (Extended is strongly recommended for WebP conversion). Pick one install path:
 
 ### As a Hugo Module (recommended)
 
@@ -252,7 +252,7 @@ Prefetch/prerender is delegated to the browser via [Speculation Rules](https://d
 
 - `cd exampleSite && hugo server` for local preview.
 - CI (`.github/workflows/build.yml`) builds the example site on every push against two Hugo versions (a pinned reproducible one and `latest`) and runs `html-validate` plus a deprecation grep against the output.
-- Minimum supported Hugo: **0.128.0**. Bumped here whenever the theme relies on a newer template feature.
+- Minimum supported Hugo: **0.154.0** (for the `try` statement used in `forge-meta`). Bumped here whenever the theme relies on a newer template feature.
 
 Releases follow [`RELEASING.md`](./RELEASING.md): tag `vX.Y.Z`, push the tag, and the Go module proxy serves it as `hugo mod get github.com/arty2/onion@vX.Y.Z`.
 

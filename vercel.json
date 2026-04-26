@@ -6,7 +6,7 @@
 	"trailingSlash": true,
 	"build": {
 		"env": {
-			"HUGO_VERSION": "0.140.2"
+			"HUGO_VERSION": "0.154.0"
 		}
 	}
 }

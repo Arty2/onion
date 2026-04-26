@@ -140,7 +140,8 @@
   Override per-page with `forge_platform` (see above).
 
   ─────────────────────────────────────────────────────────────────────────────
-  REQUIRED HUGO VERSION: matches the rest of the theme floor.
+  REQUIRED HUGO VERSION: ≥ 0.154.0 (for `try`). The theme-wide floor in
+  `theme.toml` / `hugo.yaml` is bumped to match.
   ─────────────────────────────────────────────────────────────────────────────
 
 */ -}}
@@ -282,14 +283,14 @@
 {{- $cacheKey := printf "%s:%s" $apiURL (now.Format "2006-01-02") -}}
 {{- $opts := dict "key" $cacheKey -}}
 
-{{- with resources.GetRemote $apiURL $opts -}}
+{{- with try (resources.GetRemote $apiURL $opts) -}}
   {{- with .Err -}}
     {{- warnf "forge-meta: API error for %q: %s" $apiURL . -}}
-  {{- else -}}
+  {{- else with .Value -}}
     {{- $stats = .Content | transform.Unmarshal -}}
+  {{- else -}}
+    {{- warnf "forge-meta: empty response from %q" $apiURL -}}
   {{- end -}}
-{{- else -}}
-  {{- warnf "forge-meta: empty response from %q" $apiURL -}}
 {{- end -}}
 
 {{- /* ================================================================= */ -}}
