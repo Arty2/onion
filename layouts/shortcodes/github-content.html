@@ -1,4 +1,18 @@
 <!-- /layouts/shortcodes/github-content.html -->
+{{- /*
+  github-content — fetch a GitHub repository's README and inline its
+  rendered Markdown.
+
+  SECURITY: the fetched README is untrusted remote content. Hugo's
+  markdownify runs shortcode rendering BEFORE markdown, so any literal
+  shortcode delimiter in the README would be executed against the
+  consumer site's template registry — a server-side template injection
+  vector. We replace the opening `{{` with the fullwidth lookalike
+  `｛｛` (U+FF5B) so the literal byte sequence `{{<` / `{{%` never
+  appears. Fullwidth survives both plainification (no entity decode)
+  and markdown rendering (no escape unwrap), so it stays neutralised
+  even when downstream templates re-pass `.Summary` through markdownify.
+*/ -}}
 {{- $repository := "" -}}
 {{- $branch := "master" -}}
 {{- $data := dict -}}
@@ -19,8 +33,12 @@
 				{{ $content = replace $content (printf "# %s" . ) "" }}
 			{{ end }}
 			{{/* make links absolute, useful for images */}}
-			{{- $content = replace $content "](./" (printf "%s%s" "](" $branchURL) -}} 
+			{{- $content = replace $content "](./" (printf "%s%s" "](" $branchURL) -}}
 			{{- $content = replace $content "](/"  (printf "%s%s" "](" $branchURL) -}}
+			{{/* SECURITY: neutralise Hugo shortcode delimiters in the
+			     remote README. See top-of-file comment for rationale. */}}
+			{{- $content = replace $content "{{<" "｛｛<" -}}
+			{{- $content = replace $content "{{%" "｛｛%" -}}
 		{{- end -}}
 		{{- $content | markdownify -}}
 	{{ end }}
