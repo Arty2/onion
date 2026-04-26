@@ -100,19 +100,22 @@ pages:
   other: Pages
 
 
-## github-content and meta
+## forge metadata (GitHub, GitLab, Forgejo/Gitea/Codeberg)
 
-github-hosted:
-  other: GitHub Repository
+forge-hosted:
+  other: 'Hosted on {{ . }}'
 
-github-repository:
+forge-repository:
   other: Repository
 
-github-license:
+forge-license:
   other: License
 
-github-last-pushed:
-  other: Last Push
+forge-last-pushed:
+  other: Last pushed
+
+
+## github-content shortcode (legacy)
 
 github-error:
   other: "Error fetching content. View repository on GitHub:"

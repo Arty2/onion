@@ -207,7 +207,11 @@ dateRead
 dateCreated
 crosspost
 directURL       # override destination URL for the article
-Github          # "org/repo" — fetches live license + pushed_at via API
+Forge           # "host/owner/repo" — fetches license + last-pushed via API
+                # (github.com / gitlab.com / codeberg.org auto-detected)
+Github          # legacy: "org/repo" — still works, treated as github.com
+forge_platform  # required for unrecognised hosts: github | gitlab | forgejo
+forge_label     # override the display label (default: auto from host)
 publication:
   title
   subtitle

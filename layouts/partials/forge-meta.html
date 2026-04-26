@@ -1,0 +1,359 @@
+{{- /*
+
+  forge-meta.html — Repository metadata partial for GitHub, GitLab, and Forgejo/Gitea
+
+  Dialectic Acheropoieton of Heracles Papatheodorou and Claude
+
+  ─────────────────────────────────────────────────────────────────────────────
+  USAGE
+  ─────────────────────────────────────────────────────────────────────────────
+
+  Call this partial from your template (e.g. in place of the Github block
+  inside meta.html):
+
+    {{ partial "forge-meta" . }}
+
+  ─────────────────────────────────────────────────────────────────────────────
+  FRONT-MATTER PARAMETERS (per-page)
+  ─────────────────────────────────────────────────────────────────────────────
+
+  Forge              (string, required)
+    Full "host/owner/repo" path. The host determines which API is used.
+    Examples:
+      Forge: "github.com/Arty2/onion"
+      Forge: "gitlab.com/inkscape/inkscape"
+      Forge: "codeberg.org/forgejo/forgejo"
+      Forge: "git.example.com/alice/project"
+
+  Github             (string, legacy fallback)
+    "owner/repo" without host prefix. Used only when `Forge` is absent.
+    Kept for backward compatibility with the original meta.html block.
+    Example:
+      Github: "Arty2/onion"
+
+  forge_platform     (string, conditionally required)
+    Override automatic platform detection. Required when the host in
+    `Forge` is not a recognised forge (e.g. a redirect/vanity domain).
+    Accepted values: "github", "gitlab", "forgejo"
+    Examples:
+      forge_platform: "github"     # redirect domain → GitHub API
+      forge_platform: "gitlab"     # self-hosted GitLab
+      forge_platform: "forgejo"    # self-hosted Forgejo/Gitea
+
+    Note on redirect / vanity domains:
+    If you use a domain like git.example.com that redirects to a forge,
+    set `forge_platform` explicitly. The display link will use your
+    domain; the API call will be routed to the correct canonical host.
+    This works transparently for GitHub (api.github.com is always used).
+    For GitLab and Forgejo, the API lives on the canonical host, so use
+    the real hostname in `Forge` and `forge_label` for display instead:
+      Forge: "codeberg.org/owner/repo"
+      forge_label: "git.example.com"
+
+  forge_label        (string, optional)
+    Override the display name shown in the summary heading. When absent,
+    the label is auto-detected:
+      github.com     → "GitHub"
+      gitlab.com     → "GitLab"
+      codeberg.org   → "Codeberg"
+      other Forgejo  → "Forgejo"
+    Examples:
+      forge_label: "My Gitea"
+      forge_label: "GitLab CE"
+      forge_label: "git.heracl.es"
+
+  ─────────────────────────────────────────────────────────────────────────────
+  SITE CONFIGURATION (hugo.yaml / hugo.toml) — all optional
+  ─────────────────────────────────────────────────────────────────────────────
+
+  No site configuration is required. The partial works out of the box
+  with recognised hosts (github.com, gitlab.com, codeberg.org) and
+  per-page `forge_platform` overrides. The settings below are only
+  needed for advanced use cases.
+
+  params.forgeContent.gitlabHosts   ([]string, optional)
+    Hostnames that should be treated as GitLab instances (in addition to
+    "gitlab.com" which is always recognised). Without this, unknown hosts
+    require `forge_platform` in front matter.
+    Example (YAML):
+      params:
+        forgeContent:
+          gitlabHosts:
+            - "gitlab.company.org"
+            - "git.internal.example.com"
+
+  security.http.urls                ([]string, optional)
+    Only needed if your site already restricts remote URLs. Hugo's
+    default allows all URLs. If you have a restrictive allowlist, add
+    patterns for the API domains you use:
+      security:
+        http:
+          urls:
+            - "^https://api\\.github\\.com/.*"
+            - "^https://gitlab\\.com/api/.*"
+            - "^https://codeberg\\.org/api/.*"
+          mediaTypes:
+            - "^application/json$"
+
+  caches.getresource                (map)
+    Controls on-disk caching of remote API responses. The partial also
+    applies a date-stamped cache key (YYYY-MM-DD) so the same URL is
+    fetched at most once per calendar day within a build session.
+      caches:
+        getresource:
+          maxAge: "24h"
+          dir: ":cacheDir/:project"
+
+  ─────────────────────────────────────────────────────────────────────────────
+  I18N KEYS
+  ─────────────────────────────────────────────────────────────────────────────
+
+  All platforms share the same set of i18n keys. If a key is missing,
+  the partial falls back to hardcoded English.
+
+  Key                Receives    Default (English)
+  ─────────────────  ──────────  ───────────────────────
+  forge-hosted       {{ . }}     "Hosted on {{ . }}"
+  forge-repository   —           "Repository"
+  forge-license      —           "License"
+  forge-last-pushed  —           "Last pushed"
+
+  The `forge-hosted` key receives the platform label as its template
+  context (`.`), so the translation can include it:
+
+    - id: forge-hosted
+      translation: "Hosted on {{ . }}"
+
+  If the key is missing, the partial renders the bare platform label
+  (e.g. "GitHub").
+
+  ─────────────────────────────────────────────────────────────────────────────
+  PLATFORM DETECTION (automatic)
+  ─────────────────────────────────────────────────────────────────────────────
+
+    • github.com            → GitHub REST API v3
+    • gitlab.com + hosts in params.forgeContent.gitlabHosts
+                            → GitLab REST API v4
+    • codeberg.org          → Forgejo API v1 (labelled "Codeberg")
+    • Any other host        → requires `forge_platform` in front matter
+
+  Override per-page with `forge_platform` (see above).
+
+  ─────────────────────────────────────────────────────────────────────────────
+  REQUIRED HUGO VERSION: ≥ 0.154.0 (for `try` statement)
+  ─────────────────────────────────────────────────────────────────────────────
+
+*/ -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 1. Resolve the forge value (unified `Forge` or legacy `Github`)   */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- $forgeRaw := "" -}}
+{{- $isLegacyGithub := false -}}
+
+{{- with .Params.Forge -}}
+  {{- $forgeRaw = . -}}
+{{- else -}}
+  {{- with $.Params.Github -}}
+    {{- $forgeRaw = . -}}
+    {{- $isLegacyGithub = true -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $forgeRaw -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 2. Parse host and repo path                                      */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- $host := "" -}}
+{{- $repoPath := "" -}}
+
+{{- if $isLegacyGithub -}}
+  {{- /* Legacy format: "owner/repo" — no host prefix */ -}}
+  {{- $host = "github.com" -}}
+  {{- $repoPath = $forgeRaw -}}
+{{- else -}}
+  {{- /* Unified format: "host/owner/repo" or "host/group/subgroup/project" */ -}}
+  {{- $parts := split $forgeRaw "/" -}}
+  {{- if ge (len $parts) 3 -}}
+    {{- $host = index $parts 0 -}}
+    {{- $repoPath = strings.TrimPrefix (printf "%s/" $host) $forgeRaw -}}
+  {{- else -}}
+    {{- warnf "forge-meta: invalid Forge value %q on page %q — expected host/owner/repo" $forgeRaw $.Page.Title -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $host -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 3. Detect platform (auto or per-page override)                   */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- $platform := "" -}}
+
+{{- /* Per-page override takes priority */ -}}
+{{- with $.Params.forge_platform -}}
+  {{- if in (slice "github" "gitlab" "forgejo") . -}}
+    {{- $platform = . -}}
+  {{- else -}}
+    {{- warnf "forge-meta: unknown forge_platform %q on page %q — expected github, gitlab, or forgejo" . $.Page.Title -}}
+  {{- end -}}
+{{- else -}}
+  {{- /* Auto-detect from hostname */ -}}
+  {{- if eq $host "github.com" -}}
+    {{- $platform = "github" -}}
+  {{- else if eq $host "gitlab.com" -}}
+    {{- $platform = "gitlab" -}}
+  {{- else if eq $host "codeberg.org" -}}
+    {{- $platform = "forgejo" -}}
+  {{- else -}}
+    {{- /* Check user-configured GitLab hosts (nil-safe) */ -}}
+    {{- $gitlabHosts := slice -}}
+    {{- with site.Params.forgeContent -}}
+      {{- with .gitlabHosts -}}
+        {{- $gitlabHosts = . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range $gitlabHosts -}}
+      {{- if eq . $host -}}
+        {{- $platform = "gitlab" -}}
+      {{- end -}}
+    {{- end -}}
+    {{- /* If still unresolved, warn */ -}}
+    {{- if not $platform -}}
+      {{- warnf "forge-meta: unrecognised host %q on page %q — set forge_platform in front matter" $host $.Page.Title -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Only proceed if platform was resolved */ -}}
+{{- if $platform -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 4. Resolve display label                                         */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- $defaultLabels := dict "github" "GitHub" "gitlab" "GitLab" "forgejo" "Forgejo" -}}
+{{- $platformLabel := index $defaultLabels $platform -}}
+
+{{- /* Codeberg gets its own default label */ -}}
+{{- if and (eq $platform "forgejo") (eq $host "codeberg.org") -}}
+  {{- $platformLabel = "Codeberg" -}}
+{{- end -}}
+
+{{- /* Per-page override wins over everything */ -}}
+{{- with $.Params.forge_label -}}
+  {{- $platformLabel = . -}}
+{{- end -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 5. Build API URL                                                 */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- /* The web URL always uses the host the user provided (supports
+       redirect / vanity domains). */ -}}
+{{- $webURL := printf "https://%s/%s" $host $repoPath -}}
+
+{{- $apiURL := "" -}}
+
+{{- if eq $platform "github" -}}
+  {{- /* GitHub API is always at api.github.com, regardless of the host
+         in Forge. This allows redirect / vanity domains to work. */ -}}
+  {{- $apiURL = printf "https://api.github.com/repos/%s" $repoPath -}}
+
+{{- else if eq $platform "gitlab" -}}
+  {{- /* GitLab requires URL-encoded path; ?license=true includes license data */ -}}
+  {{- $encodedPath := replace $repoPath "/" "%2F" -}}
+  {{- $apiURL = printf "https://%s/api/v4/projects/%s?license=true" $host $encodedPath -}}
+
+{{- else -}}
+  {{- /* Forgejo / Gitea — API lives on the same host */ -}}
+  {{- $apiURL = printf "https://%s/api/v1/repos/%s" $host $repoPath -}}
+
+{{- end -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 6. Fetch API data with daily cache key                           */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- $stats := dict -}}
+{{- $cacheKey := printf "%s:%s" $apiURL (now.Format "2006-01-02") -}}
+{{- $opts := dict "key" $cacheKey -}}
+
+{{- with try (resources.GetRemote $apiURL $opts) -}}
+  {{- with .Err -}}
+    {{- warnf "forge-meta: API error for %q: %s" $apiURL . -}}
+  {{- else with .Value -}}
+    {{- $stats = .Content | transform.Unmarshal -}}
+  {{- else -}}
+    {{- warnf "forge-meta: empty response from %q" $apiURL -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 7. Extract fields from API response                              */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- $license  := "" -}}
+{{- $lastPush := "" -}}
+
+{{- with $stats -}}
+
+  {{- /* --- License name --- */ -}}
+  {{- with .license -}}
+    {{- if reflect.IsMap . -}}
+      {{- /* GitHub returns { "name": "MIT License", … }
+             GitLab returns { "key": "mit", "name": "MIT License", … } */ -}}
+      {{- with .name -}}{{- $license = . -}}{{- end -}}
+    {{- else -}}
+      {{- /* Some Forgejo instances may return a plain string */ -}}
+      {{- $license = . | string -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- /* --- Last push / activity date --- */ -}}
+  {{- if eq $platform "github" -}}
+    {{- with .pushed_at        -}}{{- $lastPush = . -}}{{- end -}}
+  {{- else if eq $platform "gitlab" -}}
+    {{- with .last_activity_at -}}{{- $lastPush = . -}}{{- end -}}
+  {{- else -}}
+    {{- with .updated_at       -}}{{- $lastPush = . -}}{{- end -}}
+  {{- end -}}
+
+{{- end -}}{{- /* end with $stats */ -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* 8. Render                                                        */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- with $stats -}}
+<details>
+  <summary>
+    {{- $hosted := i18n "forge-hosted" $platformLabel -}}
+    {{- if not $hosted -}}
+      {{- $hosted = $platformLabel -}}
+    {{- end -}}
+    {{ $hosted }}
+  </summary>
+  <dl>
+    <dt>{{ i18n "forge-repository" | default "Repository" }}</dt>
+    <dd><a href="{{ $webURL }}" target="_blank">{{ $repoPath }}</a></dd>
+
+    {{- with $license }}
+    <dt>{{ i18n "forge-license" | default "License" }}</dt>
+    <dd>{{ . }}</dd>
+    {{- end }}
+
+    {{- with $lastPush }}
+    <dt>{{ i18n "forge-last-pushed" | default "Last pushed" }}</dt>
+    <dd>{{ . }}</dd>
+    {{- end }}
+  </dl>
+</details>
+{{- end -}}{{- /* end with $stats (render gate) */ -}}
+
+{{- end -}}{{- /* end if $platform */ -}}
+{{- end -}}{{- /* end with $host */ -}}
+{{- end -}}{{- /* end with $forgeRaw */ -}}
