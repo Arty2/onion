@@ -1,0 +1,77 @@
+name: build
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  build-example-site:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Pinned, reproducible happy path. Runs the extra validators.
+          - hugo: '0.140.2'
+            label: pinned
+            validate: true
+          # Tracks Hugo's latest release. Build-only, no validators, so
+          # cosmetic html-validate churn doesn't break the matrix.
+          - hugo: 'latest'
+            label: latest
+            validate: false
+
+    name: hugo-${{ matrix.label }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install Hugo (extended) — ${{ matrix.hugo }}
+        run: |
+          set -eu
+          if [ "${{ matrix.hugo }}" = "latest" ]; then
+            HUGO_VERSION=$(curl -sSL https://api.github.com/repos/gohugoio/hugo/releases/latest \
+              | grep -oP '"tag_name": "v\K[^"]+')
+          else
+            HUGO_VERSION="${{ matrix.hugo }}"
+          fi
+          echo "Installing Hugo $HUGO_VERSION (extended)"
+          curl -sSL -o /tmp/hugo.deb \
+            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i /tmp/hugo.deb
+          hugo version
+
+      - name: JS syntax check
+        run: |
+          node --check static/scripts/onion.js
+          node --check static/scripts/askolonion/askolonion.js
+
+      - name: Build exampleSite
+        working-directory: exampleSite
+        run: |
+          hugo --gc --minify --printPathWarnings --logLevel warn 2>&1 | tee build.log
+          # Surface Hugo deprecation warnings as build failures so we don't
+          # silently slide back into deprecation debt.
+          if grep -q 'DEPRECATION' build.log; then
+            echo "::error::Hugo emitted DEPRECATION warnings; see build.log above"
+            exit 1
+          fi
+
+      - name: Hugo module verify
+        run: hugo mod verify
+
+      - name: HTML validate
+        if: matrix.validate
+        working-directory: exampleSite
+        run: npx --yes html-validate@^9 --config ../.github/html-validate.json "public/**/*.html"
+
+      - name: Upload build artefact
+        if: matrix.validate
+        uses: actions/upload-artifact@v4
+        with:
+          name: exampleSite-public
+          path: exampleSite/public
+          retention-days: 7

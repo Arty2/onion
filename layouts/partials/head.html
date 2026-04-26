@@ -1,27 +1,26 @@
-<title>{{if .IsHome}}{{ .Site.Title }}{{ with .Title }} • {{ . }}{{ end }}{{else}}{{ with .Title }}{{ . }} • {{ end }}{{ .Site.Title }}{{end}}</title>
+<title>{{ if .IsHome }}{{ site.Title }}{{ with .Title }} • {{ . }}{{ end }}{{ else }}{{ with .Title }}{{ . }} • {{ end }}{{ site.Title }}{{ end }}</title>
 
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ else }}{{ with .Site.Params.author.description }}{{ . }}{{ end }}{{ end }}{{ end }}{{ end }}">
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with site.Params.description }}{{ . }}{{ else }}{{ with site.Params.author.description }}{{ . }}{{ end }}{{ end }}{{ end }}{{ end }}">
 
 <!-- preload essential fonts -->
-{{- if not (in .Site.Params.theme ",mod--font-local") -}}
-{{- if in .Site.Params.theme "mod--font-sans" }}
-<link rel="preload" href="../fonts/AlegreyaSans-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+{{- if not (in site.Params.theme ",mod--font-local") -}}
+{{- if in site.Params.theme "mod--font-sans" }}
+<link rel="preload" href="{{ "/fonts/AlegreyaSans-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin/>
 {{- else -}}
-<link rel="preload" href="../fonts/Alegreya-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="{{ "/fonts/Alegreya-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin/>
 {{- end }}
-<link rel="preload" href="../fonts/FantasqueSansMono-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="{{ "/fonts/FantasqueSansMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin/>
 {{- end }}
 
-<!-- load non essential style sheets, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/ -->
+<!-- core stylesheet: minified + fingerprinted asset pipeline -->
 {{- $corecss := resources.Get "/styles/screen.css" | minify | fingerprint -}}
-<link rel="stylesheet" href="{{ $corecss.RelPermalink }}" media="screen">
-<!-- <link rel="stylesheet" href="/styles/essential.css" media="screen"> -->
-<link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="print" onload="this.media='screen'">
-<link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="print" onload="this.media='screen'">
-<noscript>
-    <link rel="stylesheet" href="{{ "/styles/syntax.min.css" | relURL }}" media="screen">
-    <link rel="stylesheet" href="{{ "/scripts/simple-lightbox/simple-lightbox.min.css" | relURL }}" media="screen">
-</noscript>
+<link rel="stylesheet" href="{{ $corecss.RelPermalink }}" integrity="{{ $corecss.Data.Integrity }}" crossorigin="anonymous">
+<!-- syntax-highlight CSS: non-blocking, see https://timkadlec.com/remembers/2020-02-13-when-css-blocks/ -->
+{{- $syntaxcss := resources.Get "/styles/syntax.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $syntaxcss.RelPermalink }}" integrity="{{ $syntaxcss.Data.Integrity }}" crossorigin="anonymous" media="print" onload="this.media='screen'">
+<noscript><link rel="stylesheet" href="{{ $syntaxcss.RelPermalink }}" integrity="{{ $syntaxcss.Data.Integrity }}" crossorigin="anonymous"></noscript>
+<!-- simple-lightbox CSS is injected by onion.js only on pages with image links -->
+
 
 <!-- load facicon from /static/ folder (default: blank file) -->
 {{- if or (fileExists "static/favicon.png") (fileExists "static/favicon.ico") -}}
@@ -39,10 +38,12 @@
 {{ template "_internal/opengraph.html" . }}
 {{ template "_internal/schema.html" . }}
 
-    <meta name="fediverse:creator" content="{{ .Site.Params.Author.Fediverse }}" />
+{{- with site.Params.Author.Fediverse }}
+    <meta name="fediverse:creator" content="{{ . }}" />
+{{- end }}
 
 {{- range .AlternativeOutputFormats }}
-{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
 {{- end -}}
 {{ if .IsTranslated -}}
     {{ range .AllTranslations }}

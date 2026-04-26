@@ -1,13 +1,6 @@
-{{- $emojis := dict
-	"caution" "🛑"
-	"important" "ℹ️"
-	"note" "ℹ️"
-	"tip" "💡"
-	"warning" "⚠️"
--}}
 {{- if eq .Type "alert" }}
 <div role="note" class="alert alert-{{ .AlertType }}">
-	<div role="heading" class="alert__title">
+	<div role="heading" aria-level="3" class="alert__title">
 	{{ with .AlertTitle }}
 		{{ . }}
 	{{ else }}

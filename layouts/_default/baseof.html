@@ -1,6 +1,7 @@
+{{- $siteTheme := or site.Params.Theme "theme--default" -}}
 <!DOCTYPE html>
 {{ "<!-- Built with Hugo and the https://heracl.es/onion theme. -->" | safeHTML }}
-<html class="{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.LanguageCode }} lang="{{ . }}"{{ end }}>
+<html class="{{ $siteTheme }}{{ with .Params.Theme }} {{ . }}{{ end }}"{{ with site.Language.Lang }} lang="{{ . }}"{{ end }}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -17,7 +18,7 @@ if (typeof themes !== 'undefined' && themes.length > 0) {
 	}
 	// get current theme from classList?
 } else {
-	theme = '{{ with site.Params.Theme }}{{ . }}{{ end }}{{ with .Params.Theme }} {{ . }}{{ end }}';
+	theme = '{{ $siteTheme }}{{ with .Params.Theme }} {{ . }}{{ end }}';
 }
 document.documentElement.classList.add(...theme.split(' '))
 </script>
@@ -30,9 +31,9 @@ document.documentElement.classList.add(...theme.split(' '))
 			{{ $inlineCSS.Content | safeCSS }}
 		</style>
 	{{- end -}}
-	{{- if ne site.Params.show_gadgets false }}{{ partial "gadgets" . }}{{ end -}}
+	{{- if and (ne site.Params.show_gadgets false) (ne site.Params.showgadgets false) }}{{ partial "gadgets" . }}{{ end -}}
 	<header>
-		{{ if ne site.Params.show_languages false }}{{ partial "languages" . }}{{ end }}
+		{{ if and (ne site.Params.show_languages false) (ne site.Params.showlanguages false) }}{{ partial "languages" . }}{{ end }}
 		<div class="inner">
 		{{ block "header" . }}{{ partial "header-inner" . }}{{end}}
 		</div>
@@ -45,8 +46,8 @@ document.documentElement.classList.add(...theme.split(' '))
 		{{ block "footer" . }}{{ partialCached "footer-inner" . }}{{end}}
 		</div>
 	</footer>
-	{{ partialCached "scripts" . }}
-	<!-- load custom.js located by the content, if it exists */ -->
+	{{ partial "scripts" . }}
+	<!-- load custom.js located by the content, if it exists -->
 	{{ if (fileExists "static/scripts/custom.js") -}}
 		<script async src="./scripts/custom.js"></script>
 	{{- end }}

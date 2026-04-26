@@ -1,5 +1,25 @@
 <script src="{{ "/scripts/onion.js" | relURL }}" async></script>
-<!-- lightbox loaded from onion.js -->
-<!-- <script src="{{ "/scripts/simple-lightbox/simple-lightbox.min.js" | relURL }}" async></script> -->
-<script src="{{ "/scripts/instantpage.js" | relURL }}" type="module" defer></script>
+<!--
+	Speculation Rules (native prerender on hover/touch). Chrome 108+,
+	Edge 122+, Safari 17.2+. Firefox falls back gracefully to no prefetch,
+	in line with the theme's progressive-enhancement design principles.
+-->
+<script type="speculationrules">
+{
+	"prerender": [{
+		"where": {
+			"and": [
+				{ "href_matches": "/*" },
+				{ "not": { "href_matches": "/assets/*" } },
+				{ "not": { "selector_matches": "a[rel~=nofollow]" } },
+				{ "not": { "selector_matches": ".no-prerender a" } }
+			]
+		},
+		"eagerness": "moderate"
+	}]
+}
+</script>
+{{- if .Page.Store.Get "needs_model_viewer" }}
+<script src="{{ "/scripts/model-viewer.min.js" | relURL }}" type="module" defer></script>
+{{- end }}
 {{ template "_internal/google_analytics.html" . }}

@@ -2,7 +2,7 @@
 <nav class="languages" aria-label="{{ i18n "languages-available" }}" aria-role="navigation">
 	<ul>
 		{{- range $index, $language := .AllTranslations }}
-		<li><a rel="alternate" href="{{ .RelPermalink }}" hreflang="{{ .Site.LanguageCode }}" lang="{{ .Site.LanguageCode }}" {{ if eq $.Page.RelPermalink .RelPermalink }}aria-current="page"{{ end }}>{{ .Site.Language.LanguageName }}</a></li>
+		<li><a rel="alternate" href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}" {{ if eq $.Page.RelPermalink .RelPermalink }}aria-current="page"{{ end }}>{{ .Language.LanguageName }}</a></li>
 		{{- end }}
 	</ul>
 </nav>

@@ -1,10 +1,10 @@
 {{/* layouts/index.json */}}
 {
 "version": "https://jsonfeed.org/version/1.1",
-"title": "{{ if eq  .Title  .Site.Title }}{{ .Site.Title | plainify }}{{ else }}{{ with .Title }}{{ . | plainify }} • {{ end }}{{ .Site.Title | plainify }}{{ end }}",
-"home_page_url": "{{- with .Site.BaseURL }}{{ . | absLangURL  }}{{ end -}}",
+"title": "{{ if eq .Title site.Title }}{{ site.Title | plainify }}{{ else }}{{ with .Title }}{{ . | plainify }} • {{ end }}{{ site.Title | plainify }}{{ end }}",
+"home_page_url": "{{- with site.BaseURL }}{{ . | absLangURL  }}{{ end -}}",
 "feed_url": "{{ .Permalink | absLangURL }}",
-{{ with .Site.Params.Author -}}
+{{ with site.Params.Author -}}
 	"authors": [{
 		"name": "{{ .name }}"{{ if .email }},
 		"url": "mailto:{{ .email }}"{{ end }}{{ if .image }},
@@ -13,8 +13,8 @@
 {{- end }}
 "items":
 {{- $index := slice -}}
-{{- $pages := where .Site.RegularPages.ByDate.Reverse "Type" "not in"  (slice "page" "section") -}}
-{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- $pages := where site.RegularPages.ByDate.Reverse "Type" "not in"  (slice "page" "section") -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
 {{- if ge $limit 1 -}}
 	{{- $pages = $pages | first $limit -}}
 {{- end -}}

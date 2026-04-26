@@ -9,9 +9,9 @@
 </head>
 <body>
 	<main>
-		<h1>{{ i18n "404-error" }}{{ with .Site.Title }} • {{ . }}{{ end }}</h1>
+		<h1>{{ i18n "404-error" }}{{ with site.Title }} • {{ . }}{{ end }}</h1>
 		<p>
-		{{- with .Site.BaseURL }}<a href="{{ . | relLangURL  }}">{{ i18n "404-back" }}</a>
+		{{- with site.BaseURL }}<a href="{{ . | relLangURL  }}">{{ i18n "404-back" }}</a>
 		{{- else }}…{{ end -}}
 		</p>
 	</main>

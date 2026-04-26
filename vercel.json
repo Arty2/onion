@@ -1,0 +1,12 @@
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"buildCommand": "cd exampleSite && hugo --gc --minify --baseURL \"https://$VERCEL_URL/\"",
+	"outputDirectory": "exampleSite/public",
+	"cleanUrls": true,
+	"trailingSlash": true,
+	"build": {
+		"env": {
+			"HUGO_VERSION": "0.140.2"
+		}
+	}
+}

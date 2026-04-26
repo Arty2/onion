@@ -1,68 +1,68 @@
 <!-- layouts/partials/render-image.html -->
-<!-- embedded template: https://github.com/gohugoio/hugo/edit/master/tpl/tplimpl/embedded/templates/_default/_markup/render-image.html -->
-<!-- get image URL from Markdown tag -->
+<!-- Based on the embedded template: https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/_default/_markup/render-image.html -->
 {{- $src := (.Destination | safeURL) -}}
-{{ $src = replace $src "./" "" }}
+{{- $src = replace $src "./" "" -}}
 <!-- split # fragment (used for CSS classes) and keep clean URL -->
 {{- $fragments := (split $src "#") -}}
-{{- $src = index ($fragments) 0 -}}
-<!-- check .Store.Get "imgwidth" or use default width -->
-{{- $imgwidth := .Page.Store.Get "imgwidth" | default 920 -}}
-<!-- TODO: wrap in figure if there’s title text, but check if already in featured-image template -->
+{{- $src = index $fragments 0 -}}
+{{- $imgwidth := .Page.Store.Get "imgwidth" | default 1200 -}}
+<!-- featured/LCP images get fetchpriority=high and eager decoding -->
+{{- $isFeatured := eq (.Page.Store.Get "featuredClass") "cover" -}}
 {{ with $.Title }}<figure>{{ end }}
-<!-- check if it exists as a page resource -->
 {{- with (or ((.Page.Resources.ByType "image").Get $src) ((resources.ByType "image").Get $src)) -}}
-	<!-- if SVG then output its contents -->
 	{{- if strings.HasSuffix $src ".svg" -}}
-		<!-- TODO: consider accessibility best practives https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/SVG_In_HTML_Introduction -->
 		{{ .Content | safeHTML }}
 	{{- else -}}
-		{{ $resized := . }}
-		<!-- resize if wider than "imgwidth" but if GIF file then avoid resizing animations; WebP animations not yet supported; see upstream ticket: https://github.com/golang/go/issues/53364 -->
-		{{ if and (gt .Width $imgwidth) (ne .MediaType.SubType "gif") }}
-			{{ if hugo.IsExtended }}
-				{{- $resized = .Resize (print $imgwidth "x webp") -}}
-			{{ else }}
-				{{- $resized = .Resize (print $imgwidth "x") -}}
-				{{ warnf "Missing Hugo Extended, in partial render-image.html" }}
-			{{ end }}
-		{{ end }}
-		<!-- if JPEG (certain to be opaque) generate a low resolution placeholder to use as background -->
-		{{ $placeholder := "" }}
-		{{- if or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "jpeg") }}
-			{{ $placeholder = .Resize "48x q20 jpg Gaussian" }}
-		{{ end -}}
-		<!-- TODO: parse exif https://gohugo.io/content-management/image-processing/#exif -->
-		<img src="{{ $resized.RelPermalink }}"
-		width="{{ $resized.Width }}"
-		height="{{ $resized.Height }}"
-		{{ with $placeholder }} style="
+		{{- /* Two-size responsive pipeline: a narrow variant for mobile,
+		       a wide variant at the configured imgwidth for desktop + HiDPI.
+		       GIFs skip resizing (golang/go#53364). */ -}}
+		{{- $isRaster := and (ne .MediaType.SubType "gif") (not (strings.HasSuffix $src ".svg")) -}}
+		{{- $format := cond hugo.IsExtended " webp" "" -}}
+		{{- $narrowW := 800 -}}
+		{{- if ge $imgwidth 1200 -}}{{ $narrowW = 800 }}{{- else -}}{{ $narrowW = div $imgwidth 2 }}{{- end -}}
+		{{- $wide := . -}}
+		{{- $narrow := "" -}}
+		{{- if and $isRaster (gt .Width $imgwidth) -}}
+			{{- $wide = .Resize (printf "%dx%s" $imgwidth $format) -}}
+		{{- end -}}
+		{{- if and $isRaster (gt .Width $narrowW) -}}
+			{{- $narrow = .Resize (printf "%dx%s" $narrowW $format) -}}
+		{{- end -}}
+		{{- if and (not hugo.IsExtended) (gt .Width $imgwidth) -}}
+			{{ warnf "Hugo Extended not detected; render-image.html is serving unconverted raster images." }}
+		{{- end -}}
+		{{- /* Opaque JPEGs get a tiny base64 placeholder as background */ -}}
+		{{- $placeholder := "" -}}
+		{{- if or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "jpeg") -}}
+			{{- $placeholder = .Resize "48x q20 jpg Gaussian" -}}
+		{{- end -}}
+		<img src="{{ $wide.RelPermalink }}"
+		{{ with $narrow }}srcset="{{ .RelPermalink }} {{ .Width }}w, {{ $wide.RelPermalink }} {{ $wide.Width }}w"
+		sizes="(max-width: 800px) 100vw, min(75vw, {{ $wide.Width }}px)"{{ end }}
+		width="{{ $wide.Width }}"
+		height="{{ $wide.Height }}"
+		{{ with $placeholder }}style="
 			background-image: url('data:image/jpg;base64,{{ .Content | base64Encode }}');
 			background-position: 50% 50%;
 			background-repeat: no-repeat;
 			background-size: cover;"{{ end }}
-		{{ with $.PlainText }} alt="{{ . }}" {{ end }}
-		{{ with $.Title }} title="{{ . | plainify | htmlEscape }}" {{ end }}
-		{{ with index ($fragments) 1 }} class="{{ . | plainify | htmlEscape }}" {{ end }}
+		{{ with $.PlainText }} alt="{{ . }}"{{ end }}
+		{{ with $.Title }} title="{{ . | plainify | htmlEscape }}"{{ end }}
+		{{ with index $fragments 1 }} class="{{ . | plainify | htmlEscape }}"{{ end }}
 		{{- range $k, $v := $.Attributes -}}
-			{{- if $v -}}
-				{{- printf " %s=%q" $k ($v | htmlEscape) | safeHTMLAttr -}}
-			{{- end -}}
+			{{- if $v }} {{ printf "%s=%q" $k ($v | htmlEscape) | safeHTMLAttr }}{{ end -}}
 		{{- end -}}
-		loading="lazy" decoding="async" />
-		<!-- closing tag on img intented, for compatibility with XML output -->
+		{{ if $isFeatured }} loading="eager" decoding="async" fetchpriority="high"{{ else }} loading="lazy" decoding="async"{{ end }} />
 	{{- end -}}
 {{- else -}}
-	<!-- or otherwise its an external resource so load the URL -->
+	<!-- external resource: emit as-is -->
 	<img src="{{ .Destination | safeURL }}"
-	{{ with $.PlainText }} alt="{{ . }}" {{ end }}
-	{{ with $.Title }} title="{{ . | plainify | htmlEscape }}" {{ end }}
-	{{ with index ($fragments) 1 }} class="{{ . | plainify }}" {{ end }}
+	{{ with $.PlainText }} alt="{{ . }}"{{ end }}
+	{{ with $.Title }} title="{{ . | plainify | htmlEscape }}"{{ end }}
+	{{ with index $fragments 1 }} class="{{ . | plainify }}"{{ end }}
 	{{- range $k, $v := .Attributes -}}
-		{{- if $v -}}
-			{{- printf " %s=%q" $k ($v | htmlEscape) | safeHTMLAttr -}}
-		{{- end -}}
+		{{- if $v }} {{ printf "%s=%q" $k ($v | htmlEscape) | safeHTMLAttr }}{{ end -}}
 	{{- end -}}
-	loading="lazy" decoding="async" data-src="external" />
+	{{ if $isFeatured }} loading="eager" decoding="async" fetchpriority="high"{{ else }} loading="lazy" decoding="async"{{ end }} data-src="external" />
 {{- end -}}
 {{ with $.Title }}<figcaption>{{ . | markdownify }}</figcaption></figure>{{ end }}

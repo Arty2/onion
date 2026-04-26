@@ -1,0 +1,134 @@
+# --------------------------------------------------------------------------- #
+# Onion — default site configuration
+#
+# Copy into your site's hugo.toml and edit. Only the three keys in section 1
+# are required; the theme has sensible defaults for everything else.
+#
+# Where possible, key names match the conventions used by other popular Hugo
+# themes (PaperMod, Hextra, Stack, Congo, Anatole) so a `hugo.toml` from one
+# of those is mostly portable. Where onion ships its own legacy `snake_case`
+# names, the `camelCase` form is also accepted (see "Migrating" in README.md).
+#
+# Reference:
+#   https://gohugo.io/configuration/
+#   https://github.com/arty2/onion
+# --------------------------------------------------------------------------- #
+
+
+# ===== 1. Site identity (REQUIRED) ========================================= #
+
+baseURL                = "https://example.org/"
+title                  = "My Onion site"
+theme                  = "onion"
+
+# Recommended:
+languageCode           = "en-us"
+defaultContentLanguage = "en"
+enableRobotsTXT        = true
+
+# googleAnalytics      = "G-XXXXXXXXXX"
+
+
+# ===== 2. Content shape ==================================================== #
+
+[taxonomies]
+  tag    = "tags"
+  series = "series"
+
+[params]
+  description    = "Site tagline shown in <meta description> and feeds."
+
+  # Default Open Graph / Twitter card images (Hugo built-in convention).
+  # Hugo's internal opengraph template picks these up automatically.
+  # images       = ["images/screenshot.png"]
+
+  # Which content sections feed home page + archives. Hugo built-in.
+  # If unset, Hugo guesses (the section with the most regular pages).
+  # mainSections = ["posts"]
+
+  # Go time layout used wherever the theme renders a date.
+  # Both `dateFormat` and the legacy `date_format` are accepted.
+  dateFormat     = "2006-01-02"
+
+
+# ===== 3. Author + social ================================================== #
+
+[params.author]
+  name        = "Jane Doe"
+  description = "One-line bio shown in the author card and <meta>."
+  email       = "jane@example.org"           # optional
+  image       = "avatar.png"                 # path relative to /static or bundle
+  Fediverse   = "@jane@example.social"       # emits <meta name="fediverse:creator">
+
+# Footer social icons. `name` matches an icon glyph in the icon font.
+# `url` and `link` are interchangeable — `url` matches PaperMod's `socialIcons`.
+# [[params.social]]
+#   name = "mastodon"
+#   url  = "https://mastodon.social/@jane"
+# [[params.social]]
+#   name = "github"
+#   url  = "https://github.com/jane"
+
+
+# ===== 4. Look & feel ====================================================== #
+
+[params]
+  # Theme + modifiers. Combine space-separated values.
+  #   themes          : theme--default | theme--peach | theme--retro |
+  #                     theme--gray    | theme--blue
+  #   color scheme    : scheme--light  | scheme--dark  (default: OS preference)
+  #   layout mods     : mod-newline    | mod--fullwidth
+  #   font mods       : mod--font-serif | mod--font-sans | mod--font-mono |
+  #                     mod--font-local (disables bundled webfonts)
+  theme          = "theme--default"
+
+  # Optional Markdown logo rendered in the header (falls back to site title).
+  # logo         = "![alt](/logo.svg)"
+
+  # Set for right-to-left languages.
+  # LanguageDir  = "rtl"
+
+  # Feature toggles (all optional; sensible defaults shown).
+  # Both camelCase and the legacy snake_case forms are accepted; setting
+  # either to `false` disables the feature.
+  showGadgets    = true   # floating return-to-top + theme-switcher
+  showLanguages  = true   # language switcher in the <header>
+  showMeta       = true   # per-article sidebar: ToC, dates, taxonomies, …
+  showToc        = true   # auto table of contents on long articles
+  showShare      = false  # per-article share links (fb/twitter/email)
+  showAuthor     = true   # footer author card
+  showSocial     = true   # footer social-media icons
+  showSearch     = false  # client-side search (askolonion + Fuse.js)
+
+
+# ===== 5. Integrations (opt-in) ============================================ #
+
+[services.rss]
+  limit = 20
+
+# [params.shortcodes.dailymotion]
+#   ID      = ""     # your Dailymotion player ID
+#   Disable = false  # set true to render a link instead of an iframe
+
+
+# ===== 6. Menus (standard Hugo) ============================================ #
+
+# [[menu.main]]
+#   name   = "Archives"
+#   url    = "/archives/"
+#   weight = 10
+# [[menu.footer]]
+#   name   = "colophon"   # looked up via i18n/
+#   url    = "/colophon/"
+
+
+# ===== 7. Markdown (Goldmark) ============================================== #
+# These match Hugo defaults but are spelled out so the theme behaves the
+# same regardless of any Hugo-version drift.
+
+[markup.goldmark.renderer]
+  unsafe = true          # inline HTML in Markdown, needed for some shortcodes
+[markup.goldmark.parser]
+  [markup.goldmark.parser.attribute]
+    block = true
+    title = true

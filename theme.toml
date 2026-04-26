@@ -1,11 +1,13 @@
 name = "onion"
 license = "MIT"
-licenselink = "https://github.com/Arty2/onion/blob/master/LICENSE.txt"
-description = "Theme description"
+licenselink = "https://github.com/arty2/onion/blob/master/LICENSE.txt"
+description = "Plug-and-play, progressively-enhanced, mobile-first Hugo theme with multilingual support, sidenotes, automatic light/dark mode and a self-hosted privacy-first toolkit."
 homepage = "https://heracl.es/onion/"
-tags = ["experimental", "responsive"]
-# features = ["some", "awesome", "features"]
-min_version = "0.81.0"
+demosite = "https://heracl.es/onion/"
+tags = ["blog", "responsive", "minimal", "dark", "light", "multilingual", "accessibility", "typography", "marginalia", "rss"]
+features = ["responsive", "light-dark", "multilingual", "marginalia", "syntax-highlighting", "rss", "json-feed", "microformats", "open-graph"]
+min_version = "0.128.0"
+
 [author]
     name = "Heracles Papatheodorou"
     homepage = "https://heracl.es/"

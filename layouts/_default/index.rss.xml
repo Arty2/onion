@@ -1,6 +1,6 @@
 {{- $pctx := . -}}
 {{- if .IsHome -}}
-	{{ $pctx = .Site }}
+	{{ $pctx = site }}
 {{- end -}}
 	{{- $pages := slice -}}
 {{- if or $.IsHome $.IsSection -}}
@@ -8,7 +8,7 @@
 {{- else -}}
 	{{- $pages = $pctx.Pages -}}
 {{- end -}}
-{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
 {{- if ge $limit 1 -}}
 	{{- $pages = $pages | first $limit -}}
 {{- end -}}
@@ -22,14 +22,14 @@
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
 >
 	<channel>
-		<title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title | plainify | transform.XMLEscape }}{{ else }}{{ with .Title }}{{ . | plainify | transform.XMLEscape }} • {{ end }}{{ .Site.Title | plainify | transform.XMLEscape }}{{ end }}</title>
+		<title>{{ if eq .Title site.Title }}{{ site.Title | plainify | transform.XMLEscape }}{{ else }}{{ with .Title }}{{ . | plainify | transform.XMLEscape }} • {{ end }}{{ site.Title | plainify | transform.XMLEscape }}{{ end }}</title>
 		<link>{{ .Permalink }}</link>
-		<description>{{ with .Description }}{{ . | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{if .IsPage}}{{ .Summary | plainify }}{{ else }}{{ with .Site.Params.description }}{{ . | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{ with .Site.Params.Author.description }}{{ . | plainify | transform.XMLEscape | safeHTML }}{{ end }}{{ end }}{{ end }}{{ end }}</description>
-		<generator>Hugo</generator>{{ with .Site.LanguageCode }}
-		<language>{{.}}</language>{{end}}{{ with .Site.Params.Author.email }}
-		<managingEditor>{{.}}{{ with $.Site.Params.Author.name }} ({{ . | plainify }}){{end}}</managingEditor>{{end}}{{ with .Site.Params.Author.email }}
-		<webMaster>{{ . | plainify | transform.XMLEscape }}{{ with $.Site.Params.Author.name }} ({{ . | plainify }}){{end}}</webMaster>{{end}}{{ with .Site.Copyright }}
-		<copyright>{{ . | $.RenderString | plainify | transform.XMLEscape }}</copyright>{{end}}{{ if not .Date.IsZero }}
+		<description>{{ with .Description }}{{ . | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{ if .IsPage }}{{ .Summary | plainify }}{{ else }}{{ with site.Params.description }}{{ . | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{ with site.Params.Author.description }}{{ . | plainify | transform.XMLEscape | safeHTML }}{{ end }}{{ end }}{{ end }}{{ end }}</description>
+		<generator>Hugo</generator>{{ with site.Language.Lang }}
+		<language>{{.}}</language>{{ end }}{{ with site.Params.Author.email }}
+		<managingEditor>{{.}}{{ with site.Params.Author.name }} ({{ . | plainify }}){{ end }}</managingEditor>{{ end }}{{ with site.Params.Author.email }}
+		<webMaster>{{ . | plainify | transform.XMLEscape }}{{ with site.Params.Author.name }} ({{ . | plainify }}){{ end }}</webMaster>{{ end }}{{ with site.Copyright }}
+		<copyright>{{ . | $.RenderString | plainify | transform.XMLEscape }}</copyright>{{ end }}{{ if not .Date.IsZero }}
 		<lastBuildDate>{{ (index $pages.ByLastmod.Reverse 0).Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
 		{{- with .OutputFormats.Get "RSS" }}
 		{{ printf `<atom:link href=%q rel="self" type=%q />` .Permalink .MediaType | safeHTML }}
@@ -40,10 +40,10 @@
 			<link>{{ .Permalink }}</link>
 			<guid isPermaLink="false">{{ md5 .Permalink }}</guid>
 			<pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
-			{{ with .Site.Params.Author.email }}<author>{{.}}{{ with $.Site.Params.Author.name }} ({{.}}){{end}}</author>{{end}}
+			{{ with site.Params.Author.email }}<author>{{.}}{{ with site.Params.Author.name }} ({{.}}){{ end }}</author>{{ end }}
 			<description>{{ with .Description }}{{ . | plainify | transform.XMLEscape | safeHTML }}{{ else }}{{ .Summary | plainify | transform.XMLEscape | safeHTML }}{{ end }}</description>
 			{{- with .Page.Type }}<category domain="types">{{ i18n . }}</category>{{ end }}
-			{{- range .Params.Tags -}}{{ with $.Site.GetPage (printf "/%s/%s" "tags" . ) }}
+			{{- range .Params.Tags -}}{{ with site.GetPage (printf "/%s/%s" "tags" . ) }}
 			<category domain="tags">{{ i18n .Name }}</category>
 			{{- end -}}{{- end }}
 		</item>

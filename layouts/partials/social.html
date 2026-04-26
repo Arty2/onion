@@ -1,7 +1,8 @@
 <nav class="social">
 	<menu>
-	{{- range .Site.Params.Social -}}
-		<li><a href="{{ if in .link ":" }}{{ .link }}{{ else }}{{ .link | relLangURL }}{{ end }}" rel="me noopener" class="icon icon-{{ .name }}" title="{{ .name }}" target="_blank"><span>{{ .name }}</span></a></li>
+	{{- range site.Params.Social -}}
+		{{- $href := or .url .link -}}
+		<li><a href="{{ if in $href ":" }}{{ $href }}{{ else }}{{ $href | relLangURL }}{{ end }}" rel="me noopener" class="icon icon-{{ .name }}" title="{{ .name }}" target="_blank"><span>{{ .name }}</span></a></li>
 	{{- end }}
 	</menu>
 </nav>

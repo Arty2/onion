@@ -1,10 +1,14 @@
 {{ define "main" }}
+	{{- $mainPages := site.RegularPages -}}
+	{{- with site.Params.mainSections -}}
+		{{- $mainPages = where site.RegularPages "Section" "in" . -}}
+	{{- end -}}
 	{{ if gt (len .Content) 0 }}
 		{{ .Content }}
-	{{ else if gt (len .Site.RegularPages) 0}}
+	{{ else if gt (len $mainPages) 0}}
 		<section class="articles-list">
 			<div class="wrapper">
-			{{ range .Site.RegularPages }}
+			{{ range $mainPages }}
 				{{ partial "article.html" . }}
 			{{ end }}
 			</div>

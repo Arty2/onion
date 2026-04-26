@@ -1,10 +1,14 @@
 {{ define "main" }}
 	<!-- Display any content the page already has -->
 	{{ .Content }}
-	
+
 	{{- $type := .Params.Type -}}
+	{{- $mainPages := site.RegularPages -}}
+	{{- with site.Params.mainSections -}}
+		{{- $mainPages = where site.RegularPages "Section" "in" . -}}
+	{{- end -}}
 	<!-- Group articles by year and loop through them -->
-	{{- range (.Site.RegularPages.GroupByDate "2006") -}}
+	{{- range ($mainPages.GroupByDate "2006") -}}
 		<!-- Get articles to display -->
 		{{- $articles := (cond (eq $type "section") .Pages (where .Pages "Type" $type)) -}}
 		<!-- Count articles returned -->

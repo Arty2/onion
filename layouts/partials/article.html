@@ -34,17 +34,14 @@
 		{{- with .Params.Rating }}
 			<div class="rating" data-rating="{{ . }}">{{ range seq (int . ) }}★{{ end }}</div>
 		{{- end -}}
+		{{- $dateFormat := or site.Params.date_format site.Params.dateformat "2006-01-02" -}}
 		<time class="time dt-published" datetime="{{ .Date.Format "2006-01-02" }}">
 			{{- if .Params.dateCreated -}}
 				{{- .Params.dateCreated -}}
 			{{- else if .Params.dateRead -}}
 				{{- .Params.dateRead -}}
 			{{- else -}}
-				{{- if isset $.Site.Params "date_format" -}}
-					{{- .Date.Format $.Site.Params.date_format -}}
-				{{- else -}}
-					{{- .Date.Format "2006-01-02" -}}
-				{{- end -}}
+				{{- .Date.Format $dateFormat -}}
 			{{- end -}}
 		</time>
 	</a>
