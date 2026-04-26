@@ -17,7 +17,7 @@ the working copy of the repo.
 ## Vercel preview deployments
 
 A [`vercel.json`](../vercel.json) at the repo root builds this site on every
-push to Vercel. It pins `HUGO_VERSION=0.140.2` and sets `--baseURL` from
+push to Vercel. It pins `HUGO_VERSION=0.154.0` and sets `--baseURL` from
 `$VERCEL_URL` so preview deploys get correct absolute links.
 
 ## CI

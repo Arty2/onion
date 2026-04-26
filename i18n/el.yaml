@@ -100,19 +100,22 @@ pages:
   other: Σελίδες
 
 
-## github-content and meta
+## forge metadata (GitHub, GitLab, Forgejo/Gitea/Codeberg)
 
-github-hosted:
-  other: Αποθετήριο GitHub
+forge-hosted:
+  other: 'Φιλοξενείται στο {{ . }}'
 
-github-repository:
+forge-repository:
   other: Αποθετήριο
 
-github-license:
+forge-license:
   other: Άδεια χρήσης
 
-github-last-pushed:
-  other: Eνημέρωση
+forge-last-pushed:
+  other: Τελευταία ώθηση
+
+
+## github-content shortcode (legacy)
 
 github-error:
   other: "Σφάλμα φόρτωσης. Προβολή αποθετηρίου στο GitHub:"
