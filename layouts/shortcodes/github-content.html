@@ -7,11 +7,12 @@
   markdownify runs shortcode rendering BEFORE markdown, so any literal
   shortcode delimiter in the README would be executed against the
   consumer site's template registry — a server-side template injection
-  vector. We replace the opening `{{` with the fullwidth lookalike
-  `｛｛` (U+FF5B) so the literal byte sequence `{{<` / `{{%` never
-  appears. Fullwidth survives both plainification (no entity decode)
-  and markdown rendering (no escape unwrap), so it stays neutralised
-  even when downstream templates re-pass `.Summary` through markdownify.
+  vector. We replace both halves of the shortcode delimiter pair with
+  the fullwidth lookalikes `｛｛` (U+FF5B) and `｝｝` (U+FF5D) so the
+  literal byte sequences `{{<` / `{{%` / `>}}` / `%}}` never appear.
+  Fullwidth survives both plainification (no entity decode) and markdown
+  rendering (no escape unwrap), so it stays neutralised even when
+  downstream templates re-pass `.Summary` through markdownify.
 */ -}}
 {{- $repository := "" -}}
 {{- $branch := "master" -}}
@@ -39,6 +40,8 @@
 			     remote README. See top-of-file comment for rationale. */}}
 			{{- $content = replace $content "{{<" "｛｛<" -}}
 			{{- $content = replace $content "{{%" "｛｛%" -}}
+			{{- $content = replace $content ">}}" ">｝｝" -}}
+			{{- $content = replace $content "%}}" "%｝｝" -}}
 		{{- end -}}
 		{{- $content | markdownify -}}
 	{{ end }}
