@@ -77,7 +77,7 @@ enableRobotsTXT        = true
   #   themes          : theme--default | theme--peach | theme--retro |
   #                     theme--gray    | theme--blue
   #   color scheme    : scheme--light  | scheme--dark  (default: OS preference)
-  #   layout mods     : mod-newline    | mod--fullwidth
+  #   layout mods     : mod--newline   | mod--fullwidth
   #   font mods       : mod--font-serif | mod--font-sans | mod--font-mono |
   #                     mod--font-local (disables bundled webfonts)
   theme          = "theme--default"

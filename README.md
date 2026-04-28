@@ -85,17 +85,103 @@ Onion's parameter names overlap with the conventions used by [PaperMod](https://
 
 ## Theming
 
-Set `params.theme` to one of the following. Every theme, except `theme--gray` and `theme--blue`, ships with both a light and a dark scheme.
+`params.theme` is a space-separated list of class tokens. All values are optional; pick at most one per category and combine freely. Set the same value via `theme:` in page front-matter to override per page.
 
-| Themes           | Color schemes                       | Layout modifiers                                    | Font modifiers                                |
-| ---------------- | ----------------------------------- | --------------------------------------------------- | --------------------------------------------- |
-| `theme--default` | `scheme--light` (default from OS)   | `mod-newline` (paragraph spacing instead of indent) | `mod--font-serif` (default)                   |
-| `theme--peach`   | `scheme--dark` (default from OS)    | `mod--fullwidth` (forces full-width content)        | `mod--font-sans`                              |
-| `theme--retro`   |                                     |                                                     | `mod--font-mono`                              |
-| `theme--gray`    |                                     |                                                     | `mod--font-local` (disables bundled webfonts) |
-| `theme--blue`    |                                     |                                                     |                                               |
+**Themes** (colour palette):
 
-Values are whitespace-separated, so you can combine them — e.g. `theme = "theme--peach scheme--dark mod--font-sans"`. The same value can also be set on a page via `theme:` front-matter, overriding the site default for that page only.
+- `theme--default` — light + dark
+- `theme--peach`   — light + dark
+- `theme--retro`   — light + dark
+- `theme--gray`    — single scheme
+- `theme--blue`    — single scheme
+
+**Colour scheme** (defaults to OS preference if unset):
+
+- `scheme--light`
+- `scheme--dark`
+
+**Layout modifiers**:
+
+- `mod--newline`   — paragraph spacing instead of first-line indent
+- `mod--fullwidth` — forces full-width content (`--max-content: 100%`)
+
+**Font modifiers**:
+
+- `mod--font-serif` (default)
+- `mod--font-sans`
+- `mod--font-mono`
+- `mod--font-local` — disables bundled webfonts; uses OS stacks
+
+Combine, e.g. `theme = "theme--peach scheme--dark mod--font-sans"`.
+
+
+## Article-listing modifiers
+
+`{{< articles-list class="…" >}}` accepts space-separated classes. Each toggles a display tweak independently:
+
+| Class          | Effect                                 |
+| -------------- | -------------------------------------- |
+| `preformatted` | Narrow, monospace summaries            |
+| `cluster`      | 3-up flex grid                         |
+| `no-taxa`      | Hide all taxonomy chips                |
+| `no-types`     | Hide post-type chips                   |
+| `no-tags`      | Hide tag chips                         |
+| `no-time`      | Hide publication date                  |
+| `no-summary`   | Hide article summary                   |
+| `no-text`      | Hide all text — thumbnails only        |
+| `no-gap`       | Collapse the gutter between cards      |
+
+Two activation classes pair with related shortcodes:
+
+- `articles-filterable` — opt in to client-side tag filtering driven by `{{< articles-filter >}}`. Articles are matched on the `data-tags` attribute the shortcode emits.
+- `stack` — used by the archives template to group entries by year.
+
+
+## Article filter
+
+`{{< articles-filter >}}` renders a clickable bar of taxon buttons that hide/show items in any sibling `{{< articles-list class="articles-filterable" >}}`. Filtering is client-side, multi-select, and degrades to a post-count display when JavaScript is unavailable.
+
+The shortcode walks `site.Taxonomies.tags` by default and renders one button per term, plus a reset button.
+
+**Parameters:**
+
+| Parameter   | Effect                                                          |
+| ----------- | --------------------------------------------------------------- |
+| `class`     | Extra classes on the rendered `<div class="taxonomy-filter">`.  |
+| `tagfilter` | A single taxon slug to *exclude* from the filter bar (e.g. hide a `meta` tag from end users). |
+
+**Useful classes via `class="…"`:**
+
+| Class    | Effect |
+| -------- | ------ |
+| `sticky` | Pin the filter bar to the viewport top (`position: sticky; top: 0`). Useful when the listing is long. |
+
+`sticky` is a generic helper rather than a filter-specific modifier; it just happens to be applied to the filter via this shortcode's `class` parameter.
+
+**Pairing with `articles-list`:** the filter operates on any element matching `.articles-filterable [data-tags]`. Typical usage:
+
+```hugo
+{{< articles-filter class="sticky" >}}
+{{< articles-list  class="articles-filterable" >}}
+```
+
+**Noscript fallback:** without JavaScript the bar still renders, with each taxon showing its post count (e.g. `tag (12)`). The reset button is hidden in this mode.
+
+
+## Image modifiers
+
+Append a `#fragment` to any image URL to apply visual-treatment classes. Works in plain markdown (`![alt](src#fragment)`), in `{{< figure >}}`, and on remote images. The fragment is forwarded as the `class` attribute on the rendered `<img>` by the markdown image render hook (`layouts/_default/_markup/render-image.html` → `layouts/partials/render-image.html`).
+
+| Fragment    | Effect                                                          |
+| ----------- | --------------------------------------------------------------- |
+| `#blend`    | Theme-aware blend (multiply in light, screen + invert in dark)  |
+| `#screen`   | `mix-blend-mode: screen` (always)                               |
+| `#multiply` | `mix-blend-mode: multiply` (always)                             |
+| `#shadow`   | Drop-shadow using the active theme's shadow colour              |
+
+Combine by URL-encoding a space, e.g. `![diagram](architecture.svg#blend%20shadow)`.
+
+The `{{< include >}}` shortcode inlines content as-is and does NOT process `#fragment` modifiers — use `{{< figure >}}` or plain markdown image syntax instead.
 
 
 ## Installation
