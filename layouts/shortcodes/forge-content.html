@@ -1,0 +1,237 @@
+<!-- /layouts/shortcodes/forge-content.html -->
+{{- /*
+
+  forge-content — fetch a file (default: README) from any of GitHub /
+  GitLab / Forgejo / Codeberg and inline its rendered Markdown.
+
+  Replaces the legacy `github-content` shortcode (deleted in this
+  branch). Multi-platform via the same detection logic as the
+  `forge-meta` partial — both share `partials/forge-resolve.html`.
+
+  ─── PARAMETERS ────────────────────────────────────────────────────────
+    repository  (string, required)
+                 Either:
+                   • Unified  : "host/owner/repo" (host = github.com /
+                                gitlab.com / codeberg.org / a host listed
+                                in `params.forgeContent.gitlabHosts`).
+                   • Legacy   : "owner/repo" — assumed GitHub.
+    branch      (string, default "master")
+    path        (string, optional)
+                 File path within the repo. If empty, the shortcode
+                 fetches the README:
+                   • GitHub : uses the dedicated `/readme` endpoint
+                              (server-side detection).
+                   • GitLab + Forgejo: probes "README.md", "README",
+                              "readme.md" in order; first hit wins.
+    platform    (string, optional)
+                 Override platform detection: "github" | "gitlab" |
+                 "forgejo". Required when the host is a custom domain
+                 the auto-detector doesn't recognise.
+    unsafe      (bool, default false)
+                 When `true`, removes `<svg>` and `<math>` from the HTML
+                 sanitiser denylist so inline diagrams / equations from
+                 a trusted source render as live elements. Every other
+                 dangerous tag (script, iframe, …) and event-handler
+                 attribute remains stripped.
+
+  ─── SECURITY ──────────────────────────────────────────────────────────
+
+  Fetched content is UNTRUSTED remote markdown. It passes through
+  three protective transforms before reaching `markdownify`:
+
+    1. Hugo shortcode delimiter neutralisation. Both halves of the
+       Hugo shortcode delimiter pair (`{{<` / `{{%` / `>}}` / `%}}`)
+       are replaced with the fullwidth lookalikes `｛｛` (U+FF5B) and
+       `｝｝` (U+FF5D). This prevents server-side template injection:
+       a malicious README cannot trick the consumer site's template
+       engine into executing arbitrary shortcodes against its own
+       template registry.
+
+    2. HTML tag denylist. A regex pass entity-escapes a closed list
+       of tags known to be dangerous in any context — script, style,
+       iframe, frame, frameset, noframes, object, embed, applet,
+       form, input, button, textarea, select, option, optgroup,
+       fieldset, legend, link, meta, base, noscript. Plus svg + math
+       unless `unsafe="true"` is set (allowlisted only for trusted
+       sources). Disallowed tags render as visible escaped text in
+       the final HTML; they never execute or load remote resources.
+
+    3. Dangerous attribute strip. Event handlers (`on*=…`),
+       `javascript:` URIs in `href` / `src`, and IE-era CSS
+       `expression(…)` are stripped wherever they appear. The
+       containing tag survives (no structural change to the
+       document) but cannot script.
+
+  This is a denylist, not a strict allowlist. It is intentionally
+  conservative compared to GitHub's GFM sanitiser — it accepts the
+  same dangerous tags GFM rejects, but does NOT strictly enforce
+  GFM's full allowlist. For most READMEs this is sufficient. If you
+  need stronger guarantees (e.g. you syndicate content from
+  attacker-controlled repositories), consider running a proper
+  HTML sanitiser as a preprocessing build step instead.
+
+  ─── REQUIRED HUGO VERSION: ≥ 0.154.0 ──────────────────────────────────
+
+*/ -}}
+
+{{- $repository := .Get "repository" -}}
+{{- $branch     := .Get "branch" | default "master" -}}
+{{- $path       := .Get "path" -}}
+{{- $platformIn := .Get "platform" -}}
+{{- $unsafe     := eq (.Get "unsafe") "true" -}}
+
+{{- /* Resolve via shared partial. Detect whether the input is the
+       legacy "owner/repo" form (no slash-separated host prefix) and
+       feed it accordingly. */ -}}
+{{- $forgeArg  := "" -}}
+{{- $githubArg := "" -}}
+{{- with $repository -}}
+  {{- $parts := split . "/" -}}
+  {{- if and (eq (len $parts) 2) (not (in . ".")) -}}
+    {{- /* "owner/repo" — legacy GitHub form */ -}}
+    {{- $githubArg = . -}}
+  {{- else -}}
+    {{- $forgeArg = . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $resolved := partial "forge-resolve" (dict
+    "forge"     $forgeArg
+    "github"    $githubArg
+    "platform"  $platformIn
+    "pageTitle" .Page.Title
+    "component" "forge-content") -}}
+
+{{- $host     := $resolved.host -}}
+{{- $repoPath := $resolved.repoPath -}}
+{{- $platform := $resolved.platform -}}
+{{- $webURL   := $resolved.webURL -}}
+
+{{- /* Failure-path fallback link — emitted when fetch fails. */ -}}
+{{- $errorMsg  := i18n "forge-error" | default "Could not fetch content from" -}}
+{{- $fallback  := "" -}}
+{{- with $webURL -}}
+  {{- $fallback = printf `%s <a href="%s">%s</a>` $errorMsg . $repoPath -}}
+{{- end -}}
+
+{{- if $platform -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* Build candidate API URLs                                         */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- /* `$candidates` is the ordered list of API URLs to try. For
+       GitHub with no `path` it's a single dedicated `/readme`; for
+       GitLab/Forgejo without `path` it's a probe over README.md,
+       README, readme.md. With an explicit `path` it's always one URL. */ -}}
+{{- $candidates := slice -}}
+
+{{- if eq $platform "github" -}}
+  {{- if $path -}}
+    {{- $candidates = $candidates | append (printf "https://api.github.com/repos/%s/contents/%s?ref=%s" $repoPath $path $branch) -}}
+  {{- else -}}
+    {{- $candidates = $candidates | append (printf "https://api.github.com/repos/%s/readme?ref=%s" $repoPath $branch) -}}
+  {{- end -}}
+{{- else if eq $platform "gitlab" -}}
+  {{- $encPath := replace $repoPath "/" "%2F" -}}
+  {{- $names   := slice $path -}}
+  {{- if not $path -}}
+    {{- $names = slice "README.md" "README" "readme.md" -}}
+  {{- end -}}
+  {{- range $names -}}
+    {{- $encFile := replace . "/" "%2F" -}}
+    {{- $candidates = $candidates | append (printf "https://%s/api/v4/projects/%s/repository/files/%s?ref=%s" $host $encPath $encFile $branch) -}}
+  {{- end -}}
+{{- else -}}
+  {{- /* forgejo / gitea */ -}}
+  {{- $names := slice $path -}}
+  {{- if not $path -}}
+    {{- $names = slice "README.md" "README" "readme.md" -}}
+  {{- end -}}
+  {{- range $names -}}
+    {{- $candidates = $candidates | append (printf "https://%s/api/v1/repos/%s/contents/%s?ref=%s" $host $repoPath . $branch) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* Probe candidates in order. First base64-decoded `content` wins.   */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- $local := newScratch -}}
+{{- range $candidates -}}
+  {{- if not ($local.Get "found") -}}
+    {{- $cacheKey := printf "%s:%s" . (now.Format "2006-01-02") -}}
+    {{- $opts     := dict "key" $cacheKey -}}
+    {{- with try (resources.GetRemote . $opts) -}}
+      {{- with .Err -}}
+        {{- /* error: fall through to next candidate */ -}}
+      {{- else with .Value -}}
+        {{- $payload := .Content | transform.Unmarshal -}}
+        {{- with $payload.content -}}
+          {{- $local.Set "found"   true -}}
+          {{- $local.Set "content" (. | base64Decode) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ================================================================= */ -}}
+{{- /* Render                                                            */ -}}
+{{- /* ================================================================= */ -}}
+
+{{- if $local.Get "found" -}}
+  {{- $content := $local.Get "content" | string -}}
+
+  {{- /* Strip an H1 that duplicates the page title. */ -}}
+  {{- with .Page.Params.Title -}}
+    {{- $content = replace $content (printf "# %s" .) "" -}}
+  {{- end -}}
+
+  {{- /* Rewrite relative links to absolute raw URLs. */ -}}
+  {{- $rawBase := "" -}}
+  {{- if eq $platform "github" -}}
+    {{- $rawBase = printf "https://raw.githubusercontent.com/%s/%s/" $repoPath $branch -}}
+  {{- else if eq $platform "gitlab" -}}
+    {{- $rawBase = printf "https://%s/%s/-/raw/%s/" $host $repoPath $branch -}}
+  {{- else -}}
+    {{- $rawBase = printf "https://%s/%s/raw/branch/%s/" $host $repoPath $branch -}}
+  {{- end -}}
+  {{- $content = replace $content "](./" (printf "](%s" $rawBase) -}}
+  {{- $content = replace $content "](/"  (printf "](%s" $rawBase) -}}
+
+  {{- /* SECURITY 1/3: neutralise Hugo shortcode delimiters. */ -}}
+  {{- $content = replace $content "{{<" "｛｛<" -}}
+  {{- $content = replace $content "{{%" "｛｛%" -}}
+  {{- $content = replace $content ">}}" ">｝｝" -}}
+  {{- $content = replace $content "%}}" "%｝｝" -}}
+
+  {{- /* SECURITY 2/3: HTML tag denylist. Entity-escape opening and
+         closing forms of dangerous tags so they render as visible
+         text rather than executing. svg + math are denylisted
+         unless `unsafe="true"`. */ -}}
+  {{- $blockedTags := "script|style|iframe|frame|frameset|noframes|object|embed|applet|form|input|button|textarea|select|option|optgroup|fieldset|legend|link|meta|base|noscript" -}}
+  {{- if not $unsafe -}}
+    {{- $blockedTags = printf "%s|svg|math" $blockedTags -}}
+  {{- end -}}
+  {{- $tagRE := printf `(?i)<(/?)(%s)\b([^>]*)>` $blockedTags -}}
+  {{- $content = replaceRE $tagRE "&lt;${1}${2}${3}&gt;" $content -}}
+
+  {{- /* SECURITY 3/3: strip dangerous attributes. The containing
+         tag survives but loses the attack vector. */ -}}
+  {{- $content = replaceRE `(?i)\s+on[a-z]+\s*=\s*"[^"]*"` "" $content -}}
+  {{- $content = replaceRE `(?i)\s+on[a-z]+\s*=\s*'[^']*'` "" $content -}}
+  {{- $content = replaceRE `(?i)\s+(href|src|xlink:href)\s*=\s*"\s*javascript:[^"]*"` "" $content -}}
+  {{- $content = replaceRE `(?i)\s+(href|src|xlink:href)\s*=\s*'\s*javascript:[^']*'` "" $content -}}
+  {{- $content = replaceRE `(?i)\s+style\s*=\s*"[^"]*expression\s*\([^"]*"` "" $content -}}
+
+  {{- $content | markdownify -}}
+{{- else -}}
+  {{- warnf "forge-content: unable to fetch content from %q on page %q" $webURL .Page.Title -}}
+  {{- $fallback | safeHTML -}}
+{{- end -}}
+
+{{- else -}}
+  {{- /* Platform unresolved — fall back to a link if we have one. */ -}}
+  {{- with $fallback -}}{{- . | safeHTML -}}{{- end -}}
+{{- end -}}

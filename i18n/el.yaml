@@ -118,10 +118,10 @@ forge-last-pushed:
   other: Τελευταία ώθηση
 
 
-## github-content shortcode (legacy)
+## forge-content shortcode
 
-github-error:
-  other: "Σφάλμα φόρτωσης. Προβολή αποθετηρίου στο GitHub:"
+forge-error:
+  other: "Δεν ήταν δυνατή η ανάκτηση από"
 
 
 ## 404 error

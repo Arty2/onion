@@ -1,0 +1,129 @@
+{{- /*
+  forge-resolve.html — Shared platform resolution for forge-* templates.
+
+  Used by `partials/forge-meta.html` and `shortcodes/forge-content.html`
+  so they can never drift on platform detection, label resolution, or
+  warning messages.
+
+  ─── Input (dict) ──────────────────────────────────────────────────────
+    forge       (string)  — the unified "host/owner/repo" value
+    github      (string)  — legacy "owner/repo" fallback (assumed GitHub)
+    platform    (string)  — per-page override: "github" | "gitlab" | "forgejo"
+    label       (string)  — display-name override
+    pageTitle   (string)  — used in warning messages
+    component   (string)  — caller name for warnings (e.g. "forge-meta",
+                            "forge-content"); defaults to "forge"
+
+  Either `forge` OR `github` must be non-empty for a valid result.
+
+  ─── Output (dict) ─────────────────────────────────────────────────────
+    host           (string)  — e.g. "github.com"
+    repoPath       (string)  — "owner/repo" or "group/subgroup/project"
+    platform       (string)  — "github" | "gitlab" | "forgejo" | ""
+    platformLabel  (string)  — "GitHub" | "Codeberg" | overridden | ""
+    webURL         (string)  — "https://{host}/{repoPath}"
+    isLegacyGithub (bool)    — true when input came via `github`
+
+  When `platform` in the returned dict is empty, the caller MUST
+  early-exit (the helper has already emitted any relevant warnf).
+*/ -}}
+
+{{- $forge       := .forge -}}
+{{- $github      := .github -}}
+{{- $platformIn  := .platform -}}
+{{- $labelIn     := .label -}}
+{{- $pageTitle   := .pageTitle -}}
+{{- $component   := .component | default "forge" -}}
+
+{{- $forgeRaw      := "" -}}
+{{- $isLegacyGithub := false -}}
+{{- with $forge -}}
+  {{- $forgeRaw = . -}}
+{{- else -}}
+  {{- with $github -}}
+    {{- $forgeRaw      = . -}}
+    {{- $isLegacyGithub = true -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $host     := "" -}}
+{{- $repoPath := "" -}}
+{{- $platform := "" -}}
+{{- $platformLabel := "" -}}
+{{- $webURL   := "" -}}
+
+{{- with $forgeRaw -}}
+
+  {{- if $isLegacyGithub -}}
+    {{- $host     = "github.com" -}}
+    {{- $repoPath = $forgeRaw -}}
+  {{- else -}}
+    {{- $parts := split $forgeRaw "/" -}}
+    {{- if ge (len $parts) 3 -}}
+      {{- $host     = index $parts 0 -}}
+      {{- $repoPath = strings.TrimPrefix (printf "%s/" $host) $forgeRaw -}}
+    {{- else -}}
+      {{- warnf "%s: invalid forge value %q on page %q — expected host/owner/repo" $component $forgeRaw $pageTitle -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- with $host -}}
+
+    {{- /* Per-page platform override */ -}}
+    {{- with $platformIn -}}
+      {{- if in (slice "github" "gitlab" "forgejo") . -}}
+        {{- $platform = . -}}
+      {{- else -}}
+        {{- warnf "%s: unknown forge_platform %q on page %q — expected github, gitlab, or forgejo" $component . $pageTitle -}}
+      {{- end -}}
+    {{- else -}}
+      {{- /* Auto-detect from hostname */ -}}
+      {{- if eq $host "github.com" -}}
+        {{- $platform = "github" -}}
+      {{- else if eq $host "gitlab.com" -}}
+        {{- $platform = "gitlab" -}}
+      {{- else if eq $host "codeberg.org" -}}
+        {{- $platform = "forgejo" -}}
+      {{- else -}}
+        {{- $gitlabHosts := slice -}}
+        {{- with site.Params.forgeContent -}}
+          {{- with .gitlabHosts -}}
+            {{- $gitlabHosts = . -}}
+          {{- end -}}
+        {{- end -}}
+        {{- range $gitlabHosts -}}
+          {{- if eq . $host -}}
+            {{- $platform = "gitlab" -}}
+          {{- end -}}
+        {{- end -}}
+        {{- if not $platform -}}
+          {{- warnf "%s: unrecognised host %q on page %q — set forge_platform in front matter" $component $host $pageTitle -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- /* Display label */ -}}
+    {{- with $platform -}}
+      {{- $defaultLabels := dict "github" "GitHub" "gitlab" "GitLab" "forgejo" "Forgejo" -}}
+      {{- $platformLabel = index $defaultLabels . -}}
+      {{- if and (eq . "forgejo") (eq $host "codeberg.org") -}}
+        {{- $platformLabel = "Codeberg" -}}
+      {{- end -}}
+      {{- with $labelIn -}}
+        {{- $platformLabel = . -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $webURL = printf "https://%s/%s" $host $repoPath -}}
+
+  {{- end -}}{{- /* end with $host */ -}}
+
+{{- end -}}{{- /* end with $forgeRaw */ -}}
+
+{{- return (dict
+    "host"           $host
+    "repoPath"       $repoPath
+    "platform"       $platform
+    "platformLabel"  $platformLabel
+    "webURL"         $webURL
+    "isLegacyGithub" $isLegacyGithub) -}}

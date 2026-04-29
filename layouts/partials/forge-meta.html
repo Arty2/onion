@@ -140,122 +140,35 @@
   Override per-page with `forge_platform` (see above).
 
   ─────────────────────────────────────────────────────────────────────────────
-  REQUIRED HUGO VERSION: ≥ 0.154.0 (for `try`). The theme-wide floor in
-  `theme.toml` / `hugo.yaml` is bumped to match.
+  REQUIRED HUGO VERSION: ≥ 0.154.0 (for `try` statement)
   ─────────────────────────────────────────────────────────────────────────────
 
 */ -}}
 
 {{- /* ================================================================= */ -}}
-{{- /* 1. Resolve the forge value (unified `Forge` or legacy `Github`)   */ -}}
+{{- /* 1–4. Resolve forge / host / platform / label via shared partial   */ -}}
 {{- /* ================================================================= */ -}}
 
-{{- $forgeRaw := "" -}}
-{{- $isLegacyGithub := false -}}
+{{- $resolved := partial "forge-resolve" (dict
+    "forge"     .Params.Forge
+    "github"    .Params.Github
+    "platform"  .Params.forge_platform
+    "label"     .Params.forge_label
+    "pageTitle" .Title
+    "component" "forge-meta") -}}
 
-{{- with .Params.Forge -}}
-  {{- $forgeRaw = . -}}
-{{- else -}}
-  {{- with $.Params.Github -}}
-    {{- $forgeRaw = . -}}
-    {{- $isLegacyGithub = true -}}
-  {{- end -}}
-{{- end -}}
-
-{{- with $forgeRaw -}}
-
-{{- /* ================================================================= */ -}}
-{{- /* 2. Parse host and repo path                                      */ -}}
-{{- /* ================================================================= */ -}}
-
-{{- $host := "" -}}
-{{- $repoPath := "" -}}
-
-{{- if $isLegacyGithub -}}
-  {{- /* Legacy format: "owner/repo" — no host prefix */ -}}
-  {{- $host = "github.com" -}}
-  {{- $repoPath = $forgeRaw -}}
-{{- else -}}
-  {{- /* Unified format: "host/owner/repo" or "host/group/subgroup/project" */ -}}
-  {{- $parts := split $forgeRaw "/" -}}
-  {{- if ge (len $parts) 3 -}}
-    {{- $host = index $parts 0 -}}
-    {{- $repoPath = strings.TrimPrefix (printf "%s/" $host) $forgeRaw -}}
-  {{- else -}}
-    {{- warnf "forge-meta: invalid Forge value %q on page %q — expected host/owner/repo" $forgeRaw $.Page.Title -}}
-  {{- end -}}
-{{- end -}}
-
-{{- with $host -}}
-
-{{- /* ================================================================= */ -}}
-{{- /* 3. Detect platform (auto or per-page override)                   */ -}}
-{{- /* ================================================================= */ -}}
-
-{{- $platform := "" -}}
-
-{{- /* Per-page override takes priority */ -}}
-{{- with $.Params.forge_platform -}}
-  {{- if in (slice "github" "gitlab" "forgejo") . -}}
-    {{- $platform = . -}}
-  {{- else -}}
-    {{- warnf "forge-meta: unknown forge_platform %q on page %q — expected github, gitlab, or forgejo" . $.Page.Title -}}
-  {{- end -}}
-{{- else -}}
-  {{- /* Auto-detect from hostname */ -}}
-  {{- if eq $host "github.com" -}}
-    {{- $platform = "github" -}}
-  {{- else if eq $host "gitlab.com" -}}
-    {{- $platform = "gitlab" -}}
-  {{- else if eq $host "codeberg.org" -}}
-    {{- $platform = "forgejo" -}}
-  {{- else -}}
-    {{- /* Check user-configured GitLab hosts (nil-safe) */ -}}
-    {{- $gitlabHosts := slice -}}
-    {{- with site.Params.forgeContent -}}
-      {{- with .gitlabHosts -}}
-        {{- $gitlabHosts = . -}}
-      {{- end -}}
-    {{- end -}}
-    {{- range $gitlabHosts -}}
-      {{- if eq . $host -}}
-        {{- $platform = "gitlab" -}}
-      {{- end -}}
-    {{- end -}}
-    {{- /* If still unresolved, warn */ -}}
-    {{- if not $platform -}}
-      {{- warnf "forge-meta: unrecognised host %q on page %q — set forge_platform in front matter" $host $.Page.Title -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
+{{- $host          := $resolved.host -}}
+{{- $repoPath      := $resolved.repoPath -}}
+{{- $platform      := $resolved.platform -}}
+{{- $platformLabel := $resolved.platformLabel -}}
+{{- $webURL        := $resolved.webURL -}}
 
 {{- /* Only proceed if platform was resolved */ -}}
 {{- if $platform -}}
 
 {{- /* ================================================================= */ -}}
-{{- /* 4. Resolve display label                                         */ -}}
-{{- /* ================================================================= */ -}}
-
-{{- $defaultLabels := dict "github" "GitHub" "gitlab" "GitLab" "forgejo" "Forgejo" -}}
-{{- $platformLabel := index $defaultLabels $platform -}}
-
-{{- /* Codeberg gets its own default label */ -}}
-{{- if and (eq $platform "forgejo") (eq $host "codeberg.org") -}}
-  {{- $platformLabel = "Codeberg" -}}
-{{- end -}}
-
-{{- /* Per-page override wins over everything */ -}}
-{{- with $.Params.forge_label -}}
-  {{- $platformLabel = . -}}
-{{- end -}}
-
-{{- /* ================================================================= */ -}}
 {{- /* 5. Build API URL                                                 */ -}}
 {{- /* ================================================================= */ -}}
-
-{{- /* The web URL always uses the host the user provided (supports
-       redirect / vanity domains). */ -}}
-{{- $webURL := printf "https://%s/%s" $host $repoPath -}}
 
 {{- $apiURL := "" -}}
 
@@ -356,5 +269,3 @@
 {{- end -}}{{- /* end with $stats (render gate) */ -}}
 
 {{- end -}}{{- /* end if $platform */ -}}
-{{- end -}}{{- /* end with $host */ -}}
-{{- end -}}{{- /* end with $forgeRaw */ -}}
