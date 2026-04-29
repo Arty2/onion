@@ -133,7 +133,7 @@ inspired from https://viewfromthisside.superhi.com/
 
 (function(){
 	const galleries = document.querySelectorAll('div.gallery');
-	galleries.forEach(function(element, index){
+	galleries.forEach(function(element){
 		let index_current = 0;
 		let index = 0;
 		let z = 1;
