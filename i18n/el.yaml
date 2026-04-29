@@ -18,6 +18,12 @@ previous:
 search:
   other: Αναζήτηση
 
+toggle-theme:
+  other: Εναλλαγή θέματος
+
+scroll-top:
+  other: Επιστροφή στην κορυφή
+
 play-on:
   other: 'Αναπαραγωγή στο {{ .platform }}'
 
@@ -38,9 +44,6 @@ share-email:
 
 
 ## post details
-
-description:
-  other: Σύνοψη
 
 tags:
   other: Ετικέτες

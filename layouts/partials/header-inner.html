@@ -8,5 +8,5 @@
 	</a>
 	{{- with site.Params.description }}<span class="description">{{ . }}</span>{{ end -}}
 </h1>
-{{ partialCached "menu-main" . }}
+{{ partialCached "menu-main" . .RelPermalink }}
 {{- if or site.Params.show_search site.Params.showsearch }}{{ partialCached "search" . }}{{ end -}}

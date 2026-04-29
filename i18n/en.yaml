@@ -18,6 +18,12 @@ previous:
 search:
   other: Search
 
+toggle-theme:
+  other: Toggle theme
+
+scroll-top:
+  other: Scroll to top
+
 play-on:
   other: 'Play on {{ .platform }}'
 
@@ -38,9 +44,6 @@ share-email:
 
 
 ## post details
-
-description:
-  other: Summary
 
 rating:
   other: Rating
