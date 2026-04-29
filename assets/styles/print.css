@@ -1,0 +1,80 @@
+/*--------------------------------------------------------------
+print stylesheet — loaded with media="print" so the browser only
+fetches it when the user actually prints (or print-previews).
+--------------------------------------------------------------*/
+
+/* ink-saving palette: theme colours are HSL channels at runtime, so
+   forcing them flat is enough to override every theme. */
+:root {
+	--page-color:          0 0% 100%;
+	--text-color:          0 0% 0%;
+	--hyperlink-color:     0 0% 0%;
+	--accent-color:        0 0% 0%;
+	--text-color-inverted: 0 0% 100%;
+	--shadow-color:        0 0% 100%;
+	--blend-mode:   normal;
+	--blend-filter: none;
+}
+
+body {
+	background: white;
+	color: black;
+	font-family: var(--font-serif);
+}
+
+/* single column — drop the on-screen content cap. */
+body > header,
+main,
+body > footer {
+	max-width: none;
+	margin: 0;
+}
+
+/* hide chrome the reader doesn't need on paper. */
+.gadgets,
+.languages,
+nav,
+.taxonomy-filter,
+#search__form,
+.menu-social,
+.share,
+[data-print="hide"] {
+	display: none !important;
+}
+
+/* expand non-anchor hyperlinks to footnote-style URLs so they survive
+   the page. Skip mailto/tel and same-page anchors. */
+a[href^="http"]::after,
+a[href^="//"]::after {
+	content: " (" attr(href) ")";
+	font-size: 90%;
+	word-break: break-all;
+}
+
+/* respect page breaks. */
+h1, h2, h3, h4, h5, h6 {
+	break-after: avoid;
+}
+
+figure,
+pre,
+blockquote,
+.alert {
+	break-inside: avoid;
+}
+
+/* remove decorative effects that print poorly. */
+img,
+picture,
+video,
+svg {
+	mix-blend-mode: normal;
+	filter: none;
+	max-width: 100% !important;
+}
+
+article:focus-within,
+article:hover > * {
+	outline: none;
+	color: black;
+}
