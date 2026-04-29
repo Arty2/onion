@@ -19,6 +19,9 @@
 {{- $syntaxcss := resources.Get "/styles/syntax.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $syntaxcss.RelPermalink }}" integrity="{{ $syntaxcss.Data.Integrity }}" crossorigin="anonymous" media="print" onload="this.media='screen'">
 <noscript><link rel="stylesheet" href="{{ $syntaxcss.RelPermalink }}" integrity="{{ $syntaxcss.Data.Integrity }}" crossorigin="anonymous"></noscript>
+<!-- print stylesheet: lazy-fetched by the browser when actually printing -->
+{{- $printcss := resources.Get "/styles/print.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $printcss.RelPermalink }}" integrity="{{ $printcss.Data.Integrity }}" crossorigin="anonymous" media="print">
 <!-- simple-lightbox CSS is injected by onion.js only on pages with image links -->
 
 

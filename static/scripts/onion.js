@@ -39,8 +39,8 @@ contain image links (avoids shipping ~50 kB of JS/CSS everywhere).
 via https://simplelightbox.com/
 --------------------------------------------------------------*/
 if (document.querySelector('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]')) {
-	var lbBase = window.location.origin + '/scripts/simple-lightbox/';
-	var lbCss = document.createElement('link');
+	const lbBase = window.location.origin + '/scripts/simple-lightbox/';
+	const lbCss = document.createElement('link');
 	lbCss.rel = 'stylesheet';
 	lbCss.href = lbBase + 'simple-lightbox.min.css';
 	document.head.appendChild(lbCss);
@@ -58,74 +58,72 @@ if (document.querySelector('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], 
 Gadget #scroller behavior
 --------------------------------------------------------------*/
 (function(){
-	if (document.body.contains(document.getElementById('scroller'))) {
-		// if possible to scroll, indicate there is more
-		if (window.scrollY == 0 && document.body.clientHeight > window.innerHeight) {
-			document.getElementById('scroller').classList.add('down');
+	const scroller = document.getElementById('scroller');
+	if (!scroller) return;
+
+	const update = function() {
+		if (window.scrollY > 50) {
+			scroller.classList.remove('down');
+			scroller.classList.add('up');
 		}
-		// check periodically for scroll position
-		setInterval(function(){
-			if (window.scrollY > 50) { // change gadget to scroll down
-				document.getElementById('scroller').classList.remove('down');
-				document.getElementById('scroller').classList.add('up');
-			}
-			else {
-				if (document.body.clientHeight > window.innerHeight) { // change gadget to scroll up
-					document.getElementById('scroller').classList.remove('up');
-					document.getElementById('scroller').classList.add('down');
-				}
-				else { // hide gadget if not possible to scroll
-					document.getElementById('scroller').classList.add('hidden');
-				}
-			}
-		}, 1000);
-		// hide when clicked
-		document.getElementById('scroller').addEventListener('click', function(event){
-			if (this.classList.contains('down')) { // move down
-				window.scroll({
-					top: window.innerHeight,
-					behavior: 'smooth'
-				});
-				event.preventDefault();
-				this.classList.remove('down');
-				this.classList.add('up');
-			}
-			else { // return to top
-				window.scroll({
-					top: 0,
-					behavior: 'smooth'
-				});
-				event.preventDefault();
-			}
-		});
-	}
+		else if (document.body.clientHeight > window.innerHeight) {
+			scroller.classList.remove('up');
+			scroller.classList.add('down');
+		}
+		else {
+			scroller.classList.add('hidden');
+		}
+	};
+
+	update();
+	window.addEventListener('scroll', update, { passive: true });
+
+	scroller.addEventListener('click', function(event){
+		if (this.classList.contains('down')) { // move down
+			window.scroll({
+				top: window.innerHeight,
+				behavior: 'smooth'
+			});
+			event.preventDefault();
+			this.classList.remove('down');
+			this.classList.add('up');
+		}
+		else { // return to top
+			window.scroll({
+				top: 0,
+				behavior: 'smooth'
+			});
+			event.preventDefault();
+		}
+	});
 })();
 
 /*--------------------------------------------------------------
 Gadget #themer behavior
 --------------------------------------------------------------*/
 (function(){
-	if (typeof themes !== 'undefined' && themes.length > 0 && (themer = document.getElementById('themer'))) {
-		themer.classList.remove('hidden');
-		var icurr = (themes.indexOf(theme) == -1?0:themes.indexOf(theme));
-		var inext = (icurr == themes.length - 1?0:icurr + 1)
-		document.querySelector('#themer > span').classList.add(...themes[inext].split(' '));
+	const themer = document.getElementById('themer');
+	if (typeof themes === 'undefined' || themes.length === 0 || !themer) return;
 
-		themer.onclick = function() {
-			var icurr = (themes.indexOf(theme) == -1?0:themes.indexOf(theme));
-			var inext = (icurr == themes.length - 1?0:icurr + 1)
-			var iaftr = (inext == themes.length - 1?0:inext + 1);
+	themer.classList.remove('hidden');
+	const icurrInit = themes.indexOf(theme) === -1 ? 0 : themes.indexOf(theme);
+	const inextInit = icurrInit === themes.length - 1 ? 0 : icurrInit + 1;
+	document.querySelector('#themer > span').classList.add(...themes[inextInit].split(' '));
 
-			document.documentElement.classList.remove(...theme.split(' '));
-			document.documentElement.classList.remove(...themes[icurr].split(' '));
-			document.documentElement.classList.add(...themes[inext].split(' '));
-			document.querySelector('#themer > span').classList.remove(...themes[inext].split(' '));
-			document.querySelector('#themer > span').classList.add(...themes[iaftr].split(' '));
-			localStorage.setItem('theme', themes[inext]);
-			theme = themes[inext];
-			event.preventDefault();
-		}
-	}
+	themer.onclick = function(event) {
+		const icurr = themes.indexOf(theme) === -1 ? 0 : themes.indexOf(theme);
+		const inext = icurr === themes.length - 1 ? 0 : icurr + 1;
+		const iaftr = inext === themes.length - 1 ? 0 : inext + 1;
+
+		document.documentElement.classList.remove(...theme.split(' '));
+		document.documentElement.classList.remove(...themes[icurr].split(' '));
+		document.documentElement.classList.add(...themes[inext].split(' '));
+		document.querySelector('#themer > span').classList.remove(...themes[inext].split(' '));
+		document.querySelector('#themer > span').classList.add(...themes[iaftr].split(' '));
+		try { localStorage.setItem('theme', themes[inext]); } catch (e) { /* Safari Private Mode throws on localStorage access */ }
+		theme = themes[inext];
+		event.preventDefault();
+	};
 })();
 
 /*--------------------------------------------------------------
@@ -134,25 +132,25 @@ inspired from https://viewfromthisside.superhi.com/
 --------------------------------------------------------------*/
 
 (function(){
-	var galleries = document.querySelectorAll('div.gallery');
-	galleries.forEach(function(element, index){
-		var index_current = 0;
-		var index = 0;
-		var z = 1;
+	const galleries = document.querySelectorAll('div.gallery');
+	galleries.forEach(function(element){
+		let index_current = 0;
+		let index = 0;
+		let z = 1;
 
-		var figures = element.querySelectorAll('figure');
+		const figures = element.querySelectorAll('figure');
 
 		figures.forEach(function(figure) {
 			figure.setAttribute('data-index', index);
 			index = index + 1;
 		});
 
-		var slideAnimation = function() {
+		const slideAnimation = function() {
 			index = 0;
 			figures.forEach(function(figure) {
-				var x = Math.floor(Math.random() * 3);
-				var y = Math.floor(Math.random() * 3);
-				var z = Math.random() * 2;
+				const x = Math.floor(Math.random() * 3);
+				const y = Math.floor(Math.random() * 3);
+				const z = Math.random() * 2;
 
 				figure.style.setProperty('--rand-x', 0);
 				figure.style.setProperty('--rand-y', 0);

@@ -541,7 +541,6 @@ body > footer {
 	--hyperlink-color:     0 0% 0%;
 	--accent-color:        240 100% 50%;
 	--text-color-inverted: 0 0% 78%;
-	--theme--toggle: 0;
 }
 
 .theme--blue {
@@ -551,7 +550,6 @@ body > footer {
 	--hyperlink-color:     0 0% 100%;
 	--accent-color:        60 100% 50%;
 	--text-color-inverted: 240 100% 50%;
-	--theme--toggle: 0;
 }
 
 .theme--peach {
@@ -863,7 +861,6 @@ sup[id^="fnref:"]:target a::before,
 
 sup[id^="fnref:"] a::before {
 	line-height: calc(0.75 * (var(--icon-size) - var(--icon-margin)));
-	/* TODO: introduce a line-height adjust constant? */
 }
 
 code, kbd {
@@ -1491,8 +1488,6 @@ header aside,
 	border-bottom: 2px dashed;
 	text-overflow: ellipsis;
 	transition: max-height 1s 1s, border-color 1s 1s;
-
-	/*-webkit-mask-image: linear-gradient(top, rgba(0,0,0,1) 1rem, rgba(0,0,0,0) 90%);*/
 }
 
 :is(.marginalia, .entry-content aside) > *:first-child {
@@ -1505,7 +1500,6 @@ header aside,
 	transition-delay: 0s;
 
 	border-color: transparent;
-	/*-webkit-mask-image: none;*/
 }
 
 /*.marginalia::after,
@@ -1527,7 +1521,7 @@ header aside,
 
 		border-color: transparent;
 		transition: all 0s 0s;
-		-webkit-mask-image: none;
+		mask-image: none;
 	}
 	:is(.marginalia, .entry-content aside)::before {
 		display: none;
@@ -1564,14 +1558,13 @@ main :is(h1[id], h2[id], h3[id], h4[id], h5[id], h6[id], a[title], a[href*='.pdf
 	/*backdrop-filter: blur(var(--page-blur));*/
 	color: hsl(var(--text-color) / 1);
 	cursor: help;
-	font-size: 1rem !important; /* TODO: move to typography section */;
+	font-size: 1rem !important;
 	font-variant: initial;
 	text-align: center;
 	text-overflow: ellipsis;
 	text-transform: initial;
 
-	-webkit-transition: color 0s;
-	transition        : color 0s;
+	transition: color 0s;
 	/*outline: 1px dashed red;*/
 }
 
@@ -1589,7 +1582,7 @@ main :is(h1[id], h2[id], h3[id], h4[id], h5[id], h6[id], a[title], ins[datetime]
 	border-top: 0.5px solid;
 	border-bottom: 0.5px solid;
 
-	-webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0, 10%, rgba(0,0,0,var(--page-transparency)) calc(var(--gutter) + var(--baseline)));
+	mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0, 10%, rgba(0,0,0,var(--page-transparency)) calc(var(--gutter) + var(--baseline)));
 }
 	/* anchor links */
 	main :is(h1, h2, h3, h4, h5, h6)[id]::before {
@@ -2166,8 +2159,7 @@ article h3 {
 	opacity: 1;
 	z-index: 100;
 
-	-webkit-transition: all 0.3s linear;
-	transition        : all 0.3s linear;
+	transition: all 0.3s linear;
 }
 
 [data-visibility='hidden'] {
@@ -2183,8 +2175,7 @@ article h3 {
 
 	transform-origin: center center;
 
-	-webkit-transition: all 0.3s linear;
-	transition        : all 0.3s linear;
+	transition: all 0.3s linear;
 }
 
 [data-visibility='hidden'] > * {
@@ -2346,7 +2337,6 @@ input[type=file]::file-selector-button {
 	text-transform: uppercase;
 
 	box-shadow: 0px 5px 0px 0px hsl(var(--shadow-color));
-	-webkit-appearance: button; /* iOS and Safari fix */
 }
 
 button:hover,

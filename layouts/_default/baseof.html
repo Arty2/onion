@@ -8,19 +8,19 @@
 {{ partial "head" . }}
 <script>
 const themes = ['scheme--dark','scheme--light','theme--peach scheme--dark','theme--peach scheme--light','theme--retro scheme--dark','theme--retro scheme--light'];
-if (typeof themes !== 'undefined' && themes.length > 0) {
-	if (theme = localStorage.getItem('theme')) {
-		if (themes.indexOf(theme) == -1) {
-			theme = themes[0];
-		}
+let theme;
+if (themes.length > 0) {
+	let stored = null;
+	try { stored = localStorage.getItem('theme'); } catch (e) { /* Safari Private Mode throws on localStorage access */ }
+	if (stored && themes.indexOf(stored) !== -1) {
+		theme = stored;
 	} else {
 		theme = themes[0];
 	}
-	// get current theme from classList?
 } else {
 	theme = '{{ $siteTheme }}{{ with .Params.Theme }} {{ . }}{{ end }}';
 }
-document.documentElement.classList.add(...theme.split(' '))
+document.documentElement.classList.add(...theme.split(' '));
 </script>
 </head>
 <body id="top" class="{{ .Kind }}"{{ with site.Params.LanguageDir }} dir="{{ . }}"{{ end }}>

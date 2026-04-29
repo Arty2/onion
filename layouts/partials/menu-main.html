@@ -3,10 +3,10 @@
 	<menu>
 		{{- with index site.Menus.main -}}
 			{{- range . -}}
-				<li class="{{ if .HasChildren }}has-children{{ end }}">{{ .Pre }}<a href="{{ .URL }}">{{ .Name }}</a>{{ .Post }}{{ if .HasChildren -}}
+				<li class="{{ if .HasChildren }}has-children{{ end }}">{{ .Pre }}<a href="{{ .URL }}"{{ if eq .URL $.RelPermalink }} aria-current="page"{{ end }}>{{ .Name }}</a>{{ .Post }}{{ if .HasChildren -}}
 					<menu>
 						{{- range .Children -}}
-							<li><a href="{{ .URL }}">{{ .Pre }}{{ .Name }}{{ .Post }}</a></li>
+							<li><a href="{{ .URL }}"{{ if eq .URL $.RelPermalink }} aria-current="page"{{ end }}>{{ .Pre }}{{ .Name }}{{ .Post }}</a></li>
 						{{- end -}}
 					</menu>
 				{{- end -}}</li>
@@ -14,7 +14,7 @@
 		{{- else -}}
 			{{- range site.RegularPages -}}
 				{{ if and (eq .Section "") (ne .Params.menu_hide true) -}}
-				<li><a href="{{ .RelPermalink }}">{{ with .Title }}{{ . | title }}{{ else }}{{ .File.ContentBaseName | title }}{{ end }}</a></li>
+				<li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} aria-current="page"{{ end }}>{{ with .Title }}{{ . | title }}{{ else }}{{ .File.ContentBaseName | title }}{{ end }}</a></li>
 				{{- end }}
 			{{- end -}}
 		{{- end -}}
