@@ -219,7 +219,7 @@ The theme works on **Hugo ≥ 0.154** (Extended is strongly recommended for WebP
 
 ```sh
 hugo mod init github.com/you/your-site
-hugo mod get github.com/arty2/onion
+hugo mod get github.com/arty2/onion@v0.1.0
 ```
 
 Then in `hugo.toml`:
@@ -228,7 +228,7 @@ Then in `hugo.toml`:
 theme = ["github.com/arty2/onion"]
 ```
 
-Update later with `hugo mod get -u github.com/arty2/onion`.
+Update to a newer minor with `hugo mod get -u github.com/arty2/onion@v0.X.Y`. Pinning a minor (rather than `@latest`) gives reproducible builds; see [RELEASING.md](./RELEASING.md) for the v0.x.x versioning policy.
 
 ### As a Git submodule
 
@@ -367,7 +367,7 @@ Prefetch/prerender is delegated to the browser via [Speculation Rules](https://d
 - CI (`.github/workflows/build.yml`) builds the example site on every push against two Hugo versions (a pinned reproducible one and `latest`) and runs `html-validate` plus a deprecation grep against the output.
 - Minimum supported Hugo: **0.154.0** (for the `try` statement used in `forge-meta`). Bumped here whenever the theme relies on a newer template feature.
 
-Releases follow [`RELEASING.md`](./RELEASING.md): tag `vX.Y.Z`, push the tag, and the Go module proxy serves it as `hugo mod get github.com/arty2/onion@vX.Y.Z`.
+Releases follow [`RELEASING.md`](./RELEASING.md): tag `v0.X.Y`, push the tag, and the Go module proxy serves it as `hugo mod get github.com/arty2/onion@v0.X.Y`. See [`CHANGELOG.md`](./CHANGELOG.md) for the catalogue of pre-policy v1/v2/v3 releases retired during the move to permanent v0.x.x versioning.
 
 
 * * *

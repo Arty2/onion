@@ -6,29 +6,29 @@ Hugo Module consumers fetch the theme via the Go module proxy:
 hugo mod get github.com/arty2/onion@latest
 ```
 
-`@latest` resolves to the highest semver tag in the repo. To cut a release:
+`@latest` resolves to the highest semver tag. To cut a release:
 
 ```sh
-git tag vX.Y.Z
-git push origin vX.Y.Z
+git tag v0.X.Y
+git push origin v0.X.Y
 ```
 
 The Go proxy picks it up within a few minutes. Users then upgrade with:
 
 ```sh
-hugo mod get -u github.com/arty2/onion@vX.Y.Z
+hugo mod get -u github.com/arty2/onion@v0.X.Y
 ```
 
 ## Versioning
 
-We follow [SemVer](https://semver.org/):
+This theme stays on `v0.x.x` indefinitely. Per Go's [semantic-import-versioning rule](https://go.dev/ref/mod#major-version-suffixes), any tag with major version ≥ 2 requires a `/v2` (or `/v3`, …) suffix in the `go.mod` module path AND in every consumer's `theme = ["…"]` line. Staying on v0 sidesteps that without giving up granular versioning of changes — and is well-precedented in the Go ecosystem (`golang.org/x/…`, many widely-used libraries).
 
-- **MAJOR** — breaking changes to template params, partials a downstream
-  site might override, CSS class names, or removed shortcodes.
-- **MINOR** — new shortcodes, partials, params, or i18n strings.
-- **PATCH** — bug fixes, doc updates, asset tweaks, CI changes.
+Within `v0`:
 
-The first release should be `v1.0.0`.
+- **MINOR** (`v0.X.0`) — new shortcodes, partials, params, i18n strings, OR breaking changes to template params, partials a downstream site might override, CSS class names, or removed shortcodes. (In v0, breaking changes don't bump a major; they bump MINOR. Downstream sites should pin a minor version they've tested.)
+- **PATCH** (`v0.X.Y`) — bug fixes, doc updates, asset tweaks, CI changes, dependency bumps.
+
+The first release under this policy is `v0.1.0`. The retired pre-policy tags (v1.0, v2.x, v3.x) are catalogued in [CHANGELOG.md](./CHANGELOG.md).
 
 ## Pre-release checklist
 
