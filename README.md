@@ -48,7 +48,7 @@ An experimental theme for the [Hugo](https://gohugo.io/) static site generator. 
 
 ```
 articles-filter    articles-list      figure            files-list
-gallery            github-content     include           marginalia
+forge-content      gallery            include           marginalia
 menu-social        model-viewer       section           simple-signup
 dailymotion
 ```
@@ -182,6 +182,33 @@ Append a `#fragment` to any image URL to apply visual-treatment classes. Works i
 Combine by URL-encoding a space, e.g. `![diagram](architecture.svg#blend%20shadow)`.
 
 The `{{< include >}}` shortcode inlines content as-is and does NOT process `#fragment` modifiers — use `{{< figure >}}` or plain markdown image syntax instead.
+
+
+## Forge content
+
+`{{< forge-content >}}` fetches a README (or any file) from a public GitHub / GitLab / Forgejo / Codeberg repo at build time and inlines its rendered Markdown. It supersedes the legacy `github-content` shortcode (removed in this release); migrate by changing the shortcode name and prefixing the host to `repository`.
+
+```hugo
+{{< forge-content repository="github.com/owner/repo"     branch="main" >}}
+{{< forge-content repository="gitlab.com/group/project"  branch="main" >}}
+{{< forge-content repository="codeberg.org/owner/repo"   branch="main" >}}
+```
+
+| Parameter    | Default      | Effect                                                                 |
+| ------------ | ------------ | ---------------------------------------------------------------------- |
+| `repository` | —            | `host/owner/repo` (unified) or `owner/repo` (legacy, GitHub assumed).  |
+| `branch`     | `master`     | Branch / tag / ref.                                                    |
+| `path`       | (empty)      | File path. Empty fetches the README — GitHub uses its dedicated endpoint; GitLab / Forgejo probe `README.md`, `README`, `readme.md` in order. |
+| `platform`   | auto-detect  | `github` / `gitlab` / `forgejo`. Required for unrecognised hosts (e.g. self-hosted GitLab — also addable to `params.forgeContent.gitlabHosts`). |
+| `unsafe`     | `false`      | When `true`, allows inline `<svg>` / `<math>` from trusted sources. All other dangerous tags remain stripped regardless. |
+
+**Security.** Untrusted remote markdown passes through three filters before `markdownify`:
+
+1. **Hugo shortcode delimiters are neutralised** — `{{<`, `{{%`, `>}}`, `%}}` are replaced with full-width lookalikes (`｛｛`, `｝｝`) so a malicious README cannot inject server-side template directives.
+2. **Dangerous HTML tags are entity-escaped** — `<script>`, `<iframe>`, `<object>`, `<embed>`, `<form>`, `<input>`, `<button>`, `<style>`, `<link>`, `<meta>`, `<base>`, `<noscript>` (and `<svg>` / `<math>` unless `unsafe="true"`) render as visible escaped text rather than executing.
+3. **Dangerous attributes are stripped** — `on*=` event handlers, `javascript:` URIs in `href` / `src` / `xlink:href`, and IE `expression()` styles are removed wherever they appear; the containing tag survives but loses the attack vector.
+
+This is a denylist, not a strict GFM allowlist. For most READMEs it's sufficient; for syndicating content from attacker-controlled repositories, run a dedicated sanitiser as a build step.
 
 
 ## Installation

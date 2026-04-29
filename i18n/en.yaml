@@ -118,10 +118,10 @@ forge-last-pushed:
   other: Last pushed
 
 
-## github-content shortcode (legacy)
+## forge-content shortcode
 
-github-error:
-  other: "Error fetching content. View repository on GitHub:"
+forge-error:
+  other: "Could not fetch content from"
 
 
 ## 404 error
