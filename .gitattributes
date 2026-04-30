@@ -1,6 +1,14 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Force CRLF on Windows batch files regardless of contributor git config.
+# cmd.exe is mostly tolerant of LF but the trailing `pause` command and
+# labels have known LF-related glitches.
+*.bat text eol=crlf
+
+# Force LF on shell scripts so a checkout on Windows doesn't corrupt them.
+*.sh  text eol=lf
+
 # Custom for Visual Studio
 *.cs     diff=csharp
 

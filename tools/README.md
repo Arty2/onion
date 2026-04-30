@@ -6,6 +6,12 @@ The `.bat` files are Windows helpers for users who vendor the theme into a
 site via `git submodule` or `git subtree`. They are optional — every
 equivalent `git` command works unchanged on macOS and Linux.
 
+**Run the `.bat` files from your Hugo site's repo root** (the directory
+that contains `themes\onion`). Each script verifies the directory exists
+and exits cleanly if not.
+
+`screenshot.sh` resolves its own paths and works from any cwd.
+
 | script                       | purpose                                           |
 | ---------------------------- | ------------------------------------------------- |
 | `pull-theme-submodule.bat`   | Update the theme when installed as a submodule.   |
